@@ -1,15 +1,19 @@
 import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Register from "../../Screens/Register/register";
+import Home from "../../Screens/Home/Home";
 import Login from "../../Screens/Login/login";
+import OurPlans from "../../Screens/OurPlans/OurPlans";
+import Register from "../../Screens/Register/register";
 
 const Routing = () => {
   return (
     <>
       <BrowserRouter>
         <Routes>
-          <Route path={"/"} element={<Login />} />
+          <Route path={"/"} element={<Home />} />
+          <Route path={"/login"} element={<Login />} />
           <Route path={"/register"} element={<Register />} />
+          <Route path={"/plans"} element={<OurPlans />} />
         </Routes>
       </BrowserRouter>
     </>

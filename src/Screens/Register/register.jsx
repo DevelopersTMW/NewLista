@@ -143,7 +143,7 @@ const register = () => {
               </button>
               <p className="font-Urbanist text-Paracolor font-[600] text-[15px] text-center mt-3">
                 Already have an account?{" "}
-                <Link className="font-bold">Sign in now</Link>
+                <Link to={'/'} className="font-bold">Sign in now</Link> 
               </p>
             </div>
 
