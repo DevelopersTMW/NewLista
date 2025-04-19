@@ -1,34 +1,97 @@
 import React from "react";
-import CheckIcon from '../../assets/Icon.png'
-import '../../index.css'
+import CheckIcon from "../../assets/Icon.png";
+import "../../index.css";
+import { Link } from "react-router-dom";
 
-const PlansTabs = ({PlanNum , PlanCard , Name , Desc , ButtonText}) => {
+const PlansTabs = ({ PlanNum, PlanCard, Name, Desc, ButtonText }) => {
   return (
     <>
-      <div className="bg-white px-7 py-7 rounded-2xl flex flex-col gap-6 w-[39%] border-solid border-[1.5px] border-PurpleColor">
-        <div className="flex gap-7 items-center">
-            <h1 className="font-Inter font-[500] text-[24px]">{PlanNum}  
-            </h1>
-            <button className="bg-PurpleColor px-7 py-[4px] -mt-1 font-Inter  rounded-xl text-white">{PlanCard}</button>
-        </div>
-        <div className="border-b-[1px] border-solid border-Paracolor flex flex-col gap-2 font-[400]">
-            <h1 className="font-Poppins font-[700] text-[32px]">{Name}</h1>
-            <p className="font-Urbanist text-Paracolor font-[600] text-[17px]  leading-[25px] mb-6">{Desc}</p>
-        </div>
-        <div className="mt-2">
-            <ul className="flex flex-col gap-2.5">
-                <li  className="Inter text-[#1A1A1A] text-[18px] font-[500] items-center flex  gap-3"> <img className="bg-PurpleColor text-[10px] px-1.5 py-1.5 rounded-full text-white" src={CheckIcon} alt="" /> Feature 1</li>
-                <li  className="Inter text-[#1A1A1A] text-[18px] font-[500] items-center flex  gap-3"><img className="bg-PurpleColor text-[10px] px-1.5 py-1.5 rounded-full text-white" src={CheckIcon} alt="" /> Feature 2</li>
-                <li  className="Inter text-[#1A1A1A] text-[18px] font-[500] items-center flex  gap-3"><img className="bg-PurpleColor text-[10px] px-1.5 py-1.5 rounded-full text-white" src={CheckIcon} alt="" /> Feature 3</li>
-                <li  className="Inter text-[#1A1A1A] text-[18px] font-[500] items-center flex  gap-3"><img className="bg-PurpleColor text-[10px] px-1.5 py-1.5 rounded-full text-white" src={CheckIcon} alt="" /> Feature 4</li>
-                <li  className="Inter text-[#1A1A1A] text-[18px] font-[500] items-center flex  gap-3"><img className="bg-PurpleColor text-[10px] px-1.5 py-1.5 rounded-full text-white" src={CheckIcon} alt="" />Feature 5</li>
-                <li  className="Inter text-[#1A1A1A] text-[18px] font-[500] items-center flex  gap-3"><img className="bg-PurpleColor text-[10px] px-1.5 py-1.5 rounded-full text-white" src={CheckIcon} alt="" />Feature 6</li>
-            </ul>
-        </div>
-        <div className="mt-2">
-            <button id="HoverButton" className="font-Inter  w-[100%] py-3 text-[18px] text-[#1A1A1A] font-[500] rounded-lg"><span className="z-10 relative">{ButtonText}</span></button>
-        </div>
-
+      <div className="relative w-[42%] bg-white shadow-2xl rounded-3xl p-8 ring-1 ring-gray-900/10 sm:p-10">
+        <h3 className={"text-PurpleColor text-base/7 font-semibold"}>
+          {PlanCard}
+        </h3>
+        <p className="mt-4 flex items-baseline gap-x-2">
+          <span
+            className={
+              "text-black text-5xl font-semibold tracking-tight font-Poppins"
+            }
+          >
+            {Name}
+          </span>
+          <span className={"text-Paracolor font-Urbanist text-base"}>
+            / {PlanNum}
+          </span>
+        </p>
+        <p
+          className={
+            "text-Paracolor mt-6 text-base/7 font-semibold leading-[25px] font-Urbanist"
+          }
+        >
+          Lorem ipsum dolor sit amet consectetur. Nunc et pulvinar dui.
+          consectetur. Nunc et pulvinar dui.
+        </p>
+        <ul
+          role="list"
+          className={
+            "text-Paracolor font-Urbanist mt-8 space-y-3 text-sm/6 sm:mt-10"
+          }
+        >
+          <li className="flex gap-x-3">
+            <img
+              className="bg-PurpleColor text-[10px] px-1.5 py-1.5 rounded-full text-white"
+              src={CheckIcon}
+              alt=""
+            />
+            Unlimited products
+          </li>
+          <li className="flex gap-x-3">
+            <img
+              className="bg-PurpleColor text-[10px] px-1.5 py-1.5 rounded-full text-white"
+              src={CheckIcon}
+              alt=""
+            />
+            Unlimited subscribers
+          </li>
+          <li className="flex gap-x-3">
+            <img
+              className="bg-PurpleColor text-[10px] px-1.5 py-1.5 rounded-full text-white"
+              src={CheckIcon}
+              alt=""
+            />
+            Advanced analytics
+          </li>
+          <li className="flex gap-x-3">
+            <img
+              className="bg-PurpleColor text-[10px] px-1.5 py-1.5 rounded-full text-white"
+              src={CheckIcon}
+              alt=""
+            />
+            Dedicated support representative
+          </li>
+          <li className="flex gap-x-3">
+            <img
+              className="bg-PurpleColor text-[10px] px-1.5 py-1.5 rounded-full text-white"
+              src={CheckIcon}
+              alt=""
+            />
+            Marketing automations
+          </li>
+          <li className="flex gap-x-3">
+            <img
+              className="bg-PurpleColor text-[10px] px-1.5 py-1.5 rounded-full text-white"
+              src={CheckIcon}
+              alt=""
+            />
+            Custom integrations
+          </li>
+        </ul>
+        <Link
+          className={
+            "bg-PurpleColor text-white shadow-xs hover:bg-indigo-400 focus-visible:outline-indigo-500 mt-8 block rounded-md px-3.5 py-2.5 text-center text-[18px] font-semibold focus-visible:outline-2 focus-visible:outline-offset-2 sm:mt-10"
+          }
+        >
+          {ButtonText}
+        </Link>
       </div>
     </>
   );

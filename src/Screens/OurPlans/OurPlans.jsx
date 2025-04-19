@@ -65,17 +65,17 @@ const OurPlans = () => {
           {/* TABS SEC START  */}
           <div className=" mt-16">
             {/* Cards */}
-            <div className="flex gap-16 justify-center">
+            <div className="flex gap-10 justify-center">
               {activeTab === "monthly" && (
                 <>
-                  <PlansTabs PlanCard={"Free"} PlanNum={"Plan 1"} Name={"$1 USD / Month"} Desc={"Lorem ipsum dolor sit amet consectetur. Nunc et pulvinar dui."} ButtonText={"Get started for free"} />
-                  <PlansTabs PlanCard={"Premium"} PlanNum={"Plan 2"} Name={"$1 USD / Month"} Desc={"Lorem ipsum dolor sit amet consectetur. Nunc et pulvinar dui."} ButtonText={"Upgrade your plan"} />
+                  <PlansTabs PlanCard={"Free"} PlanNum={"Monthly"} Name={"$1 USD"}  Desc={"Lorem ipsum dolor sit amet consectetur. Nunc et pulvinar dui."} ButtonText={"Get started for free"} />
+                  <PlansTabs PlanCard={"Premium"} PlanNum={"Monthly"} Name={"$1 USD"} Desc={"Lorem ipsum dolor sit amet consectetur. Nunc et pulvinar dui."} ButtonText={"Upgrade your plan"} />
                 </>
               )}
               {activeTab === "yearly" && (
                 <>
-                  <PlansTabs PlanCard={"Free"} PlanNum={"Plan 1"} Name={"$12 USD / Yearly"} Desc={"Lorem ipsum dolor sit amet consectetur. Nunc et pulvinar dui."} ButtonText={"Get started for free"} />
-                  <PlansTabs PlanCard={"Premium"} PlanNum={"Plan 2"} Name={"$12 USD / Yearly"} Desc={"Lorem ipsum dolor sit amet consectetur. Nunc et pulvinar dui."} ButtonText={"Upgrade your plan"} />
+                 <PlansTabs PlanCard={"Free"} PlanNum={"Yearly"} Name={"$10 USD"} Desc={"Lorem ipsum dolor sit amet consectetur. Nunc et pulvinar dui."} ButtonText={"Get started for free"} />
+                  <PlansTabs PlanCard={"Premium"} PlanNum={"Yearly"} Name={"$10 USD"} Desc={"Lorem ipsum dolor sit amet consectetur. Nunc et pulvinar dui."} ButtonText={"Upgrade your plan"} />
                 </>
               )}
             </div>
