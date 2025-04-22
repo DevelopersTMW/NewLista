@@ -1,21 +1,11 @@
 import React, { useEffect } from "react";
 import { Select } from "@headlessui/react";
-import {
-  ArrowPathIcon,
-  ChartPieIcon,
-  CursorArrowRaysIcon,
-  FingerPrintIcon,
-  SquaresPlusIcon,
-} from "@heroicons/react/24/outline";
-import {
-  PhoneIcon,
-  PlayCircleIcon,
-} from "@heroicons/react/20/solid";
-// COMPONENTS 
+// COMPONENTS
 import TransparentNavbar from "../../Components/Navbar/TransparentNavbar";
 import TopDevelopes from "../../Components/Cards/TopDevelopes/TopDevelopes";
 import PropertiesCards from "../../Components/Cards/PropertiesCards/PropertiesCards";
-// IMAGES 
+import Testimonials from "../../Components/Testimonials/Testimonials";
+// IMAGES
 import HeroBg from "../../assets/HeroSecImage.jpg";
 import HomeSec1_1 from "../../assets/HomeSec1.1.png";
 import HomeSec1_2 from "../../assets/HomeSec1.2.png";
@@ -26,6 +16,11 @@ import TopDeveloper1_3 from "../../assets/TopDeveloper1.3.jpg";
 import PropertiesImage1 from "../../assets/PropertiesImage1.png";
 import PropertiesImage2 from "../../assets/PropertiesImage2.png";
 import PropertiesImage3 from "../../assets/PropertiesImage3.png";
+import Testimonials1 from "../../assets/Testimonials1.png";
+import HomeSec5_1 from "../../assets/HomeSec5.1.png";
+import HomeSec5_2 from "../../assets/HomeSec5.2.png";
+import InvestorCards from "../../Components/Cards/InvestorCards/InvestorCards";
+import Footer from "../../Components/Footer/Footer";
 
 // BACKGORUND
 const HeroBackground = {
@@ -36,7 +31,6 @@ const HeroBackground = {
   backgroundColor: "#0009",
   backgroundBlendMode: "color",
 };
-
 
 const Home = () => {
   useEffect(() => {
@@ -201,7 +195,7 @@ const Home = () => {
         {/* SECTION 1 START  */}
         <section className="flex flex-col items-center justify-center py-14 gap-10 ">
           <div className="flex flex-col justify-center items-center w-[60%] text-center">
-            <h1 className="text-7xl font-[700] font-Poppins  text-[#1E1E1E] sm:text-[43px] leading-[48px]">
+            <h1 className="text-7xl font-[700] font-Urbanist  text-[#1E1E1E] sm:text-[37px] leading-[48px]">
               Seamless Real Estate Investing Starts Here
             </h1>
             <p className="text-md font-Inter font-medium text-pretty text-Paracolor mt-2 sm:text-md/8 ">
@@ -277,7 +271,7 @@ const Home = () => {
           {/* CONTENT SECTION  */}
           <div className="flex justify-center items-center w-[84%]">
             <div className="w-[65%]">
-              <h1 className="text-7xl font-[700] font-Poppins  text-[#1E1E1E] sm:text-[42px] leading-[48px]">
+              <h1 className="text-7xl font-[700] font-Urbanist  text-[#1E1E1E] sm:text-[37px] leading-[48px]">
                 Featured Properties
               </h1>
               <p className="text-md font-Inter font-medium text-pretty text-Paracolor mt-2 sm:text-[14px]/5.5 ">
@@ -361,16 +355,18 @@ const Home = () => {
           {/* CONTENT SECTION  */}
           <div className="flex justify-center items-center w-[84%]">
             <div className="w-[65%]">
-              <h1 className="text-7xl font-[700] font-Poppins  text-[#1E1E1E] sm:text-[42px] leading-[48px]">
-              Top Developers in Commercial Real Estate
+              <h1 className="text-7xl font-[700] font-Urbanist  text-[#1E1E1E] sm:text-[37px] leading-[48px]">
+                Top Developers in Commercial Real Estate
               </h1>
               <p className="text-md font-Inter font-medium text-pretty text-Paracolor mt-2 sm:text-[14px]/5.5 ">
-              Discover the leaders in commercial real estate development. These developers are shaping the skyline and driving innovation across cities.
+                Discover the leaders in commercial real estate development.
+                These developers are shaping the skyline and driving innovation
+                across cities.
               </p>
             </div>
             <div className="w-[35%] flex justify-end">
               <button className="px-5 font-Inter bg-[#1E1E1E] text-white py-3 rounded-[7px]">
-              View All Developers
+                View All Developers
               </button>
             </div>
           </div>
@@ -406,7 +402,113 @@ const Home = () => {
           </div>
         </section>
         {/* SECTION 3 END */}
+        {/* SECTION 4 START  */}
+        <section className="flex flex-col justify-center items-center py-16 gap-10">
+          {/* CONTENT SECTION  */}
+          <div className="w-[84%]">
+            <h1 className="text-7xl font-[700] font-Urbanist  text-[#1E1E1E] sm:text-[37px] leading-[48px]">
+              What Our Clients Say
+            </h1>
+            <p className="text-md font-Inter font-medium text-pretty text-Paracolor mt-2 sm:text-[14px]/5.5  ">
+              Read the success stories and heartfelt testimonials from our
+              valued clients. Discover why they chose Estatein for their real
+              estate needs.
+            </p>
+          </div>
+          {/* CARDSECTION  */}
+          <div className="flex justify-center gap-7 w-[84%]">
+            <Testimonials
+              RevTitle={"Seamless & Efficient Platform!"}
+              RevParagraph={
+                "NewLista made listing and selling properties effortless. I connected with serious buyers and closed a deal in just two weeks!"
+              }
+              Stars={3}
+              RevImage={Testimonials1}
+              UserName={"Michael R."}
+              Desination={"USA, California"}
+            ></Testimonials>
+            <Testimonials
+              RevTitle={"Exclusive Deals & Great Networking!"}
+              RevParagraph={
+                "The off-market listings gave me access to investment opportunities I couldn’t find anywhere else. The networking features are a huge bonus!"
+              }
+              Stars={4}
+              RevImage={Testimonials1}
+              UserName={"Sarah L."}
+              Desination={"USA, Florida"}
+            ></Testimonials>
+            <Testimonials
+              RevTitle={"Everything You Need in One Place!"}
+              RevParagraph={
+                "From property listings to investor connections, NewLista has transformed how I do business. Highly recommend to any serious real estate professional!"
+              }
+              Stars={5}
+              RevImage={Testimonials1}
+              UserName={"David M."}
+              Desination={"USA, Nevada"}
+            ></Testimonials>
+          </div>
+        </section>
+        {/* SECTION 4 END  */}
+        {/* SECTION 5 START  */}
+        <section className="flex flex-col justify-center items-center gap-10 pt-12 pb-20">
+          <div className="w-[84%]">
+            <h1 className="text-7xl font-[700] font-Urbanist  text-[#1E1E1E] sm:text-[37px] leading-[48px]">
+              Have a property to sell?
+            </h1>
+          </div>
+          <div className="w-[84%] border-solid border-[1px] border-[#BBBBBB] flex rounded-[10px]">
+            <div className="w-[25%] h-[90%]">
+              <img className="" src={HomeSec5_1} alt="" />
+            </div>
+            <div className="flex flex-col justify-center items-center text-center px-20 gap-5 w-[50%] py-2">
+              <h1 className="font-Inter font-bold text-[22px] leading-[25px]">
+                Reach serious buyers, close deals faster, and maximize your
+                property's potential.{" "}
+              </h1>
+              <button className="bg-PurpleColor py-2 text-[16px] text-white font-Inter rounded-[8px] w-full">
+                Sell your Property
+              </button>
+            </div>
+            <div className="w-[25%] h-[90%]">
+              <img className="" src={HomeSec5_2} alt="" />
+            </div>
+          </div>
+        </section>
+        {/* SECTION 5 END  */}
+        {/* SECTION 6 START  */}
+        <section className="flex flex-col justify-center items-center pb-28 pt-10 gap-10 overflow-hidden">
+          {/* CONTENT SECTION  */}
+          <div className="flex justify-center items-center w-[84%]">
+            <div className="w-[65%]">
+              <h1 className="text-7xl font-[700] font-Urbanist  text-[#1E1E1E] sm:text-[37px] leading-[48px]">
+                Expand Your Real Estate Network
+              </h1>
+              <p className="text-md font-Inter font-medium text-pretty text-Paracolor mt-2 sm:text-[14px]/5.5 ">
+                Connect with serious investors, brokers, and real estate
+                professionals. Build partnerships, exchange insights, and
+                discover exclusive deals.
+              </p>
+            </div>
+            <div className="w-[35%] flex justify-end">
+              <button className="px-5 font-Inter bg-[#1E1E1E] text-white py-3 rounded-[7px]">
+                View more
+              </button>
+            </div>
+          </div>
+          {/* CARD SECTION  */}
+          <div className="w-[84%] flex gap-10">
+            <InvestorCards InvesImage={Testimonials1} InvesUserName={'John Doe'} InvesDesc={"Real Estate Investor"}  ></InvestorCards> 
+            <InvestorCards InvesImage={Testimonials1} InvesUserName={'John Doe'} InvesDesc={"Real Estate Investor"}  ></InvestorCards> 
+            <InvestorCards InvesImage={Testimonials1} InvesUserName={'John Doe'} InvesDesc={"Real Estate Investor"}  ></InvestorCards> 
+            <InvestorCards InvesImage={Testimonials1} InvesUserName={'John Doe'} InvesDesc={"Real Estate Investor"}  ></InvestorCards> 
+            <InvestorCards InvesImage={Testimonials1} InvesUserName={'John Doe'} InvesDesc={"Real Estate Investor"}  ></InvestorCards> 
+            <InvestorCards InvesImage={Testimonials1} InvesUserName={'John Doe'} InvesDesc={"Real Estate Investor"}  ></InvestorCards> 
+          </div>
+        </section>
+        {/* SECTION 6 END  */}
       </div>
+      <Footer></Footer>
     </>
   );
 };

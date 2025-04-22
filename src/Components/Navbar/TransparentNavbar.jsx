@@ -168,7 +168,7 @@ function TransparentNavbar() {
             </Link>
           </div>
           <div>
-            <Link className="text-sm/6 font-semibold text-gray-900">
+            <Link to={'/login'} className="text-sm/6 font-semibold text-gray-900">
               <button className="bg-transparent border-[1px] border-solid text-textColor border-textColor px-5 py-2 rounded-md cursor-pointer">
                 Log in
               </button>
@@ -248,7 +248,7 @@ function TransparentNavbar() {
                     </Link>
                   </div>
                   <div>
-                    <Link className="text-sm/6 font-semibold text-gray-900">
+                    <Link to={'/login'} className="text-sm/6 font-semibold text-gray-900">
                       <button className="bg-transparent border-[1px] border-solid text-white border-white px-5 py-2 rounded-md font-Inter">
                         Log in
                       </button>
