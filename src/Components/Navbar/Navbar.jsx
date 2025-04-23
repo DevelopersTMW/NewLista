@@ -26,7 +26,7 @@ import {
   PlayCircleIcon,
 } from "@heroicons/react/20/solid";
 import { Link } from "react-router-dom";
-import Logo from "../../assets/Logo.png";
+import Logo from "../../assets/WhiteLogo.png";
 
 const products = [
   {
@@ -84,7 +84,7 @@ function TransparentNavbar() {
 
   
   return (
-    <header className="bg-transparent relative z-10">
+    <header className="bg-[#0F0F0F] relative z-10">
       <nav
         aria-label="Global"
         className="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8"
@@ -181,7 +181,7 @@ function TransparentNavbar() {
         {/* MAIN MENU SECTION  END  */}
         {/* BUTTONS  */}
         <div className="hidden lg:flex lg:flex-1 lg:justify-end gap-3 items-center">
-        <div>
+        {/* <div>
             <Switch
               checked={enabled}
               onChange={setEnabled}
@@ -189,7 +189,7 @@ function TransparentNavbar() {
             >
               <span className="size-4 translate-x-1 rounded-full bg-white transition group-data-[checked]:translate-x-6" />
             </Switch>
-          </div>
+          </div> */}
           <div>
             <Link className="text-sm/6 font-semibold text-gray-900">
               <button className="bg-YellowColor px-5 py-2 rounded-md font-Inter cursor-pointer">

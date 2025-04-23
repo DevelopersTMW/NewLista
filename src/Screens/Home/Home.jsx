@@ -29,7 +29,6 @@ const HeroBackground = {
   backgroundRepeat: "no-repeat",
   backgroundBlendMode: "black",
   backgroundColor: "#0009",
-  backgroundBlendMode: "color",
 };
 
 const Home = () => {
