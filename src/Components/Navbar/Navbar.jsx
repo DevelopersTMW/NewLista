@@ -65,7 +65,7 @@ const callsToAction = [
   { name: "Contact sales", href: "#", icon: PhoneIcon },
 ];
 
-function TransparentNavbar() {
+function Navbar() {
   const [enabled, setEnabled] = useState(false)
   console.log(enabled);  
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -301,4 +301,4 @@ function TransparentNavbar() {
   );
 }
 
-export default TransparentNavbar;
+export default Navbar;

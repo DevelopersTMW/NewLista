@@ -21,6 +21,7 @@ import HomeSec5_1 from "../../assets/HomeSec5.1.png";
 import HomeSec5_2 from "../../assets/HomeSec5.2.png";
 import InvestorCards from "../../Components/Cards/InvestorCards/InvestorCards";
 import Footer from "../../Components/Footer/Footer";
+import MiniFooter from "../../Components/Footer/MiniFooter";
 
 // BACKGORUND
 const HeroBackground = {
@@ -507,6 +508,7 @@ const Home = () => {
         </section>
         {/* SECTION 6 END  */}
       </div>
+      <MiniFooter></MiniFooter>
       <Footer></Footer>
     </>
   );

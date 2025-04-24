@@ -6,6 +6,7 @@ import OurPlans from "../../Screens/OurPlans/OurPlans";
 import Register from "../../Screens/Register/register";
 import AboutUs from "../../Screens/AboutUs/AboutUs";
 import Pricing from "../../Screens/Pricing/Pricing";
+import ContactUs from "../../Screens/ContactUs.jsx/ContactUs";
 
 const Routing = () => {
   return (
@@ -15,6 +16,7 @@ const Routing = () => {
           <Route path={"/"} element={<Home />} />
           <Route path={"/about-us"} element={<AboutUs />} />
           <Route path={"/pricing"} element={<Pricing />} />
+          <Route path={"/contact-us"} element={<ContactUs />} />
           <Route path={"/login"} element={<Login />} />
           <Route path={"/register"} element={<Register />} />
           <Route path={"/plans"} element={<OurPlans />} />
