@@ -7,6 +7,7 @@ import Register from "../../Screens/Register/register";
 import AboutUs from "../../Screens/AboutUs/AboutUs";
 import Pricing from "../../Screens/Pricing/Pricing";
 import ContactUs from "../../Screens/ContactUs.jsx/ContactUs";
+import AddProperty from "../../Screens/AddProperty/AddProperty";
 
 const Routing = () => {
   return (
@@ -15,6 +16,7 @@ const Routing = () => {
         <Routes>
           <Route path={"/"} element={<Home />} />
           <Route path={"/about-us"} element={<AboutUs />} />
+          <Route path={"/add-property"} element={<AddProperty />} />
           <Route path={"/pricing"} element={<Pricing />} />
           <Route path={"/contact-us"} element={<ContactUs />} />
           <Route path={"/login"} element={<Login />} />

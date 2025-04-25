@@ -7,7 +7,7 @@ const JourneyBgImage = {
     backgroundImage: `url(${BgImage})`,
     backgroundSize: "cover",
     backgroundRepeat: "no-repeat",
-    backgroundBlendMode: "black",
+    // backgroundBlendMode: "black",
     backgroundColor: "#0009",
     backgroundBlendMode: "color",
   };
