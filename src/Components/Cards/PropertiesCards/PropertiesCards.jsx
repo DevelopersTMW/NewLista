@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 const PropertiesCards = ({ Img, Heading, desc, Status, Price, Features }) => {
   return (
     <>
-      <div className="w-[33%] bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
+      <div className="w-[100%] bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
         <Link>
           <img className="rounded-t-lg h-[270px] object-cover w-[100%]" src={Img} alt="" />
         </Link>

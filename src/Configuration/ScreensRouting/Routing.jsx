@@ -8,6 +8,9 @@ import AboutUs from "../../Screens/AboutUs/AboutUs";
 import Pricing from "../../Screens/Pricing/Pricing";
 import ContactUs from "../../Screens/ContactUs.jsx/ContactUs";
 import AddProperty from "../../Screens/AddProperty/AddProperty";
+import ViewProperty from "../../Screens/ViewProperty/ViewProperty";
+import PropertyDetails from "../../Screens/ViewProperty/PropertyDetails";
+import Residential from "../../Screens/Residential/Residential";
 
 const Routing = () => {
   return (
@@ -17,11 +20,15 @@ const Routing = () => {
           <Route path={"/"} element={<Home />} />
           <Route path={"/about-us"} element={<AboutUs />} />
           <Route path={"/add-property"} element={<AddProperty />} />
+          <Route path={"/view-property"} element={<ViewProperty />} />
+          <Route path={"/property-detail"} element={<PropertyDetails />} />
           <Route path={"/pricing"} element={<Pricing />} />
           <Route path={"/contact-us"} element={<ContactUs />} />
           <Route path={"/login"} element={<Login />} />
           <Route path={"/register"} element={<Register />} />
           <Route path={"/plans"} element={<OurPlans />} />
+          <Route path={"/residential"} element={<Residential />} />
+
         </Routes>
       </BrowserRouter>
     </>

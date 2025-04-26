@@ -289,63 +289,75 @@ const Home = () => {
           </div>
           {/* PROPERTY CARD SECTION  */}
           <div className="flex gap-7 w-[84%]">
-            <PropertiesCards
-              Img={PropertiesImage1}
-              Heading={"Seaside Serenity Villa"}
-              desc={
-                " A stunning 4-bedroom, 3-bathroom villa in a peaceful suburban neighborhood... Read More"
-              }
-              Status={"Active"}
-              Price={"550,000"}
-            ></PropertiesCards>
-            <PropertiesCards
-              Img={PropertiesImage2}
-              Heading={"Seaside Serenity Villa"}
-              desc={
-                " A stunning 4-bedroom, 3-bathroom villa in a peaceful suburban neighborhood... Read More"
-              }
-              Status={"Rental"}
-              Price={"550,000"}
-            ></PropertiesCards>
-            <PropertiesCards
-              Img={PropertiesImage3}
-              Heading={"Seaside Serenity Villa"}
-              desc={
-                " A stunning 4-bedroom, 3-bathroom villa in a peaceful suburban neighborhood... Read More"
-              }
-              Status={"Sold"}
-              Price={"550,000"}
-            ></PropertiesCards>
+            <div className="w-[33%]">
+              <PropertiesCards
+                Img={PropertiesImage1}
+                Heading={"Seaside Serenity Villa"}
+                desc={
+                  " A stunning 4-bedroom, 3-bathroom villa in a peaceful suburban neighborhood... Read More"
+                }
+                Status={"Active"}
+                Price={"550,000"}
+              ></PropertiesCards>
+            </div>
+            <div className="w-[33%]">
+              <PropertiesCards
+                Img={PropertiesImage2}
+                Heading={"Seaside Serenity Villa"}
+                desc={
+                  " A stunning 4-bedroom, 3-bathroom villa in a peaceful suburban neighborhood... Read More"
+                }
+                Status={"Rental"}
+                Price={"550,000"}
+              ></PropertiesCards>
+            </div>
+            <div className="w-[33%]">
+              <PropertiesCards
+                Img={PropertiesImage3}
+                Heading={"Seaside Serenity Villa"}
+                desc={
+                  " A stunning 4-bedroom, 3-bathroom villa in a peaceful suburban neighborhood... Read More"
+                }
+                Status={"Sold"}
+                Price={"550,000"}
+              ></PropertiesCards>
+            </div>
           </div>
           <div className="flex gap-7 w-[84%]">
-            <PropertiesCards
-              Img={PropertiesImage3}
-              Heading={"Seaside Serenity Villa"}
-              desc={
-                " A stunning 4-bedroom, 3-bathroom villa in a peaceful suburban neighborhood... Read More"
-              }
-              Status={"Sold"}
-              Price={"550,000"}
-            ></PropertiesCards>
-            <PropertiesCards
-              Img={PropertiesImage1}
-              Heading={"Seaside Serenity Villa"}
-              desc={
-                " A stunning 4-bedroom, 3-bathroom villa in a peaceful suburban neighborhood... Read More"
-              }
-              Status={"Active"}
-              Price={"550,000"}
-            ></PropertiesCards>
+            <div className="w-[33%]">
+              <PropertiesCards
+                Img={PropertiesImage3}
+                Heading={"Seaside Serenity Villa"}
+                desc={
+                  " A stunning 4-bedroom, 3-bathroom villa in a peaceful suburban neighborhood... Read More"
+                }
+                Status={"Sold"}
+                Price={"550,000"}
+              ></PropertiesCards>
+            </div>
+            <div className="w-[33%]">
+              <PropertiesCards
+                Img={PropertiesImage1}
+                Heading={"Seaside Serenity Villa"}
+                desc={
+                  " A stunning 4-bedroom, 3-bathroom villa in a peaceful suburban neighborhood... Read More"
+                }
+                Status={"Active"}
+                Price={"550,000"}
+              ></PropertiesCards>
+            </div>
 
-            <PropertiesCards
-              Img={PropertiesImage2}
-              Heading={"Seaside Serenity Villa"}
-              desc={
-                " A stunning 4-bedroom, 3-bathroom villa in a peaceful suburban neighborhood... Read More"
-              }
-              Status={"Rental"}
-              Price={"550,000"}
-            ></PropertiesCards>
+            <div className="w-[33%]">
+              <PropertiesCards
+                Img={PropertiesImage2}
+                Heading={"Seaside Serenity Villa"}
+                desc={
+                  " A stunning 4-bedroom, 3-bathroom villa in a peaceful suburban neighborhood... Read More"
+                }
+                Status={"Rental"}
+                Price={"550,000"}
+              ></PropertiesCards>
+            </div>
           </div>
         </section>
         {/* SECTION 2 END */}
@@ -498,12 +510,36 @@ const Home = () => {
           </div>
           {/* CARD SECTION  */}
           <div className="w-[84%] flex gap-10">
-            <InvestorCards InvesImage={Testimonials1} InvesUserName={'John Doe'} InvesDesc={"Real Estate Investor"}  ></InvestorCards> 
-            <InvestorCards InvesImage={Testimonials1} InvesUserName={'John Doe'} InvesDesc={"Real Estate Investor"}  ></InvestorCards> 
-            <InvestorCards InvesImage={Testimonials1} InvesUserName={'John Doe'} InvesDesc={"Real Estate Investor"}  ></InvestorCards> 
-            <InvestorCards InvesImage={Testimonials1} InvesUserName={'John Doe'} InvesDesc={"Real Estate Investor"}  ></InvestorCards> 
-            <InvestorCards InvesImage={Testimonials1} InvesUserName={'John Doe'} InvesDesc={"Real Estate Investor"}  ></InvestorCards> 
-            <InvestorCards InvesImage={Testimonials1} InvesUserName={'John Doe'} InvesDesc={"Real Estate Investor"}  ></InvestorCards> 
+            <InvestorCards
+              InvesImage={Testimonials1}
+              InvesUserName={"John Doe"}
+              InvesDesc={"Real Estate Investor"}
+            ></InvestorCards>
+            <InvestorCards
+              InvesImage={Testimonials1}
+              InvesUserName={"John Doe"}
+              InvesDesc={"Real Estate Investor"}
+            ></InvestorCards>
+            <InvestorCards
+              InvesImage={Testimonials1}
+              InvesUserName={"John Doe"}
+              InvesDesc={"Real Estate Investor"}
+            ></InvestorCards>
+            <InvestorCards
+              InvesImage={Testimonials1}
+              InvesUserName={"John Doe"}
+              InvesDesc={"Real Estate Investor"}
+            ></InvestorCards>
+            <InvestorCards
+              InvesImage={Testimonials1}
+              InvesUserName={"John Doe"}
+              InvesDesc={"Real Estate Investor"}
+            ></InvestorCards>
+            <InvestorCards
+              InvesImage={Testimonials1}
+              InvesUserName={"John Doe"}
+              InvesDesc={"Real Estate Investor"}
+            ></InvestorCards>
           </div>
         </section>
         {/* SECTION 6 END  */}

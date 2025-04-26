@@ -1,10 +1,14 @@
 import React from "react";
+import { Field, Label, Select, Switch, Textarea } from "@headlessui/react";
+// COMPONENTS
 import Navbar from "../../Components/Navbar/Navbar";
 import MiniFooter from "../../Components/Footer/MiniFooter";
 import Footer from "../../Components/Footer/Footer";
+// IMAGES
 import AddPropertyBanner from "../../assets/AddPropertyBanner.jpg";
-import { Field, Label, Select, Switch, Textarea } from "@headlessui/react";
-import ContactImage1_2 from "../../assets/ContactImage1.2.png"
+import ContactImage1_2 from "../../assets/ContactImage1.2.png";
+import ImagePlaceholder from "../../assets/ImagePlaceholder.png";
+import { ChevronDownIcon } from "@heroicons/react/20/solid";
 
 const AddProperty = () => {
   return (
@@ -75,7 +79,7 @@ const AddProperty = () => {
               />
             </div>
             <div className=" flex gap-14">
-              <div className="w-[50%]">
+              <div className="w-[50%] relative">
                 <label
                   for="text"
                   className="block mb-1 text-[15px] font-[700] text-[#222222]"
@@ -84,7 +88,7 @@ const AddProperty = () => {
                 </label>
                 <Select
                   className={
-                    "bg-[#F3EEFF] border-[#F3EEFF] text-[#868686] font-[600] font-Urbanist text-[14px] w-[100%] h-12 px-4 rounded-[6px] outline-none  "
+                    "bg-[#F3EEFF] border-[#F3EEFF] text-[#868686] font-[600] font-Urbanist text-[14px] w-[100%] h-12 px-4 rounded-[6px] outline-none appearance-none "
                   }
                   name="status"
                   aria-label="Project status"
@@ -120,8 +124,12 @@ const AddProperty = () => {
                     Canceled
                   </option>
                 </Select>
+                <ChevronDownIcon
+                  className="group pointer-events-none absolute top-10 right-2.5 size-5 fill-black/60"
+                  aria-hidden="true"
+                />
               </div>
-              <div className="w-[50%]">
+              <div className="w-[50%] relative">
                 <label
                   for="text"
                   className="block mb-1 text-[15px] font-[700] text-[#222222]"
@@ -130,7 +138,7 @@ const AddProperty = () => {
                 </label>
                 <Select
                   className={
-                    "bg-[#F3EEFF] border-[#F3EEFF] text-[#868686] font-[600] font-Urbanist text-[14px] w-[100%] h-12 px-4 rounded-[6px] outline-none  "
+                    "bg-[#F3EEFF] border-[#F3EEFF] text-[#868686] font-[600] font-Urbanist text-[14px] w-[100%] h-12 px-4 rounded-[6px] outline-none appearance-none "
                   }
                   name="status"
                   aria-label="Project status"
@@ -166,6 +174,10 @@ const AddProperty = () => {
                     Canceled
                   </option>
                 </Select>
+                <ChevronDownIcon
+                  className="group pointer-events-none absolute top-10 right-2.5 size-5 fill-black/60"
+                  aria-hidden="true"
+                />
               </div>
             </div>
             <div className=" flex gap-14">
@@ -183,7 +195,7 @@ const AddProperty = () => {
                   placeholder="Enter zip/postal code"
                 />
               </div>
-              <div className="w-[50%]">
+              <div className="w-[50%] relative">
                 <label
                   for="text"
                   className="block mb-1 text-[15px] font-[700] text-[#222222]"
@@ -192,7 +204,7 @@ const AddProperty = () => {
                 </label>
                 <Select
                   className={
-                    "bg-[#F3EEFF] border-[#F3EEFF] text-[#868686] font-[600] font-Urbanist text-[14px] w-[100%] h-12 px-4 rounded-[6px] outline-none  "
+                    "bg-[#F3EEFF] border-[#F3EEFF] text-[#868686] font-[600] font-Urbanist text-[14px] w-[100%] h-12 px-4 rounded-[6px] outline-none appearance-none "
                   }
                   name="status"
                   aria-label="Project status"
@@ -228,10 +240,14 @@ const AddProperty = () => {
                     Canceled
                   </option>
                 </Select>
+                <ChevronDownIcon
+                  className="group pointer-events-none absolute top-10 right-2.5 size-5 fill-black/60"
+                  aria-hidden="true"
+                />
               </div>
             </div>
             <div className=" flex gap-14">
-              <div className="w-[50%]">
+              <div className="w-[50%] relative">
                 <label
                   for="text"
                   className="block mb-1 text-[15px] font-[700] text-[#222222]"
@@ -240,7 +256,7 @@ const AddProperty = () => {
                 </label>
                 <Select
                   className={
-                    "bg-[#F3EEFF] border-[#F3EEFF] text-[#868686] font-[600] font-Urbanist text-[14px] w-[100%] h-12 px-4 rounded-[6px] outline-none  "
+                    "bg-[#F3EEFF] border-[#F3EEFF] text-[#868686] font-[600] font-Urbanist text-[14px] w-[100%] h-12 px-4 rounded-[6px] outline-none appearance-none "
                   }
                   name="status"
                   aria-label="Project status"
@@ -276,6 +292,10 @@ const AddProperty = () => {
                     Canceled
                   </option>
                 </Select>
+                <ChevronDownIcon
+                  className="group pointer-events-none absolute top-10 right-2.5 size-5 fill-black/60"
+                  aria-hidden="true"
+                />
               </div>
               <div className="w-[50%]">
                 <label
@@ -293,7 +313,7 @@ const AddProperty = () => {
               </div>
             </div>
             <div className=" flex gap-14">
-              <div className="w-[50%]">
+              <div className="w-[50%] relative">
                 <label
                   for="text"
                   className="block mb-1 text-[15px] font-[700] text-[#222222]"
@@ -302,7 +322,7 @@ const AddProperty = () => {
                 </label>
                 <Select
                   className={
-                    "bg-[#F3EEFF] border-[#F3EEFF] text-[#868686] font-[600] font-Urbanist text-[14px] w-[100%] h-12 px-4 rounded-[6px] outline-none  "
+                    "bg-[#F3EEFF] border-[#F3EEFF] text-[#868686] font-[600] font-Urbanist text-[14px] w-[100%] h-12 px-4 rounded-[6px] outline-none appearance-none "
                   }
                   name="status"
                   aria-label="Project status"
@@ -338,8 +358,12 @@ const AddProperty = () => {
                     Canceled
                   </option>
                 </Select>
+                <ChevronDownIcon
+                  className="group pointer-events-none absolute top-10 right-2.5 size-5 fill-black/60"
+                  aria-hidden="true"
+                />
               </div>
-              <div className="w-[50%]">
+              <div className="w-[50%] relative">
                 <label
                   for="text"
                   className="block mb-1 text-[15px] font-[700] text-[#222222]"
@@ -348,7 +372,7 @@ const AddProperty = () => {
                 </label>
                 <Select
                   className={
-                    "bg-[#F3EEFF] border-[#F3EEFF] text-[#868686] font-[600] font-Urbanist text-[14px] w-[100%] h-12 px-4 rounded-[6px] outline-none  "
+                    "bg-[#F3EEFF] border-[#F3EEFF] text-[#868686] font-[600] font-Urbanist text-[14px] w-[100%] h-12 px-4 rounded-[6px] outline-none appearance-none "
                   }
                   name="status"
                   aria-label="Project status"
@@ -384,6 +408,10 @@ const AddProperty = () => {
                     Canceled
                   </option>
                 </Select>
+                <ChevronDownIcon
+                  className="group pointer-events-none absolute top-10 right-2.5 size-5 fill-black/60"
+                  aria-hidden="true"
+                />
               </div>
             </div>
             <div className=" flex gap-14">
@@ -401,7 +429,7 @@ const AddProperty = () => {
                   placeholder="Enter zip/postal code"
                 />
               </div>
-              <div className="w-[50%]">
+              <div className="w-[50%] relative">
                 <label
                   for="text"
                   className="block mb-1 text-[15px] font-[700] text-[#222222]"
@@ -410,7 +438,7 @@ const AddProperty = () => {
                 </label>
                 <Select
                   className={
-                    "bg-[#F3EEFF] border-[#F3EEFF] text-[#868686] font-[600] font-Urbanist text-[14px] w-[100%] h-12 px-4 rounded-[6px] outline-none  "
+                    "bg-[#F3EEFF] border-[#F3EEFF] text-[#868686] font-[600] font-Urbanist text-[14px] w-[100%] h-12 px-4 rounded-[6px] outline-none appearance-none "
                   }
                   name="status"
                   aria-label="Project status"
@@ -446,6 +474,10 @@ const AddProperty = () => {
                     Canceled
                   </option>
                 </Select>
+                <ChevronDownIcon
+                  className="group pointer-events-none absolute top-10 right-2.5 size-5 fill-black/60"
+                  aria-hidden="true"
+                />
               </div>
             </div>
             <div className="flex gap-14">
@@ -478,7 +510,7 @@ const AddProperty = () => {
                 />
               </div>
             </div>
-            <div className="border-dashed pb-4 border-b-[1px] border-[#BBBBBB]">
+            <div className="border-dashed pb-4 border-b-[1px] border-[#BBBBBB] ">
               <label
                 for="text"
                 className="block mb-3 text-[15px] font-[700] text-[#222222]"
@@ -531,6 +563,26 @@ const AddProperty = () => {
                     NNN (Triple Net Lease)
                   </label>
                 </span>
+              </div>
+            </div>
+
+            <div className="border-[#BBBBBB] border-[1px] border-solid flex gap-3 px-5 py-7 w-[70%] items-center rounded-[5px]">
+              <div>
+                <img src={ImagePlaceholder} alt="" />
+              </div>
+              <div>
+                <label
+                  class="block mb-2 text-[16px] font-semibold text-gray-900 dark:text-white font-Urbanist italic"
+                  for="file_input"
+                >
+                  Upload at least one image to showcase your property.
+                </label>
+                <div className="bg-[#F8FCFF] py-2 px-3">
+                  <input
+                    className="text-PurpleColor  border-solid border-[1px] font-Inter font-semibold px-2 py-2.5 border-PurpleColor rounded-[7px]"
+                    type="file"
+                  />
+                </div>
               </div>
             </div>
 
