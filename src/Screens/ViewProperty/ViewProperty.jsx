@@ -234,6 +234,35 @@ const ViewProperty = () => {
               </Select>
             </div>
             <div className="px-8 py-1 border-r-[1px] border-solid border-Paracolor flex flex-col ">
+              <h1 className="text-[14px] font-Inter text-black font-[600]">
+                State
+              </h1>
+              <Select
+              disabled
+                name="status"
+                aria-label="Project status"
+                className={
+                  "overline-none text-[13px] font-Inter text-Paracolor font-[500] -mt-0.5 -ml-1"
+                }
+              >
+                <option className="overline-none font-Inter" value="active">
+                  Select Your State
+                </option>
+                <option className="" value="active">
+                  Active
+                </option>
+                <option className="" value="paused">
+                  Paused
+                </option>
+                <option className="" value="delayed">
+                  Delayed
+                </option>
+                <option className="" value="canceled">
+                  Canceled
+                </option>
+              </Select>
+            </div>
+            <div className="px-8 py-1 border-r-[1px] border-solid border-Paracolor flex flex-col ">
               <h1 className="text-[14px] font-semibold font-Inter text-black ">
                 Property Type
               </h1>
