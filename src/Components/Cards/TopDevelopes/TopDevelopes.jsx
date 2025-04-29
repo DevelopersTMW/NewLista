@@ -1,9 +1,7 @@
 import React from "react";
-import PropertyIcon from "../../../assets/PropertyIcon.png";
-import PropertyIcon2 from "../../../assets/PropertyIcon2.png";
 import { Link } from "react-router-dom";
 
-const TopDevelopes = ({ Img, MiniHeading, Heading, desc, Status, Price, Features }) => {
+const TopDevelopes = ({ Img, MiniHeading, Heading, desc, Price }) => {
   return (
     <>
       <div className="w-[33%] bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700 px-8 py-8">

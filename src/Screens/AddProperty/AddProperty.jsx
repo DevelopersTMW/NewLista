@@ -5,7 +5,7 @@ import Navbar from "../../Components/Navbar/Navbar";
 import MiniFooter from "../../Components/Footer/MiniFooter";
 import Footer from "../../Components/Footer/Footer";
 // IMAGES
-import AddPropertyBanner from "../../assets/AddPropertyBanner.jpg";
+import AddPropertyBanner from "../../assets/AddPropertyBanner1.1.jpg";
 import ContactImage1_2 from "../../assets/ContactImage1.2.png";
 import ImagePlaceholder from "../../assets/ImagePlaceholder.png";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";

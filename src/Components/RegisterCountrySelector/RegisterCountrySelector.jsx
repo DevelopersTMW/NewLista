@@ -8,10 +8,13 @@ const countries = [
 ];
 
 const CountrySelector = () => {
+
+  // STATES 
   const [countryCode, setCountryCode] = useState("+91");
   const [isOpen, setIsOpen] = useState(false);
   const [phone, setPhone] = useState("");
 
+  // FIND COUNTRY AND SHOW 
   const selectedCountry = countries.find((c) => c.code === countryCode);
   const dropdownRef = useRef(null);
 

@@ -6,7 +6,61 @@ import LeftSideArrow from "../../../assets/ListingLeftSideArrow.png";
 import SortIcon from "../../../assets/SortIcon1.1.png";
 import ResetImage from "../../../assets/ResetImage.png";
 import Testimonials1 from "../../../assets/Testimonials1.png";
+import ViewEye from "../../../assets/ViewEye.png";
 import InvestorCards from "../../../Components/Cards/InvestorCards/InvestorCards";
+
+
+const ListItem = [
+  {
+    name: "John Doe",
+    company: "ABC Capital",
+    location: "New York, NY",
+    invetmenttype: "Multifamily, Retail",
+    phonenum: "123-456-789",
+    date: "Jan 20, 2025",
+  },
+  {
+    name: "Jane Smith",
+    company: "Smith Realty",
+    location: "Miami, FL",
+    invetmenttype: "Office, Industrial",
+    phonenum: "123-456-789",
+    date: "Feb 2, 2025",
+  },
+  {
+    name: "Michael Lee",
+    company: "Skyline Properties",
+    location: "Los Angeles, CA",
+    invetmenttype: "Land, Mixed-Use",
+    phonenum: "123-456-789",
+    date: "Dec 15, 2024",
+  },
+  {
+    name: "Jane Smith",
+    company: "Smith Realty",
+    location: "Miami, FL",
+    invetmenttype: "Office, Industrial",
+    phonenum: "123-456-789",
+    date: "Feb 2, 2025",
+  },
+  {
+    name: "Michael Lee",
+    company: "Skyline Properties",
+    location: "Los Angeles, CA",
+    invetmenttype: "Land, Mixed-Use",
+    phonenum: "123-456-789",
+    date: "Dec 15, 2024",
+  },
+  {
+    name: "John Doe",
+    company: "ABC Capital",
+    location: "New York, NY",
+    invetmenttype: "Multifamily, Retail",
+    phonenum: "123-456-789",
+    date: "Jan 20, 2025",
+  },
+];
+
 
 const MyNetwork = () => {
   return (
@@ -141,42 +195,103 @@ const MyNetwork = () => {
             </div>
           </div>
         </div>
-        {/* CARDS  */}
-          {/* CONTENT SECTION  */}
-          
-          {/* CARD SECTION  */}
-          <div className="w-[84%] flex gap-4 pl-2 mt-14">
-            <InvestorCards 
-              InvesImage={Testimonials1}
-              InvesUserName={"John Doe"}
-              InvesDesc={"Real Estate Investor"}
-            ></InvestorCards>
-            <InvestorCards
-              InvesImage={Testimonials1}
-              InvesUserName={"John Doe"}
-              InvesDesc={"Real Estate Investor"}
-            ></InvestorCards>
-            <InvestorCards
-              InvesImage={Testimonials1}
-              InvesUserName={"John Doe"}
-              InvesDesc={"Real Estate Investor"}
-            ></InvestorCards>
-            <InvestorCards
-              InvesImage={Testimonials1}
-              InvesUserName={"John Doe"}
-              InvesDesc={"Real Estate Investor"}
-            ></InvestorCards>
-            <InvestorCards
-              InvesImage={Testimonials1}
-              InvesUserName={"John Doe"}
-              InvesDesc={"Real Estate Investor"}
-            ></InvestorCards>
-            <InvestorCards
-              InvesImage={Testimonials1}
-              InvesUserName={"John Doe"}
-              InvesDesc={"Real Estate Investor"}
-            ></InvestorCards>
-          </div>
+        {/* CARD SECTION  */}
+        <div className="w-[84%] flex gap-4 pl-2 mt-14">
+          <InvestorCards
+            InvesImage={Testimonials1}
+            InvesUserName={"John Doe"}
+            InvesDesc={"Real Estate Investor"}
+          ></InvestorCards>
+          <InvestorCards
+            InvesImage={Testimonials1}
+            InvesUserName={"John Doe"}
+            InvesDesc={"Real Estate Investor"}
+          ></InvestorCards>
+          <InvestorCards
+            InvesImage={Testimonials1}
+            InvesUserName={"John Doe"}
+            InvesDesc={"Real Estate Investor"}
+          ></InvestorCards>
+          <InvestorCards
+            InvesImage={Testimonials1}
+            InvesUserName={"John Doe"}
+            InvesDesc={"Real Estate Investor"}
+          ></InvestorCards>
+          <InvestorCards
+            InvesImage={Testimonials1}
+            InvesUserName={"John Doe"}
+            InvesDesc={"Real Estate Investor"}
+          ></InvestorCards>
+          <InvestorCards
+            InvesImage={Testimonials1}
+            InvesUserName={"John Doe"}
+            InvesDesc={"Real Estate Investor"}
+          ></InvestorCards>
+        </div>
+
+        {/* TABLE SECTION  */}
+        <div className="mt-10">
+          <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+            <thead className="text-[15px] text-[#fff] rounded-t-2xl font-Urbanist uppercase bg-[#1E1E1E] ">
+              <tr className="">
+                <th scope="col" className="px-6 py-4.5 rounded-tl-2xl">
+                NAME
+                </th>
+                <th scope="col" className="px-6 py-4.5">
+                Company
+                </th>
+                <th scope="col" className="px-6 py-4.5">
+                Location
+                </th>
+                <th scope="col" className="px-6 py-4.5">
+                Investment Type
+                </th>
+                <th scope="col" className="px-6 py-4.5">
+                Phone
+                </th>
+                <th scope="col" className="px-6 py-4.5 ">
+                Date Joined
+                </th>
+                <th scope="col" className="px-6 py-4.5 rounded-tr-3xl ">
+                  Actions
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {ListItem.map((items, index) => (
+                <>
+                  <tr className="bg-white border-b dark:bg-gray-800  dark:border-gray-700 border-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600 font-Urbanist"></tr>
+                  <th
+                    scope="row"
+                    className="px-3 py-6 font-medium text-gray-900 whitespace-nowrap  text-[16px]"
+                  >
+                    {items.name}
+                  </th>
+                  <td className="px-3.5 py-6 text-[#222222] font-[550] text-[16px]">
+                    {items.company}
+                  </td>
+                  <td className="px-3.5 py-6 text-[#222222] font-[550] text-[16px]">
+                    {items.location}
+                  </td>
+                  <td className="px-3.5 py-6 text-[#222222] font-[550] text-[16px]">
+                    {items.invetmenttype}
+                  </td>
+                  <td className="px-3.5 py-6 text-[#222222] font-[550] text-[16px]">
+                    {items.phonenum}
+                  </td>
+                  <td className="px-3.5 py-6 text-[#222222] font-[550] text-[16px]">
+                    {items.date}
+                  </td>
+                  <td className="px-4 py-6 text-[#222222] font-[550] text-[16px] flex gap-1 justify-center">
+                    <img className="w-5.5 h-5.5" src={ViewEye} alt="" />
+                    View
+                  </td>
+                  <tr />
+                </>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </section>
 
       {/* ARROW SECTION  */}

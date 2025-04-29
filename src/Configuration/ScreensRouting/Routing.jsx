@@ -11,7 +11,10 @@ import AddProperty from "../../Screens/AddProperty/AddProperty";
 import ViewProperty from "../../Screens/ViewProperty/ViewProperty";
 import PropertyDetails from "../../Screens/ViewProperty/PropertyDetails";
 import Residential from "../../Screens/Residential/Residential";
+import Commercial from "../../Screens/Commercial/Commercial";
 import Admin from "../../Screens/Admin/Admin";
+import Industrial from "../../Screens/Industrial/Industrial";
+import LeaseForm from "../../Screens/LeaseForm/LeaseForm";
 
 const Routing = () => {
   return (
@@ -29,6 +32,9 @@ const Routing = () => {
           <Route path={"/register"} element={<Register />} />
           <Route path={"/plans"} element={<OurPlans />} />
           <Route path={"/residential"} element={<Residential />} />
+          <Route path={"/commercial"} element={<Commercial />} />
+          <Route path={"/industrial"} element={<Industrial />} />
+          <Route path={"/lease"} element={<LeaseForm />} />
           <Route path={"/admin/*"} element={<Admin />} />
         </Routes>
       </BrowserRouter>

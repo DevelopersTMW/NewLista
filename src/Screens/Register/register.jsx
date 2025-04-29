@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import Image from "../../assets/LoginPage.gif";
+import Image from "../../assets/LoginPage.jpg";
 import Google from "../../assets/google.png";
 import Facebook from "../../assets/facebook.png";
 import Linkedin from "../../assets/linkedin.png";
@@ -24,11 +24,11 @@ const register = () => {
         {/* IMAGE SECTION  */}
         <div className="w-[43%]">
 
-          <img className="w-[100%]" src={Image} alt="" />
+          <img className="w-[100%] object-cover h-full" src={Image} alt="" />
         </div>
 
         {/* LOGIN FOR SECTION  */}
-        <div className="w-[55%] px-28  flex flex-col justify-center gap-7 ">
+        <div className="w-[55%] px-28 py-24 flex flex-col justify-center gap-7 ">
 
           {/* Heading Info  */}
           <div>

@@ -8,19 +8,11 @@ import {
   MenuItems,
 } from "@headlessui/react";
 import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
-
-const navigation = [
-  { name: "Dashboard", href: "#", current: true },
-  { name: "Team", href: "#", current: false },
-  { name: "Projects", href: "#", current: false },
-  { name: "Calendar", href: "#", current: false },
-];
-
+// IMAGES
 import HomeIcon from "../../assets/HomeIcon.png";
+import { Link } from "react-router-dom";
 
-function classNames(...classes) {
-  return classes.filter(Boolean).join(" ");
-}
+
 
 function AdminNavbar() {
   return (
@@ -49,10 +41,10 @@ function AdminNavbar() {
               </h1>
             </div>
             <div className="hidden  sm:ml-6 sm:block w-[70%]">
-              <div class="relative  w-[100%]">
-                <div class="absolute inset-y-0 start-0 flex items-center ps-4 pointer-events-none">
+              <div className="relative  w-[100%]">
+                <div className="absolute inset-y-0 start-0 flex items-center ps-4 pointer-events-none">
                   <svg
-                    class="w-4 h-4 text-[#444444] dark:text-gray-400"
+                    className="w-4 h-4 text-[#444444] dark:text-gray-400"
                     aria-hidden="true"
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
@@ -70,7 +62,7 @@ function AdminNavbar() {
                 <input
                   type="search"
                   id="default-search"
-                  class=" w-[100%] text-[#444444] placeholder:text-[#444444] font-Urbanist font-semibold py-3 pl-11 rounded-[10px] text-[15px] bg-[#F3EEFF] outline-none"
+                  className=" w-[100%] text-[#444444] placeholder:text-[#444444] font-Urbanist font-semibold py-3 pl-11 rounded-[10px] text-[15px] bg-[#F3EEFF] outline-none"
                   placeholder="Search "
                   required
                 />
@@ -78,15 +70,17 @@ function AdminNavbar() {
             </div>
           </div>
           <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0 w-[50%] gap-10 justify-end">
-          <button
+            <button
               type="button"
               className="relative rounded-full flex  justify-center items-center gap-2 px-4 py-2 text-[#666666]  bg-[#EBEBEB] focus:outline-hidden"
             >
               <img className="h-3.5 w-3.5" src={HomeIcon} alt="" />
 
-              <span className="font-Urbanist font-[550] text-[#222222] text-[14px]">Go Home</span>
+              <span className="font-Urbanist font-[550] text-[#222222] text-[14px]">
+                Go Home
+              </span>
             </button>
-          <button
+            <button
               type="button"
               className="relative rounded-full  p-1 text-[#666666]  focus:outline-hidden"
             >
@@ -112,54 +106,31 @@ function AdminNavbar() {
                 className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black/5 transition focus:outline-hidden data-closed:scale-95 data-closed:transform data-closed:opacity-0 data-enter:duration-100 data-enter:ease-out data-leave:duration-75 data-leave:ease-in"
               >
                 <MenuItem>
-                  <a
-                    href="#"
+                  <Link
                     className="block px-4 py-2 text-sm text-gray-700 data-focus:bg-gray-100 data-focus:outline-hidden"
                   >
                     Your Profile
-                  </a>
+                  </Link>
                 </MenuItem>
                 <MenuItem>
-                  <a
-                    href="#"
+                  <Link
                     className="block px-4 py-2 text-sm text-gray-700 data-focus:bg-gray-100 data-focus:outline-hidden"
                   >
                     Settings
-                  </a>
+                  </Link>
                 </MenuItem>
                 <MenuItem>
-                  <a
-                    href="#"
+                  <Link
                     className="block px-4 py-2 text-sm text-gray-700 data-focus:bg-gray-100 data-focus:outline-hidden"
                   >
                     Sign out
-                  </a>
+                  </Link>
                 </MenuItem>
               </MenuItems>
             </Menu>
           </div>
         </div>
       </div>
-      <DisclosurePanel className="sm:hidden">
-        <div className="space-y-1 px-2 pt-2 pb-3">
-          {navigation.map((item) => (
-            <DisclosureButton
-              key={item.name}
-              as="a"
-              href={item.href}
-              aria-current={item.current ? "page" : undefined}
-              className={classNames(
-                item.current
-                  ? "bg-gray-900 text-white"
-                  : "text-gray-300 hover:bg-gray-700 hover:text-white",
-                "block rounded-md px-3 py-2 text-base font-medium"
-              )}
-            >
-              {item.name}
-            </DisclosureButton>
-          ))}
-        </div>
-      </DisclosurePanel>
     </Disclosure>
   );
 }

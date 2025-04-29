@@ -1,119 +1,122 @@
 import React from "react";
 import { Link } from "react-router-dom";
+// IMAGES 
 import WhiteLogo from "../../assets/WhiteLogo.png";
-import FooterIcon from '../../assets/FooterIcon.png'
-import FooterIcon2 from '../../assets/FooterIcon2.png'
-
-
-
-
+import FooterIcon from "../../assets/FooterIcon.png";
+import FooterIcon2 from "../../assets/FooterIcon2.png";
 
 const Footer = () => {
   return (
     <footer>
       {/* Footer Section START  */}
-
-      <div class="  ">
-        <div class="md:flex md:justify-between bg-[#0F0F0F] px-20 lg:py-20 gap-10 w-full  ">
-          <div class="mb-6 md:mb-0 flex flex-col gap-10 w-[35%]">
+      <div className="">
+        <div className="md:flex md:justify-between bg-[#0F0F0F] px-20 lg:py-20 gap-10 w-full  ">
+          {/* SECTION 1  */}
+          <div className="mb-6 md:mb-0 flex flex-col gap-10 w-[35%]">
             <div>
-              <Link href="https://flowbite.com/" class="flex items-center">
+              <Link to={"/"} className="flex items-center">
                 <img
                   src={WhiteLogo}
-                  class="h-[80px] me-3"
+                  className="h-[80px] me-3"
                   alt="FlowBite Logo"
                 />
               </Link>
             </div>
 
-            <form class="w-[80%] bg-[#262626] rounded-lg py-0.5 border-[1px] border-solid border-[#5f5f5f]">
-              
-              <div class="relative flex justify-center items-center">
-                <div class=" inset-y-0  start-0 flex items-center pl-4 pointer-events-none">
-                 <img src={FooterIcon} alt="" />
+            <form className="w-[80%] bg-[#262626] rounded-lg py-0.5 border-[1px] border-solid border-[#5f5f5f]">
+              <div className="relative flex justify-center items-center">
+                <div className=" inset-y-0  start-0 flex items-center pl-4 pointer-events-none">
+                  <img src={FooterIcon} alt="" />
                 </div>
                 <input
                   type="search"
                   id="default-search"
-                  class="block w-full p-3.5  ps-4 text-sm font-Urbanist font-semibold placeholder:text-[#999999]  text-[#ffffff] outline-none rounded-lg"
+                  className="block w-full p-3.5  ps-4 text-sm font-Urbanist font-semibold placeholder:text-[#999999]  text-[#ffffff] outline-none rounded-lg"
                   placeholder="Enter Your Email "
                   required
                 />
                 <button
                   type="submit"
-                  class="text-white absolute end-4 bottom-3 "
+                  className="text-white absolute end-4 bottom-3 "
                 >
                   <img className="w-6 h-6" src={FooterIcon2} alt="" />
                 </button>
               </div>
             </form>
           </div>
-          <div class="flex grid-cols-2 gap-10 sm:gap-12 sm:grid-cols-5 w-[65%]">
+          {/* SECTION 2  */}
+          <div className="flex grid-cols-2 gap-10 sm:gap-12 sm:grid-cols-5 w-[65%]">
+            {/* TAB 1  */}
             <div>
-              <h2 class="mb-4 text-[15px] font-semibold font-Urbanist text-[#999999] uppercase dark:text-white">
+              <h2 className="mb-4 text-[15px] font-semibold font-Urbanist text-[#999999] uppercase dark:text-white">
                 Resources
               </h2>
-              <ul class="text-white dark:text-gray-400 text-[15px] font-[500] font-Urbanist">
-                <li class="mb-4">Hero Section</li>
-                <li class="mb-4">Features</li>
-                <li class="mb-4">Properties</li>
-                <li class="mb-4">Testimonials</li>
-                <li class="mb-4">FAQ’s</li>
+              <ul className="text-white dark:text-gray-400 text-[15px] font-[500] font-Urbanist">
+                <li className="mb-4">Hero Section</li>
+                <li className="mb-4">Features</li>
+                <li className="mb-4">Properties</li>
+                <li className="mb-4">Testimonials</li>
+                <li className="mb-4">FAQ’s</li>
               </ul>
             </div>
+            {/* TAB 2  */}
             <div>
-              <h2 class="mb-4 text-[15px] font-semibold font-Urbanist text-[#999999] uppercase dark:text-white">
+              <h2 className="mb-4 text-[15px] font-semibold font-Urbanist text-[#999999] uppercase dark:text-white">
                 About Us
               </h2>
-              <ul class="text-white dark:text-gray-400 font-[500] text-[15px] font-Urbanist">
-                <li class="mb-4">Our Story</li>
-                <li class="mb-4">Our Works</li>
-                <li class="mb-4">How It Works</li>
-                <li class="mb-4">Our Team</li>
-                <li class="mb-4">Our Clients</li>
+              <ul className="text-white dark:text-gray-400 font-[500] text-[15px] font-Urbanist">
+                <li className="mb-4">Our Story</li>
+                <li className="mb-4">Our Works</li>
+                <li className="mb-4">How It Works</li>
+                <li className="mb-4">Our Team</li>
+                <li className="mb-4">Our Clients</li>
               </ul>
             </div>
+            {/* TAB 3 */}
             <div>
-              <h2 class="mb-4 text-[15px] font-semibold font-Urbanist text-[#999999] uppercase dark:text-white">
+              <h2 className="mb-4 text-[15px] font-semibold font-Urbanist text-[#999999] uppercase dark:text-white">
                 Properties
               </h2>
-              <ul class="text-white text-[15px] dark:text-gray-400 font-[500] font-Urbanist">
-                <li class="mb-4">Portfolio</li>
-                <li class="mb-4">Categories</li>
+              <ul className="text-white text-[15px] dark:text-gray-400 font-[500] font-Urbanist">
+                <li className="mb-4">Portfolio</li>
+                <li className="mb-4">Categories</li>
               </ul>
             </div>
+            {/* TAb 4 */}
             <div>
-              <h2 class="mb-4 text-[15px] font-semibold font-Urbanist text-[#999999] uppercase dark:text-white">
+              <h2 className="mb-4 text-[15px] font-semibold font-Urbanist text-[#999999] uppercase dark:text-white">
                 Services
               </h2>
-              <ul class="text-white dark:text-gray-400 text-[15px] font-[500] font-Urbanist">
-                <li class="mb-4">Valuation Mastery</li>
-                <li class="mb-4">Strategic Marketing</li>
-                <li class="mb-4">Negotiation Wizardry</li>
-                <li class="mb-4">Closing Success</li>
-                <li class="mb-4">Property Management</li>
+              <ul className="text-white dark:text-gray-400 text-[15px] font-[500] font-Urbanist">
+                <li className="mb-4">Valuation Mastery</li>
+                <li className="mb-4">Strategic Marketing</li>
+                <li className="mb-4">Negotiation Wizardry</li>
+                <li className="mb-4">Closing Success</li>
+                <li className="mb-4">Property Management</li>
               </ul>
             </div>
+            {/* TAB 5 */}
             <div>
-              <h2 class="mb-4 text-[15px] font-semibold font-Urbanist text-[#999999] uppercase dark:text-white">
+              <h2 className="mb-4 text-[15px] font-semibold font-Urbanist text-[#999999] uppercase dark:text-white">
                 Contact Us
               </h2>
-              <ul class="text-white dark:text-gray-400 text-[15px] font-[500] font-Urbanist">
-                <li class="mb-4">Contact Form</li>
-                <li class="mb-4">Our Offices</li>
+              <ul className="text-white dark:text-gray-400 text-[15px] font-[500] font-Urbanist">
+                <li className="mb-4">Contact Form</li>
+                <li className="mb-4">Our Offices</li>
               </ul>
             </div>
           </div>
         </div>
-        <div class="sm:flex sm:items-center sm:justify-between bg-[#1A1A1A] py-6 p-4 lg:py-8 mx-auto w-full px-20 ">
-          <span class="text-sm text-white font-Urbanist sm:text-center dark:text-gray-400">
-            © 2023 <Link class="hover:underline">NewLista</Link>. All Rights
+        {/* COPYRIGHT AND SOCIAL MEDIA  */}
+        <div className="sm:flex sm:items-center sm:justify-between bg-[#1A1A1A] py-6 p-4 lg:py-8 mx-auto w-full px-20 ">
+          <span className="text-sm text-white font-Urbanist sm:text-center dark:text-gray-400">
+            © 2023 <Link to={"/"} className="hover:underline">NewLista</Link>. All Rights
             Reserved. <span className="ml-10">Terms & Conditions</span>
           </span>
-          <div class="flex  mt-4 sm:justify-center sm:mt-0">
-            <Link class="text-white hover:text-gray-900 bg-[#141414] px-2 py-2 rounded-full dark:hover:text-white">
+          <div className="flex  mt-4 sm:justify-center sm:mt-0">
+            <Link className="text-white hover:text-gray-900 bg-[#141414] px-2 py-2 rounded-full dark:hover:text-white">
               <svg
-                class="w-4 h-4"
+                className="w-4 h-4"
                 aria-hidden="true"
                 xmlns="http://www.w3.org/2000/svg"
                 fill="currentColor"
@@ -125,14 +128,13 @@ const Footer = () => {
                   clip-rule="evenodd"
                 />
               </svg>
-              <span class="sr-only">Facebook page</span>
+              <span className="sr-only">Facebook page</span>
             </Link>
             <Link
-              href="#"
-              class="text-white hover:text-gray-900 bg-[#141414] px-2 py-2 rounded-full dark:hover:text-white ms-5"
+              className="text-white hover:text-gray-900 bg-[#141414] px-2 py-2 rounded-full dark:hover:text-white ms-5"
             >
               <svg
-                class="w-4 h-4"
+                className="w-4 h-4"
                 aria-hidden="true"
                 xmlns="http://www.w3.org/2000/svg"
                 fill="currentColor"
@@ -140,14 +142,13 @@ const Footer = () => {
               >
                 <path d="M16.942 1.556a16.3 16.3 0 0 0-4.126-1.3 12.04 12.04 0 0 0-.529 1.1 15.175 15.175 0 0 0-4.573 0 11.585 11.585 0 0 0-.535-1.1 16.274 16.274 0 0 0-4.129 1.3A17.392 17.392 0 0 0 .182 13.218a15.785 15.785 0 0 0 4.963 2.521c.41-.564.773-1.16 1.084-1.785a10.63 10.63 0 0 1-1.706-.83c.143-.106.283-.217.418-.33a11.664 11.664 0 0 0 10.118 0c.137.113.277.224.418.33-.544.328-1.116.606-1.71.832a12.52 12.52 0 0 0 1.084 1.785 16.46 16.46 0 0 0 5.064-2.595 17.286 17.286 0 0 0-2.973-11.59ZM6.678 10.813a1.941 1.941 0 0 1-1.8-2.045 1.93 1.93 0 0 1 1.8-2.047 1.919 1.919 0 0 1 1.8 2.047 1.93 1.93 0 0 1-1.8 2.045Zm6.644 0a1.94 1.94 0 0 1-1.8-2.045 1.93 1.93 0 0 1 1.8-2.047 1.918 1.918 0 0 1 1.8 2.047 1.93 1.93 0 0 1-1.8 2.045Z" />
               </svg>
-              <span class="sr-only">Discord community</span>
+              <span className="sr-only">Discord community</span>
             </Link>
             <Link
-              href="#"
-              class="text-white hover:text-gray-900 bg-[#141414] px-2 py-2 rounded-full dark:hover:text-white ms-5"
+              className="text-white hover:text-gray-900 bg-[#141414] px-2 py-2 rounded-full dark:hover:text-white ms-5"
             >
               <svg
-                class="w-4 h-4"
+                className="w-4 h-4"
                 aria-hidden="true"
                 xmlns="http://www.w3.org/2000/svg"
                 fill="currentColor"
@@ -159,14 +160,13 @@ const Footer = () => {
                   clip-rule="evenodd"
                 />
               </svg>
-              <span class="sr-only">Twitter page</span>
+              <span className="sr-only">Twitter page</span>
             </Link>
             <Link
-              href="#"
-              class="text-white hover:text-gray-900 bg-[#141414] px-2 py-2 rounded-full dark:hover:text-white ms-5"
+              className="text-white hover:text-gray-900 bg-[#141414] px-2 py-2 rounded-full dark:hover:text-white ms-5"
             >
               <svg
-                class="w-4 h-4"
+                className="w-4 h-4"
                 aria-hidden="true"
                 xmlns="http://www.w3.org/2000/svg"
                 fill="currentColor"
@@ -178,14 +178,13 @@ const Footer = () => {
                   clip-rule="evenodd"
                 />
               </svg>
-              <span class="sr-only">GitHub account</span>
+              <span className="sr-only">GitHub account</span>
             </Link>
             <Link
-              href="#"
-              class="text-white hover:text-gray-900 bg-[#141414] px-2 py-2 rounded-full dark:hover:text-white ms-5"
+              className="text-white hover:text-gray-900 bg-[#141414] px-2 py-2 rounded-full dark:hover:text-white ms-5"
             >
               <svg
-                class="w-4 h-4"
+                className="w-4 h-4"
                 aria-hidden="true"
                 xmlns="http://www.w3.org/2000/svg"
                 fill="currentColor"
@@ -197,7 +196,7 @@ const Footer = () => {
                   clip-rule="evenodd"
                 />
               </svg>
-              <span class="sr-only">Dribbble account</span>
+              <span className="sr-only">Dribbble account</span>
             </Link>
           </div>
         </div>

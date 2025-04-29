@@ -1,16 +1,17 @@
 import React from 'react'
+// IMAGES 
 import BgImage from '../../assets/JourneySecImage.jpg'
 
-
-// BACKGORUND
+// CSS 
 const JourneyBgImage = {
     backgroundImage: `url(${BgImage})`,
     backgroundSize: "cover",
     backgroundRepeat: "no-repeat",
-    // backgroundBlendMode: "black",
     backgroundColor: "#0009",
     backgroundBlendMode: "color",
   };
+
+
 const MiniFooter = () => {
   return (
    <>

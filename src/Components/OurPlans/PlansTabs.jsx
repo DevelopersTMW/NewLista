@@ -1,7 +1,10 @@
 import React from "react";
-import CheckIcon from "../../assets/Icon.png";
-import "../../index.css";
 import { Link } from "react-router-dom";
+// ADDITIONAL CSS 
+import "../../index.css";
+// IMAGES 
+import CheckIcon from "../../assets/Icon.png";
+
 
 const PlansTabs = ({ PlanNum, PlanCard, Name, Desc, ButtonText }) => {
   return (

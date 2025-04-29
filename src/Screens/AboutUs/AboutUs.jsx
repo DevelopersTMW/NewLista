@@ -1,24 +1,26 @@
 import React from "react";
+// COMPONENTS 
 import Navbar from "../../Components/Navbar/Navbar";
 import Footer from "../../Components/Footer/Footer";
 import MiniFooter from "../../Components/Footer/MiniFooter";
+import Testimonials from "../../Components/Testimonials/Testimonials";
+
+// IMAGES 
 import BgImage from "../../assets/AboutUs1.1.jpg";
 import AboutUs1_2 from "../../assets/AboutUs1.2.jpg";
 import AboutUs1_3 from "../../assets/AboutUs1.3.jpg";
-import Testimonials from "../../Components/Testimonials/Testimonials";
 import Testimonials1 from "../../assets/Testimonials1.png";
 import AboutIcon1_1 from "../../assets/AboutIcon1.1.png";
 import AboutIcon1_2 from "../../assets/AboutIcon1.2.png";
 import AboutIcon1_3 from "../../assets/AboutIcon1.3.png";
+
+
 // BACKGORUND
 const AboutBgImage = {
   backgroundImage: `url(${BgImage})`,
   backgroundSize: "cover",
   backgroundRepeat: "no-repeat",
   backgroundPosition: "bottom",
-  // backgroundBlendMode: "black",
-  // backgroundColor: "#0009",
-  // backgroundBlendMode: "color",
 };
 
 const AboutUs = () => {
@@ -29,7 +31,7 @@ const AboutUs = () => {
       <section style={AboutBgImage}>
         <div className="flex gap-10 px-20 py-28 ">
           <div className="flex w-[50%] justify-center">
-            <img className="w-[400px] h-[440px] " src={AboutUs1_2} alt="" />
+            <img className="w-[400px] h-[440px] object-cover " src={AboutUs1_2} alt="" />
             <img
               className="w-[280px] h-[280px] border-solid border-white border-[5px] mt-64 -ml-48"
               src={AboutUs1_3}

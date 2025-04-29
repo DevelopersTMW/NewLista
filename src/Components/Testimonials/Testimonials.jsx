@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 
 const Testimonials = ({
   RevTitle,
@@ -8,9 +8,6 @@ const Testimonials = ({
   Desination,
   Stars,
 }) => {
-  const [Starss, setStarss] = useState("2");
-  console.log(Stars);
-
   return (
     <>
       <div className="border-[1px] border-solid border-[#BBBBBB] px-8 py-8 flex flex-col justify-start items-start gap-4 rounded-[7px] w-[33%]">
@@ -56,16 +53,26 @@ const Testimonials = ({
               ))}
         </span>
         <span>
-          <h1 className="font-Inter font-bold text-[22px] leading-[25px]">{RevTitle}</h1>
-          <p className="text-md font-Inter font-medium text-pretty text-Paracolor mt-2 sm:text-[15px]/5.5  ">{RevParagraph}</p>
+          <h1 className="font-Inter font-bold text-[22px] leading-[25px]">
+            {RevTitle}
+          </h1>
+          <p className="text-md font-Inter font-medium text-pretty text-Paracolor mt-2 sm:text-[15px]/5.5  ">
+            {RevParagraph}
+          </p>
         </span>
         <div className="flex justify-center gap-3">
           <span>
-            <img className="w-12 h-12 object-cover rounded-full" src={RevImage} alt="" />
+            <img
+              className="w-12 h-12 object-cover rounded-full"
+              src={RevImage}
+              alt=""
+            />
           </span>
           <span>
             <h4 className="font-Inter font-semibold text-[16px]">{UserName}</h4>
-            <h6 className="font-Inter text-[13.5px] font-[500]">{Desination}</h6>
+            <h6 className="font-Inter text-[13.5px] font-[500]">
+              {Desination}
+            </h6>
           </span>
         </div>
       </div>

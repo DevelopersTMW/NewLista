@@ -8,6 +8,7 @@ import MyNetwork from "./MyNetwork/MyNetwork";
 import MyOffers from "./MyOffer/MyOffer";
 import Analytics from "./Analytics/Analytics";
 import AccountSetting from "./AccountSetting/AccountSetting";
+import Inbox from "./Inbox/Inbox";
 
 const Admin = () => {
   return (
@@ -20,6 +21,7 @@ const Admin = () => {
             <Route path="/myoffers" element={<MyOffers />} />
             <Route path="/analytics" element={<Analytics />} />
             <Route path="/account-setting" element={<AccountSetting />} />
+            <Route path="/inbox" element={<Inbox />} />
           </Routes>
     }>
     </AdminSidebar>

@@ -4,7 +4,7 @@ import MiniFooter from "../../Components/Footer/MiniFooter";
 import Footer from "../../Components/Footer/Footer";
 // IMAGES
 import ImagePlaceholder from "../../assets/ImagePlaceholder.png";
-import AddPropertyBanner from "../../assets/AddPropertyBanner.jpg";
+import ResidentialBanner from "../../assets/ResidentialBanner.jpg";
 import Inputs from "../../Components/InputFields/Inputs";
 import Selection from "../../Components/InputFields/Selection";
 import Radio from "../../Components/InputFields/Radio";
@@ -21,7 +21,7 @@ const Residential = () => {
         <div>
           <img
             className="h-[40vh] object-cover w-[100%]"
-            src={AddPropertyBanner}
+            src={ResidentialBanner}
             alt=""
           />
         </div>

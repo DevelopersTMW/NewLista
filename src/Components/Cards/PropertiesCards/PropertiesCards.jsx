@@ -1,9 +1,10 @@
 import React from "react";
+import { Link } from "react-router-dom";
+// IMAGES 
 import PropertyIcon from "../../../assets/PropertyIcon.png";
 import PropertyIcon2 from "../../../assets/PropertyIcon2.png";
-import { Link } from "react-router-dom";
 
-const PropertiesCards = ({ Img, Heading, desc, Status, Price, Features }) => {
+const PropertiesCards = ({ Img, Heading, desc, Status, Price}) => {
   return (
     <>
       <div className="w-[100%] bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
