@@ -32,6 +32,35 @@ const HeroBackground = {
   backgroundColor: "#0009",
 };
 
+const propertyType = [
+  { name: "Select Your Property" },
+  { name: "Car Wash" },
+  { name: "Church" },
+  { name: "Condominium" },
+  { name: "Gas Station" },
+  { name: "Hotel" },
+  { name: "Industrial Park" },
+  { name: "Investment Home" },
+  { name: "Medical Building" },
+  { name: "Mixed Use" },
+  { name: "Mobile Home Park" },
+  { name: "Motel" },
+  { name: "Multifamily" },
+  { name: "Office Building" },
+  { name: "Recreation Center" },
+  { name: "Retail Center" },
+  { name: "Self-Storage Facility" },
+  { name: "School Building" },
+  { name: "Senior Living Facility" },
+  { name: "Shopping Center" },
+  { name: "Single Tenant Retail Building" },
+  { name: "Storage Facility" },
+  { name: "Townhomes" },
+  { name: "Vacant Land" },
+  { name: "Warehouse" },
+  { name: "Other" },
+];
+
 const Home = () => {
   useEffect(() => {
     document.documentElement.classList.add("dark");
@@ -67,24 +96,18 @@ const Home = () => {
                       "overline-none text-[16px] font-Inter text-black font-[500]"
                     }
                   >
-                    <option className="" value="active">
+                    <option className="overline-none font-Inter" value="active">
                       Buy
                     </option>
-                    <option className="" value="active">
-                      Active
+                    <option className="overline-none font-Inter" value="active">
+                      Sale
                     </option>
-                    <option className="" value="paused">
-                      Paused
-                    </option>
-                    <option className="" value="delayed">
-                      Delayed
-                    </option>
-                    <option className="" value="canceled">
-                      Canceled
+                    <option className="overline-none font-Inter" value="paused">
+                      Rent
                     </option>
                   </Select>
                 </div>
-                
+
                 <div className="px-8 py-1 border-r-[1px] border-solid border-Paracolor flex flex-col ">
                   <h1 className="text-[14px] font-Inter text-black font-[600]">
                     Location
@@ -100,16 +123,22 @@ const Home = () => {
                       Select Your City
                     </option>
                     <option className="" value="active">
-                      Active
+                      New York
                     </option>
                     <option className="" value="paused">
-                      Paused
+                      Austin
                     </option>
                     <option className="" value="delayed">
-                      Delayed
+                      Phoenix
                     </option>
                     <option className="" value="canceled">
-                      Canceled
+                      Chicago
+                    </option>
+                    <option className="" value="canceled">
+                      Houston
+                    </option>
+                    <option className="" value="canceled">
+                      Los Angeles
                     </option>
                   </Select>
                 </div>
@@ -118,7 +147,7 @@ const Home = () => {
                     State
                   </h1>
                   <Select
-                  disabled
+                    disabled
                     name="status"
                     aria-label="Project status"
                     className={
@@ -153,21 +182,15 @@ const Home = () => {
                       "overline-none text-[13px] font-Inter text-Paracolor font-[500] -mt-0.5 -ml-1"
                     }
                   >
-                    <option className="overline-none font-Inter" value="active">
-                      Choose Property Type
-                    </option>
-                    <option className="" value="active">
-                      Active
-                    </option>
-                    <option className="" value="paused">
-                      Paused
-                    </option>
-                    <option className="" value="delayed">
-                      Delayed
-                    </option>
-                    <option className="" value="canceled">
-                      Canceled
-                    </option>
+                    {propertyType.map((item, index) => (
+                      <option
+                        key={index}
+                        className="outline-none font-Inter"
+                        value={item.name}
+                      >
+                        {item.name}
+                      </option>
+                    ))}
                   </Select>
                 </div>
                 <div className="px-8 py-1  flex flex-col ">

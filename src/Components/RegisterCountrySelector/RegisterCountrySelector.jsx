@@ -7,12 +7,12 @@ const countries = [
   { code: "+61", label: "Australia", flag: "https://flagcdn.com/w40/au.png" },
 ];
 
-const CountrySelector = () => {
+const CountrySelector = ({ phone, setPhone, countryCode, setCountryCode }) => {
 
   // STATES 
-  const [countryCode, setCountryCode] = useState("+91");
+  // const [countryCode, setCountryCode] = useS/tate("+91");
   const [isOpen, setIsOpen] = useState(false);
-  const [phone, setPhone] = useState("");
+  // const [phone, setPhone] = useState("");
 
   // FIND COUNTRY AND SHOW 
   const selectedCountry = countries.find((c) => c.code === countryCode);
@@ -90,12 +90,14 @@ const CountrySelector = () => {
         {/* Phone Input */}
         <div className="w-[100%]">
           <input
-            type="tel"
-            id="phone"
+             type="tel"
+             inputMode="numeric"
+             pattern="[0-9]*"
+             maxLength={10}
             className="bg-[#F3EEFF] text-[#1d1d1d] font-[600] font-Urbanist text-[14px] w-[100%] h-12 px-4 rounded-[6px] outline-none"
             placeholder="Enter your phone number"
             value={phone}
-            onChange={(e) => setPhone(e.target.value)}
+            onChange={(e) => setPhone(e.target.value.replace(/\D/g, ""))}
           />
         </div>
       </div>
