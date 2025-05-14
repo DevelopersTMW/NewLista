@@ -9,6 +9,7 @@ import MyOffers from "./MyOffer/MyOffer";
 import Analytics from "./Analytics/Analytics";
 import AccountSetting from "./AccountSetting/AccountSetting";
 import Inbox from "./Inbox/Inbox";
+import MyNetwork2 from "./MyNetwork/MyNetwork2";
 
 const Admin = () => {
   return (
@@ -17,7 +18,7 @@ const Admin = () => {
           <Routes>
             <Route path="/" element={<Dashboard />} />
             <Route path="/listing" element={<Listing />} />
-            <Route path="/network" element={<MyNetwork />} />
+            <Route path="/network" element={<MyNetwork2 />} />
             <Route path="/myoffers" element={<MyOffers />} />
             <Route path="/analytics" element={<Analytics />} />
             <Route path="/account-setting" element={<AccountSetting />} />

@@ -17,6 +17,9 @@ import PropertiesImage1 from "../../assets/PropertiesImage1.png";
 import PropertiesImage2 from "../../assets/PropertiesImage2.png";
 import PropertiesImage3 from "../../assets/PropertiesImage3.png";
 import Testimonials1 from "../../assets/Testimonials1.png";
+import RevImage1 from "../../assets/RevImage1.jpg";
+import RevImage2 from "../../assets/RevImage2.jpg";
+import RevImage3 from "../../assets/RevImage3.jpg";
 import HomeSec5_1 from "../../assets/HomeSec5.1.png";
 import HomeSec5_2 from "../../assets/HomeSec5.2.png";
 import InvestorCards from "../../Components/Cards/InvestorCards/InvestorCards";
@@ -208,16 +211,31 @@ const Home = () => {
                       Choose Price Range
                     </option>
                     <option className="" value="active">
-                      Active
+                      Under $250K
                     </option>
                     <option className="" value="paused">
-                      Paused
+                      $250K – $500K
                     </option>
                     <option className="" value="delayed">
-                      Delayed
+                      $500K – $1M
                     </option>
                     <option className="" value="canceled">
-                      Canceled
+                      $1M – $2.5M
+                    </option>
+                    <option className="" value="canceled">
+                      $2.5M – $5M
+                    </option>
+                    <option className="" value="canceled">
+                      $5M – $10M
+                    </option>
+                    <option className="" value="canceled">
+                      $10M – $25M
+                    </option>
+                    <option className="" value="canceled">
+                      $25M – $50M
+                    </option>
+                    <option className="" value="canceled">
+                      Over $50M
                     </option>
                   </Select>
                 </div>
@@ -421,7 +439,7 @@ const Home = () => {
           <div className="flex justify-center items-center w-[84%]">
             <div className="w-[65%]">
               <h1 className="text-7xl font-[700] font-Urbanist  text-[#1E1E1E] sm:text-[37px] leading-[48px]">
-                Top Developers in Commercial Real Estate
+              Off-Market Properties
               </h1>
               <p className="text-md font-Inter font-medium text-pretty text-Paracolor mt-2 sm:text-[14px]/5.5 ">
                 Discover the leaders in commercial real estate development.
@@ -483,34 +501,34 @@ const Home = () => {
           {/* CARDSECTION  */}
           <div className="flex justify-center gap-7 w-[84%]">
             <Testimonials
-              RevTitle={"Seamless & Efficient Platform!"}
+              RevTitle={""}
               RevParagraph={
-                "NewLista made listing and selling properties effortless. I connected with serious buyers and closed a deal in just two weeks!"
+                "Newlista has transformed my real estate investing. It connected me with exclusive off-market deals, including a commercial property I recently closed. The platform is efficient, easy to use, and has opened up networking and deal opportunities I never thought possible"
               }
               Stars={3}
-              RevImage={Testimonials1}
-              UserName={"Michael R."}
-              Desination={"USA, California"}
+              RevImage={RevImage1}
+              UserName={"Mike O"}
+              Desination={"Real Estate Investor "}
             ></Testimonials>
             <Testimonials
-              RevTitle={"Exclusive Deals & Great Networking!"}
+              RevTitle={""}
               RevParagraph={
-                "The off-market listings gave me access to investment opportunities I couldn’t find anywhere else. The networking features are a huge bonus!"
+                "As a newcomer to commercial real estate, Newlista has been invaluable. Its curated listings and expert connections helped me invest confidently in a growing metro area. The insights from experienced investors made all the difference"
               }
               Stars={4}
-              RevImage={Testimonials1}
-              UserName={"Sarah L."}
-              Desination={"USA, Florida"}
+              RevImage={RevImage2}
+              UserName={"Leila N."}
+              Desination={"Investor"}
             ></Testimonials>
             <Testimonials
-              RevTitle={"Everything You Need in One Place!"}
+              RevTitle={""}
               RevParagraph={
-                "From property listings to investor connections, NewLista has transformed how I do business. Highly recommend to any serious real estate professional!"
+                "As a broker focused on value-add properties, Newlista has transformed how I work. It’s expanded my reach, helped me close multiple deals, and streamlined the process so I can focus on finding top opportunities for clients. The professional network is unmatched."
               }
               Stars={5}
-              RevImage={Testimonials1}
-              UserName={"David M."}
-              Desination={"USA, Nevada"}
+              RevImage={RevImage3}
+              UserName={"Michael M"}
+              Desination={"Commercial Real Estate Broker. "}
             ></Testimonials>
           </div>
         </section>

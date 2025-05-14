@@ -15,6 +15,9 @@ import Commercial from "../../Screens/Commercial/Commercial";
 import Admin from "../../Screens/Admin/Admin";
 import Industrial from "../../Screens/Industrial/Industrial";
 import LeaseForm from "../../Screens/LeaseForm/LeaseForm";
+import ForgetPassword from "../../Screens/ProtectedScreen/ForgetPassword";
+import OptVerification from "../../Screens/ProtectedScreen/OptVerification";
+import SetNewPassword from "../../Screens/ProtectedScreen/SetNewPassword";
 
 const Routing = () => {
   return (
@@ -29,6 +32,9 @@ const Routing = () => {
           <Route path={"/pricing"} element={<Pricing />} />
           <Route path={"/contact-us"} element={<ContactUs />} />
           <Route path={"/login"} element={<Login />} />
+          <Route path={"/reset-password"} element={<ForgetPassword />} />
+          <Route path={"/verify-otp"} element={<OptVerification />} />
+          <Route path={"/set-new-password"} element={<SetNewPassword />} />
           <Route path={"/register"} element={<Register />} />
           <Route path={"/plans"} element={<OurPlans />} />
           <Route path={"/residential"} element={<Residential />} />

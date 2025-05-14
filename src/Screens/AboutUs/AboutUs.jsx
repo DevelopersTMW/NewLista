@@ -1,11 +1,11 @@
 import React from "react";
-// COMPONENTS 
+// COMPONENTS
 import Navbar from "../../Components/Navbar/Navbar";
 import Footer from "../../Components/Footer/Footer";
 import MiniFooter from "../../Components/Footer/MiniFooter";
 import Testimonials from "../../Components/Testimonials/Testimonials";
 
-// IMAGES 
+// IMAGES
 import BgImage from "../../assets/AboutUs1.1.jpg";
 import AboutUs1_2 from "../../assets/AboutUs1.2.jpg";
 import AboutUs1_3 from "../../assets/AboutUs1.3.jpg";
@@ -13,8 +13,9 @@ import Testimonials1 from "../../assets/Testimonials1.png";
 import AboutIcon1_1 from "../../assets/AboutIcon1.1.png";
 import AboutIcon1_2 from "../../assets/AboutIcon1.2.png";
 import AboutIcon1_3 from "../../assets/AboutIcon1.3.png";
-
-
+import RevImage1 from "../../assets/RevImage1.jpg";
+import RevImage2 from "../../assets/RevImage2.jpg";
+import RevImage3 from "../../assets/RevImage3.jpg";
 // BACKGORUND
 const AboutBgImage = {
   backgroundImage: `url(${BgImage})`,
@@ -31,7 +32,11 @@ const AboutUs = () => {
       <section style={AboutBgImage}>
         <div className="flex gap-10 px-20 py-28 ">
           <div className="flex w-[50%] justify-center">
-            <img className="w-[400px] h-[440px] object-cover " src={AboutUs1_2} alt="" />
+            <img
+              className="w-[400px] h-[440px] object-cover "
+              src={AboutUs1_2}
+              alt=""
+            />
             <img
               className="w-[280px] h-[280px] border-solid border-white border-[5px] mt-64 -ml-48"
               src={AboutUs1_3}
@@ -95,8 +100,7 @@ const AboutUs = () => {
 
       {/* SECTION 1 START  */}
       <section className="flex justify-center pt-20 pb-10">
-        <div className="bg-[#F1ECFF] flex flex-col justify-center w-[85%] px-20 py-14 gap-8 rounded-[15px]"
-        >
+        <div className="bg-[#F1ECFF] flex flex-col justify-center w-[85%] px-20 py-14 gap-8 rounded-[15px]">
           <div className="flex flex-col  text-center">
             <h1 className="text-7xl font-[700] font-Urbanist  text-[#1E1E1E] sm:text-[42px] leading-[48px]">
               Our Services
@@ -230,34 +234,34 @@ const AboutUs = () => {
         {/* CARDSECTION  */}
         <div className="flex justify-center gap-7 w-[84%]">
           <Testimonials
-            RevTitle={"Seamless & Efficient Platform!"}
+            RevTitle={""}
             RevParagraph={
-              "NewLista made listing and selling properties effortless. I connected with serious buyers and closed a deal in just two weeks!"
+              "Newlista has transformed my real estate investing. It connected me with exclusive off-market deals, including a commercial property I recently closed. The platform is efficient, easy to use, and has opened up networking and deal opportunities I never thought possible"
             }
             Stars={3}
-            RevImage={Testimonials1}
-            UserName={"Michael R."}
-            Desination={"USA, California"}
+            RevImage={RevImage1}
+            UserName={"Mike O"}
+            Desination={"Real Estate Investor "}
           ></Testimonials>
           <Testimonials
-            RevTitle={"Exclusive Deals & Great Networking!"}
+            RevTitle={""}
             RevParagraph={
-              "The off-market listings gave me access to investment opportunities I couldn’t find anywhere else. The networking features are a huge bonus!"
+              "As a newcomer to commercial real estate, Newlista has been invaluable. Its curated listings and expert connections helped me invest confidently in a growing metro area. The insights from experienced investors made all the difference"
             }
             Stars={4}
-            RevImage={Testimonials1}
-            UserName={"Sarah L."}
-            Desination={"USA, Florida"}
+            RevImage={RevImage2}
+            UserName={"Leila N."}
+            Desination={"Investor"}
           ></Testimonials>
           <Testimonials
-            RevTitle={"Everything You Need in One Place!"}
+            RevTitle={""}
             RevParagraph={
-              "From property listings to investor connections, NewLista has transformed how I do business. Highly recommend to any serious real estate professional!"
+              "As a broker focused on value-add properties, Newlista has transformed how I work. It’s expanded my reach, helped me close multiple deals, and streamlined the process so I can focus on finding top opportunities for clients. The professional network is unmatched."
             }
             Stars={5}
-            RevImage={Testimonials1}
-            UserName={"David M."}
-            Desination={"USA, Nevada"}
+            RevImage={RevImage3}
+            UserName={"Michael M"}
+            Desination={"Commercial Real Estate Broker. "}
           ></Testimonials>
         </div>
       </section>

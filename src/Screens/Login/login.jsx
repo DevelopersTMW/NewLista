@@ -148,7 +148,7 @@ const Login = () => {
                   {ErrorMessage}
                 </p>
               )}
-              <Link>
+              <Link to={'/reset-password'}>
                 <p className="font-Urbanist text-Paracolor font-[600] text-[14px] text-end mt-2 mb-3">
                   Forgot Password?
                 </p>
