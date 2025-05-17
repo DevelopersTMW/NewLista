@@ -5,91 +5,83 @@ import Google from "../../assets/google.png";
 import Facebook from "../../assets/facebook.png";
 import Linkedin from "../../assets/linkedin.png";
 import axios from "axios";
+import Inputs from "../../Components/InputFields/Inputs";
 
 const Login = () => {
-  const navigate = useNavigate();
 
-  // CONDITION
+    const navigate = useNavigate();
+
+  const [formData, setFormData] = useState({ Email: "", Password: "" });
   const [Loading, setLoading] = useState(false);
   const [ErrorMessage, setErrorMessage] = useState("");
   const [EmailError, setEmailError] = useState("");
 
-  // FORM VALUES
-  const [formData, setFormData] = useState({
-    Email: "",
-    Password: "",
-  });
-
-  // GET VALUE AND SAVED IN STATE
   const handleChanges = (e) => {
     const { name, value } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
+    setFormData((prev) => ({ ...prev, [name]: value }));
+
     if (name === "Email") setEmailError("");
     if (name === "Password") setErrorMessage("");
   };
 
-  // SUBMIT FORM
   const LoginForm = async (e) => {
     e.preventDefault();
-    console.log(formData);
-    if (formData.Password.length < 8) {
-      setErrorMessage("Password must be 8 characters long");
+
+    // Simple validation
+    if (!formData.Email) {
+      setEmailError("Email is required");
       return;
     }
+    if (!/\S+@\S+\.\S+/.test(formData.Email)) {
+      setEmailError("Enter a valid email address");
+      return;
+    }
+    if (formData.Password.length < 8) {
+      setErrorMessage("Password must be at least 8 characters long");
+      return;
+    }
+
     try {
       setLoading(true);
-      const Response = await axios.post(
-        "https://newlista.secureserverinternal.com/api/login",
-        {
-          email: formData.Email,
-          password: formData.Password,
-        }
-      );
-      console.log(Response.data);
-      localStorage.setItem("token", Response.data.token);
-      // localStorage.setItem("type", Response.data.user.role);
-      // localStorage.setItem("uid", Response.data.user._id);
-      navigate("/admin");
+      const res = await axios.post("https://newlista.secureserverinternal.com/api/login", {
+        email: formData.Email,
+        password: formData.Password,
+      });
 
-      setLoading(false);
+      localStorage.setItem("token", res.data.token);
+      navigate("/admin");
     } catch (error) {
-      setLoading(false);
-      const errorMsg = error?.response?.data?.message;
+      const errorMsg = error?.response?.data?.message || "Login failed";
       const errorDetail = error?.response?.data?.errors?.[0]?.msg;
-      console.log(error.response.data.message);
+
       if (errorDetail === "Email does not exist") {
         setEmailError("Email does not exist");
-        return;
-      }
-      setErrorMessage(errorMsg + " " + "plz register first");
-      setEmailError("");
-      if (error.response.data.errors[0].msg === "Invalid password") {
+      } else if (errorDetail === "Invalid password") {
         setErrorMessage("Invalid password");
-        return;
+      } else {
+        setErrorMessage(errorMsg + " - Please register first");
       }
-
+    } finally {
+      setLoading(false);
     }
-    setErrorMessage("");
   };
+
 
   return (
     <>
-      <div className="flex">
+      <div className="flex max-[891px]:flex-col">
         {/* IMAGE SECTION  */}
-        <div className="w-[44%] min-h-screen ">
-          <img className="h-[100%]" src={Image} alt="" />
+        <div className="max-[580px]:h-[25vh] max-[891px]:h-[30vh] max-[891px]:w-[100%] min-[891px]:min-h-screen max-[1666px]:w-[46%] min-[1666px]:w-[46%]">
+          <img className="max-[891px]:h-[100%] max-[891px]:w-[100%] object-cover min-[891px]:h-[100%]" src={Image} alt="" />
         </div>
 
         {/* LOGIN FOR SECTION  */}
-        <div className="w-[55%] px-32 flex flex-col justify-center gap-7 ">
+        <div className="flex flex-col justify-center gap-7 max-[480px]:px-[10%] max-[891px]:w-[100%] max-[891px]:py-16 max-[891px]:px-[12%] max-[891px]:gap-7 max-[1000px]:gap-5 max-[1000px]:px-[7%] max-[1100px]:gap-6 max-[1100px]:px-20 max-[1666px]:px-28 max-[1666px]:py-20 max-[1666px]:w-[54%] min-[1666px]:w-[50%] min-[1666px]:pt-10 min-[1666px]:px-36 ">
           <div>
-            <h1 className="font-Poppins font-[700] text-[40px]">
+            <h1 className="font-Poppins font-[700] max-[380px]:text-[31px] max-[481px]:text-[30px] max-[481px]:leading-[39px] max-[891px]:text-[40px] max-[1000px]:text-[32px] max-[1100px]:text-[35px] max-[1280px]:text-[38px] max-[1666px]:text-[40px] min-[1666px]:text-[49px]">
               Welcome to NewLista
             </h1>
-            <p className="font-Urbanist text-Paracolor font-[600] text-[14px] pl-2">
+            <p className="font-Urbanist text-Paracolor font-[600] pl-2 max-[380px]:text-[12px] max-[481px]:text-[13.5px] max-[891px]:mt-2 max-[891px]:text-[14px] max-[1000px]:text-[13px] max-[1100px]:text-[13.5px] max-[1100px]:leading-[18px] max-[1280px]:pl-1  max-[1280px]:text-[14px] max-[1666px]:text-[15px] max-[1666px]:leading-[20px] min-[1666px]:text-[17px]">
               Log in to access exclusive real estate listings, connect with
               investors, and explore off-market deals.
             </p>
@@ -99,26 +91,10 @@ const Login = () => {
             onSubmit={(e) => {
               LoginForm(e);
             }}
-            className="flex flex-col gap-5"
+            className="flex flex-col gap-5 max-[891px]:gap-4"
           >
             <div>
-              <label
-                // for="email"
-                className="block mb-1 text-[15px] font-[700] text-PurpleColor"
-              >
-                Email/User ID
-              </label>
-              <input
-                onChange={handleChanges}
-                value={formData.Email}
-                name="Email"
-                type="email"
-                className={`bg-[#F3EEFF] border text-[#000] font-[600] font-Urbanist text-[14px] w-[100%] h-12 px-4 rounded-[6px]  ${
-                  EmailError ? " border-red-400" : "border-[#F3EEFF] outline-none"
-                } `}
-                placeholder="Enter your registered email"
-                required
-              />
+              <Inputs labels={" Email/User ID"} placeholder={"Enter your registered email"} type={"email"} value={formData.Email} name="Email" onChange={handleChanges} error={EmailError} ></Inputs>
               {EmailError && (
                 <p className="mt-2 font-Roboto border-red-500 text-red-600 ml-1 text-[13px]">
                   {EmailError}
@@ -126,65 +102,47 @@ const Login = () => {
               )}
             </div>
             <div>
-              <label
-                for="email"
-                className="block mb-1 text-[15px] font-[700] text-PurpleColor"
-              >
-                Password
-              </label>
-              <input
-                onChange={handleChanges}
-                value={formData.Password}
-                name="Password"
-                type="password"
-                className={`bg-[#F3EEFF] border  text-[#1d1d1d] font-[600] font-Urbanist text-[14px] w-[100%] h-12 px-4 rounded-[6px]  ${
-                  ErrorMessage ? " border-red-400" : "border-[#F3EEFF]  outline-none"
-                }`}
-                placeholder="Enter your password"
-                required
-              />
+              <Inputs labels={"Password"} placeholder={"Enter your password"} type={"password"} value={formData.Password} name="Password" onChange={handleChanges} error={ErrorMessage} ></Inputs>
               {ErrorMessage && (
                 <p className="mt-2 font-Roboto border-red-500 text-red-600 ml-1 text-[13px]">
                   {ErrorMessage}
                 </p>
               )}
-              <Link to={'/reset-password'}>
-                <p className="font-Urbanist text-Paracolor font-[600] text-[14px] text-end mt-2 mb-3">
-                  Forgot Password?
+                <p className="font-Urbanist text-Paracolor font-[600] text-[14px] text-end max-[481px]:text-[14px] max-[891px]:text-[15px] max-[1100px]:text-[13px] max-[1280px]:text-[14px] max-[1280px]:mt-3 max-[1666px]:mt-4 max-[1666px]:text-[15px] min-[1666px]:text-[16px] min-[1666px]:mt-3 min-[1666px]:mb-2">
+                   <Link to={'/reset-password'}>Forgot Password?</Link>
                 </p>
-              </Link>
             </div>
 
             <div className="mt-1">
               <button
                 type="submit"
-                className="bg-PurpleColor font-[700] w-[100%] h-11 text-white font-Urbanist rounded-[6px]"
+                className="bg-PurpleColor font-[700] w-[100%] h-11 text-white font-Urbanist rounded-[6px]  max-[891px]:h-10 max-[1000px]:h-10 max-[1100px]:h-10.5 max-[1100px]:text-[14.5px] min-[1666px]:h-12.5 min-[1666px]:text-[19px]"
               >
                 Log In
               </button>
-              <p className="font-Urbanist text-Paracolor font-[600] text-[14px] text-center mt-3">
+              <p className="font-Urbanist text-Paracolor font-[600] text-center max-[481px]:text-[14px] max-[891px]:text-[15px]  max-[1000px]:text-[13.5px]  max-[1100px]:text-[14px] max-[1666px]:mt-5 max-[1666px]:text-[15px] min-[1666px]:text-[17px] min-[1666px]:mt-5">
                 Don’t have an account?{" "}
                 <Link to={"/register"} className="font-bold">
                   Sign up now
                 </Link>
               </p>
             </div>
-            <div className="flex justify-center items-center gap-3 mt-2">
-              <div className="bg-[#a5a5a5] h-0.5 w-[90px]"></div>
-              <p className="font-Urbanist text-Paracolor font-[600] text-[15px] text-center">
+            <div className="flex justify-center items-center gap-3 mt-2 max-[1100px]:mt-1">
+              <div className="bg-[#a5a5a5] h-0.5 w-[90px] max-[890px]:w-[50px]"></div>
+              <p className="font-Urbanist text-Paracolor font-[600] text-[15px] text-center max-[481px]:text-[14.5px] max-[891px]:text-[17px] min-[1666px]:text-[17px]">
                 or continue with{" "}
               </p>
-              <div className="bg-[#a5a5a5] h-0.5 w-[90px]"></div>
+              <div className="bg-[#a5a5a5] h-0.5 w-[90px] max-[890px]:w-[50px]"></div>
             </div>
-            <div className="flex justify-center gap-2">
+            <div className="flex justify-center gap-2 max-[481px]:gap-4">
               <Link to={"https://www.google.com/"}>
-                <img className="w-[32px] h-8 " src={Google} alt="" />
+                <img className="max-[481px]:h-8 max-[481px]:w-[33px] max-[891px]:h-10 max-[891px]:w-[37px] max-[1666px]:h-8 max-[1666px]:w-[32px] min-[1666px]:w-[38px] min-[1666px]:h-9" src={Google} alt="" />
               </Link>
               <Link to={"https://www.facebook.com/"}>
-                <img className="w-[33px] h-8" src={Facebook} alt="" />
+                <img className="max-[481px]:h-8 max-[481px]:w-[33px] max-[891px]:h-10 max-[891px]:w-[39px] max-[1666px]:w-[33px] max-[1666px]:h-8 min-[1666px]:w-[39px] min-[1666px]:h-9" src={Facebook} alt="" />
               </Link>
               <Link to={"https://www.linkedin.com/"}>
-                <img className="w-[34px] h-8" src={Linkedin} alt="" />
+                <img className="max-[481px]:h-8 max-[481px]:w-[33px] max-[891px]:w-[40px] max-[891px]:h-10 max-[1666px]:w-[34px] max-[1666px]:h-8 min-[1666px]:w-[39px] min-[1666px]:h-9.5" src={Linkedin} alt="" />
               </Link>
             </div>
           </form>

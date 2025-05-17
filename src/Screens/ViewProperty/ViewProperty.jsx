@@ -225,7 +225,7 @@ const ViewProperty = () => {
                               Sale
                             </option>
                             <option className="overline-none font-Inter" value="paused">
-                              Rent
+                              Lease
                             </option>
                           </Select>
                         </div>

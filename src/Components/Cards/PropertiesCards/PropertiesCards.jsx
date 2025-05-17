@@ -43,7 +43,7 @@ const PropertiesCards = ({ Img, Heading, desc, Status, Price}) => {
               Units
             </span>
           </div>
-          <div className="flex justify-between mt-5">
+          <div className="flex justify-between items-center mt-5">
             <div>
               <h5 className="font-Inter text-[16px] font-[500]">Price</h5>
               <h1 className="font-Inter text-[18px] font-bold">${Price}</h1>
