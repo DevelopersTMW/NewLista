@@ -18,6 +18,7 @@ import LeaseForm from "../../Screens/LeaseForm/LeaseForm";
 import ForgetPassword from "../../Screens/ProtectedScreen/ForgetPassword";
 import OptVerification from "../../Screens/ProtectedScreen/OptVerification";
 import SetNewPassword from "../../Screens/ProtectedScreen/SetNewPassword";
+import AddProperty2 from "../../Screens/AddProperty/AddProperty2";
 
 const Routing = () => {
   return (
@@ -27,6 +28,7 @@ const Routing = () => {
           <Route path={"/"} element={<Home />} />
           <Route path={"/about-us"} element={<AboutUs />} />
           <Route path={"/add-property"} element={<AddProperty />} />
+          <Route path={"/add-property2"} element={<AddProperty2 />} />
           <Route path={"/view-property"} element={<ViewProperty />} />
           <Route path={"/property-detail"} element={<PropertyDetails />} />
           <Route path={"/pricing"} element={<Pricing />} />

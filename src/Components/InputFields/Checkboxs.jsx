@@ -10,7 +10,7 @@ function Checkboxs({labels}) {
       <Checkbox
         checked={enabled}
         onChange={setEnabled}
-        className="group block size-4  border w-[20px] rounded bg-white data-checked:bg-PurpleColor"
+        className="group block size-3.5  border w-[20px] rounded-[2px] bg-white data-checked:bg-PurpleColor"
       >
         {/* Checkmark icon */}
         <svg

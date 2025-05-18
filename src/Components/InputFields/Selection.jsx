@@ -8,7 +8,7 @@ const Selection = ({ labels, defaultOption, Style }) => {
       <div className={`relative ${Style} `}>
         <label
           for="text"
-          className="block mb-1 text-[15px] font-[600] text-[#222222] w-[100%]"
+          className="block mb-1 font-[700] text-PurpleColor w-[100%] max-[1280px]:text-[14px] max-[1666px]:text-[15px] min-[1666px]:text-[16px]"
         >
           {labels}
         </label>
