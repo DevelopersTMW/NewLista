@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Select } from "@headlessui/react";
 // COMPONENTS
 import TransparentNavbar from "../../Components/Navbar/TransparentNavbar";
@@ -25,6 +25,8 @@ import HomeSec5_2 from "../../assets/HomeSec5.2.png";
 import InvestorCards from "../../Components/Cards/InvestorCards/InvestorCards";
 import Footer from "../../Components/Footer/Footer";
 import MiniFooter from "../../Components/Footer/MiniFooter";
+import axios from "axios";
+import SearchBar from "../../Components/SearchBar/SearchBar";
 
 // BACKGORUND
 const HeroBackground = {
@@ -35,39 +37,12 @@ const HeroBackground = {
   backgroundColor: "#0009",
 };
 
-const propertyType = [
-  { name: "Select Your Property" },
-  { name: "Car Wash" },
-  { name: "Church" },
-  { name: "Condominium" },
-  { name: "Gas Station" },
-  { name: "Hotel" },
-  { name: "Industrial Park" },
-  { name: "Investment Home" },
-  { name: "Medical Building" },
-  { name: "Mixed Use" },
-  { name: "Mobile Home Park" },
-  { name: "Motel" },
-  { name: "Multifamily" },
-  { name: "Office Building" },
-  { name: "Recreation Center" },
-  { name: "Retail Center" },
-  { name: "Self-Storage Facility" },
-  { name: "School Building" },
-  { name: "Senior Living Facility" },
-  { name: "Shopping Center" },
-  { name: "Single Tenant Retail Building" },
-  { name: "Storage Facility" },
-  { name: "Townhomes" },
-  { name: "Vacant Land" },
-  { name: "Warehouse" },
-  { name: "Other" },
-];
 
 const Home = () => {
   useEffect(() => {
     document.documentElement.classList.add("dark");
   }, []);
+
   return (
     <>
       <TransparentNavbar></TransparentNavbar>
@@ -89,175 +64,8 @@ const Home = () => {
                 off-the-market deals—all in one powerful platform.
               </p>
             </div>
-            <div className="hidden sm:mb-8 sm:flex sm:justify-center mt-8">
-              <div className="relative flex rounded-full px-6.5 py-3.5 text-sm/6 text-gray-600 ring-1 ring-gray-900/10 hover:ring-gray-900/20 bg-textColor justify-center items-center">
-                <div className="px-4 py-2 border-r-[1px] border-solid border-Paracolor">
-                  <Select
-                    name="status"
-                    aria-label="Project status"
-                    className={
-                      "overline-none text-[16px] font-Inter text-black font-[500]"
-                    }
-                  >
-                    <option className="overline-none font-Inter" value="active">
-                      Buy
-                    </option>
-                    <option className="overline-none font-Inter" value="active">
-                      Sale
-                    </option>
-                    <option className="overline-none font-Inter" value="paused">
-                      Lease
-                    </option>
-                  </Select>
-                </div>
-
-                <div className="px-8 py-1 border-r-[1px] border-solid border-Paracolor flex flex-col ">
-                  <h1 className="text-[14px] font-Inter text-black font-[600]">
-                    Location
-                  </h1>
-                  <Select
-                    name="status"
-                    aria-label="Project status"
-                    className={
-                      "overline-none text-[13px] font-Inter text-Paracolor font-[500] -mt-0.5 -ml-1"
-                    }
-                  >
-                    <option className="overline-none font-Inter" value="active">
-                      Select Your City
-                    </option>
-                    <option className="" value="active">
-                      New York
-                    </option>
-                    <option className="" value="paused">
-                      Austin
-                    </option>
-                    <option className="" value="delayed">
-                      Phoenix
-                    </option>
-                    <option className="" value="canceled">
-                      Chicago
-                    </option>
-                    <option className="" value="canceled">
-                      Houston
-                    </option>
-                    <option className="" value="canceled">
-                      Los Angeles
-                    </option>
-                  </Select>
-                </div>
-                <div className="px-8 py-1 border-r-[1px] border-solid border-Paracolor flex flex-col ">
-                  <h1 className="text-[14px] font-Inter text-black font-[600]">
-                    State
-                  </h1>
-                  <Select
-                    disabled
-                    name="status"
-                    aria-label="Project status"
-                    className={
-                      "overline-none text-[13px] font-Inter text-Paracolor font-[500] -mt-0.5 -ml-1"
-                    }
-                  >
-                    <option className="overline-none font-Inter" value="active">
-                      Select Your State
-                    </option>
-                    <option className="" value="active">
-                      Active
-                    </option>
-                    <option className="" value="paused">
-                      Paused
-                    </option>
-                    <option className="" value="delayed">
-                      Delayed
-                    </option>
-                    <option className="" value="canceled">
-                      Canceled
-                    </option>
-                  </Select>
-                </div>
-                <div className="px-8 py-1 border-r-[1px] border-solid border-Paracolor flex flex-col ">
-                  <h1 className="text-[14px] font-semibold font-Inter text-black ">
-                    Property Type
-                  </h1>
-                  <Select
-                    name="status"
-                    aria-label="Project status"
-                    className={
-                      "overline-none text-[13px] font-Inter text-Paracolor font-[500] -mt-0.5 -ml-1"
-                    }
-                  >
-                    {propertyType.map((item, index) => (
-                      <option
-                        key={index}
-                        className="outline-none font-Inter"
-                        value={item.name}
-                      >
-                        {item.name}
-                      </option>
-                    ))}
-                  </Select>
-                </div>
-                <div className="px-8 py-1  flex flex-col ">
-                  <h1 className="text-[14px] font-Inter text-black font-[600]">
-                    Price Range
-                  </h1>
-                  <Select
-                    name="status"
-                    aria-label="Project status"
-                    className={
-                      "overline-none text-[13px] font-Inter text-Paracolor font-[500] -mt-0.5 -ml-1"
-                    }
-                  >
-                    <option className="overline-none font-Inter" value="active">
-                      Choose Price Range
-                    </option>
-                    <option className="" value="active">
-                      Under $250K
-                    </option>
-                    <option className="" value="paused">
-                      $250K – $500K
-                    </option>
-                    <option className="" value="delayed">
-                      $500K – $1M
-                    </option>
-                    <option className="" value="canceled">
-                      $1M – $2.5M
-                    </option>
-                    <option className="" value="canceled">
-                      $2.5M – $5M
-                    </option>
-                    <option className="" value="canceled">
-                      $5M – $10M
-                    </option>
-                    <option className="" value="canceled">
-                      $10M – $25M
-                    </option>
-                    <option className="" value="canceled">
-                      $25M – $50M
-                    </option>
-                    <option className="" value="canceled">
-                      Over $50M
-                    </option>
-                  </Select>
-                </div>
-                <div>
-                  <button className="bg-PurpleColor text-white px-2 py-2 rounded-full text-[14px] cursor-pointer">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke-width="1.5"
-                      stroke="currentColor"
-                      className="size-5 font-bold"
-                    >
-                      <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"
-                      />
-                    </svg>
-                  </button>
-                </div>
-              </div>
+            <div>
+              <SearchBar></SearchBar>
             </div>
           </div>
         </section>
@@ -439,7 +247,7 @@ const Home = () => {
           <div className="flex justify-center items-center w-[84%]">
             <div className="w-[65%]">
               <h1 className="text-7xl font-[700] font-Urbanist  text-[#1E1E1E] sm:text-[37px] leading-[48px]">
-              Off-Market Properties
+                Off-Market Properties
               </h1>
               <p className="text-md font-Inter font-medium text-pretty text-Paracolor mt-2 sm:text-[14px]/5.5 ">
                 Discover the leaders in commercial real estate development.

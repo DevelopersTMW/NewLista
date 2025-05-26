@@ -93,6 +93,9 @@ function AddProperty2() {
                 onChange={(e) => setPropertyType(e.target.value)}
                 aria-label="Project status"
               >
+                <option  value={""}>
+                    Select Your Property
+                  </option>
                 {propertyTypes.map((type) => (
                   <option key={type} value={type}>
                     {type}
