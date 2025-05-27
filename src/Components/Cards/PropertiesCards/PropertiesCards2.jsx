@@ -7,9 +7,7 @@ const PropertiesCards2 = ({ Img, Heading, desc, Status, Price, Features }) => {
   return (
     <>
       <div className="w-[100%] bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700 relative">
-        <Link>
           <img className="rounded-t-lg h-[230px] object-cover w-[100%]" src={Img} alt="" />
-        </Link>
         <div className="py-3 pb-4 px-4 flex flex-col gap-2">
           <div className="absolute top-8 end-8">
             {"Active" === Status ? (
@@ -19,15 +17,13 @@ const PropertiesCards2 = ({ Img, Heading, desc, Status, Price, Features }) => {
             ) : "Sold" === Status ? (
               <span className="bg-[#DC3545] text-white font-Inter px-4 py-1.5 text-[14px] rounded-full">Sold</span>
             ) : (
-              <span className="bg-[#FFC107] text-white font-Inter px-4 py-1.5 text-[14px] rounded-full">Rental</span>
+              <span className="bg-[#FFC107] text-white font-Inter px-4 py-1.5 text-[14px] rounded-full">{Status}</span>
             )}
           </div>
           <div>
-            <Link>
               <h1 className="mb-2 text-[21px] font-[600] font-Inter tracking-tight leading-[24px] mt-3 text-gray-900 dark:text-white">
                 {Heading}
               </h1>
-            </Link>
             <p className="mb-2 font-Inter text-[13px] font-normal text-gray-700 dark:text-gray-400">
               {desc}
             </p>
@@ -48,8 +44,8 @@ const PropertiesCards2 = ({ Img, Heading, desc, Status, Price, Features }) => {
               <h1 className="font-Inter text-[16px] font-bold">${Price}</h1>
             </div>
             <div>
-              <Link className="inline-flex font-Inter text-[12.5px] items-center px-5 py-2.5 rounded-full text-sm font-medium text-center text-white bg-PurpleColor hover:bg-PurpleColor focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-PurpleColor dark:hover:bg-PurpleColor dark:focus:ring-PurpleColor">
-              View Property
+              <Link className="inline-flex font-Inter text-[12.5px] items-center px-5 py-2.5 rounded-full text-sm font-medium text-center hover-btn-purple hover-btn">
+                <span> View Property</span>
               </Link>
             </div>
           </div>

@@ -42,8 +42,8 @@ const InvestorCards = ({InvesImage , InvesUserName , InvesDesc}) => {
           </ul>
           {/* BUTTONS  */}
           <div className="flex gap-4 pt-7">
-            <button className="font-Inter text-[#008316] font-semibold text-[15px] px-5 py-1.5 rounded-full border-solid border-[2px] border-[#008316]">Connect</button>
-            <button className="font-Inter text-white bg-PurpleColor font-semibold text-[15px] px-5 py-1.5 rounded-full  flex gap-2 justify-center items-center"><img className="w-4 h-4" src={MessageIcon} alt="" />Message</button>
+            <button className="font-Inter font-semibold text-[15px] pl-4 pr-6 py-1.5 rounded-full border-solid border-[2px] hover-btn hover-btn-green"><span>Connect</span></button>
+            <button className="font-Inter text-white hover-btn-purple hover-btn font-semibold text-[15px] px-5 py-1.5 rounded-full "><span className=" flex gap-2 justify-center items-center"><img className="w-4 h-4" src={MessageIcon} alt="" />Message</span></button>
           </div>
         </div>
       </div>

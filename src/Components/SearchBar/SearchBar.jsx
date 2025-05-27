@@ -257,8 +257,8 @@ const SearchBar = () => {
             </Select>
           </div>
           <div>
-            <button className="bg-PurpleColor text-white px-2 py-2 rounded-full text-[14px] cursor-pointer">
-              <svg
+            <button className="hover-btn hover-btn-purple text-white px-2 py-2 rounded-full text-[14px] cursor-pointer">
+              <span><svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
                 viewBox="0 0 24 24"
@@ -271,7 +271,7 @@ const SearchBar = () => {
                   strokeLinejoin="round"
                   d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"
                 />
-              </svg>
+              </svg></span>
             </button>
           </div>
         </div>

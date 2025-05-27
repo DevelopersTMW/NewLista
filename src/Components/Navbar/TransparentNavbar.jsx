@@ -39,27 +39,28 @@ function TransparentNavbar() {
         <PopoverGroup className="hidden lg:flex lg:gap-x-12">
           <Link
             to={"/about-us"}
-            className="text-sm/6 font-[500] text-textColor font-Inter"
+            className="text-sm/6 font-[500] text-textColor font-Inter hover:text-[#c4c4c4]"
           >
             About Us
           </Link>
           <Link
             to={"/pricing"}
-            className="text-sm/6 font-[500] text-textColor font-Inter"
+            className="text-sm/6 font-[500] text-textColor font-Inter hover:text-[#c4c4c4]"
           >
             Pricing
           </Link>
-          <Link
-            to={"contact-us"}
-            className="text-sm/6 font-[500] text-textColor font-Inter"
-          >
-            Contact
-          </Link>
+          
           <Link
             to={"/view-property"}
-            className="text-sm/6 font-[500]  text-textColor  font-Inter "
+            className="text-sm/6 font-[500]  text-textColor  font-Inter hover:text-[#c4c4c4] "
           >
-            Networking
+            Properties
+          </Link>
+          <Link
+            to={"contact-us"}
+            className="text-sm/6 font-[500] text-textColor font-Inter hover:text-[#c4c4c4]"
+          >
+            Contact
           </Link>
         </PopoverGroup>
         {/* MAIN MENU SECTION  END  */}
@@ -77,8 +78,8 @@ function TransparentNavbar() {
               to={"/add-property"}
               className="text-sm/6 font-semibold text-gray-900"
             >
-              <button className="bg-YellowColor px-5 py-2 rounded-md font-Inter cursor-pointer">
-                Add a Property
+              <button className="hover-btn-yellow hover-btn text-black px-5 py-2 rounded-md font-Inter cursor-pointer">
+                <span>Add a Property</span>
               </button>
             </Link>
           </div>
@@ -87,8 +88,8 @@ function TransparentNavbar() {
               to={"/login"}
               className="text-sm/6 font-semibold text-gray-900"
             >
-              <button className="bg-transparent border-[1px] border-solid text-textColor border-textColor px-5 py-2 rounded-md cursor-pointer">
-                Log in
+              <button className="bg-transparent hover-btn-yellow hover-btn hover:border-black border-[1px] border-solid text-textColor border-textColor px-5 py-2 rounded-md cursor-pointer">
+                <span>Log in</span>
               </button>
             </Link>
           </div>
@@ -133,17 +134,18 @@ function TransparentNavbar() {
                 >
                   Pricing
                 </Link>
+                
+                <Link
+                  to={"/view-property"}
+                  className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-900 hover:bg-gray-50 font-Inter"
+                >
+                  Properties
+                </Link>
                 <Link
                   to={"/contact-us"}
                   className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-900 hover:bg-gray-50 font-Inter"
                 >
                   Contact
-                </Link>
-                <Link
-                  to={"/view-property"}
-                  className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-900 hover:bg-gray-50 font-Inter"
-                >
-                  Networking
                 </Link>
               </div>
               {/* MAIN MENU SECTION START  */}

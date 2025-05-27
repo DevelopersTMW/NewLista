@@ -12,6 +12,7 @@ import ListingImage1_1 from "../../../assets/listing1.1.png"
 import ListingImage1_2 from "../../../assets/listing1.2.png"
 import ListingImage1_3 from "../../../assets/listing1.3.png"
 import ListingImage1_4 from "../../../assets/listing1.4.png"
+import { Link } from "react-router-dom";
 
 const ListItem = [
   {
@@ -68,9 +69,12 @@ const Listing = () => {
           <h1 className="font-Urbanist text-[#222222] text-[30px] font-[700]">
             My Listings
           </h1>
-          <button className="px-5 font-Inter bg-[#1E1E1E] text-white py-3 rounded-[7px]">
-            Add New Property
+          <Link to={'/add-property'}>
+          <button className="px-5 font-Inter hover-btn hover-btn-black bg-[#1E1E1E] text-white py-3 rounded-[7px]">
+            <span>Add New Property</span>
           </button>
+          </Link>
+          
         </div>
       </section>
 

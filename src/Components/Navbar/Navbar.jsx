@@ -56,17 +56,18 @@ function Navbar() {
               Pricing
             </Link>
             <Link
-              to={"/contact-us"}
-              className="text-sm/6 font-[500] text-textColor font-Inter"
-            >
-              Contact
-            </Link>
-            <Link
               to={"/view-property"}
               className="text-sm/6 font-[500]  text-textColor  font-Inter "
             >
-              Networking
+              Properties
             </Link>
+            <Link
+              to={"/contact-us"}
+              className="text-sm/6 font-[500] text-textColor font-Inter"
+            >
+              Contact Us
+            </Link>
+           
           </PopoverGroup>
           {/* MAIN MENU SECTION  END  */}
           {/* BUTTONS  */}
@@ -76,8 +77,8 @@ function Navbar() {
                 to={"/add-property"}
                 className="text-sm/6 font-semibold text-gray-900"
               >
-                <button className="bg-YellowColor px-5 py-2 rounded-md font-Inter cursor-pointer">
-                  Add a Property
+                <button className="hover-btn-yellow hover-btn px-5 py-2 rounded-md font-Inter cursor-pointer">
+                  <span>Add a Property</span>
                 </button>
               </Link>
             </div>
@@ -86,8 +87,8 @@ function Navbar() {
                 to={"/login"}
                 className="text-sm/6 font-semibold text-gray-900"
               >
-                <button className="bg-transparent border-[1px] border-solid text-textColor border-textColor px-5 py-2 rounded-md cursor-pointer">
-                  Log in
+                <button className="bg-transparent hover-btn hover-btn-purple hover:border-[#1E1E1E] border-[1px] border-solid text-textColor border-textColor px-5 py-2 rounded-md cursor-pointer">
+                  <span>Log in</span>
                 </button>
               </Link>
             </div>

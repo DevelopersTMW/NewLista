@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { Select } from "@headlessui/react";
 // COMPONENTS
 import TransparentNavbar from "../../Components/Navbar/TransparentNavbar";
 import TopDevelopes from "../../Components/Cards/TopDevelopes/TopDevelopes";
@@ -27,6 +26,8 @@ import Footer from "../../Components/Footer/Footer";
 import MiniFooter from "../../Components/Footer/MiniFooter";
 import axios from "axios";
 import SearchBar from "../../Components/SearchBar/SearchBar";
+import TruncatedText from "../../Components/TruncatedText/TruncatedText";
+import { Link } from "react-router-dom";
 
 // BACKGORUND
 const HeroBackground = {
@@ -37,8 +38,420 @@ const HeroBackground = {
   backgroundColor: "#0009",
 };
 
+const data = [
+  {
+    id: 1,
+    user_id: 1,
+    property_name: "Modern Office Space helloskjsnkjsnjksnshsjh",
+    listing_type: "For Lease",
+    property_type: "Office",
+    listing_status: "Available",
+    sale_price: null,
+    lease_rate: "15.50",
+    lease_rate_unit: "Per SF/Month",
+    lease_type: "NNN",
+    building_size: "3500.00",
+    address: "123 Main Street, Suite 200",
+    city: "Los Angeles",
+    state: "CA",
+    zip: "90001",
+    description:
+      "Spacious office located in the downtown business district with full amenities.",
+    images: [],
+    featured_listing: true,
+    off_market_listing: true,
+    custom_fields:
+      '{"parking_spaces":"10","floor_number":"2","built_year":"2015"}',
+    created_at: "2025-05-19T17:44:32.000000Z",
+    updated_at: "2025-05-19T18:03:44.000000Z",
+    user: {
+      id: 1,
+      first_name: "Umer",
+      last_name: "Farooq",
+      email: "test@gmail.com",
+      phone: "123456",
+      location: "karachi",
+      email_verified_at: null,
+      otp: "836910",
+      otp_expires_at: "2025-05-19 18:29:22",
+      company_name: null,
+      personal_website: null,
+      title: null,
+      property_interests: null,
+      property_interests_custom: null,
+      preferred_investment_range: null,
+      preferred_locations: null,
+      preferred_investment_type: null,
+      preferred_cap_rate_min: null,
+      preferred_cap_rate_max: null,
+      investor_status: null,
+      experience_level: null,
+      bio: null,
+      headshot: null,
+      banner: null,
+      created_at: "2025-05-19T17:02:49.000000Z",
+      updated_at: "2025-05-19T18:21:15.000000Z",
+    },
+  },
+  {
+    id: 1,
+    user_id: 1,
+    property_name: "Modern Office Space helloskjsnkjsnjksnshsjh",
+    listing_type: "For Lease",
+    property_type: "Office",
+    listing_status: "Available",
+    sale_price: null,
+    lease_rate: "15.50",
+    lease_rate_unit: "Per SF/Month",
+    lease_type: "NNN",
+    building_size: "3500.00",
+    address: "123 Main Street, Suite 200",
+    city: "Los Angeles",
+    state: "CA",
+    zip: "90001",
+    description:
+      "Spacious office located in the downtown business district with full amenities.",
+    images: [],
+    featured_listing: true,
+    off_market_listing: true,
+    custom_fields:
+      '{"parking_spaces":"10","floor_number":"2","built_year":"2015"}',
+    created_at: "2025-05-19T17:44:32.000000Z",
+    updated_at: "2025-05-19T18:03:44.000000Z",
+    user: {
+      id: 1,
+      first_name: "Umer",
+      last_name: "Farooq",
+      email: "test@gmail.com",
+      phone: "123456",
+      location: "karachi",
+      email_verified_at: null,
+      otp: "836910",
+      otp_expires_at: "2025-05-19 18:29:22",
+      company_name: null,
+      personal_website: null,
+      title: null,
+      property_interests: null,
+      property_interests_custom: null,
+      preferred_investment_range: null,
+      preferred_locations: null,
+      preferred_investment_type: null,
+      preferred_cap_rate_min: null,
+      preferred_cap_rate_max: null,
+      investor_status: null,
+      experience_level: null,
+      bio: null,
+      headshot: null,
+      banner: null,
+      created_at: "2025-05-19T17:02:49.000000Z",
+      updated_at: "2025-05-19T18:21:15.000000Z",
+    },
+  },
+  {
+    id: 2,
+    user_id: 1,
+    property_name: "Modern Office Space",
+    listing_type: "For Lease",
+    property_type: "Office",
+    listing_status: "Available",
+    sale_price: null,
+    lease_rate: "15.50",
+    lease_rate_unit: "Per SF/Month",
+    lease_type: "NNN",
+    building_size: "3500.00",
+    address: "123 Main Street, Suite 200",
+    city: "Los Angeles",
+    state: "CA",
+    zip: "90001",
+    description:
+      "Spacious office located in the downtown business district with full amenities.",
+    images: [
+      "https://example.com/image1.jpg",
+      "https://example.com/image2.jpg",
+    ],
+    featured_listing: true,
+    off_market_listing: true,
+    custom_fields:
+      '{"parking_spaces":"10","floor_number":"2","built_year":"2015"}',
+    created_at: "2025-05-19T18:06:32.000000Z",
+    updated_at: "2025-05-26T19:35:38.000000Z",
+    user: {
+      id: 1,
+      first_name: "Umer",
+      last_name: "Farooq",
+      email: "test@gmail.com",
+      phone: "123456",
+      location: "karachi",
+      email_verified_at: null,
+      otp: "836910",
+      otp_expires_at: "2025-05-19 18:29:22",
+      company_name: null,
+      personal_website: null,
+      title: null,
+      property_interests: null,
+      property_interests_custom: null,
+      preferred_investment_range: null,
+      preferred_locations: null,
+      preferred_investment_type: null,
+      preferred_cap_rate_min: null,
+      preferred_cap_rate_max: null,
+      investor_status: null,
+      experience_level: null,
+      bio: null,
+      headshot: null,
+      banner: null,
+      created_at: "2025-05-19T17:02:49.000000Z",
+      updated_at: "2025-05-19T18:21:15.000000Z",
+    },
+  },
+  {
+    id: 3,
+    user_id: 1,
+    property_name: "Modern Office Space",
+    listing_type: "For Lease",
+    property_type: "Office",
+    listing_status: "Available",
+    sale_price: null,
+    lease_rate: "15.50",
+    lease_rate_unit: "Per SF/Month",
+    lease_type: "NNN",
+    building_size: "3500.00",
+    address: "123 Main Street, Suite 200",
+    city: "Los Angeles",
+    state: "CA",
+    zip: "90001",
+    description:
+      "This beautiful property is located in the heart of the city with easy access to all amenities, featuring spacious rooms, modern kitchen, and a lovely garden area for relaxation",
+    images: [
+      "https://example.com/image1.jpg",
+      "https://example.com/image2.jpg",
+    ],
+    featured_listing: true,
+    off_market_listing: true,
+    custom_fields:
+      '{"parking_spaces":"10","floor_number":"2","built_year":"2015"}',
+    created_at: "2025-05-26T17:46:35.000000Z",
+    updated_at: "2025-05-26T17:46:35.000000Z",
+    user: {
+      id: 1,
+      first_name: "Umer",
+      last_name: "Farooq",
+      email: "test@gmail.com",
+      phone: "123456",
+      location: "karachi",
+      email_verified_at: null,
+      otp: "836910",
+      otp_expires_at: "2025-05-19 18:29:22",
+      company_name: null,
+      personal_website: null,
+      title: null,
+      property_interests: null,
+      property_interests_custom: null,
+      preferred_investment_range: null,
+      preferred_locations: null,
+      preferred_investment_type: null,
+      preferred_cap_rate_min: null,
+      preferred_cap_rate_max: null,
+      investor_status: null,
+      experience_level: null,
+      bio: null,
+      headshot: null,
+      banner: null,
+      created_at: "2025-05-19T17:02:49.000000Z",
+      updated_at: "2025-05-19T18:21:15.000000Z",
+    },
+  },
+  {
+    id: 3,
+    user_id: 1,
+    property_name: "Modern Office Space",
+    listing_type: "For Lease",
+    property_type: "Office",
+    listing_status: "Available",
+    sale_price: null,
+    lease_rate: "15.50",
+    lease_rate_unit: "Per SF/Month",
+    lease_type: "NNN",
+    building_size: "3500.00",
+    address: "123 Main Street, Suite 200",
+    city: "Los Angeles",
+    state: "CA",
+    zip: "90001",
+    description:
+      "This beautiful property is located in the heart of the city with easy access to all amenities, featuring spacious rooms, modern kitchen, and a lovely garden area for relaxation",
+    images: [
+      "https://example.com/image1.jpg",
+      "https://example.com/image2.jpg",
+    ],
+    featured_listing: true,
+    off_market_listing: true,
+    custom_fields:
+      '{"parking_spaces":"10","floor_number":"2","built_year":"2015"}',
+    created_at: "2025-05-26T17:46:35.000000Z",
+    updated_at: "2025-05-26T17:46:35.000000Z",
+    user: {
+      id: 1,
+      first_name: "Umer",
+      last_name: "Farooq",
+      email: "test@gmail.com",
+      phone: "123456",
+      location: "karachi",
+      email_verified_at: null,
+      otp: "836910",
+      otp_expires_at: "2025-05-19 18:29:22",
+      company_name: null,
+      personal_website: null,
+      title: null,
+      property_interests: null,
+      property_interests_custom: null,
+      preferred_investment_range: null,
+      preferred_locations: null,
+      preferred_investment_type: null,
+      preferred_cap_rate_min: null,
+      preferred_cap_rate_max: null,
+      investor_status: null,
+      experience_level: null,
+      bio: null,
+      headshot: null,
+      banner: null,
+      created_at: "2025-05-19T17:02:49.000000Z",
+      updated_at: "2025-05-19T18:21:15.000000Z",
+    },
+  },
+  {
+    id: 3,
+    user_id: 1,
+    property_name: "Modern Office Space",
+    listing_type: "For Lease",
+    property_type: "Office",
+    listing_status: "Available",
+    sale_price: null,
+    lease_rate: "15.50",
+    lease_rate_unit: "Per SF/Month",
+    lease_type: "NNN",
+    building_size: "3500.00",
+    address: "123 Main Street, Suite 200",
+    city: "Los Angeles",
+    state: "CA",
+    zip: "90001",
+    description:
+      "This beautiful property is located in the heart of the city with easy access to all amenities, featuring spacious rooms, modern kitchen, and a lovely garden area for relaxation",
+    images: [
+      "https://example.com/image1.jpg",
+      "https://example.com/image2.jpg",
+    ],
+    featured_listing: true,
+    off_market_listing: true,
+    custom_fields:
+      '{"parking_spaces":"10","floor_number":"2","built_year":"2015"}',
+    created_at: "2025-05-26T17:46:35.000000Z",
+    updated_at: "2025-05-26T17:46:35.000000Z",
+    user: {
+      id: 1,
+      first_name: "Umer",
+      last_name: "Farooq",
+      email: "test@gmail.com",
+      phone: "123456",
+      location: "karachi",
+      email_verified_at: null,
+      otp: "836910",
+      otp_expires_at: "2025-05-19 18:29:22",
+      company_name: null,
+      personal_website: null,
+      title: null,
+      property_interests: null,
+      property_interests_custom: null,
+      preferred_investment_range: null,
+      preferred_locations: null,
+      preferred_investment_type: null,
+      preferred_cap_rate_min: null,
+      preferred_cap_rate_max: null,
+      investor_status: null,
+      experience_level: null,
+      bio: null,
+      headshot: null,
+      banner: null,
+      created_at: "2025-05-19T17:02:49.000000Z",
+      updated_at: "2025-05-19T18:21:15.000000Z",
+    },
+  },
+  {
+    id: 3,
+    user_id: 1,
+    property_name: "Modern Office Space",
+    listing_type: "For Lease",
+    property_type: "Office",
+    listing_status: "Available",
+    sale_price: null,
+    lease_rate: "15.50",
+    lease_rate_unit: "Per SF/Month",
+    lease_type: "NNN",
+    building_size: "3500.00",
+    address: "123 Main Street, Suite 200",
+    city: "Los Angeles",
+    state: "CA",
+    zip: "90001",
+    description:
+      "This beautiful property is located in the heart of the city with easy access to all amenities, featuring spacious rooms, modern kitchen, and a lovely garden area for relaxation",
+    images: [
+      "https://example.com/image1.jpg",
+      "https://example.com/image2.jpg",
+    ],
+    featured_listing: true,
+    off_market_listing: true,
+    custom_fields:
+      '{"parking_spaces":"10","floor_number":"2","built_year":"2015"}',
+    created_at: "2025-05-26T17:46:35.000000Z",
+    updated_at: "2025-05-26T17:46:35.000000Z",
+    user: {
+      id: 1,
+      first_name: "Umer",
+      last_name: "Farooq",
+      email: "test@gmail.com",
+      phone: "123456",
+      location: "karachi",
+      email_verified_at: null,
+      otp: "836910",
+      otp_expires_at: "2025-05-19 18:29:22",
+      company_name: null,
+      personal_website: null,
+      title: null,
+      property_interests: null,
+      property_interests_custom: null,
+      preferred_investment_range: null,
+      preferred_locations: null,
+      preferred_investment_type: null,
+      preferred_cap_rate_min: null,
+      preferred_cap_rate_max: null,
+      investor_status: null,
+      experience_level: null,
+      bio: null,
+      headshot: null,
+      banner: null,
+      created_at: "2025-05-19T17:02:49.000000Z",
+      updated_at: "2025-05-19T18:21:15.000000Z",
+    },
+  },
+];
 
 const Home = () => {
+  const ApiKey = import.meta.env.VITE_API_KEY;
+  const [Properties, setProperties] = useState([]);
+  const token = localStorage.getItem("token");
+
+  useEffect(() => {
+    async function GetProperty() {
+      try {
+        const GetPropertyData = await axios.get(`${ApiKey}/properties`);
+        const Response = GetPropertyData.data.data;
+        setProperties(Response);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    GetProperty();
+  }, []);
+
   useEffect(() => {
     document.documentElement.classList.add("dark");
   }, []);
@@ -98,9 +511,11 @@ const Home = () => {
                 </p>
               </div>
               <div className="mt-3">
-                <button className="w-[100%] border-[1px] border-solid border-textColor py-2 text-textColor font-Inter rounded-[6px]">
-                  Add a Property
-                </button>
+                <Link to={"/add-property3"}>
+                  <button className="w-[100%] border-[1px] border-solid border-textColor py-2.5 text-textColor font-Inter rounded-[6px] cursor-pointer hover-btn hover-btn-purple hover:border-black">
+                   <span> Add a Property</span>
+                  </button>
+                </Link>
               </div>
             </div>
             {/* CARD 2 */}
@@ -117,9 +532,11 @@ const Home = () => {
                 </p>
               </div>
               <div className="mt-3">
-                <button className="w-[100%] border-[1px] border-solid border-textColor py-2 text-textColor font-Inter rounded-[6px]">
-                  Add a Property
-                </button>
+                <Link to={"/admin/network"}>
+                  <button className="w-[100%] border-[1px] border-solid border-textColor py-2.5 text-textColor font-Inter rounded-[6px] cursor-pointer hover-btn hover-btn-purple hover:border-black">
+                    <span>Expand Your Network</span>
+                  </button>
+                </Link>
               </div>
             </div>
             {/* CARD 3 */}
@@ -136,9 +553,11 @@ const Home = () => {
                 </p>
               </div>
               <div className="mt-3">
-                <button className="w-[100%] border-[1px] border-solid border-textColor py-2 text-textColor font-Inter rounded-[6px]">
-                  Add a Property
-                </button>
+                  <Link to={token ? "/view-property" : "/plans"}>
+                    <button className="hover-btn hover-btn-purple w-[100%] border-[1px] border-solid border-textColor hover:border-black py-2.5 text-textColor font-Inter rounded-[6px] cursor-pointer">
+                      <span>View Off-Market Deals</span>
+                    </button>
+                  </Link>
               </div>
             </div>
           </div>
@@ -161,82 +580,35 @@ const Home = () => {
               </p>
             </div>
             <div className="w-[35%] flex justify-end">
-              <button className="px-5 font-Inter bg-[#1E1E1E] text-white py-3 rounded-[7px]">
-                View All Properties
-              </button>
+              <Link to={"/view-property"}>
+                <button className="hover-btn hover-btn-black px-5 font-Inter py-3 rounded-[7px] cursor-pointer">
+                  <span>View All Properties</span>
+                </button>
+              </Link>
             </div>
           </div>
           {/* PROPERTY CARD SECTION  */}
-          <div className="flex gap-7 w-[84%]">
-            <div className="w-[33%]">
-              <PropertiesCards
-                Img={PropertiesImage1}
-                Heading={"Seaside Serenity Villa"}
-                desc={
-                  " A stunning 4-bedroom, 3-bathroom villa in a peaceful suburban neighborhood... Read More"
-                }
-                Status={"Active"}
-                Price={"550,000"}
-              ></PropertiesCards>
-            </div>
-            <div className="w-[33%]">
-              <PropertiesCards
-                Img={PropertiesImage2}
-                Heading={"Seaside Serenity Villa"}
-                desc={
-                  " A stunning 4-bedroom, 3-bathroom villa in a peaceful suburban neighborhood... Read More"
-                }
-                Status={"Rental"}
-                Price={"550,000"}
-              ></PropertiesCards>
-            </div>
-            <div className="w-[33%]">
-              <PropertiesCards
-                Img={PropertiesImage3}
-                Heading={"Seaside Serenity Villa"}
-                desc={
-                  " A stunning 4-bedroom, 3-bathroom villa in a peaceful suburban neighborhood... Read More"
-                }
-                Status={"Sold"}
-                Price={"550,000"}
-              ></PropertiesCards>
-            </div>
-          </div>
-          <div className="flex gap-7 w-[84%]">
-            <div className="w-[33%]">
-              <PropertiesCards
-                Img={PropertiesImage3}
-                Heading={"Seaside Serenity Villa"}
-                desc={
-                  " A stunning 4-bedroom, 3-bathroom villa in a peaceful suburban neighborhood... Read More"
-                }
-                Status={"Sold"}
-                Price={"550,000"}
-              ></PropertiesCards>
-            </div>
-            <div className="w-[33%]">
-              <PropertiesCards
-                Img={PropertiesImage1}
-                Heading={"Seaside Serenity Villa"}
-                desc={
-                  " A stunning 4-bedroom, 3-bathroom villa in a peaceful suburban neighborhood... Read More"
-                }
-                Status={"Active"}
-                Price={"550,000"}
-              ></PropertiesCards>
-            </div>
-
-            <div className="w-[33%]">
-              <PropertiesCards
-                Img={PropertiesImage2}
-                Heading={"Seaside Serenity Villa"}
-                desc={
-                  " A stunning 4-bedroom, 3-bathroom villa in a peaceful suburban neighborhood... Read More"
-                }
-                Status={"Rental"}
-                Price={"550,000"}
-              ></PropertiesCards>
-            </div>
+          <div className="flex flex-wrap gap-7 w-[84%]">
+            {Properties?.filter((item) => item.featured_listing)
+              .slice(0, 6)
+              .map((items) => (
+                <div key={items.id} className="w-[31%]">
+                  <PropertiesCards
+                    Img={PropertiesImage1}
+                    Heading={
+                      <TruncatedText
+                        text={items.property_name}
+                        maxLength={23}
+                      />
+                    }
+                    desc={
+                      <TruncatedText text={items.description} maxLength={90} />
+                    }
+                    Status={items.listing_type}
+                    Price={items.lease_rate}
+                  />
+                </div>
+              ))}
           </div>
         </section>
         {/* SECTION 2 END */}
@@ -256,40 +628,29 @@ const Home = () => {
               </p>
             </div>
             <div className="w-[35%] flex justify-end">
-              <button className="px-5 font-Inter bg-[#1E1E1E] text-white py-3 rounded-[7px]">
-                View All Developers
-              </button>
+              <Link to={token ? "/view-property" : "/plans"}>
+                <button className="hover-btn hover-btn-black px-5 font-Inter py-3 rounded-[7px] cursor-pointer">
+                  <span>View All Developers</span>
+                </button>
+              </Link>
             </div>
           </div>
           {/* PROPERTY CARD SECTION  */}
           <div className="flex gap-7 w-[84%]">
-            <TopDevelopes
-              Img={TopDeveloper1_1}
-              Heading={"New York City"}
-              MiniHeading={"Manhattan"}
-              desc={
-                " Known for its iconic skyline and bustling financial district, Manhattan is the heart of New York's real estate market."
-              }
-              Price={"550K"}
-            ></TopDevelopes>
-            <TopDevelopes
-              Img={TopDeveloper1_2}
-              Heading={"Los Angeles"}
-              MiniHeading={"Santa Monica"}
-              desc={
-                " Santa Monica offers a mix of beachfront properties and thriving retail spaces, ideal for both business and leisure."
-              }
-              Price={"550K"}
-            ></TopDevelopes>
-            <TopDevelopes
-              Img={TopDeveloper1_3}
-              Heading={"Miami"}
-              MiniHeading={"Brickell"}
-              desc={
-                "Brickell is Miami's financial hub, known for its high-rise apartments and vibrant nightlife scene."
-              }
-              Price={"550K"}
-            ></TopDevelopes>
+            {Properties?.filter((items) => items.off_market_listing)
+              .slice(0, 3)
+              .map((items) => (
+                <TopDevelopes
+                  key={items.id}
+                  Img={TopDeveloper1_1}
+                  Heading={items.city}
+                  MiniHeading={items.state}
+                  desc={
+                    <TruncatedText text={items.description} maxLength={90} />
+                  }
+                  Price={items.lease_rate}
+                ></TopDevelopes>
+              ))}
           </div>
         </section>
         {/* SECTION 3 END */}
@@ -357,9 +718,11 @@ const Home = () => {
                 Reach serious buyers, close deals faster, and maximize your
                 property's potential.{" "}
               </h1>
-              <button className="bg-PurpleColor py-2 text-[16px] text-white font-Inter rounded-[8px] w-full">
-                Sell your Property
+              <Link className="w-full" to={'/add-property3'}>
+              <button className="hover-btn-purple hover-btn py-2 text-[16px] text-white font-Inter rounded-[8px] w-full cursor-pointer">
+                <span>Sell your Property</span>
               </button>
+              </Link>
             </div>
             <div className="w-[25%] h-[90%]">
               <img className="" src={HomeSec5_2} alt="" />
@@ -382,9 +745,11 @@ const Home = () => {
               </p>
             </div>
             <div className="w-[35%] flex justify-end">
-              <button className="px-5 font-Inter bg-[#1E1E1E] text-white py-3 rounded-[7px]">
-                View more
+              <Link to={"/admin/network"}>
+              <button className="hover-btn hover-btn-black px-5 font-Inter py-3 rounded-[7px] cursor-pointer">
+                <span>View more</span>
               </button>
+              </Link>
             </div>
           </div>
           {/* CARD SECTION  */}

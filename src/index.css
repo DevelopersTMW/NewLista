@@ -15,6 +15,91 @@
 }
 
 
+
+@layer components {
+  /* Base Animation Styles */
+  .hover-btn {
+    @apply relative cursor-pointer overflow-hidden px-5 py-2 rounded-md font-medium transition-colors duration-300 ease-in-out border;
+  }
+
+  .hover-btn::before {
+    content: '';
+    @apply absolute left-0 bottom-0 w-full;
+    height: 0%;
+    border-radius: 50% 50% 0 0;
+    transition: height 0.8s;
+    z-index: 0;
+  }
+
+  .hover-btn span {
+    @apply relative z-10 transition-colors duration-300;
+  }
+
+  .hover-btn:hover::before {
+    height: 180%;
+  }
+
+  .hover-btn:hover span {
+    @apply text-white;
+  }
+
+  /* Theme: Black */
+  .hover-btn-black {
+    @apply text-white bg-[#1E1E1E];
+  }
+
+  .hover-btn-black::before {
+    @apply  bg-PurpleColor border-PurpleColor;
+  }
+  .hover-btn-black:hover {
+    @apply border-PurpleColor;
+  }
+
+  /* Theme: White */
+  .hover-btn-white {
+    @apply text-black bg-white border-white;
+  }
+
+  .hover-btn-white::before {
+    background-color: #000;
+  }
+
+  .hover-btn-white:hover {
+    @apply border-black;
+  }
+
+  /* Theme: Purple */
+  .hover-btn-purple {
+    @apply text-white bg-[#703BF7] border-[#703BF7];
+  }
+  .hover-btn-purple::before {
+    background-color: #1E1E1E;
+  }
+  .hover-btn-purple:hover {
+    @apply border-[#1E1E1E];
+  }
+   /* Theme: Yellow */
+  .hover-btn-yellow {
+    @apply text-white bg-YellowColor border-YellowColor;
+  }
+  .hover-btn-yellow::before {
+    background-color: #1E1E1E;
+  }
+  .hover-btn-yellow:hover {
+    @apply border-[#1E1E1E];
+  }
+    /* Theme: Yellow */
+  .hover-btn-green {
+    @apply text-[#008316] bg-transparent border-[#008316];
+  }
+  .hover-btn-green::before {
+    @apply bg-[#008316] border-[#008316] text-white
+  }
+  .hover-btn-green:hover {
+    @apply border-[#008316];
+  }
+}
+
 /* BUTTON HOVER ANIMATION */
 #HoverButton {
   position: relative; 

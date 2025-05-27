@@ -45,54 +45,41 @@ const Footer = () => {
             </form>
           </div>
           {/* SECTION 2  */}
-          <div className="flex grid-cols-2 gap-10 sm:gap-12 sm:grid-cols-5 w-[65%]">
+          <div className="flex justify-end grid-cols-2 gap-10 sm:gap-12 sm:grid-cols-5 w-[65%]">
             {/* TAB 1  */}
             <div>
               <h2 className="mb-4 text-[15px] font-semibold font-Urbanist text-[#999999] uppercase dark:text-white">
-                Resources
+                Quick Links
               </h2>
               <ul className="text-white dark:text-gray-400 text-[15px] font-[500] font-Urbanist">
-                <li className="mb-4">Hero Section</li>
-                <li className="mb-4">Features</li>
-                <li className="mb-4">Properties</li>
-                <li className="mb-4">Testimonials</li>
-                <li className="mb-4">FAQ’s</li>
+                <li className="mb-4 hover:text-[#c4c4c4]"><Link to={"/"}>Home</Link></li>
+                <li className="mb-4 hover:text-[#c4c4c4]"><Link to={"/about-us"}>About Us</Link></li>
+                <li className="mb-4 hover:text-[#c4c4c4]"><Link to={"/view-property"}>Properties</Link></li>
+                <li className="mb-4 hover:text-[#c4c4c4]"><Link to={'/add-property'}>Add Properties</Link></li>
+                <li className="mb-4 hover:text-[#c4c4c4]"><Link to={"/contact-us"}>Contact Us</Link></li>
               </ul>
             </div>
             {/* TAB 2  */}
             <div>
               <h2 className="mb-4 text-[15px] font-semibold font-Urbanist text-[#999999] uppercase dark:text-white">
-                About Us
+                Our Services
               </h2>
               <ul className="text-white dark:text-gray-400 font-[500] text-[15px] font-Urbanist">
-                <li className="mb-4">Our Story</li>
-                <li className="mb-4">Our Works</li>
-                <li className="mb-4">How It Works</li>
-                <li className="mb-4">Our Team</li>
-                <li className="mb-4">Our Clients</li>
+                <li className="mb-4 hover:text-[#c4c4c4]">Exclusive Off-Market Listings</li>
+                <li className="mb-4 hover:text-[#c4c4c4]">Seamless Property Transactions</li>
+                <li className="mb-4 hover:text-[#c4c4c4]">Real Estate Networking</li>
+                <li className="mb-4 hover:text-[#c4c4c4]">Data-Driven Market Insights</li>
               </ul>
             </div>
             {/* TAB 3 */}
             <div>
               <h2 className="mb-4 text-[15px] font-semibold font-Urbanist text-[#999999] uppercase dark:text-white">
-                Properties
+                Secure 
               </h2>
               <ul className="text-white text-[15px] dark:text-gray-400 font-[500] font-Urbanist">
-                <li className="mb-4">Portfolio</li>
-                <li className="mb-4">Categories</li>
-              </ul>
-            </div>
-            {/* TAb 4 */}
-            <div>
-              <h2 className="mb-4 text-[15px] font-semibold font-Urbanist text-[#999999] uppercase dark:text-white">
-                Services
-              </h2>
-              <ul className="text-white dark:text-gray-400 text-[15px] font-[500] font-Urbanist">
-                <li className="mb-4">Valuation Mastery</li>
-                <li className="mb-4">Strategic Marketing</li>
-                <li className="mb-4">Negotiation Wizardry</li>
-                <li className="mb-4">Closing Success</li>
-                <li className="mb-4">Property Management</li>
+                <li className="mb-4 hover:text-[#c4c4c4]"><Link to={'/login'}>Login</Link></li>
+                <li className="mb-4 hover:text-[#c4c4c4]"><Link to={"/register"}>Register</Link></li>
+                <li className="mb-4 hover:text-[#c4c4c4]"><Link to={"/our-plans"}>Our Plans</Link></li>
               </ul>
             </div>
             {/* TAB 5 */}
@@ -101,8 +88,9 @@ const Footer = () => {
                 Contact Us
               </h2>
               <ul className="text-white dark:text-gray-400 text-[15px] font-[500] font-Urbanist">
-                <li className="mb-4">Contact Form</li>
-                <li className="mb-4">Our Offices</li>
+                <li className="mb-4 hover:text-[#c4c4c4]"><Link to={"tel:123456789"}>123-456-789</Link></li>
+                <li className="mb-4 hover:text-[#c4c4c4]"><Link to={"mailto:info@gmail.com"}>info@gmail.com</Link></li>
+                <li className="mb-4 hover:text-[#c4c4c4]"><Link to={"https://maps.google.com"}>Your Address</Link></li>
               </ul>
             </div>
           </div>
@@ -110,11 +98,11 @@ const Footer = () => {
         {/* COPYRIGHT AND SOCIAL MEDIA  */}
         <div className="sm:flex sm:items-center sm:justify-between bg-[#1A1A1A] py-6 p-4 lg:py-8 mx-auto w-full px-20 ">
           <span className="text-sm text-white font-Urbanist sm:text-center dark:text-gray-400">
-            © 2023 <Link to={"/"} className="hover:underline">NewLista</Link>. All Rights
-            Reserved. <span className="ml-10">Terms & Conditions</span>
+            © 2025 <Link to={"/"} className="hover:underline">NewLista</Link>. All Rights
+            Reserved. <span className="ml-10 hover:text-[#c4c4c4]"><Link to={"/"}>Terms & Conditions</Link></span>
           </span>
           <div className="flex  mt-4 sm:justify-center sm:mt-0">
-            <Link className="text-white hover:text-gray-900 bg-[#141414] px-2 py-2 rounded-full dark:hover:text-white">
+            <Link className="text-white hover:bg-PurpleColor bg-[#141414] px-2 py-2 rounded-full dark:hover:text-white ms-5">
               <svg
                 className="w-4 h-4"
                 aria-hidden="true"
@@ -131,7 +119,7 @@ const Footer = () => {
               <span className="sr-only">Facebook page</span>
             </Link>
             <Link
-              className="text-white hover:text-gray-900 bg-[#141414] px-2 py-2 rounded-full dark:hover:text-white ms-5"
+              className="text-white hover:bg-PurpleColor bg-[#141414] px-2 py-2 rounded-full dark:hover:text-white ms-5"
             >
               <svg
                 className="w-4 h-4"
@@ -145,7 +133,7 @@ const Footer = () => {
               <span className="sr-only">Discord community</span>
             </Link>
             <Link
-              className="text-white hover:text-gray-900 bg-[#141414] px-2 py-2 rounded-full dark:hover:text-white ms-5"
+              className="text-white hover:bg-PurpleColor bg-[#141414] px-2 py-2 rounded-full dark:hover:text-white ms-5"
             >
               <svg
                 className="w-4 h-4"
@@ -163,7 +151,7 @@ const Footer = () => {
               <span className="sr-only">Twitter page</span>
             </Link>
             <Link
-              className="text-white hover:text-gray-900 bg-[#141414] px-2 py-2 rounded-full dark:hover:text-white ms-5"
+              className="text-white hover:bg-PurpleColor bg-[#141414] px-2 py-2 rounded-full dark:hover:text-white ms-5"
             >
               <svg
                 className="w-4 h-4"
@@ -181,7 +169,7 @@ const Footer = () => {
               <span className="sr-only">GitHub account</span>
             </Link>
             <Link
-              className="text-white hover:text-gray-900 bg-[#141414] px-2 py-2 rounded-full dark:hover:text-white ms-5"
+              className="text-white hover:bg-PurpleColor bg-[#141414] px-2 py-2 rounded-full dark:hover:text-white ms-5"
             >
               <svg
                 className="w-4 h-4"

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import {
   Select,
   Tab,
@@ -11,10 +11,10 @@ import {
 import Navbar from "../../Components/Navbar/Navbar";
 import Footer from "../../Components/Footer/Footer";
 import MiniFooter from "../../Components/Footer/MiniFooter";
-import PropertiesCards from "../../Components/Cards/PropertiesCards/PropertiesCards";
 // IMAGES
 import PropertiesImage1 from "../../assets/PropertiesImage1.png";
 import PropertiesImage2 from "../../assets/PropertiesImage2.png";
+import FilterIcon2 from "../../assets/FilterIcon2.png";
 import PropertiesImage3 from "../../assets/PropertiesImage3.png";
 import AddPropertyBanner from "../../assets/AddPropertyBanner.jpg";
 import ViewPropertyIcon1 from "../../assets/ViewPropertyIcon1.png";
@@ -27,6 +27,10 @@ import ViewPropertyIcon7 from "../../assets/ViewPropertyIcon7.png";
 import ViewPropertyIcon8 from "../../assets/ViewPropertyIcon8.png";
 import ViewPropertyIcon9 from "../../assets/ViewPropertyIcon9.png";
 import PropertiesCards2 from "../../Components/Cards/PropertiesCards/PropertiesCards2";
+import SearchBar from "../../Components/SearchBar/SearchBar";
+import axios from "axios";
+import TruncatedText from "../../Components/TruncatedText/TruncatedText";
+import EmptyCards from "../../Components/EmptyCard/EmptyCard";
 
 // TAB ITEMS
 const tabItems = [
@@ -69,100 +73,6 @@ const tabItems = [
   },
 ];
 
-// TABS PANELS
-const tabpanel = (
-  <TabPanel className="w-[100%] my-20 flex flex-wrap gap-4 px-16">
-    <div className="w-[23.5%]">
-      <PropertiesCards2
-        Img={PropertiesImage1}
-        Heading={"Seaside Serenity Villa"}
-        desc={
-          " A stunning 4-bedroom, 3-bathroom villa in a peaceful suburban neighborhood... Read More"
-        }
-        Status={"Active"}
-        Price={"550,000"}
-      ></PropertiesCards2>
-    </div>
-    <div className="w-[23.5%]">
-      <PropertiesCards2
-        Img={PropertiesImage3}
-        Heading={"Rustic Retreat Cottage"}
-        desc={
-          " An elegant 3-bedroom, 2.5-bathroom townhouse in a gated community... Read More"
-        }
-        Status={"Sold"}
-        Price={"550,000"}
-      ></PropertiesCards2>
-    </div>
-    <div className="w-[23.5%]">
-      <PropertiesCards2
-        Img={PropertiesImage2}
-        Heading={"Metropolitan Haven"}
-        desc={
-          " A chic and fully-furnished 2-bedroom apartment with panoramic city views... Read More"
-        }
-        Status={"Rental"}
-        Price={"550,000"}
-      ></PropertiesCards2>
-    </div>
-    <div className="w-[23.5%]">
-      <PropertiesCards2
-        Img={PropertiesImage1}
-        Heading={"Rustic Retreat Cottage"}
-        desc={
-          "An elegant 3-bedroom, 2.5-bathroom townhouse in a gated community... Read More"
-        }
-        Status={"Active"}
-        Price={"550,000"}
-      ></PropertiesCards2>
-    </div>
-    <div className="w-[23.5%]">
-      <PropertiesCards2
-        Img={PropertiesImage2}
-        Heading={"Rustic Retreat Cottage"}
-        desc={
-          " An elegant 3-bedroom, 2.5-bathroom townhouse in a gated community... Read More"
-        }
-        Status={"Sold"}
-        Price={"550,000"}
-      ></PropertiesCards2>
-    </div>
-    <div className="w-[23.5%]">
-      <PropertiesCards2
-        Img={PropertiesImage3}
-        Heading={"Metropolitan Haven"}
-        desc={
-          " A chic and fully-furnished 2-bedroom apartment with panoramic city views... Read More"
-        }
-        Status={"Sold"}
-        Price={"550,000"}
-      ></PropertiesCards2>
-    </div>
-    <div className="w-[23.5%]">
-      <PropertiesCards2
-        Img={PropertiesImage1}
-        Heading={"Seaside Serenity Villa"}
-        desc={
-          " A stunning 4-bedroom, 3-bathroom villa in a peaceful suburban neighborhood... Read More"
-        }
-        Status={"Active"}
-        Price={"550,000"}
-      ></PropertiesCards2>
-    </div>
-    <div className="w-[23.5%]">
-      <PropertiesCards2
-        Img={PropertiesImage3}
-        Heading={"Seaside Serenity Villa"}
-        desc={
-          " A stunning 4-bedroom, 3-bathroom villa in a peaceful suburban neighborhood... Read More"
-        }
-        Status={"Sold"}
-        Price={"550,000"}
-      ></PropertiesCards2>
-    </div>
-  </TabPanel>
-);
-
 // BACKGORUND
 const BannerBackground = {
   backgroundImage: `url(${AddPropertyBanner})`,
@@ -172,256 +82,148 @@ const BannerBackground = {
   backgroundColor: "#0009",
 };
 
-const propertyType = [
-  { name: "Select Your Property" },
-  { name: "Car Wash" },
-  { name: "Church" },
-  { name: "Condominium" },
-  { name: "Gas Station" },
-  { name: "Hotel" },
-  { name: "Industrial Park" },
-  { name: "Investment Home" },
-  { name: "Medical Building" },
-  { name: "Mixed Use" },
-  { name: "Mobile Home Park" },
-  { name: "Motel" },
-  { name: "Multifamily" },
-  { name: "Office Building" },
-  { name: "Recreation Center" },
-  { name: "Retail Center" },
-  { name: "Self-Storage Facility" },
-  { name: "School Building" },
-  { name: "Senior Living Facility" },
-  { name: "Shopping Center" },
-  { name: "Single Tenant Retail Building" },
-  { name: "Storage Facility" },
-  { name: "Townhomes" },
-  { name: "Vacant Land" },
-  { name: "Warehouse" },
-  { name: "Other" },
-];
-
 const ViewProperty = () => {
+  const ApiKey = import.meta.env.VITE_API_KEY;
+  const [Properties, setProperties] = useState([]);
+  const [FilterValue, setFilterValue] = useState("");
+  const isLoggedIn = localStorage.getItem("token");
+  const [ShowEmpty, setShowEmpty] = useState(false);
+
+  useEffect(() => {
+    async function GetProperty() {
+      try {
+        const GetPropertyData = await axios.get(`${ApiKey}/properties`);
+        const Response = GetPropertyData.data.data;
+        setProperties(Response);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    GetProperty();
+  }, []);
+
+  // CHECK IF USER EXIST THEN SHOW OFF MARKET
+  const filteredProperties = useMemo(() => {
+    let filtered = [];
+
+    if (FilterValue === "Off Market Properties") {
+      if (isLoggedIn) {
+        filtered = Properties.filter((item) => item.off_market_listing);
+      } else {
+        filtered = [];
+      }
+    } else if (FilterValue === "Features Property") {
+      filtered = Properties.filter((item) => item.featured_listing);
+    } else if (FilterValue === "Filter") {
+      if (isLoggedIn) {
+        filtered = Properties.filter(
+          (item) => item.featured_listing || item.off_market_listing
+        );
+      } else {
+        filtered = Properties.filter((item) => item.featured_listing);
+      }
+    } else {
+      filtered = Properties.filter((item) => item.featured_listing);
+    }
+
+    setShowEmpty(filtered.length === 0);
+    return filtered;
+  }, [Properties, isLoggedIn, FilterValue]);
+
+
+
   return (
     <>
       <Navbar></Navbar>
       {/* BANNER START  */}
       <section style={BannerBackground}>
-        
-         <div className="hidden sm:mb-8 sm:flex sm:justify-center  py-28">
-                      <div className="relative flex rounded-full px-6.5 py-3.5 text-sm/6 text-gray-600 ring-1 ring-gray-900/10 hover:ring-gray-900/20 bg-textColor justify-center items-center">
-                        <div className="px-4 py-2 border-r-[1px] border-solid border-Paracolor">
-                          <Select
-                            name="status"
-                            aria-label="Project status"
-                            className={
-                              "overline-none text-[16px] font-Inter text-black font-[500]"
-                            }
-                          >
-                            <option className="overline-none font-Inter" value="active">
-                              Buy
-                            </option>
-                            <option className="overline-none font-Inter" value="active">
-                              Sale
-                            </option>
-                            <option className="overline-none font-Inter" value="paused">
-                              Lease
-                            </option>
-                          </Select>
-                        </div>
-        
-                        <div className="px-8 py-1 border-r-[1px] border-solid border-Paracolor flex flex-col ">
-                          <h1 className="text-[14px] font-Inter text-black font-[600]">
-                            Location
-                          </h1>
-                          <Select
-                            name="status"
-                            aria-label="Project status"
-                            className={
-                              "overline-none text-[13px] font-Inter text-Paracolor font-[500] -mt-0.5 -ml-1"
-                            }
-                          >
-                            <option className="overline-none font-Inter" value="active">
-                              Select Your City
-                            </option>
-                            <option className="" value="active">
-                              New York
-                            </option>
-                            <option className="" value="paused">
-                              Austin
-                            </option>
-                            <option className="" value="delayed">
-                              Phoenix
-                            </option>
-                            <option className="" value="canceled">
-                              Chicago
-                            </option>
-                            <option className="" value="canceled">
-                              Houston
-                            </option>
-                            <option className="" value="canceled">
-                              Los Angeles
-                            </option>
-                          </Select>
-                        </div>
-                        <div className="px-8 py-1 border-r-[1px] border-solid border-Paracolor flex flex-col ">
-                          <h1 className="text-[14px] font-Inter text-black font-[600]">
-                            State
-                          </h1>
-                          <Select
-                            disabled
-                            name="status"
-                            aria-label="Project status"
-                            className={
-                              "overline-none text-[13px] font-Inter text-Paracolor font-[500] -mt-0.5 -ml-1"
-                            }
-                          >
-                            <option className="overline-none font-Inter" value="active">
-                              Select Your State
-                            </option>
-                            <option className="" value="active">
-                              Active
-                            </option>
-                            <option className="" value="paused">
-                              Paused
-                            </option>
-                            <option className="" value="delayed">
-                              Delayed
-                            </option>
-                            <option className="" value="canceled">
-                              Canceled
-                            </option>
-                          </Select>
-                        </div>
-                        <div className="px-8 py-1 border-r-[1px] border-solid border-Paracolor flex flex-col ">
-                          <h1 className="text-[14px] font-semibold font-Inter text-black ">
-                            Property Type
-                          </h1>
-                          <Select
-                            name="status"
-                            aria-label="Project status"
-                            className={
-                              "overline-none text-[13px] font-Inter text-Paracolor font-[500] -mt-0.5 -ml-1"
-                            }
-                          >
-                            {propertyType.map((item, index) => (
-                              <option
-                                key={index}
-                                className="outline-none font-Inter"
-                                value={item.name}
-                              >
-                                {item.name}
-                              </option>
-                            ))}
-                          </Select>
-                        </div>
-                        <div className="px-8 py-1  flex flex-col ">
-                          <h1 className="text-[14px] font-Inter text-black font-[600]">
-                            Price Range
-                          </h1>
-                          <Select
-                            name="status"
-                            aria-label="Project status"
-                            className={
-                              "overline-none text-[13px] font-Inter text-Paracolor font-[500] -mt-0.5 -ml-1"
-                            }
-                          >
-                            <option className="overline-none font-Inter" value="active">
-                              Choose Price Range
-                            </option>
-                            <option className="" value="active">
-                              Under $250K
-                            </option>
-                            <option className="" value="paused">
-                              $250K – $500K
-                            </option>
-                            <option className="" value="delayed">
-                              $500K – $1M
-                            </option>
-                            <option className="" value="canceled">
-                              $1M – $2.5M
-                            </option>
-                            <option className="" value="canceled">
-                              $2.5M – $5M
-                            </option>
-                            <option className="" value="canceled">
-                              $5M – $10M
-                            </option>
-                            <option className="" value="canceled">
-                              $10M – $25M
-                            </option>
-                            <option className="" value="canceled">
-                              $25M – $50M
-                            </option>
-                            <option className="" value="canceled">
-                              Over $50M
-                            </option>
-                          </Select>
-                        </div>
-                        <div>
-                          <button className="bg-PurpleColor text-white px-2 py-2 rounded-full text-[14px] cursor-pointer">
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              fill="none"
-                              viewBox="0 0 24 24"
-                              stroke-width="1.5"
-                              stroke="currentColor"
-                              className="size-5 font-bold"
-                            >
-                              <path
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"
-                              />
-                            </svg>
-                          </button>
-                        </div>
-                      </div>
-                    </div>
+        <div className="py-28 px-12">
+          <SearchBar></SearchBar>
+        </div>
       </section>
       {/* BANNER END   */}
 
       {/* PROPERTY TABS START */}
       <section>
         <TabGroup>
-          <TabList
-            className={
-              "flex gap-7 px-12 pt-5 justify-center border-b-[1px] border-[#BBBBBB] border-solid"
-            }
-          >
-            {tabItems.map((item, index) => (
-              <Tab key={index} as={React.Fragment}>
-                {({ selected }) => (
-                  <span
-                    className={`flex flex-col justify-evenly items-center text-center pb-5 gap-1 focus:outline-none cursor-pointer ${
-                      selected
-                        ? "border-b-2 border-Paracolor"
-                        : "border-b-2 border-transparent"
-                    }`}
-                  >
-                    <img
-                      className="w-[25px]"
-                      src={item.image}
-                      alt={item.label}
-                    />
-                    <h5 className="font-Poppins text-Paracolor text-[13px]  font-semibold">
-                      {item.label}
-                    </h5>
-                  </span>
-                )}
-              </Tab>
-            ))}
-          </TabList>
+          <div className="flex gap-8 px-8 pt-7 items-end  justify-center  border-b-[1px] border-[#BBBBBB] border-solid">
+            <TabList className={"flex gap-5 items-end  justify-center"}>
+              {tabItems.map((item, index) => (
+                <Tab key={index} as={React.Fragment}>
+                  {({ selected }) => (
+                    <span
+                      className={`flex flex-col justify-evenly items-center text-center pb-5 gap-1 focus:outline-none cursor-pointer ${
+                        selected
+                          ? "border-b-2 border-Paracolor"
+                          : "border-b-2 border-transparent"
+                      }`}
+                    >
+                      <img
+                        className="w-[25px]"
+                        src={item.image}
+                        alt={item.label}
+                      />
+                      <h5 className="font-Poppins text-Paracolor text-[13px]  font-semibold">
+                        {item.label}
+                      </h5>
+                    </span>
+                  )}
+                </Tab>
+              ))}
+            </TabList>
+            <div className="flex justify-center gap-2 font-Poppins border-[1px] px-4  border-solid border-[#bebebe] rounded-[6px] text-Paracolor text-[15px] items-center font-semibold mb-6 ">
+              <img className="w-5 h-5" src={FilterIcon2} alt="" />
+              <Select
+                className={
+                  "appearance-none outline-none focus:outline-none w-14 px-1 py-2.5 cursor-pointer"
+                }
+                name="status"
+                aria-label="Project status"
+                value={FilterValue}
+                onChange={(e) => {
+                  setFilterValue(e.target.value);
+                }}
+              >
+                <option
+                  className="text-[#1a1919] font-[500] font-Urbanist text-[15px]"
+                  value="Filter"
+                >
+                  Filter
+                </option>
+                <option
+                  className="text-[#1a1919] font-[500] font-Urbanist text-[15px]"
+                  value="Features Property"
+                >
+                  Features Property
+                </option>
+                <option
+                  className="text-[#1a1919] font-[500] font-Urbanist text-[15px]"
+                  value="Off Market Properties"
+                >
+                  Off Market Properties
+                </option>
+              </Select>
+            </div>
+          </div>
+
           <TabPanels>
-            {tabpanel}
-            {tabpanel}
-            {tabpanel}
-            {tabpanel}
-            {tabpanel}
-            {tabpanel}
-            {tabpanel}
-            {tabpanel}
-            {tabpanel}
+            <TabPanel className="w-[100%] my-20 flex flex-wrap gap-4 px-16">
+              {ShowEmpty ? (
+                <EmptyCards Title={"Unlock hidden opportunities by upgrading to a premium membership"} />
+              ) : (
+                filteredProperties.slice(0, 6).map((items) => (
+                  <div key={items.id} className="w-[23.5%]">
+                    <PropertiesCards2
+                      Img={PropertiesImage3}
+                      Heading={items.property_name}
+                      desc={items.description}
+                      Status={items.listing_type}
+                      Price={items.lease_rate}
+                    ></PropertiesCards2>
+                  </div>
+                ))
+              )}
+            </TabPanel>
           </TabPanels>
         </TabGroup>
       </section>

@@ -1,22 +1,22 @@
-import React from 'react'
-// IMAGES 
-import BgImage from '../../assets/JourneySecImage.jpg'
+import React from "react";
+// IMAGES
+import BgImage from "../../assets/JourneySecImage.jpg";
+import { Link } from "react-router-dom";
 
-// CSS 
+// CSS
 const JourneyBgImage = {
-    backgroundImage: `url(${BgImage})`,
-    backgroundSize: "cover",
-    backgroundRepeat: "no-repeat",
-    backgroundColor: "#0009",
-    backgroundBlendMode: "color",
-  };
-
+  backgroundImage: `url(${BgImage})`,
+  backgroundSize: "cover",
+  backgroundRepeat: "no-repeat",
+  backgroundColor: "#0009",
+  backgroundBlendMode: "color",
+};
 
 const MiniFooter = () => {
   return (
-   <>
-   {/*START YOUR JOURNEY SECTION START  */}
-   <div style={JourneyBgImage} className="bg-[#0F0F0F]">
+    <>
+      {/*START YOUR JOURNEY SECTION START  */}
+      <div style={JourneyBgImage} className="bg-[#0F0F0F]">
         {/* CONTENT SECTION  */}
         <div className="flex justify-center items-center px-24 py-[60px]">
           <div className="w-[65%]">
@@ -31,15 +31,17 @@ const MiniFooter = () => {
             </p>
           </div>
           <div className="w-[35%] flex justify-end">
-            <button className="px-5 font-Inter bg-PurpleColor text-white py-3 rounded-[7px]">
-              Join the Network
-            </button>
+            <Link to={"/admin/network"}>
+              <button className="px-5 font-Inter hover-btn-purple hover-btn py-3 rounded-[7px] cursor-pointer">
+                <span>Join the Network</span>
+              </button>
+            </Link>
           </div>
         </div>
       </div>
       {/*START YOUR JOURNEY SECTION END  */}
-   </>
-  )
-}
+    </>
+  );
+};
 
-export default MiniFooter
+export default MiniFooter;

@@ -7,11 +7,11 @@ import PropertyIcon2 from "../../../assets/PropertyIcon2.png";
 const PropertiesCards = ({ Img, Heading, desc, Status, Price}) => {
   return (
     <>
-      <div className="w-[100%] bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
+      <div className="w-[100%] bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700 ">
         <Link>
           <img className="rounded-t-lg h-[270px] object-cover w-[100%]" src={Img} alt="" />
         </Link>
-        <div className="p-5 flex flex-col gap-2">
+        <div className="p-5 flex flex-col gap-2 justify-center">
           <div>
             {"Active" === Status ? (
               <span className="bg-[#28A745] text-white font-Inter px-3 py-1 text-[14px] rounded-full">
@@ -20,12 +20,12 @@ const PropertiesCards = ({ Img, Heading, desc, Status, Price}) => {
             ) : "Sold" === Status ? (
               <span className="bg-[#DC3545] text-white font-Inter px-3 py-1 text-[14px] rounded-full">Sold</span>
             ) : (
-              <span className="bg-[#FFC107] text-white font-Inter px-3 py-1 text-[14px] rounded-full">Rental</span>
+              <span className="bg-[#FFC107] text-white font-Inter px-3 py-1 text-[14px] rounded-full">{Status}</span>
             )}
           </div>
           <div>
             <Link>
-              <h1 className="mb-2 text-[25px] font-[600] font-Inter tracking-tight leading-[24px] mt-3 text-gray-900 dark:text-white">
+              <h1 className="mb-2 text-[25px] font-[600] font-Inter tracking-tight leading-[27px] mt-3 text-gray-900 dark:text-white ">
                 {Heading}
               </h1>
             </Link>
@@ -49,8 +49,8 @@ const PropertiesCards = ({ Img, Heading, desc, Status, Price}) => {
               <h1 className="font-Inter text-[18px] font-bold">${Price}</h1>
             </div>
             <div>
-              <Link className="inline-flex font-Inter text-[15.3px] items-center px-5 py-2.5 rounded-full text-sm font-medium text-center text-white bg-PurpleColor hover:bg-PurpleColor focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-PurpleColor dark:hover:bg-PurpleColor dark:focus:ring-PurpleColor">
-              View Property Details
+              <Link className="inline-flex font-Inter text-[15.3px] items-center px-5 py-2.5 rounded-full text-sm font-medium text-center focus:outline-none  hover-btn-purple hover-btn">
+              <span>View Property Details</span>
               </Link>
             </div>
           </div>

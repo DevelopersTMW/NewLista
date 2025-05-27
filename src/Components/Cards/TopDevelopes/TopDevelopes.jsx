@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 const TopDevelopes = ({ Img, MiniHeading, Heading, desc, Price }) => {
   return (
     <>
-      <div className="w-[33%] bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700 px-8 py-8">
+      <div className="w-[33%] bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700 px-7 py-7">
         <Link>
           <img className="rounded-lg h-[240px] object-cover w-[100%] " src={Img} alt="" />
         </Link>
@@ -39,8 +39,8 @@ const TopDevelopes = ({ Img, MiniHeading, Heading, desc, Price }) => {
               <h1 className="font-Inter text-[22px] font-bold">${Price}</h1>
             </div>
             <div>
-              <Link className="inline-flex font-Inter text-[15.3px] items-center px-5 py-2.5 rounded-full text-sm font-medium text-center text-white bg-YellowColor hover:bg-YellowColor focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-YellowColor dark:hover:bg-YellowColor dark:focus:ring-YellowColor">
-              Browse all
+              <Link className="inline-flex font-Inter text-[15.3px] items-center px-5 py-2.5 rounded-full text-sm font-medium text-center focus:outline-none hover-btn-yellow hover-btn ">
+              <span>Browse all</span>
               </Link>
             </div>
           </div>
