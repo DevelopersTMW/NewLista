@@ -32,7 +32,7 @@ const Footer = () => {
                   type="search"
                   id="default-search"
                   className="block w-full p-3.5  ps-4 text-sm font-Urbanist font-semibold placeholder:text-[#999999]  text-[#ffffff] outline-none rounded-lg"
-                  placeholder="Enter Your Email "
+                  placeholder="Subscribe To Our Newsletter "
                   required
                 />
                 <button
@@ -57,6 +57,7 @@ const Footer = () => {
                 <li className="mb-4 hover:text-[#c4c4c4]"><Link to={"/view-property"}>Properties</Link></li>
                 <li className="mb-4 hover:text-[#c4c4c4]"><Link to={'/add-property'}>Add Properties</Link></li>
                 <li className="mb-4 hover:text-[#c4c4c4]"><Link to={"/contact-us"}>Contact Us</Link></li>
+                <span className=" hover:text-[#c4c4c4]"><Link to={"/"}>Terms & Conditions</Link></span>
               </ul>
             </div>
             {/* TAB 2  */}
@@ -99,7 +100,7 @@ const Footer = () => {
         <div className="sm:flex sm:items-center sm:justify-between bg-[#1A1A1A] py-6 p-4 lg:py-8 mx-auto w-full px-20 ">
           <span className="text-sm text-white font-Urbanist sm:text-center dark:text-gray-400">
             © 2025 <Link to={"/"} className="hover:underline">NewLista</Link>. All Rights
-            Reserved. <span className="ml-10 hover:text-[#c4c4c4]"><Link to={"/"}>Terms & Conditions</Link></span>
+            Reserved.
           </span>
           <div className="flex  mt-4 sm:justify-center sm:mt-0">
             <Link className="text-white hover:bg-PurpleColor bg-[#141414] px-2 py-2 rounded-full dark:hover:text-white ms-5">

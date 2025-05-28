@@ -13,6 +13,7 @@ import Logo from "../../assets/WhiteLogo.png";
 
 function Navbar() {
 
+  const token = localStorage.getItem("token")
   //  MOBILE NAVBAR CHECK
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -60,6 +61,12 @@ function Navbar() {
               className="text-sm/6 font-[500]  text-textColor  font-Inter "
             >
               Properties
+            </Link>
+            <Link
+              to={token ? "/admin/netowrking" : "/login"}
+              className="text-sm/6 font-[500]  text-textColor  font-Inter "
+            >
+              Networking
             </Link>
             <Link
               to={"/contact-us"}

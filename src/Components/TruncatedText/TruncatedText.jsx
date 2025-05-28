@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-function TruncatedText({ text, maxLength = 100 }) {
+function TruncatedText({ text, maxLength  }) {
   const [isExpanded, setIsExpanded] = useState(false);
 
   if (!text) return null;
@@ -14,7 +14,7 @@ function TruncatedText({ text, maxLength = 100 }) {
   const toggleExpand = () => setIsExpanded(prev => !prev);
 
   return (
-    <p>
+    <span>
       {displayedText}
       {isLongText && (
         <button
@@ -34,7 +34,7 @@ function TruncatedText({ text, maxLength = 100 }) {
           {/* {isExpanded ? 'Show less' : 'Read more'} */}
         </button>
       )}
-    </p>
+    </span>
   );
 }
 

@@ -46,28 +46,27 @@ const AboutUs = () => {
           <div className="w-[50%] flex flex-col justify-center">
             {/* Heading  */}
             <div className="border-b-[1px] border-[#BBBBBB] border-solid pb-7">
-              <h1 class="text-[42px] font-Urbanist font-bold text-[#000000]">
+              <h1 class="text-[42px] font-Urbanist font-bold text-[#ffffff]">
                 About NewLista
               </h1>
-              <p class="mx-auto max-w-3xl  t font-semibold text-pretty text-black sm:text-[17px] font-Urbanist">
-                Discover the story behind NewLista where passion for real estate
-                meets innovation and integrity.
+              <p class="mx-auto max-w-3xl  t font-semibold text-pretty text-white sm:text-[17px] font-Urbanist">
+                Discover the story behind NewLista, where a passion for real
+                estate meets innovation and integrity.
               </p>
             </div>
             {/* Paragraph  */}
             <div>
-              <p class="mx-auto mt-6 max-w-3xl  text-[16px] font-medium text-pretty text-[#222222] sm:text-md/8 font-Urbanist">
+              <p class="mx-auto mt-6 max-w-3xl  text-[16px] font-medium text-pretty text-[#ffff] sm:text-md/8 font-Urbanist">
                 {" "}
-                At NewLista, we’re redefining the way real estate professionals
-                connect, collaborate, and close deals. Built for investors,
-                brokers, and property owners, our platform offers seamless
+                At NewLista, we're redefining how real estate investors connect,
+                collaborate, and close deals. Our platform offers seamless
                 access to off-market listings, powerful networking tools, and
                 exclusive market insights. Whether you're buying, selling, or
                 expanding your investment portfolio, NewLista empowers you with
                 the tools and connections you need to succeed.
               </p>
             </div>
-            <div className="flex gap-4 mt-6">
+            {/* <div className="flex gap-4 mt-6">
               <span className="bg-white rounded-[6px] px-4 py-4">
                 <h1 class="text-[26px] font-bold font-Inter text-PurpleColor">
                   200+
@@ -92,7 +91,7 @@ const AboutUs = () => {
                   Years of Experience
                 </p>
               </span>
-            </div>
+            </div> */}
           </div>
         </div>
       </section>
@@ -100,39 +99,46 @@ const AboutUs = () => {
 
       {/* SECTION 1 START  */}
       <section className="flex justify-center pt-20 pb-10">
-        <div className="bg-[#F1ECFF] flex flex-col justify-center w-[85%] px-20 py-14 gap-8 rounded-[15px]">
+        <div className="bg-[#F1ECFF] flex flex-col justify-center w-[85%] px-10 py-14 gap-8 rounded-[15px]">
           <div className="flex flex-col  text-center">
             <h1 className="text-7xl font-[700] font-Urbanist  text-[#1E1E1E] sm:text-[42px] leading-[48px]">
               Our Services
             </h1>
           </div>
-          <div className="flex flex-col gap-7 ">
+          <div className="flex flex-col ">
             {/* CARD 1 PART  */}
             <div className="flex gap-7">
-              <div className="bg-white px-5 py-5 rounded-[8px] flex justify-center flex-col  gap-3">
+              <div className="bg-white w-[33%] px-5 py-5 rounded-[8px] flex justify-center flex-col  gap-3">
                 <h1 className="font-semibold font-Urbanist text-[21px]">
-                  🏢 Exclusive Off-Market Listings
+                  🏢 Off-Market Listings
                 </h1>
                 <p className="text-[#222222] font-Inter text-[15px] ">
-                  Gain access to premium real estate deals not available
-                  anywhere else. Connect with verified sellers and investors to
-                  discover hidden opportunities.
+                  Gain access to exclusive property listings not available on
+                  public platforms.
                 </p>
               </div>
-              <div className="bg-white px-5 py-5 rounded-[8px] w-[70%] flex justify-center flex-col  gap-3">
+              <div className="bg-white px-5 w-[33%] py-5 rounded-[8px]  flex justify-center flex-col  gap-3">
                 <h1 className="font-semibold font-Urbanist text-[20px]">
                   🔗 Real Estate Networking
                 </h1>
                 <p className="text-[#222222] font-Inter text-[13.5px]">
-                  Build valuable connections with industry professionals. Join a
-                  thriving community of investors, brokers, and property owners
-                  to collaborate and grow your portfolio.
+                  Connect with fellow investors to build valuable relationships
+                  and explore collaborative opportunities.
+                </p>
+              </div>
+              <div className="bg-white w-[33%] px-5 py-5 rounded-[8px] flex justify-center flex-col  gap-3">
+                <h1 className="font-semibold font-Urbanist text-[21px]">
+                  📊 Investment Insights
+                </h1>
+                <p className="text-[#222222] font-Inter text-[15px]">
+                  Stay informed with the latest market trends and data to make
+                  strategic investment decisions.
                 </p>
               </div>
             </div>
             {/* CARD 2 PART  */}
             <div className="flex gap-7">
-              <div className="bg-white px-5 py-5 rounded-[8px] w-[70%] flex justify-center flex-col  gap-3">
+              {/* <div className="bg-white px-5 py-5 rounded-[8px] w-[70%] flex justify-center flex-col  gap-3">
                 <h1 className="font-semibold font-Urbanist text-[20px]">
                   💰 Seamless Property Transactions
                 </h1>
@@ -141,17 +147,7 @@ const AboutUs = () => {
                   closing, our platform simplifies the process and maximizes
                   your success.
                 </p>
-              </div>
-              <div className="bg-white px-5 py-5 rounded-[8px] flex justify-center flex-col  gap-3">
-                <h1 className="font-semibold font-Urbanist text-[21px]">
-                  📊 Data-Driven Market Insights
-                </h1>
-                <p className="text-[#222222] font-Inter text-[15px]">
-                  Stay ahead with real-time analytics and trends. Make informed
-                  decisions with expert-driven insights on commercial real
-                  estate opportunities.
-                </p>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>
@@ -167,7 +163,7 @@ const AboutUs = () => {
         </div>
         <div className="flex gap-8 w-[85%]">
           {/* CARD 1  */}
-          <div className="w-[33%] bg-PurpleColor rounded-[10px] px-5.5 py-8 flex flex-col gap-4 min-h-[190px] justify-center">
+          <div className="w-[33%] bg-black rounded-[10px] px-5.5 py-8 flex flex-col gap-4 min-h-[190px] justify-center">
             <div>
               <img src={AboutIcon1_1} alt="" />
             </div>
@@ -183,7 +179,7 @@ const AboutUs = () => {
             </div>
           </div>
           {/* CARD 2 */}
-          <div className="w-[33%] bg-PurpleColor rounded-[10px] px-5.5 py-8 flex flex-col gap-4 min-h-[190px] justify-center">
+          <div className="w-[33%] bg-black rounded-[10px] px-5.5 py-8 flex flex-col gap-4 min-h-[190px] justify-center">
             <div>
               <img src={AboutIcon1_2} alt="" />
             </div>
@@ -199,7 +195,7 @@ const AboutUs = () => {
             </div>
           </div>
           {/* CARD 3 */}
-          <div className="w-[33%] bg-PurpleColor rounded-[10px] px-5.5 py-8 flex flex-col gap-4 min-h-[190px] justify-center">
+          <div className="w-[33%] bg-black rounded-[10px] px-5.5 py-8 flex flex-col gap-4 min-h-[190px] justify-center">
             <div className="w-[100px]">
               <img src={AboutIcon1_3} alt="" />
             </div>
@@ -219,7 +215,7 @@ const AboutUs = () => {
       {/* SECTION 2 END  */}
 
       {/* SECTION 3 START  */}
-      <section className="flex flex-col justify-center items-center pb-20 gap-10">
+      <section className="flex flex-col justify-center items-center py-16 gap-10">
         {/* CONTENT SECTION  */}
         <div className="w-[84%]">
           <h1 className="text-7xl font-[700] font-Urbanist  text-[#1E1E1E] sm:text-[37px] leading-[48px]">
@@ -227,8 +223,8 @@ const AboutUs = () => {
           </h1>
           <p className="text-md font-Inter font-medium text-pretty text-Paracolor mt-2 sm:text-[14px]/5.5  ">
             Read the success stories and heartfelt testimonials from our valued
-            clients. Discover why they chose Estatein for their real estate
-            needs.
+            clients. Discover why they chose NewLista for their real estate
+            needs
           </p>
         </div>
         {/* CARDSECTION  */}
@@ -238,30 +234,30 @@ const AboutUs = () => {
             RevParagraph={
               "Newlista has transformed my real estate investing. It connected me with exclusive off-market deals, including a commercial property I recently closed. The platform is efficient, easy to use, and has opened up networking and deal opportunities I never thought possible"
             }
-            Stars={3}
+            Stars={5}
             RevImage={RevImage1}
             UserName={"Mike O"}
-            Desination={"Real Estate Investor "}
+            Desination={"Investor "}
           ></Testimonials>
           <Testimonials
             RevTitle={""}
             RevParagraph={
-              "As a newcomer to commercial real estate, Newlista has been invaluable. Its curated listings and expert connections helped me invest confidently in a growing metro area. The insights from experienced investors made all the difference"
+              "As a seasoned real estate investor, I'm always looking for an edge. NewLista's networking features and exclusive off-market listings have given me just that. The tailored notifications save me time, and the ability to share my own listings with a select group of professionals has led to quicker, more profitable deals. It's become an indispensable tool in my investment arsenal."
             }
-            Stars={4}
+            Stars={5}
             RevImage={RevImage2}
-            UserName={"Leila N."}
+            UserName={"Charles K"}
             Desination={"Investor"}
           ></Testimonials>
           <Testimonials
             RevTitle={""}
             RevParagraph={
-              "As a broker focused on value-add properties, Newlista has transformed how I work. It’s expanded my reach, helped me close multiple deals, and streamlined the process so I can focus on finding top opportunities for clients. The professional network is unmatched."
+              "Newlista is revolutionizing how I connect with fellow real estate investors. The platform's focus on facilitating networking among professionals is a game-changer. I'm particularly excited about the potential to share and discover off-market listings exclusively with other investors. This feature alone could be invaluable for finding hidden gem properties."
             }
             Stars={5}
             RevImage={RevImage3}
             UserName={"Michael M"}
-            Desination={"Commercial Real Estate Broker. "}
+            Desination={"Investor"}
           ></Testimonials>
         </div>
       </section>

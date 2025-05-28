@@ -8,6 +8,8 @@ import Logo from "../../assets/Logo.png";
 
 
 function TransparentNavbar() {
+
+  const token = localStorage.getItem("token")
   // MOBILE MENU CHECK
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -55,6 +57,12 @@ function TransparentNavbar() {
             className="text-sm/6 font-[500]  text-textColor  font-Inter hover:text-[#c4c4c4] "
           >
             Properties
+          </Link>
+          <Link
+            to={token ? "/admin/netowrking" : "/login"}
+            className="text-sm/6 font-[500]  text-textColor  font-Inter hover:text-[#c4c4c4] "
+          >
+            Netoworking
           </Link>
           <Link
             to={"contact-us"}

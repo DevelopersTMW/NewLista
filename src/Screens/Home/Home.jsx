@@ -472,10 +472,10 @@ const Home = () => {
                 The Ultimate Commercial Real Estate Marketplace & Investor
                 Network
               </h1>
-              <p className="mt-8 text-md font-medium text-pretty text-textColor sm:text-lg/8 ">
+              {/* <p className="mt-8 text-md font-medium text-pretty text-textColor sm:text-lg/8 ">
                 List properties, connect with investors, and unlock exclusive
                 off-the-market deals—all in one powerful platform.
-              </p>
+              </p> */}
             </div>
             <div>
               <SearchBar></SearchBar>
@@ -491,9 +491,9 @@ const Home = () => {
               Seamless Real Estate Investing Starts Here
             </h1>
             <p className="text-md font-Inter font-medium text-pretty text-Paracolor mt-2 sm:text-md/8 ">
-              NewLista simplifies how investors, buyers, and sellers connect.
-              Discover exclusive listings, grow your network, and close
-              deals—all in one easy-to-use platform.
+              NewLista connects real estate investors—buyers and sellers—on one
+              platform built to list properties, showcase exclusive off-market
+              deals, grow your network, and close more deals.
             </p>
           </div>
           <div className="flex gap-8 w-[83%]">
@@ -511,9 +511,9 @@ const Home = () => {
                 </p>
               </div>
               <div className="mt-3">
-                <Link to={"/add-property3"}>
+                <Link to={"/form"}>
                   <button className="w-[100%] border-[1px] border-solid border-textColor py-2.5 text-textColor font-Inter rounded-[6px] cursor-pointer hover-btn hover-btn-purple hover:border-black">
-                   <span> Add a Property</span>
+                    <span> Add a Property</span>
                   </button>
                 </Link>
               </div>
@@ -525,7 +525,7 @@ const Home = () => {
               </div>
               <div className="flex flex-col gap-3">
                 <h1 className="text-textColor font-Inter font-semibold text-[23px] leading-[22px]">
-                  Connect & Collaborate
+                  Add a Property
                 </h1>
                 <p className="text-textColor font-Inter text-[16px]">
                   Build your network and form partnerships.
@@ -534,7 +534,7 @@ const Home = () => {
               <div className="mt-3">
                 <Link to={"/admin/network"}>
                   <button className="w-[100%] border-[1px] border-solid border-textColor py-2.5 text-textColor font-Inter rounded-[6px] cursor-pointer hover-btn hover-btn-purple hover:border-black">
-                    <span>Expand Your Network</span>
+                    <span>Create a Network</span>
                   </button>
                 </Link>
               </div>
@@ -546,18 +546,18 @@ const Home = () => {
               </div>
               <div className="flex flex-col gap-3">
                 <h1 className="text-textColor font-Inter font-semibold text-[23px] leading-[27px]">
-                  Search for Off-Market Properties
+                  Add a Property to Find Off Market Properties
                 </h1>
                 <p className="text-textColor font-Inter text-[16px]">
                   Access off-market deals and make direct offers.
                 </p>
               </div>
               <div className="mt-3">
-                  <Link to={token ? "/view-property" : "/plans"}>
-                    <button className="hover-btn hover-btn-purple w-[100%] border-[1px] border-solid border-textColor hover:border-black py-2.5 text-textColor font-Inter rounded-[6px] cursor-pointer">
-                      <span>View Off-Market Deals</span>
-                    </button>
-                  </Link>
+                <Link to={token ? "/view-property" : "/pricing"}>
+                  <button className="hover-btn hover-btn-purple w-[100%] border-[1px] border-solid border-textColor hover:border-black py-2.5 text-textColor font-Inter rounded-[6px] cursor-pointer">
+                    <span>View Off-Market Deals</span>
+                  </button>
+                </Link>
               </div>
             </div>
           </div>
@@ -573,10 +573,9 @@ const Home = () => {
                 Featured Properties
               </h1>
               <p className="text-md font-Inter font-medium text-pretty text-Paracolor mt-2 sm:text-[14px]/5.5 ">
-                Explore our handpicked selection of featured properties. Each
-                listing offers a glimpse into exceptional homes and investments
-                available through Estatein. Click "View Details" for more
-                information.
+                Check out investment properties handpicked and listed by
+                Investors. Explore current opportunities and connect directly to
+                learn more or make an offer
               </p>
             </div>
             <div className="w-[35%] flex justify-end">
@@ -592,22 +591,26 @@ const Home = () => {
             {Properties?.filter((item) => item.featured_listing)
               .slice(0, 6)
               .map((items) => (
-                <div key={items.id} className="w-[31%]">
-                  <PropertiesCards
-                    Img={PropertiesImage1}
-                    Heading={
-                      <TruncatedText
-                        text={items.property_name}
-                        maxLength={23}
-                      />
-                    }
-                    desc={
-                      <TruncatedText text={items.description} maxLength={90} />
-                    }
-                    Status={items.listing_type}
-                    Price={items.lease_rate}
-                  />
-                </div>
+                  <div key={items.id} className="w-[31%]">
+                    <PropertiesCards
+                      Img={PropertiesImage1}
+                      Heading={
+                        <TruncatedText
+                          text={items.property_name}
+                          maxLength={23}
+                        />
+                      }
+                      desc={
+                        <TruncatedText
+                          text={items.description}
+                          maxLength={90}
+                        />
+                      }
+                      Status={items.listing_status}
+                      type={items.listing_type}
+                      Price={items.listing_type === "For Sale" ? items.sale_price  : items.lease_rate    }
+                    />
+                  </div>
               ))}
           </div>
         </section>
@@ -622,21 +625,20 @@ const Home = () => {
                 Off-Market Properties
               </h1>
               <p className="text-md font-Inter font-medium text-pretty text-Paracolor mt-2 sm:text-[14px]/5.5 ">
-                Discover the leaders in commercial real estate development.
-                These developers are shaping the skyline and driving innovation
-                across cities.
+                Access exclusive off-market deals not available to the public.
+                To view full property details, you must be a subscriber.
               </p>
             </div>
             <div className="w-[35%] flex justify-end">
-              <Link to={token ? "/view-property" : "/plans"}>
+              <Link to={token ? "/view-property" : "/pricing"}>
                 <button className="hover-btn hover-btn-black px-5 font-Inter py-3 rounded-[7px] cursor-pointer">
-                  <span>View All Developers</span>
+                  <span>View All Off-Market Properties</span>
                 </button>
               </Link>
             </div>
           </div>
           {/* PROPERTY CARD SECTION  */}
-          <div className="flex gap-7 w-[84%]">
+          <div className="flex gap-7 w-[84%] blur-[4px]">
             {Properties?.filter((items) => items.off_market_listing)
               .slice(0, 3)
               .map((items) => (
@@ -648,7 +650,7 @@ const Home = () => {
                   desc={
                     <TruncatedText text={items.description} maxLength={90} />
                   }
-                  Price={items.lease_rate}
+                  Price={items.listing_type === "For Sale" ? items.sale_price  : items.lease_rate  }
                 ></TopDevelopes>
               ))}
           </div>
@@ -663,8 +665,8 @@ const Home = () => {
             </h1>
             <p className="text-md font-Inter font-medium text-pretty text-Paracolor mt-2 sm:text-[14px]/5.5  ">
               Read the success stories and heartfelt testimonials from our
-              valued clients. Discover why they chose Estatein for their real
-              estate needs.
+              valued clients. Discover why they chose NewLista for their real
+              estate needs
             </p>
           </div>
           {/* CARDSECTION  */}
@@ -674,30 +676,30 @@ const Home = () => {
               RevParagraph={
                 "Newlista has transformed my real estate investing. It connected me with exclusive off-market deals, including a commercial property I recently closed. The platform is efficient, easy to use, and has opened up networking and deal opportunities I never thought possible"
               }
-              Stars={3}
+              Stars={5}
               RevImage={RevImage1}
               UserName={"Mike O"}
-              Desination={"Real Estate Investor "}
+              Desination={"Investor "}
             ></Testimonials>
             <Testimonials
               RevTitle={""}
               RevParagraph={
-                "As a newcomer to commercial real estate, Newlista has been invaluable. Its curated listings and expert connections helped me invest confidently in a growing metro area. The insights from experienced investors made all the difference"
+                "As a seasoned real estate investor, I'm always looking for an edge. NewLista's networking features and exclusive off-market listings have given me just that. The tailored notifications save me time, and the ability to share my own listings with a select group of professionals has led to quicker, more profitable deals. It's become an indispensable tool in my investment arsenal."
               }
-              Stars={4}
+              Stars={5}
               RevImage={RevImage2}
-              UserName={"Leila N."}
+              UserName={"Charles K"}
               Desination={"Investor"}
             ></Testimonials>
             <Testimonials
               RevTitle={""}
               RevParagraph={
-                "As a broker focused on value-add properties, Newlista has transformed how I work. It’s expanded my reach, helped me close multiple deals, and streamlined the process so I can focus on finding top opportunities for clients. The professional network is unmatched."
+                "Newlista is revolutionizing how I connect with fellow real estate investors. The platform's focus on facilitating networking among professionals is a game-changer. I'm particularly excited about the potential to share and discover off-market listings exclusively with other investors. This feature alone could be invaluable for finding hidden gem properties."
               }
               Stars={5}
               RevImage={RevImage3}
               UserName={"Michael M"}
-              Desination={"Commercial Real Estate Broker. "}
+              Desination={"Investor"}
             ></Testimonials>
           </div>
         </section>
@@ -718,10 +720,10 @@ const Home = () => {
                 Reach serious buyers, close deals faster, and maximize your
                 property's potential.{" "}
               </h1>
-              <Link className="w-full" to={'/add-property3'}>
-              <button className="hover-btn-purple hover-btn py-2 text-[16px] text-white font-Inter rounded-[8px] w-full cursor-pointer">
-                <span>Sell your Property</span>
-              </button>
+              <Link className="w-full" to={"/add-property3"}>
+                <button className="hover-btn-purple hover-btn py-2 text-[16px] text-white font-Inter rounded-[8px] w-full cursor-pointer">
+                  <span>Sell your Property</span>
+                </button>
               </Link>
             </div>
             <div className="w-[25%] h-[90%]">
@@ -739,16 +741,15 @@ const Home = () => {
                 Expand Your Real Estate Network
               </h1>
               <p className="text-md font-Inter font-medium text-pretty text-Paracolor mt-2 sm:text-[14px]/5.5 ">
-                Connect with serious investors, brokers, and real estate
-                professionals. Build partnerships, exchange insights, and
-                discover exclusive deals.
+                Network with fellow investors. Exchange insights, build lasting
+                partnerships, and discover exclusive real estate deals.
               </p>
             </div>
             <div className="w-[35%] flex justify-end">
               <Link to={"/admin/network"}>
-              <button className="hover-btn hover-btn-black px-5 font-Inter py-3 rounded-[7px] cursor-pointer">
-                <span>View more</span>
-              </button>
+                <button className="hover-btn hover-btn-black px-5 font-Inter py-3 rounded-[7px] cursor-pointer">
+                  <span>View more</span>
+                </button>
               </Link>
             </div>
           </div>

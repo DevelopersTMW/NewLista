@@ -1,6 +1,7 @@
 import { Select } from "@headlessui/react";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import ComboboxSelector from "../ComboboxSelector/ComboboxSelector";
 
 const propertyType = [
   { name: "Select Your Property" },
@@ -30,74 +31,76 @@ const propertyType = [
   { name: "Warehouse" },
   { name: "Other" },
 ];
-
-const states = {
-  Alabama: "AL",
-  Alaska: "AK",
-  Arizona: "AZ",
-  Arkansas: "AR",
-  California: "CA",
-  Colorado: "CO",
-  Connecticut: "CT",
-  Delaware: "DE",
-  Florida: "FL",
-  Georgia: "GA",
-  Hawaii: "HI",
-  Idaho: "ID",
-  Illinois: "IL",
-  Indiana: "IN",
-  Iowa: "IA",
-  Kansas: "KS",
-  Kentucky: "KY",
-  Louisiana: "LA",
-  Maine: "ME",
-  Maryland: "MD",
-  Massachusetts: "MA",
-  Michigan: "MI",
-  Minnesota: "MN",
-  Mississippi: "MS",
-  Missouri: "MO",
-  Montana: "MT",
-  Nebraska: "NE",
-  Nevada: "NV",
-  NewHampshire: "NH",
-  NewJersey: "NJ",
-  NewMexico: "NM",
-  NewYork: "NY",
-  NorthCarolina: "NC",
-  NorthDakota: "ND",
-  Ohio: "OH",
-  Oklahoma: "OK",
-  Oregon: "OR",
-  Pennsylvania: "PA",
-  RhodeIsland: "RA",
-  SouthCarolina: "SC",
-  SouthDakota: "SD",
-  Tennessee: "TN",
-  Texas: "TX",
-  Utah: "UT",
-  Vermont: "VT",
-  Virginia: "VA",
-  Washington: "WA",
-  WestVirginia: "WV",
-  Wisconsin: "WI",
-  Wyoming: "WY",
-};
+const statesArray = [
+  { id: 1, name: "Alabama", code: "AL" },
+  { id: 2, name: "Alaska", code: "AK" },
+  { id: 3, name: "Arizona", code: "AZ" },
+  { id: 4, name: "Arkansas", code: "AR" },
+  { id: 5, name: "California", code: "CA" },
+  { id: 6, name: "Colorado", code: "CO" },
+  { id: 7, name: "Connecticut", code: "CT" },
+  { id: 8, name: "Delaware", code: "DE" },
+  { id: 9, name: "Florida", code: "FL" },
+  { id: 10, name: "Georgia", code: "GA" },
+  { id: 11, name: "Hawaii", code: "HI" },
+  { id: 12, name: "Idaho", code: "ID" },
+  { id: 13, name: "Illinois", code: "IL" },
+  { id: 14, name: "Indiana", code: "IN" },
+  { id: 15, name: "Iowa", code: "IA" },
+  { id: 16, name: "Kansas", code: "KS" },
+  { id: 17, name: "Kentucky", code: "KY" },
+  { id: 18, name: "Louisiana", code: "LA" },
+  { id: 19, name: "Maine", code: "ME" },
+  { id: 20, name: "Maryland", code: "MD" },
+  { id: 21, name: "Massachusetts", code: "MA" },
+  { id: 22, name: "Michigan", code: "MI" },
+  { id: 23, name: "Minnesota", code: "MN" },
+  { id: 24, name: "Mississippi", code: "MS" },
+  { id: 25, name: "Missouri", code: "MO" },
+  { id: 26, name: "Montana", code: "MT" },
+  { id: 27, name: "Nebraska", code: "NE" },
+  { id: 28, name: "Nevada", code: "NV" },
+  { id: 29, name: "NewHampshire", code: "NH" },
+  { id: 30, name: "NewJersey", code: "NJ" },
+  { id: 31, name: "NewMexico", code: "NM" },
+  { id: 32, name: "NewYork", code: "NY" },
+  { id: 33, name: "NorthCarolina", code: "NC" },
+  { id: 34, name: "NorthDakota", code: "ND" },
+  { id: 35, name: "Ohio", code: "OH" },
+  { id: 36, name: "Oklahoma", code: "OK" },
+  { id: 37, name: "Oregon", code: "OR" },
+  { id: 38, name: "Pennsylvania", code: "PA" },
+  { id: 39, name: "RhodeIsland", code: "RA" },
+  { id: 40, name: "SouthCarolina", code: "SC" },
+  { id: 41, name: "SouthDakota", code: "SD" },
+  { id: 42, name: "Tennessee", code: "TN" },
+  { id: 43, name: "Texas", code: "TX" },
+  { id: 44, name: "Utah", code: "UT" },
+  { id: 45, name: "Vermont", code: "VT" },
+  { id: 46, name: "Virginia", code: "VA" },
+  { id: 47, name: "Washington", code: "WA" },
+  { id: 48, name: "WestVirginia", code: "WV" },
+  { id: 49, name: "Wisconsin", code: "WI" },
+  { id: 50, name: "Wyoming", code: "WY" },
+];
 
 const SearchBar = () => {
   const [selectedState, setSelectedState] = useState("");
   const [cities, setCities] = useState([]);
   const [selectedCity, setSelectedCity] = useState("");
 
-  const StateSelectionHandler = (e) => {
-    let state = e.target.value;
+  const [selectedPerson, setSelectedPerson] = useState(null);
+
+  const StateSelectionHandler = (value) => {
+    let state = value.name;
     setSelectedState(state);
     setSelectedCity("");
     setCities([]);
 
     try {
       if (state) {
-        const stateShortNames = states[state];
+        const stateShortNames = value.code;
+
         axios
           .get(`/states/${stateShortNames}.json`)
           .then((res) => {
@@ -113,17 +116,22 @@ const SearchBar = () => {
     }
   };
 
+  const CitySelectionHandler = (value) => {
+    console.log("Selected Data :", value);
+  };
+
   //   CHECK IF CITY EXIST OR NOT
-  useEffect(() => {
-    if (selectedCity) {
-    //   console.log(selectedCity);
-    }
-  });
+  let citiess = cities.map((name, index) => ({
+    id: index + 1,
+    name,
+  }));
+
+
   return (
     <>
       <div className="hidden sm:mb-8 sm:flex sm:justify-center mt-8">
         <div className="relative w-[84%] flex rounded-full px-6.5 py-3.5 text-sm/6 text-gray-600 ring-1 ring-gray-900/10 hover:ring-gray-900/20 bg-textColor justify-center items-center">
-          <div className=" px-4 py-2 border-r-[1px] border-solid border-Paracolor">
+          <div className="w-[15%] px-4 py-2 border-r-[1px] border-solid border-Paracolor">
             <Select
               name="status"
               aria-label="Project status"
@@ -140,58 +148,30 @@ const SearchBar = () => {
             </Select>
           </div>
 
-          <div className=" px-8 py-1 border-r-[1px] border-solid border-Paracolor flex flex-col ">
+          <div className="w-[20%] px-8 py-1 border-r-[1px] border-solid border-Paracolor flex flex-col ">
             <h1 className="text-[14px] font-Inter text-black font-[600]">
               State
             </h1>
-            <Select
-              name="status"
-              aria-label="Project status"
-              className={
-                "overline-none text-[13px] font-Inter text-Paracolor font-[500] -mt-0.5 -ml-1 focus:outline-none"
-              }
-              value={selectedState}
-              onChange={StateSelectionHandler}
-            >
-              <option className="overline-none font-Inter" value="">
-                Select Your State
-              </option>
-              {Object.keys(states).map((state) => (
-                <option key={state} value={state}>
-                  {state}
-                </option>
-              ))}
-            </Select>
+            <ComboboxSelector
+              options={statesArray}
+              onSelect={StateSelectionHandler}
+              placeholder={"Select Your State"}
+            ></ComboboxSelector>
           </div>
-          <div
-            className="w-[190px] overflow-hidden  appearance-none  truncate whitespace-nowrap text-ellipsis px-8 py-1 border-r-[1px] border-solid border-Paracolor flex flex-col  "
-          >
+
+          <div className="w-[190px] whitespace-nowrap text-ellipsis px-8 py-1 border-r-[1px] border-solid border-Paracolor flex flex-col  ">
             <h1 className="text-[14px] font-Inter text-black font-[600]">
               City
             </h1>
-            <Select
-              name="status"
-              aria-label="Project status"
-              className={
-                "overline-none text-[13px] font-Inter text-Paracolor font-[500] -mt-0.5 -ml-1  focus:outline-none"
-              }
-              disabled={!cities.length}
-              value={selectedCity}
-              onChange={(e) => {
-                setSelectedCity(e.target.value);
-              }}
-            >
-              <option className="overline-none font-Inter focus:outline-none" value="active">
-                Select Your City
-              </option>
-              {cities.map((city, index) => (
-                <option key={index} value={city}>
-                  {city}
-                </option>
-              ))}
-            </Select>
+
+            <ComboboxSelector
+              options={citiess}
+              onSelect={CitySelectionHandler}
+              placeholder={"Select Your City"}
+              disabled={citiess.length > 0 ? false : true}
+            ></ComboboxSelector>
           </div>
-          <div className=" px-8 py-1 border-r-[1px] border-solid border-Paracolor flex flex-col ">
+          <div className="w-[22%] px-8 py-1 border-r-[1px] border-solid border-Paracolor flex flex-col ">
             <h1 className="text-[14px] font-semibold font-Inter text-black ">
               Property Type
             </h1>
@@ -213,7 +193,7 @@ const SearchBar = () => {
               ))}
             </Select>
           </div>
-          <div className=" px-8 py-1  flex flex-col ">
+          <div className="w-[20%] px-8 py-1  flex flex-col ">
             <h1 className="text-[14px] font-Inter text-black font-[600]">
               Price Range
             </h1>
@@ -227,9 +207,7 @@ const SearchBar = () => {
               <option className="overline-none font-Inter" value="active">
                 Choose Price Range
               </option>
-              <option  value="active">
-                Under $250K
-              </option>
+              <option value="active">Under $250K</option>
               <option className="" value="paused">
                 $250K – $500K
               </option>
@@ -258,20 +236,22 @@ const SearchBar = () => {
           </div>
           <div>
             <button className="hover-btn hover-btn-purple text-white px-2 py-2 rounded-full text-[14px] cursor-pointer">
-              <span><svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth="1.5"
-                stroke="currentColor"
-                className="size-5 font-bold"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"
-                />
-              </svg></span>
+              <span>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth="1.5"
+                  stroke="currentColor"
+                  className="size-5 font-bold"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"
+                  />
+                </svg>
+              </span>
             </button>
           </div>
         </div>

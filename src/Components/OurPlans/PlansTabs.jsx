@@ -30,8 +30,7 @@ const PlansTabs = ({ PlanNum, PlanCard, Name, Desc, ButtonText }) => {
             "text-Paracolor mt-6 text-base/7 font-semibold leading-[25px] font-Urbanist"
           }
         >
-          Lorem ipsum dolor sit amet consectetur. Nunc et pulvinar dui.
-          consectetur. Nunc et pulvinar dui.
+         {Desc}
         </p>
         <ul
           role="list"

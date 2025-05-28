@@ -4,18 +4,27 @@ import { Link } from "react-router-dom";
 import PropertyIcon from "../../../assets/PropertyIcon.png";
 import PropertyIcon2 from "../../../assets/PropertyIcon2.png";
 
-const PropertiesCards = ({ Img, Heading, desc, Status, Price}) => {
+const PropertiesCards = ({ Img, Heading, desc, Status , type, Price}) => {
   return (
     <>
-      <div className="w-[100%] bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700 ">
+      <div className="w-[100%] bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700 relative">
         <Link>
           <img className="rounded-t-lg h-[270px] object-cover w-[100%]" src={Img} alt="" />
         </Link>
         <div className="p-5 flex flex-col gap-2 justify-center">
           <div>
-            {"Active" === Status ? (
+            {"For Sale" === type ? (
               <span className="bg-[#28A745] text-white font-Inter px-3 py-1 text-[14px] rounded-full">
-                Active
+                For Sale
+              </span>
+            ) : (
+              <span className="bg-[#FFC107] text-white font-Inter px-3 py-1 text-[14px] rounded-full">{type}</span>
+            )}
+          </div>
+          <div className="absolute top-6 end-6">
+            {"Available" === Status ? (
+              <span className="bg-[#28A745] text-white font-Inter px-3 py-1 text-[14px] rounded-full">
+                Available
               </span>
             ) : "Sold" === Status ? (
               <span className="bg-[#DC3545] text-white font-Inter px-3 py-1 text-[14px] rounded-full">Sold</span>

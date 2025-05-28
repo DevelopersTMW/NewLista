@@ -16,29 +16,29 @@ const Pricing = () => {
       <Navbar></Navbar>
       {/* PRICING SECTION  */}
       <section>
-        <div class="relative isolate px-6 py-24 sm:py-32 lg:px-8 flex flex-col justify-center items-center overflow-hidden">
+        <div className="relative isolate px-6 py-24 sm:py-32 lg:px-8 flex flex-col justify-center items-center overflow-hidden">
           {/* SHAPE START  */}
           <div
-            class="absolute left-[74%]  w-[50%]  inset-x-0 -top-[10%] -z-10 transform-gpu overflow-hidden  blur-3xl"
+            className="absolute left-[74%]  w-[50%]  inset-x-0 -top-[10%] -z-10 transform-gpu overflow-hidden  blur-3xl"
             aria-hidden="true"
           >
             <img src={Shape} alt="" />
           </div>
           <div
-            class="absolute -left-[15%]  w-[50%]  inset-x-0 top-[25%] -z-10 transform-gpu overflow-hidden  blur-3xl"
+            className="absolute -left-[15%]  w-[50%]  inset-x-0 top-[25%] -z-10 transform-gpu overflow-hidden  blur-3xl"
             aria-hidden="true"
           >
             <img src={Shape2} alt="" />
           </div>
           {/* SHAPE END  */}
           {/* HEADER SECTION  */}
-          <div class="mx-auto max-w-4xl text-center">
-            <h2 class="text-base/7 font-semibold text-indigo-600">Pricing</h2>
-            <p class="mt-2 text-5xl font-Urbanist  tracking-tight text-balanc text-gray-900 sm:text-5xl font-[700]">
+          <div className="mx-auto max-w-4xl text-center">
+            <h2 className="text-base/7 font-semibold text-indigo-600">Pricing</h2>
+            <p className="mt-2 text-5xl font-Urbanist  tracking-tight text-balanc text-gray-900 sm:text-5xl font-[700]">
               Choose Your Plan & Grow Your Network
             </p>
           </div>
-          <p class="mx-auto mt-6 max-w-3xl text-center text-lg font-medium text-pretty text-gray-600 sm:text-md/8 font-Urbanist">
+          <p className="mx-auto mt-6 max-w-3xl text-center text-lg font-medium text-pretty text-gray-600 sm:text-md/8 font-Urbanist">
             Maximize your opportunities, connect with top investors, and access
             exclusive deals. Choose a plan that fits your needs.
           </p>
@@ -75,18 +75,18 @@ const Pricing = () => {
                   <PlansTabs
                     PlanCard={"Free"}
                     PlanNum={"Monthly"}
-                    Name={"$1 USD"}
+                    Name={"$0 USD"}
                     Desc={
-                      "Lorem ipsum dolor sit amet consectetur. Nunc et pulvinar dui."
+                      "This pricing better reflects the value offered to commercial real estate investors, especially considering the exclusive networking and off-market deal access. It also provides a better foundation for early ROI and supports ongoing business costs."
                     }
                     ButtonText={"Get started for free"}
                   />
                   <PlansTabs
                     PlanCard={"Premium"}
                     PlanNum={"Monthly"}
-                    Name={"$1 USD"}
+                    Name={"$29.99 USD"}
                     Desc={
-                      "Lorem ipsum dolor sit amet consectetur. Nunc et pulvinar dui."
+                      "This pricing better reflects the value offered to commercial real estate investors, especially considering the exclusive networking and off-market deal access. It also provides a better foundation for early ROI and supports ongoing business costs."
                     }
                     ButtonText={"Upgrade your plan"}
                   />
@@ -97,18 +97,18 @@ const Pricing = () => {
                   <PlansTabs
                     PlanCard={"Free"}
                     PlanNum={"Yearly"}
-                    Name={"$10 USD"}
+                    Name={"$0 USD"}
                     Desc={
-                      "Lorem ipsum dolor sit amet consectetur. Nunc et pulvinar dui."
+                      "This pricing better reflects the value offered to commercial real estate investors, especially considering the exclusive networking and off-market deal access. It also provides a better foundation for early ROI and supports ongoing business costs."
                     }
                     ButtonText={"Get started for free"}
                   />
                   <PlansTabs
-                    PlanCard={"Premium"}
+                    PlanCard={" New Investor Pro Pricing (Save $61)"}
                     PlanNum={"Yearly"}
-                    Name={"$10 USD"}
+                    Name={"$299 USD "}
                     Desc={
-                      "Lorem ipsum dolor sit amet consectetur. Nunc et pulvinar dui."
+                      "This pricing better reflects the value offered to commercial real estate investors, especially considering the exclusive networking and off-market deal access. It also provides a better foundation for early ROI and supports ongoing business costs"
                     }
                     ButtonText={"Upgrade your plan"}
                   />

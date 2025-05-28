@@ -1,12 +1,38 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
-// IMAGES 
-import MessageIcon from '../../../assets/MessageIcon.png'
+// IMAGES
+import MessageIcon from "../../../assets/MessageIcon.png";
 import InvestorIcon1 from "../../../assets/InvestorIcon1.png";
 import InvestorIcon2 from "../../../assets/InvestorIcon2.png";
 import InvestorIcon3 from "../../../assets/InvestorIcon3.png";
+import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
 
-const InvestorCards = ({InvesImage , InvesUserName , InvesDesc}) => {
+const InvestorCards = ({ InvesImage, InvesUserName, InvesDesc }) => {
+  const token = localStorage.getItem("token");
+
+  const [ShowModal, setShowModal] = useState(false);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (ShowModal === true) {
+      Swal.fire({
+        title: "Join To View Investors",
+        timer: 3000,
+        showConfirmButton: false, 
+        showCancelButton: false, 
+        allowOutsideClick: false,
+        allowEscapeKey: false,
+        timerProgressBar: true,
+      }).then(() => {
+        navigate("/pricing");
+        setShowModal(false);
+      });
+    } else {
+      setShowModal(false);
+    }
+  });
+
   return (
     <>
       <div className="border-[1px] border-solid border-[#BBBBBB] px-7 py-7 rounded-[8px]">
@@ -20,7 +46,9 @@ const InvestorCards = ({InvesImage , InvesUserName , InvesDesc}) => {
             />
           </span>
           <span>
-            <h4 className="font-Inter font-bold text-[22px]">{InvesUserName}</h4>
+            <h4 className="font-Inter font-bold text-[22px]">
+              {InvesUserName}
+            </h4>
             <h6 className="font-Inter text-[15px] font-[500]">{InvesDesc}</h6>
           </span>
         </div>
@@ -29,21 +57,39 @@ const InvestorCards = ({InvesImage , InvesUserName , InvesDesc}) => {
           <ul className="flex justify-start items-start flex-col gap-3">
             <li className="flex gap-3 justify-center items-center">
               <img className="w-5 h-5 " src={InvestorIcon1} alt="" />
-              <p className="font-Inter text-[15px] text-Paracolor font-[600]">New York</p>
+              <p className="font-Inter text-[15px] text-Paracolor font-[600]">
+                New York
+              </p>
             </li>
             <li className="flex gap-3 justify-center items-center">
               <img className="w-5 h-5 " src={InvestorIcon2} alt="" />
-              <p className="font-Inter text-[15px] text-Paracolor font-[600]">Multifamily - Retail - Industrial</p>
+              <p className="font-Inter text-[15px] text-Paracolor font-[600]">
+                Multifamily - Retail - Industrial
+              </p>
             </li>
             <li className="flex gap-3 justify-center items-center">
               <img className="w-5 h-5 " src={InvestorIcon3} alt="" />
-              <p className="font-Inter text-[15px] text-Paracolor font-[600]">Member since 2022</p>
+              <p className="font-Inter text-[15px] text-Paracolor font-[600]">
+                Member since 2022
+              </p>
             </li>
           </ul>
           {/* BUTTONS  */}
           <div className="flex gap-4 pt-7">
-            <button className="font-Inter font-semibold text-[15px] pl-4 pr-6 py-1.5 rounded-full border-solid border-[2px] hover-btn hover-btn-green"><span>Connect</span></button>
-            <button className="font-Inter text-white hover-btn-purple hover-btn font-semibold text-[15px] px-5 py-1.5 rounded-full "><span className=" flex gap-2 justify-center items-center"><img className="w-4 h-4" src={MessageIcon} alt="" />Message</span></button>
+            <button
+              className="font-Inter font-semibold text-[15px] pl-4 pr-6 py-1.5 rounded-full border-solid border-[2px] hover-btn hover-btn-green"
+              onClick={() => {
+                !token && setShowModal(true);
+              }}
+            >
+              <span>Connect</span>
+            </button>
+            <button className="font-Inter text-white hover-btn-purple hover-btn font-semibold text-[15px] px-5 py-1.5 rounded-full ">
+              <span className=" flex gap-2 justify-center items-center">
+                <img className="w-4 h-4" src={MessageIcon} alt="" />
+                Message
+              </span>
+            </button>
           </div>
         </div>
       </div>
