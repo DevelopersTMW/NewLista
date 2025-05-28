@@ -5,15 +5,19 @@ const TopDevelopes = ({ Img, MiniHeading, Heading, desc, Price }) => {
   return (
     <>
       <div className="w-[33%] bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700 ">
-          <img className="rounded-t-lg h-[240px] object-cover w-[100%] " src={Img} alt="" />
+        <img
+          className="rounded-t-lg h-[240px] object-cover w-[100%] "
+          src={Img}
+          alt=""
+        />
         <div className="pt-4 pb- flex flex-col gap-2 px-7 py-7">
           <div>
-              <h1 className=" text-[25px] font-[700] font-Inter tracking-tight leading-[24px] mt-3 text-gray-900 dark:text-white">
-                {Heading}
-              </h1>
-              <h1 className="mb-2 text-[18px] font-[600] font-Inter tracking-tight leading-[24px] mt-1 text-gray-900 dark:text-white">
-                {MiniHeading}
-              </h1>
+            <h1 className=" text-[25px] font-[700] font-Inter tracking-tight leading-[24px] mt-3 text-gray-900 dark:text-white">
+              {Heading}
+            </h1>
+            <h1 className="mb-2 text-[18px] font-[600] font-Inter tracking-tight leading-[24px] mt-1 text-gray-900 dark:text-white">
+              {MiniHeading}
+            </h1>
             <p className="mb-2 font-Inter text-[14px] font-normal text-gray-700 dark:text-gray-400">
               {desc}
             </p>
@@ -31,13 +35,17 @@ const TopDevelopes = ({ Img, MiniHeading, Heading, desc, Price }) => {
           </div> */}
           <div className="flex justify-between items-end mt-5">
             <div>
-              <h5 className="font-Inter text-[16px] font-[500]">Starting from</h5>
+              <h5 className="font-Inter text-[16px] font-[500]">
+                Starting from
+              </h5>
               <h1 className="font-Inter text-[22px] font-bold">${Price}</h1>
             </div>
             <div>
-              <button className="inline-flex font-Inter text-[15.3px] items-center px-5 py-2.5 rounded-full text-sm font-medium text-center focus:outline-none hover-btn-yellow hover-btn ">
-              <span>View Property Details</span>
-              </button>
+              <Link to={'/property-detail'}>
+                <button className="inline-flex font-Inter text-[15.3px] items-center px-5 py-2.5 rounded-full text-sm font-medium text-center focus:outline-none hover-btn-yellow hover-btn ">
+                  <span>View Property Details</span>
+                </button>
+              </Link>
             </div>
           </div>
         </div>

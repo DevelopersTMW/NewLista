@@ -44,7 +44,7 @@ const PropertiesCards2 = ({ Img, Heading, desc, Status, Price, Features }) => {
               <h1 className="font-Inter text-[16px] font-bold">${Price}</h1>
             </div>
             <div>
-              <Link className="inline-flex font-Inter text-[12.5px] items-center px-5 py-2.5 rounded-full text-sm font-medium text-center hover-btn-purple hover-btn">
+              <Link to={"/property-detail"} className="inline-flex font-Inter text-[12.5px] items-center px-5 py-2.5 rounded-full text-sm font-medium text-center hover-btn-purple hover-btn">
                 <span> View Property</span>
               </Link>
             </div>

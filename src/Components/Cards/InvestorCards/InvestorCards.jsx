@@ -84,7 +84,9 @@ const InvestorCards = ({ InvesImage, InvesUserName, InvesDesc }) => {
             >
               <span>Connect</span>
             </button>
-            <button className="font-Inter text-white hover-btn-purple hover-btn font-semibold text-[15px] px-5 py-1.5 rounded-full ">
+            <button className="font-Inter text-white hover-btn-purple hover-btn font-semibold text-[15px] px-5 py-1.5 rounded-full "  onClick={() => {
+                !token && setShowModal(true);
+              }}>
               <span className=" flex gap-2 justify-center items-center">
                 <img className="w-4 h-4" src={MessageIcon} alt="" />
                 Message

@@ -3,7 +3,7 @@ import { Dialog, DialogPanel, PopoverGroup } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { Link } from "react-router-dom";
 // IMAGES
-import Logo from "../../assets/Logo.png";
+import Logo from "../../assets/WhiteLogo.png";
 
 
 
@@ -62,7 +62,7 @@ function TransparentNavbar() {
             to={token ? "/admin/netowrking" : "/login"}
             className="text-sm/6 font-[500]  text-textColor  font-Inter hover:text-[#c4c4c4] "
           >
-            Netoworking
+            Networking
           </Link>
           <Link
             to={"contact-us"}

@@ -35,7 +35,8 @@ const HeroBackground = {
   backgroundSize: "cover",
   backgroundRepeat: "no-repeat",
   backgroundBlendMode: "black",
-  backgroundColor: "#0009",
+  backgroundColor: "rgb(0 0 0 / 54%)",
+  backgroundBlendMode: "color"
 };
 
 const data = [
@@ -525,7 +526,7 @@ const Home = () => {
               </div>
               <div className="flex flex-col gap-3">
                 <h1 className="text-textColor font-Inter font-semibold text-[23px] leading-[22px]">
-                  Add a Property
+                 Connect & Collaborate
                 </h1>
                 <p className="text-textColor font-Inter text-[16px]">
                   Build your network and form partnerships.
@@ -546,7 +547,7 @@ const Home = () => {
               </div>
               <div className="flex flex-col gap-3">
                 <h1 className="text-textColor font-Inter font-semibold text-[23px] leading-[27px]">
-                  Add a Property to Find Off Market Properties
+                  Search for Off-Market Properties
                 </h1>
                 <p className="text-textColor font-Inter text-[16px]">
                   Access off-market deals and make direct offers.
@@ -555,7 +556,7 @@ const Home = () => {
               <div className="mt-3">
                 <Link to={token ? "/view-property" : "/pricing"}>
                   <button className="hover-btn hover-btn-purple w-[100%] border-[1px] border-solid border-textColor hover:border-black py-2.5 text-textColor font-Inter rounded-[6px] cursor-pointer">
-                    <span>View Off-Market Deals</span>
+                    <span>Find Off Market Properties</span>
                   </button>
                 </Link>
               </div>
