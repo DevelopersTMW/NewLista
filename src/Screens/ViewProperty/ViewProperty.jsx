@@ -130,8 +130,6 @@ const ViewProperty = () => {
     return filtered;
   }, [Properties, isLoggedIn, FilterValue]);
 
-
-
   return (
     <>
       <Navbar></Navbar>
@@ -209,17 +207,25 @@ const ViewProperty = () => {
           <TabPanels>
             <TabPanel className="w-[100%] my-20 flex flex-wrap gap-4 px-16">
               {ShowEmpty ? (
-                <EmptyCards Title={"Unlock hidden opportunities by upgrading to a premium membership"} />
+                <EmptyCards
+                  Title={
+                    "Unlock hidden opportunities by upgrading to a premium membership"
+                  }
+                />
               ) : (
                 filteredProperties.slice(0, 6).map((items) => (
                   <div key={items.id} className="w-[23.5%]">
-                    <PropertiesCards2
-                      Img={PropertiesImage3}
-                      Heading={items.property_name}
-                      desc={items.description}
-                      Status={items.listing_type}
-                      Price={items.lease_rate}
-                    ></PropertiesCards2>
+                    {
+                      <PropertiesCards2
+                        Img={PropertiesImage3}
+                        Heading={items.property_name}
+                        desc={items.description}
+                        Status={items.listing_type}
+                        Price={items.listing_type === "For Sale" ? items.sale_price  : items.lease_rate }
+                        id={items.id}
+                        images={items.images[0]}
+                      ></PropertiesCards2>
+                    }
                   </div>
                 ))
               )}

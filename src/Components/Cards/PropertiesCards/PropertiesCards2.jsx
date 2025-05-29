@@ -3,11 +3,11 @@ import PropertyIcon from "../../../assets/PropertyIcon.png";
 import PropertyIcon2 from "../../../assets/PropertyIcon2.png";
 import { Link } from "react-router-dom";
 
-const PropertiesCards2 = ({ Img, Heading, desc, Status, Price, Features }) => {
+const PropertiesCards2 = ({ Img, Heading, desc, Status, Price, Features , id  , images}) => {
   return (
     <>
       <div className="w-[100%] bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700 relative">
-          <img className="rounded-t-lg h-[230px] object-cover w-[100%]" src={Img} alt="" />
+          <img className="rounded-t-lg h-[230px] object-cover w-[100%]" src={images} alt="" />
         <div className="py-3 pb-4 px-4 flex flex-col gap-2">
           <div className="absolute top-8 end-8">
             {"Active" === Status ? (
@@ -44,7 +44,7 @@ const PropertiesCards2 = ({ Img, Heading, desc, Status, Price, Features }) => {
               <h1 className="font-Inter text-[16px] font-bold">${Price}</h1>
             </div>
             <div>
-              <Link to={"/property-detail"} className="inline-flex font-Inter text-[12.5px] items-center px-5 py-2.5 rounded-full text-sm font-medium text-center hover-btn-purple hover-btn">
+              <Link to={`/properties/${id}`} className="inline-flex font-Inter text-[12.5px] items-center px-5 py-2.5 rounded-full text-sm font-medium text-center hover-btn-purple hover-btn">
                 <span> View Property</span>
               </Link>
             </div>

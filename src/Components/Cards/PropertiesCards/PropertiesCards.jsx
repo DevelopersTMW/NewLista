@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import PropertyIcon from "../../../assets/PropertyIcon.png";
 import PropertyIcon2 from "../../../assets/PropertyIcon2.png";
 
-const PropertiesCards = ({ Img, Heading, desc, Status , type, Price}) => {
+const PropertiesCards = ({ Img, Heading, desc, Status , type, Price , id}) => {
   return (
     <>
       <div className="w-[100%] bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700 relative">
@@ -58,7 +58,7 @@ const PropertiesCards = ({ Img, Heading, desc, Status , type, Price}) => {
               <h1 className="font-Inter text-[18px] font-bold">${Price}</h1>
             </div>
             <div>
-              <Link to={"/property-detail"} className="inline-flex font-Inter text-[15.3px] items-center px-5 py-2.5 rounded-full text-sm font-medium text-center focus:outline-none  hover-btn-purple hover-btn">
+              <Link to={`/properties/${id}`}  className="inline-flex font-Inter text-[15.3px] items-center px-5 py-2.5 rounded-full text-sm font-medium text-center focus:outline-none  hover-btn-purple hover-btn">
               <span>View Property Details</span>
               </Link>
             </div>

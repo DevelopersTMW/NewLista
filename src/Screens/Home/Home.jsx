@@ -610,6 +610,7 @@ const Home = () => {
                       Status={items.listing_status}
                       type={items.listing_type}
                       Price={items.listing_type === "For Sale" ? items.sale_price  : items.lease_rate    }
+                      id={items.id}
                     />
                   </div>
               ))}
@@ -652,6 +653,7 @@ const Home = () => {
                     <TruncatedText text={items.description} maxLength={90} />
                   }
                   Price={items.listing_type === "For Sale" ? items.sale_price  : items.lease_rate  }
+                  id={items.id}
                 ></TopDevelopes>
               ))}
           </div>

@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const TopDevelopes = ({ Img, MiniHeading, Heading, desc, Price }) => {
+const TopDevelopes = ({ Img, MiniHeading, Heading, desc, Price , id }) => {
   return (
     <>
       <div className="w-[33%] bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700 ">
@@ -41,7 +41,7 @@ const TopDevelopes = ({ Img, MiniHeading, Heading, desc, Price }) => {
               <h1 className="font-Inter text-[22px] font-bold">${Price}</h1>
             </div>
             <div>
-              <Link to={'/property-detail'}>
+              <Link to={`/properties/${id}`}>
                 <button className="inline-flex font-Inter text-[15.3px] items-center px-5 py-2.5 rounded-full text-sm font-medium text-center focus:outline-none hover-btn-yellow hover-btn ">
                   <span>View Property Details</span>
                 </button>
