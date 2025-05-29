@@ -25,7 +25,7 @@ const StepForm = () => {
   };
 
   const steps = [
-    // <Step1 onNext={nextStep} defaultValues={formData} />,
+    <Step1 onNext={nextStep} defaultValues={formData} />,
     <Step2 onNext={nextStep} onBack={prevStep} defaultValues={formData} />,
     <Step3
       onBack={prevStep}
