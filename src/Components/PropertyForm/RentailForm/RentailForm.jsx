@@ -1,25 +1,36 @@
 import Inputs from "../../InputFields/Inputs";
 import Selection from "../../InputFields/Selection";
 
-const RentailForm = ({ propertyTypeName }) => {
+const currencies = [
+  "USD", "EUR", "CAD", "HKD", "ISK", "PHP", "DKK", "HUF", "CZK", "AUD", "RON",
+  "SEK", "IDR", "INR", "BRL", "RUB", "HRK", "JPY", "THB", "CHF", "SGD", "PLN",
+  "BGN", "TRY", "CNY", "NOK", "NZD", "ZAR", "MXN", "ILS", "GBP", "KRW", "MYR"
+];
+
+const RentailForm = ({ propertyTypeName, register }) => {
   return (
     <div className="border-[2px] rounded-[8px] px-4 border-solid border-[#ececec] mt-5 bg-[#fcfcfc] py-8">
       <div className="flex flex-col gap-8">
         <div className="flex gap-8">
           <span className="w-[100%]">
-            <Selection labels={"Currency"} defaultOption={"USD"}></Selection>
+            <Selection labels={"Currency"} defaultOption={"Select Your Currency"} Options={currencies}></Selection>
           </span>
           <span className="w-[100%]">
             <Inputs
               labels={"Monthly Rental*"}
               type={"text"}
               placeholder={"Ex: 10000"}
+              name={"MonthlyRental"}
+              register={register}
             ></Inputs>
           </span>
           <span className="w-[100%]">
             <Selection
               labels={"Building Size"}
-              defaultOption={"Sq Ft"}
+              defaultOption={"Select Size"}
+              Options={["Sq Ft" , "Sq M"]}
+              name={"BuildingSize"}
+              register={register}
             ></Selection>
           </span>
           <span className="w-[100%]">
@@ -27,6 +38,8 @@ const RentailForm = ({ propertyTypeName }) => {
               labels={"‎"}
               type={"text"}
               placeholder={"Ex: 10000"}
+              name={"BuildingSizeNumber"}
+              register={register}
             ></Inputs>
           </span>
         </div>
@@ -36,6 +49,8 @@ const RentailForm = ({ propertyTypeName }) => {
               labels={"Building Levels"}
               type={"text"}
               placeholder={"Ex:1"}
+              name={"BuildingLevels"}
+              register={register}
             ></Inputs>
           </span>
           <span className="w-[100%]">
@@ -43,12 +58,17 @@ const RentailForm = ({ propertyTypeName }) => {
               labels={"Year Built"}
               type={"number"}
               placeholder={"2020"}
+              name={"YearBuilt"}
+              register={register}
             ></Inputs>
           </span>
           <span className="w-[100%]">
             <Selection
-              labels={"Land Scape"}
-              defaultOption={"Multiple"}
+              labels={"Land Scape Size"}
+              defaultOption={"Select Size"}
+              Options={["Sq Ft" , "Sq M"]}
+              name={"LandScape"}
+              register={register}
             ></Selection>
           </span>
           <span className="w-[100%]">
@@ -56,6 +76,8 @@ const RentailForm = ({ propertyTypeName }) => {
               labels={"‎ "}
               type={"number"}
               placeholder={"Ex:1"}
+              name={"LandScapeNumber"}
+              register={register}
             ></Inputs>
           </span>
         </div>
@@ -63,7 +85,10 @@ const RentailForm = ({ propertyTypeName }) => {
           <span className="w-[100%]">
             <Selection
               labels={"‎ "}
-              defaultOption={"Acres"}
+              defaultOption={"Select"}
+              Options={["Acres" , "Hectacres"]}
+              name={"LandScapeAcres"}
+              register={register}
             ></Selection>
           </span>
           <span className="w-[100%]">
@@ -71,12 +96,17 @@ const RentailForm = ({ propertyTypeName }) => {
               labels={"‎ "}
               type={"number"}
               placeholder={"Ex:1"}
+              name={"LandScapeNumber2"}
+              register={register}
             ></Inputs>
           </span>
           <span className="w-[100%]">
             <Selection
               labels={"Outdoor Signage Available"}
-              defaultOption={"Yes"}
+              defaultOption={"Select"}
+              Options={["Yes" , "No"]}
+              name={"Outdoor-Signage"}
+              register={register}
             ></Selection>
           </span>
           <span className="w-[100%]">
@@ -84,6 +114,8 @@ const RentailForm = ({ propertyTypeName }) => {
               labels={"Parking Spaces"}
               type={"number"}
               placeholder={"Ex:1"}
+              name={"Parking-Space"}
+              register={register}
             ></Inputs>
           </span>
         </div>
@@ -93,12 +125,17 @@ const RentailForm = ({ propertyTypeName }) => {
               labels={"Number of Units"}
               type={"number"}
               placeholder={"Ex:1"}
+              name={"NumberOfUnits"}
+              register={register}
             ></Inputs>
           </span>
           <span className="w-[100%]">
             <Selection
               labels={"Building Class"}
-              defaultOption={"A"}
+              defaultOption={"Select Class"}
+              Options={["A" , "B" , "C" , "D"]}
+              name={"BuildingClass"}
+              register={register}
             ></Selection>
           </span>
           <span className="w-[100%]">
@@ -106,6 +143,8 @@ const RentailForm = ({ propertyTypeName }) => {
               labels={"Percentage Leased (%)"}
               type={"number"}
               placeholder={"Ex:75"}
+              name={"Percentage-Lease"}
+              register={register}
             ></Inputs>
           </span>
         </div>

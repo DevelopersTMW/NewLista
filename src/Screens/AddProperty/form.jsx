@@ -2,7 +2,7 @@ import React, { useState } from "react";
 // COMPONENTS
 import Navbar from "../../Components/Navbar/Navbar";
 import Footer from "../../Components/Footer/Footer";
-import Step1 from "./step1";
+import Step1 from "./PropertyDetailStep1/PropertyDetail.jsx";
 import Step2 from "./step2";
 import Step3 from "./step3";
 // IMAGES
@@ -25,7 +25,7 @@ const StepForm = () => {
   };
 
   const steps = [
-    <Step1 onNext={nextStep} defaultValues={formData} />,
+    // <Step1 onNext={nextStep} defaultValues={formData} />,
     <Step2 onNext={nextStep} onBack={prevStep} defaultValues={formData} />,
     <Step3
       onBack={prevStep}

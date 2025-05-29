@@ -4,27 +4,73 @@ import Selection from "../../InputFields/Selection";
 import Checkboxs from "../../InputFields/Checkboxs";
 import { Textarea } from "@headlessui/react";
 import UnitDetailsForm from "../../UnitDetailsForm/UnitDetailsForm";
+import { Controller } from "react-hook-form";
 
-const WareHouseForm = ({ propertyTypeName }) => {
+const currencies = [
+  "USD",
+  "EUR",
+  "CAD",
+  "HKD",
+  "ISK",
+  "PHP",
+  "DKK",
+  "HUF",
+  "CZK",
+  "AUD",
+  "RON",
+  "SEK",
+  "IDR",
+  "INR",
+  "BRL",
+  "RUB",
+  "HRK",
+  "JPY",
+  "THB",
+  "CHF",
+  "SGD",
+  "PLN",
+  "BGN",
+  "TRY",
+  "CNY",
+  "NOK",
+  "NZD",
+  "ZAR",
+  "MXN",
+  "ILS",
+  "GBP",
+  "KRW",
+  "MYR",
+];
+
+const WareHouseForm = ({ propertyTypeName, register , control }) => {
   return (
     <div className="border-[2px] rounded-[8px] px-4 border-solid border-[#ececec] mt-5 bg-[#fcfcfc] py-8">
       <div className="">
         <div className="flex flex-col gap-8">
           <div className="flex gap-8">
             <span className="w-[100%]">
-              <Selection labels={"Currency"} defaultOption={"USD"}></Selection>
+              <Selection
+                labels={"Select"}
+                Options={currencies}
+                defaultOption={"Select"}
+              ></Selection>
             </span>
             <span className="w-[100%]">
               <Inputs
                 labels={"Monthly Rental*"}
                 type={"text"}
                 placeholder={"Ex: 10000"}
+                name={"MonthlyRental"}
+                register={register}
               ></Inputs>
             </span>
             <span className="w-[100%]">
               <Selection
                 labels={"Building Size"}
-                defaultOption={"Sq Ft"}
+                defaultOption={"Select"}
+                Options={["Sq Ft", "Sq M"]}
+                name={"BuildingSize"}
+                register={register}
               ></Selection>
             </span>
             <span className="w-[100%]">
@@ -32,6 +78,8 @@ const WareHouseForm = ({ propertyTypeName }) => {
                 labels={"‎"}
                 type={"text"}
                 placeholder={"Ex: 10000"}
+                name={"BuildingSizeNumber"}
+                register={register}
               ></Inputs>
             </span>
           </div>
@@ -41,6 +89,8 @@ const WareHouseForm = ({ propertyTypeName }) => {
                 labels={"Ceiling Height (FT/M)"}
                 type={"number"}
                 placeholder={"Ex:1"}
+                name={"CeilingHeight"}
+                register={register}
               ></Inputs>
             </span>
             <span className="w-[100%]">
@@ -48,12 +98,17 @@ const WareHouseForm = ({ propertyTypeName }) => {
                 labels={"Year Built"}
                 type={"number"}
                 placeholder={"2020"}
+                name={"YearBuilt"}
+                register={register}
               ></Inputs>
             </span>
             <span className="w-[100%]">
               <Selection
                 labels={"Land Scape"}
-                defaultOption={"Sq Ft"}
+                defaultOption={"Select"}
+                Options={["Sq Ft", "Sq M"]}
+                name={"LandScape"}
+                register={register}
               ></Selection>
             </span>
             <span className="w-[100%]">
@@ -61,18 +116,28 @@ const WareHouseForm = ({ propertyTypeName }) => {
                 labels={"‎"}
                 type={"number"}
                 placeholder={"Ex:1"}
+                name={"LandScapeNumber"}
+                register={register}
               ></Inputs>
             </span>
           </div>
           <div className="flex gap-8">
             <span className="w-[100%]">
-              <Selection labels={"‎"} defaultOption={"Acres"}></Selection>
+              <Selection
+                labels={"‎"}
+                defaultOption={"Select"}
+                Options={["Acres", "Hectacres"]}
+                name={"LandScapeAcres"}
+                register={register}
+              ></Selection>
             </span>
             <span className="w-[100%]">
               <Inputs
                 labels={"‎"}
                 type={"number"}
                 placeholder={"Ex:10"}
+                name={"LandScapeNumber2"}
+                register={register}
               ></Inputs>
             </span>
             <span className="w-[100%]">
@@ -80,6 +145,8 @@ const WareHouseForm = ({ propertyTypeName }) => {
                 labels={"Overhead Doors"}
                 type={"number"}
                 placeholder={"Ex:1"}
+                name={"OverheadDoors"}
+                register={register}
               ></Inputs>
             </span>
             <span className="w-[100%]">
@@ -87,6 +154,8 @@ const WareHouseForm = ({ propertyTypeName }) => {
                 labels={"Parking Space"}
                 type={"number"}
                 placeholder={"Ex:1"}
+                name={"ParkingSpace"}
+                register={register}
               ></Inputs>
             </span>
           </div>
@@ -96,12 +165,17 @@ const WareHouseForm = ({ propertyTypeName }) => {
                 labels={"Number of Docks"}
                 type={"number"}
                 placeholder={"Ex:1"}
+                name={"NumberOfDocks"}
+                register={register}
               ></Inputs>
             </span>
             <span className="w-[100%]">
               <Selection
                 labels={"Building Class"}
-                defaultOption={"A"}
+                defaultOption={"Select"}
+                Options={["A", "B", "C", "D"]}
+                name={"BuildingClass"}
+                register={register}
               ></Selection>
             </span>
             <span className="w-[100%]">
@@ -109,6 +183,8 @@ const WareHouseForm = ({ propertyTypeName }) => {
                 labels={"Ground Level Docks"}
                 type={"number"}
                 placeholder={"Ex:75"}
+                name={"Ground-Level-Docks "}
+                register={register}
               ></Inputs>
             </span>
             <span className="w-[100%]">
@@ -116,6 +192,8 @@ const WareHouseForm = ({ propertyTypeName }) => {
                 labels={"High Level Docks"}
                 type={"number"}
                 placeholder={"Ex:1"}
+                name={"High-Level-Docks"}
+                register={register}
               ></Inputs>
             </span>
           </div>
@@ -129,14 +207,102 @@ const WareHouseForm = ({ propertyTypeName }) => {
             </h1>
           </span>
           <div className="flex gap-5">
-            <Checkboxs labels={"Phase 3"}></Checkboxs>
-            <Checkboxs labels={"220V"}></Checkboxs>
-            <Checkboxs labels={"100 / 127V"}></Checkboxs>
-            <Checkboxs labels={"230V"}></Checkboxs>
-            <Checkboxs labels={"110 / 120V "}></Checkboxs>
-            <Checkboxs labels={"240V"}></Checkboxs>
-            <Checkboxs labels={"380V"}></Checkboxs>
-            <Checkboxs labels={"480V"}></Checkboxs>
+            <Controller
+              name="Phase 3"
+              control={control}
+              defaultValue={false}
+              render={({ field }) => (
+                <Checkboxs
+                  {...field}
+                  name="Phase 3"
+                  labels="Phase 3"
+                />
+              )}
+            />
+             <Controller
+              name="220V"
+              control={control}
+              defaultValue={false}
+              render={({ field }) => (
+                <Checkboxs
+                  {...field}
+                  name="220V"
+                  labels="220V"
+                />
+              )}
+            />
+            <Controller
+              name="230V"
+              control={control}
+              defaultValue={false}
+              render={({ field }) => (
+                <Checkboxs
+                  {...field}
+                  name="230V"
+                  labels="230V"
+                />
+              )}
+            />
+            <Controller
+              name="240V"
+              control={control}
+              defaultValue={false}
+              render={({ field }) => (
+                <Checkboxs
+                  {...field}
+                  name="240V"
+                  labels="240V"
+                />
+              )}
+            />
+            <Controller
+              name="380V"
+              control={control}
+              defaultValue={false}
+              render={({ field }) => (
+                <Checkboxs
+                  {...field}
+                  name="380V"
+                  labels="380V"
+                />
+              )}
+            />
+            <Controller
+              name="480V"
+              control={control}
+              defaultValue={false}
+              render={({ field }) => (
+                <Checkboxs
+                  {...field}
+                  name="480V"
+                  labels="480V"
+                />
+              )}
+            />
+            <Controller
+              name="110 / 120V "
+              control={control}
+              defaultValue={false}
+              render={({ field }) => (
+                <Checkboxs
+                  {...field}
+                  name="110 / 120V "
+                  labels="110 / 120V "
+                />
+              )}
+            />
+            <Controller
+              name="100 / 127V"
+              control={control}
+              defaultValue={false}
+              render={({ field }) => (
+                <Checkboxs
+                  {...field}
+                  name="100 / 127V"
+                  labels="100 / 127V"
+                />
+              )}
+            />
           </div>
         </div>
       </div>

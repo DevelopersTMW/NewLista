@@ -1,14 +1,14 @@
 import { Textarea } from "@headlessui/react";
 import React from "react";
 
-const TextAreas = ({labe}) => {
+const TextAreas = ({label , placeholder , name , register}) => {
   return (
     <div>
       <label
-        htmlFor="text"
+        htmlFor={name}
         className="block mb-1 text-[15px] font-[700] text-PurpleColor"
       >
-        Description
+        {label}
       </label>
       <Textarea
         className={
@@ -16,7 +16,8 @@ const TextAreas = ({labe}) => {
         }
         rows={4}
         name="description"
-        placeholder="Describe the property, its features, location advantages, and any unique selling points."
+        placeholder={placeholder}
+        {...(register && typeof register === "function" ? register(name) : {})}
       ></Textarea>
     </div>
   );

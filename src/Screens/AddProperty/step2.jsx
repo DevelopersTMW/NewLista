@@ -1,5 +1,5 @@
-import React from "react";
-import { useForm } from "react-hook-form";
+import React, { useEffect, useState } from "react";
+import { Controller, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import step2Schema from "./step2schema.js";
 import Checkboxs from "../../Components/InputFields/Checkboxs.jsx";
@@ -11,12 +11,37 @@ const Step2 = ({ onNext, onBack, defaultValues }) => {
     register,
     handleSubmit,
     formState: { errors },
+    watch,
+    control,
   } = useForm({
     defaultValues,
-    resolver: yupResolver(step2Schema),
   });
+const files = watch("fileInput"); // will be FileList
+const [previews, setPreviews] = useState([]);
 
-  const onSubmit = (data) => onNext(data);
+useEffect(() => {
+  if (!files || files.length === 0) {
+    setPreviews([]);
+    return;
+  }
+
+  const urls = Array.from(files)
+    .filter((file) => file.type.startsWith("image/"))
+    .map((file) => URL.createObjectURL(file));
+
+  setPreviews(urls);
+
+  // Cleanup object URLs
+  return () => {
+    urls.forEach((url) => URL.revokeObjectURL(url));
+  };
+}, [files]);
+
+  const onSubmits = (value) => {
+    console.log("hello");
+
+    console.log(value);
+  };
 
   return (
     // <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
@@ -32,7 +57,7 @@ const Step2 = ({ onNext, onBack, defaultValues }) => {
     //   </div>
     // </form>
     <>
-      <form onSubmit={handleSubmit(onSubmit)} action="" className="">
+      <form onSubmit={handleSubmit(onSubmits)} action="" className="">
         <div className="border border-[#ececec] rounded-2xl px-10 py-8">
           <div className="relative">
             <label
@@ -43,9 +68,9 @@ const Step2 = ({ onNext, onBack, defaultValues }) => {
             </label>
             <div className=" mt-4 rounded-xl relative">
               <div className="flex flex-col items-center justify-center w-full py-10 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer">
-                <div class="flex flex-col justify-center px-9 items-center gap-3">
+                <div className="flex flex-col justify-center px-9 items-center gap-3">
                   <Upload size={55} />
-                  <p class="text-center text-[22px] font-semibold w-[60%]">
+                  <p className="text-center text-[22px] font-semibold w-[60%]">
                     Drag and drop your images here PNG, JPG, WEBP up to 10MB
                     each
                   </p>
@@ -54,7 +79,9 @@ const Step2 = ({ onNext, onBack, defaultValues }) => {
                       id="fileInput"
                       type="file"
                       className="hidden"
-                      accept=".doc, .docx, .pdf, .txt, .rtf, .odt, .pages, .html, .png, .gif, .tiff"
+                      accept=".png,.jpg,.jpeg,.webp"
+                      multiple
+                      {...register("fileInput")}
                     />
                     <label
                       htmlFor="fileInput"
@@ -63,6 +90,19 @@ const Step2 = ({ onNext, onBack, defaultValues }) => {
                       <span>Select Files</span>
                     </label>
                   </div>
+
+                  {previews.length > 0 && (
+                    <div className="flex flex-wrap gap-4 mt-4">
+                      {previews.map((src, index) => (
+                        <img
+                          key={index}
+                          src={src}
+                          alt={`Preview ${index}`}
+                          className="max-w-[150px] rounded shadow"
+                        />
+                      ))}
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
@@ -75,16 +115,74 @@ const Step2 = ({ onNext, onBack, defaultValues }) => {
             </span>
             <div className="flex gap-20">
               <div className="flex flex-col gap-2">
-                <Checkboxs labels={"Parking"}></Checkboxs>
-                <Checkboxs labels={"Sprinkler System"}></Checkboxs>
+                <Controller
+                  name="Parking"
+                  control={control}
+                  defaultValue={false}
+                  render={({ field }) => (
+                    <Checkboxs {...field} name="Parking" labels="Parking" />
+                  )}
+                />
+                <Controller
+                  name="SprinklerSystem"
+                  control={control}
+                  defaultValue={false}
+                  render={({ field }) => (
+                    <Checkboxs
+                      {...field}
+                      name="SprinklerSystem"
+                      labels="Sprinkler System"
+                    />
+                  )}
+                />
               </div>
               <div className="flex flex-col gap-2">
-                <Checkboxs labels={"Security System"}></Checkboxs>
-                <Checkboxs labels={"HVAC"}></Checkboxs>
+                <Controller
+                  name="SecuritySystem"
+                  control={control}
+                  defaultValue={false}
+                  render={({ field }) => (
+                    <Checkboxs
+                      {...field}
+                      name="SecuritySystem"
+                      labels="Security System"
+                    />
+                  )}
+                />
+                <Controller
+                  name="HVAC"
+                  control={control}
+                  defaultValue={false}
+                  render={({ field }) => (
+                    <Checkboxs {...field} name="HVAC" labels="HVAC" />
+                  )}
+                />
               </div>
               <div className="flex flex-col gap-2">
-                <Checkboxs labels={"High Speed Internet"}></Checkboxs>
-                <Checkboxs labels={"ADA Compliant"}></Checkboxs>
+                <Controller
+                  name="HighSpeedInternet"
+                  control={control}
+                  defaultValue={false}
+                  render={({ field }) => (
+                    <Checkboxs
+                      {...field}
+                      name="HighSpeedInternet"
+                      labels="High Speed Internet"
+                    />
+                  )}
+                />
+                <Controller
+                  name="ADACompliant"
+                  control={control}
+                  defaultValue={false}
+                  render={({ field }) => (
+                    <Checkboxs
+                      {...field}
+                      name="ADACompliant"
+                      labels="ADA Compliant"
+                    />
+                  )}
+                />
               </div>
             </div>
           </div>
@@ -123,14 +221,15 @@ const Step2 = ({ onNext, onBack, defaultValues }) => {
           </div>
         </div>
         <div className="flex gap-2 justify-between px-1.5 py-7">
-           <button
-            className="bg-transparent border-[#6C757D] cursor-pointer text-[17px] border-solid border-[2px] font-[600] px-6 py-2.5 text-[#6C757D] font-Urbanist rounded-[6px]" onClick={onBack}
+          <button
+            className="bg-transparent border-[#6C757D] cursor-pointer text-[17px] border-solid border-[2px] font-[600] px-6 py-2.5 text-[#6C757D] font-Urbanist rounded-[6px]"
+            onClick={onBack}
           >
-            Back to Details 
+            Back to Details
           </button>
           <button
             className="bg-PurpleColor font-[600] cursor-pointer text-[17px] px-6 py-2.5 text-white font-Urbanist rounded-[6px]"
-            onClick={onNext}
+            // onClick={onNext}
             type="submit"
           >
             Preview Listing

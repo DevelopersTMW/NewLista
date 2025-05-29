@@ -1,8 +1,10 @@
 import { Switch } from "@headlessui/react";
 import { AlertCircle } from "lucide-react";
 import React from "react";
+import Switches from "../../../../Components/InputFields/Switch";
+import { Controller } from "react-hook-form";
 
-const ListingVisibilitySwitches = () => {
+const ListingVisibilitySwitches = ({ register, controls }) => {
   return (
     <>
       <div className="flex flex-col py-5 gap-2">
@@ -12,10 +14,12 @@ const ListingVisibilitySwitches = () => {
           </h1>
         </div>
         <div className="flex  items-center gap-3">
-          <Switch className="group inline-flex h-6.5 w-12 items-center rounded-full bg-gray-200 transition data-checked:bg-PurpleColor outline-none">
-            <span className="size-4 translate-x-1 rounded-full bg-white transition group-data-checked:translate-x-6" />
-          </Switch>
-
+          <Controller
+            name="FeaturedListing"
+            control={controls}
+            defaultValue={false}
+            render={({ field }) => <Switches {...field} />}
+          />
           <div className="flex flex-col gap-0.5">
             <span className="flex gap-4">
               <h1 className="block font-Urbanist text-[17px] font-[500] text-[#000000]">
@@ -32,10 +36,12 @@ const ListingVisibilitySwitches = () => {
           </div>
         </div>
         <div className="flex  items-center gap-3">
-          <Switch className="group inline-flex h-6.5 w-12 items-center rounded-full bg-gray-200 transition data-checked:bg-PurpleColor outline-none">
-            <span className="size-4 translate-x-1 rounded-full bg-white transition group-data-checked:translate-x-6" />
-          </Switch>
-
+          <Controller
+            name="Off-the-MarketListing"
+            control={controls}
+            defaultValue={false}
+            render={({ field }) => <Switches {...field} />}
+          />
           <div className="flex flex-col gap-0.5">
             <span className="flex gap-4">
               <h1 className="block font-Urbanist text-[17px] font-[500] text-[#000000]">
@@ -52,9 +58,12 @@ const ListingVisibilitySwitches = () => {
           </div>
         </div>
         <div className="flex  items-center gap-3">
-          <Switch className="group inline-flex h-6.5 w-12 items-center rounded-full bg-gray-200 transition data-checked:bg-PurpleColor outline-none">
-            <span className="size-4 translate-x-1 rounded-full bg-white transition group-data-checked:translate-x-6" />
-          </Switch>
+          <Controller
+            name="OwnerFinancing"
+            control={controls}
+            defaultValue={false}
+            render={({ field }) => <Switches {...field} />}
+          />
 
           <div className="flex flex-co items-center gap-0.5">
             <span className="flex gap-4">
@@ -77,9 +86,12 @@ const ListingVisibilitySwitches = () => {
           </h1>
         </div>
         <div className="flex  items-center gap-3">
-          <Switch className="group inline-flex h-6.5 w-12 items-center rounded-full bg-gray-200 transition data-checked:bg-PurpleColor outline-none">
-            <span className="size-4 translate-x-1 rounded-full bg-white transition group-data-checked:translate-x-6" />
-          </Switch>
+          <Controller
+            name="ShowNumber"
+            control={controls}
+            defaultValue={false}
+            render={({ field }) => <Switches {...field} />}
+          />
 
           <div className="flex flex-co items-center gap-0.5">
             <span className="flex gap-4">
@@ -93,9 +105,12 @@ const ListingVisibilitySwitches = () => {
           </div>
         </div>
         <div className="flex  items-center gap-3">
-          <Switch className="group inline-flex h-6.5 w-12 items-center rounded-full bg-gray-200 transition data-checked:bg-PurpleColor outline-none">
-            <span className="size-4 translate-x-1 rounded-full bg-white transition group-data-checked:translate-x-6" />
-          </Switch>
+          <Controller
+            name="ShowEmail"
+            control={controls}
+            defaultValue={false}
+            render={({ field }) => <Switches {...field} />}
+          />
 
           <div className="flex flex-co items-center gap-0.5">
             <span className="flex gap-4">

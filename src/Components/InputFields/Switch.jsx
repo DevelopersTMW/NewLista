@@ -1,0 +1,22 @@
+import { Switch } from "@headlessui/react";
+import React from "react";
+
+const Switches = ({ value, onChange }) => {
+  return (
+    <Switch
+      checked={value}
+      onChange={onChange}
+      className={`${
+        value ? "bg-PurpleColor" : "bg-gray-200"
+      } group inline-flex h-6.5 w-12 items-center rounded-full transition outline-none`}
+    >
+      <span
+        className={`size-4 rounded-full bg-white transition ${
+          value ? "translate-x-6" : "translate-x-1"
+        }`}
+      />
+    </Switch>
+  );
+};
+
+export default Switches;

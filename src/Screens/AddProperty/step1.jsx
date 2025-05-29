@@ -36,7 +36,7 @@ const Step1 = ({ onNext, defaultValues }) => {
   const { register, watch } = useForm();
 
   // CHECK RADIO VALUE
-  const PropertyType = watch("propertyType");
+  const PropertyRadio = watch("propertyType");
   // PROPERTY TYPES
   const [propertyType, setPropertyType] = useState("");
 
@@ -103,8 +103,8 @@ const Step1 = ({ onNext, defaultValues }) => {
                 </span>
               </div>
               <div className="flex justify-between flex-wrap gap-8">
-                {(PropertyType === "For Sale" ||
-                  PropertyType === "Both (For Sale & For Lease)") && (
+                {(PropertyRadio === "For Sale" ||
+                  PropertyRadio === "Both (For Sale & For Lease)") && (
                   <span className="w-[48.5%]">
                     <Inputs
                       labels={"Sale Price"}
@@ -113,8 +113,8 @@ const Step1 = ({ onNext, defaultValues }) => {
                     ></Inputs>
                   </span>
                 )}
-                {(PropertyType === "For Lease" ||
-                  PropertyType === "Both (For Sale & For Lease)") && (
+                {(PropertyRadio === "For Lease" ||
+                  PropertyRadio === "Both (For Sale & For Lease)") && (
                   <span className="w-[48.5%] flex gap-4">
                     <span className="w-[100%]">
                       <Inputs
@@ -140,8 +140,8 @@ const Step1 = ({ onNext, defaultValues }) => {
                   ></Inputs>
                 </span>
               </div>
-              {(PropertyType === "For Lease" ||
-                PropertyType === "Both (For Sale & For Lease)") && (
+              {(PropertyRadio === "For Lease" ||
+                PropertyRadio === "Both (For Sale & For Lease)") && (
                 <div className="flex gap-2 flex-col">
                   <label className="block mb-1 font-[700] text-PurpleColor w-[100%] max-[1280px]:text-[14px] max-[1666px]:text-[15px] min-[1666px]:text-[16px]">
                     Lease Type

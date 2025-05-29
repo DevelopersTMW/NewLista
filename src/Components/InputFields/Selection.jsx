@@ -2,7 +2,17 @@ import React, { useEffect, useState } from "react";
 import { Select } from "@headlessui/react";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
 
-const Selection = ({ labels, defaultOption, Options, Style , values , onchange }) => {
+const Selection = ({
+  labels,
+  defaultOption,
+  Options,
+  Style,
+  values,
+  onchange,
+  register,
+  name,
+   autoSelectFirst = false
+}) => {
   const [Optionss, setOptions] = useState([]);
 
   useEffect(() => {
@@ -16,7 +26,7 @@ const Selection = ({ labels, defaultOption, Options, Style , values , onchange }
     <>
       <div className={`relative ${Style} `}>
         <label
-          htmlFor="text"
+          htmlFor={name}
           className="block mb-1 font-[700] text-PurpleColor w-[100%] max-[1280px]:text-[14px] max-[1666px]:text-[15px] min-[1666px]:text-[16px]"
         >
           {labels}
@@ -25,28 +35,31 @@ const Selection = ({ labels, defaultOption, Options, Style , values , onchange }
           className={
             "bg-[#F3EEFF] border-[#F3EEFF]  text-[#4b4b4b] font-[600] font-Urbanist text-[14px] w-[100%] h-12 px-4 rounded-[6px] outline-none appearance-none cursor-pointer focus:outline-none"
           }
+          defaultValue={
+            autoSelectFirst ? Options[0] : defaultOption === null ? "" : ""
+          }
           name="status"
           value={values}
           onChange={onchange}
+          {...(register && typeof register === "function"
+            ? register(name)
+            : {})}
           aria-label="Project status"
         >
-          <option
-            className="text-[#1a1919] font-[500] font-Urbanist text-[14px] "
-            value=""
-          >
-            {defaultOption}
-          </option>
+          {defaultOption !== null && !autoSelectFirst && (
+            <option value="">{defaultOption}</option>
+          )}
           {Optionss?.map((items, index) => {
-              return (
-                <option
-                  key={index}
-                  className="text-[#1a1919] font-[500] font-Urbanist text-[14px] "
-                  value={items}
-                >
-                  {items}
-                </option>
-              );
-            })}
+            return (
+              <option
+                key={index}
+                className="text-[#1a1919] font-[500] font-Urbanist text-[14px] "
+                value={items}
+              >
+                {items}
+              </option>
+            );
+          })}
         </Select>
         <ChevronDownIcon
           className={`group pointer-events-none absolute top-10 right-2.5 size-5 fill-black text-black ${Style} `}
