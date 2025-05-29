@@ -57,7 +57,7 @@ function Navbar() {
               Pricing
             </Link>
             <Link
-              to={"/view-property"}
+              to={"/properties"}
               className="text-sm/6 font-[500]  text-textColor  font-Inter "
             >
               Properties
@@ -81,7 +81,7 @@ function Navbar() {
           <div className="hidden lg:flex lg:flex-1 lg:justify-end gap-3 items-center">
             <div>
               <Link
-                to={"/add-property"}
+                to={"/form"}
                 className="text-sm/6 font-semibold text-gray-900"
               >
                 <button className="hover-btn-yellow hover-btn px-5 py-2 rounded-md font-Inter cursor-pointer">

@@ -53,7 +53,7 @@ function TransparentNavbar() {
           </Link>
           
           <Link
-            to={"/view-property"}
+            to={"/properties"}
             className="text-sm/6 font-[500]  text-textColor  font-Inter hover:text-[#c4c4c4] "
           >
             Properties
@@ -83,7 +83,7 @@ function TransparentNavbar() {
           </div> */}
           <div>
             <Link
-              to={"/add-property"}
+              to={"/form"}
               className="text-sm/6 font-semibold text-gray-900"
             >
               <button className="hover-btn-yellow hover-btn text-black px-5 py-2 rounded-md font-Inter cursor-pointer">
