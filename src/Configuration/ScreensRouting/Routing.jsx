@@ -32,7 +32,7 @@ const Routing = () => {
           <Route path={"/add-property"} element={<AddProperty />} />
           <Route path={"/add-property2"} element={<AddProperty2 />} />
           <Route path={"/form"} element={<StepForm />} />
-          <Route path={"/property-overview"} element={<ViewProperty />} />
+          <Route path={"/properties"} element={<ViewProperty />} />
           <Route path={"/properties/:id"} element={<PropertyDetails />} />
           <Route path={"/pricing"} element={<Pricing />} />
           <Route path={"/contact-us"} element={<ContactUs />} />
