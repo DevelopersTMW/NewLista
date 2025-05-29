@@ -3,6 +3,37 @@ import Inputs from "../../../../Components/InputFields/Inputs";
 import Selection from "../../../../Components/InputFields/Selection";
 import RadioButton from "../../../../Components/InputFields/RadioButton";
 
+
+const propertyType = [
+  { name: "Select Your Property" },
+  { name: "Car Wash" },
+  // { name: "Church" },
+  // { name: "Condominium" },
+  { name: "Gas Station" },
+  { name: "Hotel" },
+  { name: "Industrial Park" },
+  { name: "Investment Home" },
+  // { name: "Medical Building" },
+  // { name: "Mixed Use" },
+  // { name: "Mobile Home Park" },
+  { name: "Motel" },
+  { name: "Multifamily" },
+  // { name: "Office Building" },
+  { name: "Recreation Center" },
+  // { name: "Retail Center" },
+  { name: "Self-Storage Facility" },
+  // { name: "School Building" },
+  { name: "Senior Living Facility" },
+  { name: "Shopping Center" },
+  { name: "Single Tenant Retail Building" },
+  // { name: "Storage Facility" },
+  { name: "Townhomes" },
+  // { name: "Vacant Land" },
+  // { name: "Warehouse" },
+  // { name: "Other" },
+];
+
+
 const propertyTypes = [
   "Retail For Lease",
   "Office For Lease",

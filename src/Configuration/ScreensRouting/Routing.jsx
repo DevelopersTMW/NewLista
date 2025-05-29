@@ -32,8 +32,8 @@ const Routing = () => {
           <Route path={"/add-property"} element={<AddProperty />} />
           <Route path={"/add-property2"} element={<AddProperty2 />} />
           <Route path={"/form"} element={<StepForm />} />
-          <Route path={"/view-property"} element={<ViewProperty />} />
-          <Route path={"/property-detail"} element={<PropertyDetails />} />
+          <Route path={"/property-overview"} element={<ViewProperty />} />
+          <Route path={"/properties/:id"} element={<PropertyDetails />} />
           <Route path={"/pricing"} element={<Pricing />} />
           <Route path={"/contact-us"} element={<ContactUs />} />
           <Route path={"/login"} element={<Login />} />
@@ -42,10 +42,10 @@ const Routing = () => {
           <Route path={"/set-new-password"} element={<SetNewPassword />} />
           <Route path={"/register"} element={<Register />} />
           <Route path={"/plans"} element={<OurPlans />} />
-          <Route path={"/residential"} element={<Residential />} />
-          <Route path={"/commercial"} element={<Commercial />} />
-          <Route path={"/industrial"} element={<Industrial />} />
-          <Route path={"/lease"} element={<LeaseForm />} />
+          {/* <Route path={"/residential"} element={<Residential />} /> */}
+          {/* <Route path={"/commercial"} element={<Commercial />} /> */}
+          {/* <Route path={"/industrial"} element={<Industrial />} /> */}
+          {/* <Route path={"/lease"} element={<LeaseForm />} /> */}
           <Route path={"/admin/*"} element={<Admin />} />
         </Routes>
       </BrowserRouter>
