@@ -28,6 +28,7 @@ import { Link } from "react-router-dom";
 import { Map, MapPlus } from "lucide-react";
 import HomeSection1 from "./HomeSections/HomeSection1";
 import CardContentSection from "./HomeSections/CardContentSection";
+import Carousel from "../../Components/Carousel/Carousel";
 
 // BACKGORUND
 const HeroBackground = {
@@ -507,7 +508,7 @@ const Home = () => {
                 "Check out investment properties handpicked and listed by Investors. Explore current opportunities and connect directly to learn more or make an offer"
               }
               ButtonName={"View All Properties"}
-              ButtonLink={"/view-property"}
+              ButtonLink={"/properties"}
             />
             <div className="flex flex-wrap gap-7 sm:gap-3 md:gap-5 md:w-[84%]">
               {Properties?.filter((item) => item.featured_listing)
@@ -552,10 +553,10 @@ const Home = () => {
                 "Access exclusive off-market deals not available to the public. To view full property details, you must be a subscriber."
               }
               ButtonName={"View All Off-Market Properties"}
-              ButtonLink={"/view-property"}
+              ButtonLink={"/properties"}
             />
             {/* PROPERTY CARD SECTION  */}
-            <div className="flex gap-7 sm:gap-3 sm:-ml-4 md:gap-5  md:w-[84%] blur-[px]">
+            <div className="flex gap-7 sm:gap-3 sm:-ml-4 md:gap-5  md:w-[84%] blur-[12px]">
               {Properties?.filter((items) => items.off_market_listing)
                 .slice(0, 3)
                 .map((items) => (
@@ -643,7 +644,7 @@ const Home = () => {
                   Reach serious buyers, close deals faster, and maximize your
                   property's potential.{" "}
                 </h1>
-                <Link className="w-full" to={"/add-property3"}>
+                <Link className="w-full" to={"/form"}>
                   <button className="hover-btn-purple hover-btn py-2 text-[16px] text-white font-Inter rounded-[8px] w-full cursor-pointer">
                     <span>Sell your Property</span>
                   </button>
@@ -700,6 +701,8 @@ const Home = () => {
               ></InvestorCards>
             </div>
           </section>
+
+          <Carousel/>
           {/* SECTION 6 END  */}
         </div>
         <MiniFooter></MiniFooter>
