@@ -491,7 +491,7 @@ const Home = () => {
               </p> */}
               </div>
               <div className="lg:w-[100%] xl:w-[100%] 2xl:w-[80%]">
-                {/* <SearchBar></SearchBar> */}
+                <SearchBar></SearchBar>
               </div>
             </div>
           </section>
