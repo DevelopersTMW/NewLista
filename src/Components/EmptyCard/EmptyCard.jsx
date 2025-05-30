@@ -5,7 +5,7 @@ const EmptyCards = ({ Title }) => {
   return (
     <>
       {/* PAGE TITTLE  */}
-      <section className="flex flex-col justify-center items-center py-4 text-center w-[100%]">
+      <section id={'Off-market'} className="flex flex-col justify-center items-center py-4 text-center w-[100%]">
         <div className="flex justify-center">
           <img className="w-[100%]" src={EmptyCard} alt="" />
         </div>

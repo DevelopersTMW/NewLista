@@ -1,22 +1,24 @@
 import React from "react";
 import { Link } from "react-router-dom";
-// ADDITIONAL CSS 
+// ADDITIONAL CSS
 import "../../index.css";
-// IMAGES 
+// IMAGES
 import CheckIcon from "../../assets/Icon.png";
 
 
-const PlansTabs = ({ PlanNum, PlanCard, Name, Desc, ButtonText }) => {
+  
+
+const PlansTabs = ({ PlanNum, PlanCard, Name, Desc, ButtonText , benefits }) => {
   return (
     <>
-      <div className="relative w-[42%] bg-white shadow-2xl rounded-3xl p-8 ring-1 ring-gray-900/10 sm:p-10">
+      <div className="relative w-[100%] bg-white shadow-2xl rounded-3xl p-8 ring-1 ring-gray-900/10 sm:p-10">
         <h3 className={"text-PurpleColor text-base/7 font-semibold"}>
           {PlanCard}
         </h3>
         <p className="mt-4 flex items-baseline gap-x-2">
           <span
             className={
-              "text-black text-5xl font-semibold tracking-tight font-Poppins"
+              "text-black text-[46px] font-semibold tracking-tight font-Poppins"
             }
           >
             {Name}
@@ -30,7 +32,7 @@ const PlansTabs = ({ PlanNum, PlanCard, Name, Desc, ButtonText }) => {
             "text-Paracolor mt-6 text-base/7 font-semibold leading-[25px] font-Urbanist"
           }
         >
-         {Desc}
+          {Desc}
         </p>
         <ul
           role="list"
@@ -38,54 +40,26 @@ const PlansTabs = ({ PlanNum, PlanCard, Name, Desc, ButtonText }) => {
             "text-Paracolor font-Urbanist mt-8 space-y-3 text-sm/6 sm:mt-10"
           }
         >
-          <li className="flex gap-x-3">
-            <img
-              className="bg-PurpleColor text-[10px] px-1.5 py-1.5 rounded-full text-white"
-              src={CheckIcon}
-              alt=""
-            />
-            Unlimited products
-          </li>
-          <li className="flex gap-x-3">
-            <img
-              className="bg-PurpleColor text-[10px] px-1.5 py-1.5 rounded-full text-white"
-              src={CheckIcon}
-              alt=""
-            />
-            Unlimited subscribers
-          </li>
-          <li className="flex gap-x-3">
-            <img
-              className="bg-PurpleColor text-[10px] px-1.5 py-1.5 rounded-full text-white"
-              src={CheckIcon}
-              alt=""
-            />
-            Advanced analytics
-          </li>
-          <li className="flex gap-x-3">
-            <img
-              className="bg-PurpleColor text-[10px] px-1.5 py-1.5 rounded-full text-white"
-              src={CheckIcon}
-              alt=""
-            />
-            Dedicated support representative
-          </li>
-          <li className="flex gap-x-3">
-            <img
-              className="bg-PurpleColor text-[10px] px-1.5 py-1.5 rounded-full text-white"
-              src={CheckIcon}
-              alt=""
-            />
-            Marketing automations
-          </li>
-          <li className="flex gap-x-3">
-            <img
-              className="bg-PurpleColor text-[10px] px-1.5 py-1.5 rounded-full text-white"
-              src={CheckIcon}
-              alt=""
-            />
-            Custom integrations
-          </li>
+          {benefits.map((item) => (
+            <li key={item.id} className="flex items-center gap-x-3">
+              {item.checked && (
+                <img
+                  src={CheckIcon}
+                  alt="Checked"
+                  className="bg-PurpleColor text-[10px] px-[5px] py-1.5 rounded-full text-white"
+                />
+              )}
+              {!item.checked&& (
+                <img
+                  src={CheckIcon}
+                  alt="Checked"
+                  className="bg-PurpleColor text-[10px] px-[5px] py-1.5 rounded-full text-white"
+                />
+              )}
+              <span className="text-sm text-gray-800">{item.label}</span>
+            </li>
+          ))}
+          
         </ul>
         <Link
           className={

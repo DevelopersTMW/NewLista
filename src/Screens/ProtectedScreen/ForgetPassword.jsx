@@ -110,24 +110,6 @@ const ForgetPassword = () => {
                 )}
               </button>
             </div>
-            <div className="flex justify-center items-center gap-3 mt-3">
-              <div className="bg-[#a5a5a5] h-0.5 w-[90px]"></div>
-              <p className="font-Urbanist text-Paracolor font-[600] text-[15px] text-center">
-                or continue with{" "}
-              </p>
-              <div className="bg-[#a5a5a5] h-0.5 w-[90px]"></div>
-            </div>
-            <div className="flex justify-center gap-2">
-              <Link to={"https://www.google.com/"}>
-                <img className="w-[32px] h-8 " src={Google} alt="" />
-              </Link>
-              <Link to={"https://www.facebook.com/"}>
-                <img className="w-[33px] h-8" src={Facebook} alt="" />
-              </Link>
-              <Link to={"https://www.linkedin.com/"}>
-                <img className="w-[34px] h-8" src={Linkedin} alt="" />
-              </Link>
-            </div>
           </form>
         </div>
       </div>

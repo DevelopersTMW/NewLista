@@ -24,7 +24,7 @@ function TransparentNavbar() {
         <div className="flex lg:flex-1">
           <Link to={"/"} className="-m-1.5 p-1.5">
             <span className="sr-only">New Lista</span>
-            <img alt="" src={Logo} className="h-16 w-auto" />
+            <img alt="" src={Logo} className="h-14 sm:h-16 w-auto" />
           </Link>
         </div>
         {/* MENU ICON MOBILE  */}
@@ -112,7 +112,7 @@ function TransparentNavbar() {
         className="lg:hidden"
       >
         <div className="fixed inset-0 z-10" />
-        <DialogPanel className="fixed inset-y-0 right-0 z-10 w-full overflow-y-auto px-10 py-8 bg-black sm:px-6 sm:py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
+        <DialogPanel className="fixed inset-y-0 right-0 z-10 w-full overflow-y-auto px-6 py-8 bg-black sm:px-6 sm:py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
           <div className="flex items-center justify-between">
             <Link className="-m-1.5 p-1.5">
               <img alt="" src={Logo} className="h-14 w-auto" />

@@ -1,15 +1,20 @@
-import React from "react";
+import React, { useState } from "react";
 import { Select, Textarea } from "@headlessui/react";
 // Components
 import Navbar from "../../Components/Navbar/Navbar";
 import MiniFooter from "../../Components/Footer/MiniFooter";
 import Footer from "../../Components/Footer/Footer";
-import CountrySelector from "../../Components/RegisterCountrySelector/RegisterCountrySelector";
+import CountrySelector from "../../Components/RegisterCountrySelector/CountrySelection";
 // Image
 import ContactImage1_1 from "../../assets/ContactImage1.1.png";
 import ContactImage1_2 from "../../assets/ContactImage1.2.png"
+import Inputs from "../../Components/InputFields/Inputs";
 
 const ContactUs = () => {
+
+  const [phone , setPhone] = useState("")
+
+
   return (
     <>
       <Navbar></Navbar>
@@ -85,38 +90,10 @@ const ContactUs = () => {
             </div>
 
             {/* Phone Number*/}
-            <CountrySelector />
+            <CountrySelector setPhone={setPhone} phone={phone}  />
             {/* Location  */}
             <div>
-              <label
-                for="text"
-                className="block mb-1 text-[15px] font-[700] text-PurpleColor"
-              >
-                Subject
-              </label>
-              <Select
-                className={
-                  "bg-[#F3EEFF] border-[#F3EEFF] text-[#868686] font-[600] font-Urbanist text-[14px] w-[100%] h-12 px-4 rounded-[6px] outline-none  "
-                }
-                name="status"
-                aria-label="Project status"
-              >
-                <option className="text-[#c4c4c4]" value="active">
-                  General Inquiry
-                </option>
-                <option className="text-[#c4c4c4]" value="active">
-                  Active
-                </option>
-                <option className="text-[#c4c4c4]" value="paused">
-                  Paused
-                </option>
-                <option className="text-[#c4c4c4]" value="delayed">
-                  Delayed
-                </option>
-                <option className="text-[#c4c4c4]" value="canceled">
-                  Canceled
-                </option>
-              </Select>
+              <Inputs labels={"Subject"} placeholder={"Enter General Inquiry"}></Inputs>
             </div>
 
             {/* Message */}

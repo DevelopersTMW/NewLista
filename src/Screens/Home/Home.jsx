@@ -29,13 +29,13 @@ import { Map, MapPlus } from "lucide-react";
 import HomeSection1 from "./HomeSections/HomeSection1";
 import CardContentSection from "./HomeSections/CardContentSection";
 import Carousel from "../../Components/Carousel/Carousel";
+import CardCarousel from "../../Components/Carousel/Carousel";
 
 // BACKGORUND
 const HeroBackground = {
   backgroundImage: `url(${HeroBg})`,
   backgroundSize: "cover",
   backgroundRepeat: "no-repeat",
-  backgroundBlendMode: "black",
   backgroundColor: "rgb(0 0 0 / 54%)",
   backgroundBlendMode: "color",
 };
@@ -500,7 +500,7 @@ const Home = () => {
           <HomeSection1 token={token}></HomeSection1>
 
           {/* SECTION 2 START  */}
-          <section className="flex flex-col justify-center items-center py-3 sm:py-8 lg:py-14 px-6 sm:px-8 gap-10 md:px-0 sm:gap-6">
+          <section  id="featurelisting" className="flex flex-col justify-center items-center py-3 sm:py-8 lg:py-14 px-6 sm:px-8 gap-10 md:px-0 sm:gap-6">
             {/* CONTENT SECTION  */}
             <CardContentSection
               Heading={"Featured Properties"}
@@ -545,7 +545,7 @@ const Home = () => {
           {/* SECTION 2 END */}
 
           {/* SECTION 3 START  */}
-          <section className="flex flex-col justify-center items-center py-20 px-6 sm:px-8 sm:py-14 md:px-0  gap-10 sm:gap-6">
+          <section id="OffMarketingListing" className="flex flex-col justify-center items-center py-20 px-6 sm:px-8 sm:py-14 md:px-0  gap-10 sm:gap-6">
             {/* CONTENT SECTION  */}
             <CardContentSection
               Heading={"Off-Market Properties"}
@@ -556,15 +556,18 @@ const Home = () => {
               ButtonLink={"/properties"}
             />
             {/* PROPERTY CARD SECTION  */}
-            <div className="flex gap-7 sm:gap-3 sm:-ml-4 md:gap-5  md:w-[84%] blur-[12px]">
+            <div  className="flex gap-7 sm:gap-3 sm:-ml-4 md:gap-5  md:w-[84%] blur-[px]">
               {Properties?.filter((items) => items.off_market_listing)
                 .slice(0, 3)
                 .map((items) => (
                   <TopDevelopes
                     key={items.id}
                     Img={items.images[0]}
-                    Heading={items.city}
-                    MiniHeading={items.state}
+                    Heading={items.property_name}
+                    MiniHeading={<TruncatedText
+                          text={items.address}
+                          maxLength={19}
+                        />}
                     desc={
                       <TruncatedText text={items.description} maxLength={90} />
                     }
@@ -669,7 +672,8 @@ const Home = () => {
             />
             {/* CARD SECTION  */}
             <div className="w-[98%] sm:-ml-3 md:w-[84%] flex gap-10">
-              <InvestorCards
+              <CardCarousel/>
+              {/* <InvestorCards
                 InvesImage={Testimonials1}
                 InvesUserName={"John Doe"}
                 InvesDesc={"Real Estate Investor"}
@@ -698,11 +702,11 @@ const Home = () => {
                 InvesImage={Testimonials1}
                 InvesUserName={"John Doe"}
                 InvesDesc={"Real Estate Investor"}
-              ></InvestorCards>
+              ></InvestorCards> */}
             </div>
           </section>
 
-          <Carousel/>
+        
           {/* SECTION 6 END  */}
         </div>
         <MiniFooter></MiniFooter>

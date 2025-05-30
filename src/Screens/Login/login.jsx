@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Image from "../../assets/RegisterPage.jpg";
 import Google from "../../assets/google.png";
@@ -8,8 +8,9 @@ import axios from "axios";
 import Inputs from "../../Components/InputFields/Inputs";
 
 const Login = () => {
-
-    const navigate = useNavigate();
+  const navigate = useNavigate();
+  const clientId = import.meta.env.VITE_GOOGLE_CLIENT_ID;
+  const ApiKey = import.meta.env.VITE_API_KEY;
 
   const [formData, setFormData] = useState({ Email: "", Password: "" });
   const [Loading, setLoading] = useState(false);
@@ -43,11 +44,13 @@ const Login = () => {
 
     try {
       setLoading(true);
-      const res = await axios.post("https://newlista.secureserverinternal.com/api/login", {
-        email: formData.Email,
-        password: formData.Password,
-      });
-
+      const res = await axios.post(
+        `${ApiKey}/login`,
+        {
+          email: formData.Email,
+          password: formData.Password,
+        }
+      );
       localStorage.setItem("token", res.data.token);
       navigate("/admin");
     } catch (error) {
@@ -66,13 +69,72 @@ const Login = () => {
     }
   };
 
+  const GoogleLogin = async (e) => {
+    const idToken = e.credential;
+    const base64Url = idToken.split(".")[1];
+    const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
+    const jsonPayload = decodeURIComponent(
+      atob(base64)
+        .split("")
+        .map(function (c) {
+          return "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2);
+        })
+        .join("")
+    );
+    const userData = JSON.parse(jsonPayload);
+    try {
+      setLoading(true);
+      const Response = await axios.post(
+        `${ApiKey}/social-login`,
+        {
+          email: userData.email,
+          first_name: userData.given_name,
+          last_name: userData.family_name,
+          profile_photo: userData.picture,
+        },
+        {
+          contenttype: "application/json",
+        }
+      );
+      localStorage.setItem("token", Response.data.token);
+      navigate("/admin");
+      setLoading(false);
+    } catch (error) {
+      console.log(error);
+      setLoading(false);
+      console.log(error.response.data.errors[0].msg);
+      alert(error.response.data.errors[0].msg);
+    }
+  };
+
+  // CHECK GOOGLE API AND RENDER BUTTON
+  useEffect(() => {
+    if (window.google) {
+      window.google.accounts.id.initialize({
+        client_id: clientId,
+        callback: GoogleLogin,
+      });
+      window.google.accounts.id.renderButton(
+        document.getElementById("google-login-button"),
+        {
+          theme: "outline",
+          size: "large",
+          shape: "pill",
+        }
+      );
+    }
+  }, []);
 
   return (
     <>
       <div className="flex max-[891px]:flex-col">
         {/* IMAGE SECTION  */}
         <div className="max-[580px]:h-[25vh] max-[891px]:h-[30vh] max-[891px]:w-[100%] min-[891px]:min-h-screen max-[1666px]:w-[46%] min-[1666px]:w-[46%]">
-          <img className="max-[891px]:h-[100%] max-[891px]:w-[100%] object-cover min-[891px]:h-[100%]" src={Image} alt="" />
+          <img
+            className="max-[891px]:h-[100%] max-[891px]:w-[100%] object-cover min-[891px]:h-[100%]"
+            src={Image}
+            alt=""
+          />
         </div>
 
         {/* LOGIN FOR SECTION  */}
@@ -94,7 +156,15 @@ const Login = () => {
             className="flex flex-col gap-5 max-[891px]:gap-4"
           >
             <div>
-              <Inputs labels={" Email/User ID"} placeholder={"Enter your registered email"} type={"email"} value={formData.Email} name="Email" onChange={handleChanges} error={EmailError} ></Inputs>
+              <Inputs
+                labels={" Email/User ID"}
+                placeholder={"Enter your registered email"}
+                type={"email"}
+                value={formData.Email}
+                name="Email"
+                onChange={handleChanges}
+                error={EmailError}
+              ></Inputs>
               {EmailError && (
                 <p className="mt-2 font-Roboto border-red-500 text-red-600 ml-1 text-[13px]">
                   {EmailError}
@@ -102,15 +172,23 @@ const Login = () => {
               )}
             </div>
             <div>
-              <Inputs labels={"Password"} placeholder={"Enter your password"} type={"password"} value={formData.Password} name="Password" onChange={handleChanges} error={ErrorMessage} ></Inputs>
+              <Inputs
+                labels={"Password"}
+                placeholder={"Enter your password"}
+                type={"password"}
+                value={formData.Password}
+                name="Password"
+                onChange={handleChanges}
+                error={ErrorMessage}
+              ></Inputs>
               {ErrorMessage && (
                 <p className="mt-2 font-Roboto border-red-500 text-red-600 ml-1 text-[13px]">
                   {ErrorMessage}
                 </p>
               )}
-                <p className="font-Urbanist text-Paracolor font-[600] text-[14px] text-end max-[481px]:text-[14px] max-[891px]:text-[15px] max-[1100px]:text-[13px] max-[1280px]:text-[14px] max-[1280px]:mt-3 max-[1666px]:mt-4 max-[1666px]:text-[15px] min-[1666px]:text-[16px] min-[1666px]:mt-3 min-[1666px]:mb-2">
-                   <Link to={'/reset-password'}>Forgot Password?</Link>
-                </p>
+              <p className="font-Urbanist text-Paracolor font-[600] text-[14px] text-end max-[481px]:text-[14px] max-[891px]:text-[15px] max-[1100px]:text-[13px] max-[1280px]:text-[14px] max-[1280px]:mt-3 max-[1666px]:mt-4 max-[1666px]:text-[15px] min-[1666px]:text-[16px] min-[1666px]:mt-3 min-[1666px]:mb-2">
+                <Link to={"/reset-password"}>Forgot Password?</Link>
+              </p>
             </div>
 
             <div className="mt-1">
@@ -135,15 +213,13 @@ const Login = () => {
               <div className="bg-[#a5a5a5] h-0.5 w-[90px] max-[890px]:w-[50px]"></div>
             </div>
             <div className="flex justify-center gap-2 max-[481px]:gap-4">
-              <Link to={"https://www.google.com/"}>
-                <img className="max-[481px]:h-8 max-[481px]:w-[33px] max-[891px]:h-10 max-[891px]:w-[37px] max-[1666px]:h-8 max-[1666px]:w-[32px] min-[1666px]:w-[38px] min-[1666px]:h-9" src={Google} alt="" />
-              </Link>
-              <Link to={"https://www.facebook.com/"}>
+              <div id="google-login-button"></div>
+              {/* <Link to={"https://www.facebook.com/"}>
                 <img className="max-[481px]:h-8 max-[481px]:w-[33px] max-[891px]:h-10 max-[891px]:w-[39px] max-[1666px]:w-[33px] max-[1666px]:h-8 min-[1666px]:w-[39px] min-[1666px]:h-9" src={Facebook} alt="" />
               </Link>
               <Link to={"https://www.linkedin.com/"}>
                 <img className="max-[481px]:h-8 max-[481px]:w-[33px] max-[891px]:w-[40px] max-[891px]:h-10 max-[1666px]:w-[34px] max-[1666px]:h-8 min-[1666px]:w-[39px] min-[1666px]:h-9.5" src={Linkedin} alt="" />
-              </Link>
+              </Link> */}
             </div>
           </form>
         </div>

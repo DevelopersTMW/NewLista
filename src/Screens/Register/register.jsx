@@ -1,11 +1,16 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Image from "../../assets/LoginPage.jpg";
 import Google from "../../assets/google.png";
 import Facebook from "../../assets/facebook.png";
 import Linkedin from "../../assets/linkedin.png";
-import CountrySelector from "../../Components/RegisterCountrySelector/RegisterCountrySelector";
 import axios from "axios";
+
+import "intl-tel-input/build/js/utils"; // Optional: for validation
+
+import "intl-tel-input/build/css/intlTelInput.css";
+import intlTelInput from "intl-tel-input";
+import CountrySelector from "../../Components/RegisterCountrySelector/CountrySelection";
 
 const countries = [
   { code: "+91", label: "India", flag: "https://flagcdn.com/w40/in.png" },
@@ -15,9 +20,12 @@ const countries = [
 ];
 
 const register = () => {
+  const clientId = import.meta.env.VITE_GOOGLE_CLIENT_ID;
+  const ApiKey = import.meta.env.VITE_API_KEY;
+
   const [phone, setPhone] = useState("");
   const [countryCode, setCountryCode] = useState("+91");
-  
+
   const selectedCountry = countries.find((c) => c.code === countryCode);
 
   const navigate = useNavigate();
@@ -28,7 +36,6 @@ const register = () => {
   const [formData, setFormData] = useState({
     FirstName: "",
     LastName: "",
-    // PhoneNum: {countryCode , phone},
     Location: "",
     Password: "",
     ConfirmPassword: "",
@@ -46,7 +53,6 @@ const register = () => {
 
   const RegisterForm = async (e) => {
     e.preventDefault();
-    console.log(formData);
     if (formData.Password.length < 8) {
       setErrorMessage("Password must be 8 characters Long");
       return;
@@ -63,16 +69,15 @@ const register = () => {
       setErrorMessage("Password must contain any capital letter");
       return;
     }
-    console.log( countryCode  + phone);
     try {
       setLoading(true);
       const Response = await axios.post(
-        "https://newlista.secureserverinternal.com/api/register",
+        `${ApiKey}/register`,
         {
           first_name: formData.FirstName,
           last_name: formData.LastName,
           email: formData.Email,
-          phone: countryCode  + phone,
+          phone: phone,
           location: formData.Location,
           password: formData.Password,
         },
@@ -80,9 +85,6 @@ const register = () => {
           contenttype: "application/json",
         }
       );
-     
-      
-      console.log(Response.data);
       localStorage.setItem("token", Response.data.token);
       navigate("/admin");
       setLoading(false);
@@ -93,14 +95,63 @@ const register = () => {
       alert(error.response.data.errors[0].msg);
     }
     setErrorMessage("");
-    // setFormData({
-    //   FullName:'',
-    //   Email:'',
-    //   Password:'',
-    //   ConfirmPassword:'',
-    //   Image: '',
-    // })
   };
+
+  const GoogleLogin = async (e) => {
+    const idToken = e.credential;
+    const base64Url = idToken.split(".")[1];
+    const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
+    const jsonPayload = decodeURIComponent(
+      atob(base64)
+        .split("")
+        .map(function (c) {
+          return "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2);
+        })
+        .join("")
+    );
+    const userData = JSON.parse(jsonPayload);
+    try {
+      setLoading(true);
+      const Response = await axios.post(
+        `${ApiKey}/social-login`,
+        {
+          email: userData.email,
+          first_name: userData.given_name,
+          last_name: userData.family_name,
+          profile_photo: userData.picture,
+        },
+        {
+          contenttype: "application/json",
+        }
+      );
+      localStorage.setItem("token", Response.data.token);
+      navigate("/admin");
+      setLoading(false);
+    } catch (error) {
+      console.log(error);
+      setLoading(false);
+      console.log(error.response.data.errors[0].msg);
+      alert(error.response.data.errors[0].msg);
+    }
+  };
+
+  // CHECK GOOGLE API AND RENDER BUTTON
+  useEffect(() => {
+    if (window.google) {
+      window.google.accounts.id.initialize({
+        client_id: clientId,
+        callback: GoogleLogin,
+      });
+      window.google.accounts.id.renderButton(
+        document.getElementById("google-login-button"),
+        {
+          theme: "outline",
+          size: "large",
+          shape: "pill",
+        }
+      );
+    }
+  }, []);
 
   return (
     <>
@@ -184,12 +235,7 @@ const register = () => {
             </div>
 
             {/* Phone Number*/}
-            <CountrySelector
-              phone={phone}
-              setPhone={setPhone}
-              countryCode={countryCode}
-              setCountryCode={setCountryCode}
-            />
+            <CountrySelector setPhone={setPhone} phone={phone}  />
             {/* Location  */}
             <div>
               <label className="block mb-1 text-[15px] font-[700] text-PurpleColor">
@@ -274,12 +320,12 @@ const register = () => {
               </p>
               <div className="bg-[#a5a5a5] h-0.5 w-[90px]"></div>
             </div>
-            <div className="flex justify-center gap-2">
-              <img className="w-[32px] h-8" src={Google} alt="" />
-              <img className="w-[33px] h-8" src={Facebook} alt="" />
-              <img className="w-[33px] h-8" src={Linkedin} alt="" />
-            </div>
           </form>
+          <div className="flex justify-center gap-2">
+            <div id="google-login-button"></div>
+            {/* <img className="w-[33px] h-8" src={Facebook} alt="" />
+            <img className="w-[33px] h-8" src={Linkedin} alt="" /> */}
+          </div>
         </div>
       </div>
     </>

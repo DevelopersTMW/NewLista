@@ -33,10 +33,10 @@ const HomeSection1 = ({ token }) => {
     <>
       <section className="flex flex-col items-center justify-center gap-8 px-6 sm:px-0 py-20 sm:py-14 sm:gap-10  ">
         <div className="flex flex-col justify-center items-center sm:w-[80%] md:w-[80%] lg:w-[60%] sm:text-center">
-          <h1 className="text-[34px] leading-[38px] font-[700] font-Urbanist  text-[#1E1E1E] sm:text-[37px] sm:leading-[43px] md:text-[39px] md:leading-[45px]">
+          <h1 className="text-[32px] leading-[38px] font-[700] font-Urbanist  text-[#1E1E1E] sm:text-[37px] sm:leading-[43px] md:text-[39px] md:leading-[45px]">
             Seamless Real Estate Investing Starts Here
           </h1>
-          <p className="text-[14.5px] font-Inter font-medium text-pretty text-Paracolor mt-2 sm:text-md/8 md:text-[16px]">
+          <p className="text-[14px] font-Inter font-medium text-pretty text-Paracolor mt-2 sm:text-md/8 md:text-[16px]">
             NewLista connects real estate investors—buyers and sellers—on one
             platform built to list properties, showcase exclusive off-market
             deals, grow your network, and close more deals.

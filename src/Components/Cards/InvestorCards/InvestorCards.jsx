@@ -8,34 +8,19 @@ import InvestorIcon3 from "../../../assets/InvestorIcon3.png";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 
-const InvestorCards = ({ InvesImage, InvesUserName, InvesDesc }) => {
+const InvestorCards = ({
+  InvesImage,
+  InvesUserName,
+  InvesDesc,
+  onConnectClick,
+  onMessageClick,
+}) => {
   const token = localStorage.getItem("token");
 
-  const [ShowModal, setShowModal] = useState(false);
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    if (ShowModal === true) {
-      Swal.fire({
-        title: "Join To View Investors",
-        timer: 3000,
-        showConfirmButton: false, 
-        showCancelButton: false, 
-        allowOutsideClick: false,
-        allowEscapeKey: false,
-        timerProgressBar: true,
-      }).then(() => {
-        navigate("/pricing");
-        setShowModal(false);
-      });
-    } else {
-      setShowModal(false);
-    }
-  });
-
+  
   return (
     <>
-      <div className="border-[1px] border-solid border-[#BBBBBB] px-7 py-7 rounded-[8px]">
+      <div className="border-[1px] border-solid border-[#BBBBBB] px-7 py-7 rounded-[8px] w-[94%] sm:w-[290px]">
         {/* IMAGES AND USERNAME  */}
         <div className="flex justify-start items-center gap-3 border-b-[1px] border-solid border-Paracolor pb-7">
           <span>
@@ -46,7 +31,7 @@ const InvestorCards = ({ InvesImage, InvesUserName, InvesDesc }) => {
             />
           </span>
           <span>
-            <h4 className="font-Inter font-bold text-[22px]">
+            <h4 className="font-Inter font-bold text-[22px] leading-[25px]">
               {InvesUserName}
             </h4>
             <h6 className="font-Inter text-[15px] font-[500]">{InvesDesc}</h6>
@@ -75,18 +60,23 @@ const InvestorCards = ({ InvesImage, InvesUserName, InvesDesc }) => {
             </li>
           </ul>
           {/* BUTTONS  */}
-          <div className="flex gap-4 pt-7">
+          <div className=" swiper-no-swiping flex gap-4 pt-7">
             <button
-              className="font-Inter font-semibold text-[15px] pl-4 pr-6 py-1.5 rounded-full border-solid border-[2px] hover-btn hover-btn-green"
-              onClick={() => {
-                !token && setShowModal(true);
+              className="font-Inter swiper-no-swiping font-semibold text-[15px] pl-4 pr-6 py-1.5 rounded-full border-solid border-[2px] hover-btn hover-btn-green"
+              onClick={(e) => {
+                e.stopPropagation();
+                if (onConnectClick) onConnectClick(e);
               }}
             >
               <span>Connect</span>
             </button>
-            <button className="font-Inter text-white hover-btn-purple hover-btn font-semibold text-[15px] px-5 py-1.5 rounded-full "  onClick={() => {
-                !token && setShowModal(true);
-              }}>
+            <button
+              className="swiper-no-swiping font-Inter text-white hover-btn-purple hover-btn font-semibold text-[15px] px-5 py-1.5 rounded-full "
+              onClick={(e) => {
+                e.stopPropagation();
+                if (onMessageClick) onMessageClick(e);
+              }}
+            >
               <span className=" flex gap-2 justify-center items-center">
                 <img className="w-4 h-4" src={MessageIcon} alt="" />
                 Message

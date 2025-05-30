@@ -205,7 +205,7 @@ const ViewProperty = () => {
           </div>
 
           <TabPanels>
-            <TabPanel className="w-[100%] my-20 flex flex-wrap gap-4 px-16">
+            <TabPanel id="offmarket" className="w-[100%] my-20 flex flex-wrap gap-4 px-16">
               {ShowEmpty ? (
                 <EmptyCards
                   Title={

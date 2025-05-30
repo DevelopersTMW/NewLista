@@ -6,13 +6,11 @@ import RadioButton from "../../../../Components/InputFields/RadioButton";
 
 
 const propertyTypes = [
-  "Car Wash",
   "Church",
   "Condominium",
   "Gas Station",
   "Hotel",
   "Industrial Park",
-  "Investment Home",
   "Medical Building",
   "Mixed Use",
   "Mobile Home Park",

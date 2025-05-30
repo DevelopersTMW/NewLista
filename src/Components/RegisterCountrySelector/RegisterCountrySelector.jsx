@@ -1,3 +1,4 @@
+import IntlTelInput from "intl-tel-input/react";
 import React, { useState, useEffect, useRef } from "react";
 
 const countries = [
@@ -9,12 +10,17 @@ const countries = [
 
 const CountrySelector = ({ phone, setPhone, countryCode, setCountryCode }) => {
 
-  // STATES 
+  const [value, setValue] = useState("");   // <-- Declare value here
+  const [number, setNumber] = useState("");
+  const [isValid, setIsValid] = useState(false);
+  const [errorCode, setErrorCode] = useState(null);
+
+  // STATES
   // const [countryCode, setCountryCode] = useS/tate("+91");
   const [isOpen, setIsOpen] = useState(false);
   // const [phone, setPhone] = useState("");
 
-  // FIND COUNTRY AND SHOW 
+  // FIND COUNTRY AND SHOW
   const selectedCountry = countries.find((c) => c.code === countryCode);
   const dropdownRef = useRef(null);
 
@@ -39,7 +45,22 @@ const CountrySelector = ({ phone, setPhone, countryCode, setCountryCode }) => {
 
   return (
     <>
-      <label htmlFor="phone" className="  text-[15px] font-[700] text-PurpleColor">
+      <IntlTelInput
+        initialValue={value}
+        onChangeNumber={setNumber}
+        onChangeValidity={setIsValid}
+        onChangeErrorCode={setErrorCode}
+        // any initialisation options from the readme will work here
+        initOptions={{
+          initialCountry: "us",
+          utilsScript:
+            "https://cdn.jsdelivr.net/npm/intl-tel-input@17.0.19/build/js/utils.js",
+        }}
+      />
+      <label
+        htmlFor="phone"
+        className="  text-[15px] font-[700] text-PurpleColor"
+      >
         Phone Number
       </label>
       <div className="flex items-center gap-5 -mt-2">
@@ -49,8 +70,14 @@ const CountrySelector = ({ phone, setPhone, countryCode, setCountryCode }) => {
             onClick={toggleDropdown}
             className="bg-[#F3EEFF] text-[#1d1d1d] font-[600] font-Urbanist text-[14px] w-[100%] h-12 px-3 rounded-[6px] flex items-center justify-between"
           >
-            <img src={selectedCountry?.flag} alt={selectedCountry?.label} className="w-7.5 h-6.5" />
-            {/* <span>{selectedCountry?.label} ({selectedCountry?.code})</span> */}
+            <img
+              src={selectedCountry?.flag}
+              alt={selectedCountry?.label}
+              className="w-7.5 h-6.5"
+            />
+            <span>
+              {selectedCountry?.label} ({selectedCountry?.code})
+            </span>
             <svg
               className="w-4 h-4 text-gray-500 ml-2"
               xmlns="http://www.w3.org/2000/svg"
@@ -80,7 +107,6 @@ const CountrySelector = ({ phone, setPhone, countryCode, setCountryCode }) => {
                   className="flex justify-center items-center w-full px-2 py-2.5 text-left hover:bg-gray-200"
                 >
                   <img src={c.flag} alt={c.label} className="w-7.5 h-6.5" />
-                  
                 </button>
               ))}
             </div>
@@ -90,12 +116,12 @@ const CountrySelector = ({ phone, setPhone, countryCode, setCountryCode }) => {
         {/* Phone Input */}
         <div className="w-[100%]">
           <input
-             type="tel"
-             inputMode="numeric"
-             pattern="[0-9]*"
-             maxLength={10}
+            type="tel"
+            inputMode="numeric"
+            pattern="[0-9]*"
+            maxLength={10}
             className="bg-[#F3EEFF] text-[#1d1d1d] font-[600] font-Urbanist text-[14px] w-[100%] h-12 px-4 rounded-[6px] outline-none"
-            placeholder="Enter your phone number"
+            placeholder="Enter your phone number2"
             value={phone}
             onChange={(e) => setPhone(e.target.value.replace(/\D/g, ""))}
           />

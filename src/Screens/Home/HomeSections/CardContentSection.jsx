@@ -15,7 +15,7 @@ const CardContentSection = ({Heading , Desc , ButtonName , ButtonLink}) => {
         </div>
         <div className="sm:w-[35%]  flex sm:justify-end">
           <Link to={`${ButtonLink}`}>
-            <button className="hover-btn hover-btn-black px-5 font-Inter py-3 rounded-[7px] text-[15px] cursor-pointer sm:text-[14px]">
+            <button className="hover-btn hover-btn-black px-5 font-Inter py-3 rounded-[7px] text-[14.5px] cursor-pointer sm:text-[14px]">
               <span>{ButtonName}</span>
             </button>
           </Link>
