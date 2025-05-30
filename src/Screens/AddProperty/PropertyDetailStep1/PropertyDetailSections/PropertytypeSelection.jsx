@@ -4,52 +4,35 @@ import Selection from "../../../../Components/InputFields/Selection";
 import RadioButton from "../../../../Components/InputFields/RadioButton";
 
 
-const propertyType = [
-  { name: "Select Your Property" },
-  { name: "Car Wash" },
-  // { name: "Church" },
-  // { name: "Condominium" },
-  { name: "Gas Station" },
-  { name: "Hotel" },
-  { name: "Industrial Park" },
-  { name: "Investment Home" },
-  // { name: "Medical Building" },
-  // { name: "Mixed Use" },
-  // { name: "Mobile Home Park" },
-  { name: "Motel" },
-  { name: "Multifamily" },
-  // { name: "Office Building" },
-  { name: "Recreation Center" },
-  // { name: "Retail Center" },
-  { name: "Self-Storage Facility" },
-  // { name: "School Building" },
-  { name: "Senior Living Facility" },
-  { name: "Shopping Center" },
-  { name: "Single Tenant Retail Building" },
-  // { name: "Storage Facility" },
-  { name: "Townhomes" },
-  // { name: "Vacant Land" },
-  // { name: "Warehouse" },
-  // { name: "Other" },
-];
-
 
 const propertyTypes = [
-  "Retail For Lease",
-  "Office For Lease",
-  "Warehouse For Lease",
-  "Land For Lease",
-  "Condominium Building",
-  "Apartments or Flats",
-  "Mobile Home Parks",
-  "Storage Facility",
-  "Churches",
-  "Mixed Use Properties",
-  "Group of Townhomes",
+  "Car Wash",
+  "Church",
+  "Condominium",
+  "Gas Station",
+  "Hotel",
+  "Industrial Park",
+  "Investment Home",
   "Medical Building",
+  "Mixed Use",
+  "Mobile Home Park",
+  "Motel",
+  "Multifamily",
+  "Office Building",
+  "Recreation Center",
+  "Retail Center",
+  "Self-Storage Facility",
   "School Building",
-  "Other Building",
+  "Senior Living Facility",
+  "Shopping Center",
+  "Single Tenant Retail Building",
+  "Storage Facility",
+  "Townhomes",
+  "Vacant Land",
+  "Warehouse",
+  "Other"
 ];
+
 
 const PropertytypeSelection = ({ PropertyRadios, register }) => {
   return (

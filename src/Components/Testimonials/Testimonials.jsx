@@ -1,4 +1,5 @@
 import React from "react";
+import TruncatedText from "../TruncatedText/TruncatedText";
 
 const Testimonials = ({
   RevTitle,
@@ -10,7 +11,7 @@ const Testimonials = ({
 }) => {
   return (
     <>
-      <div className="border-[1px] border-solid border-[#BBBBBB] px-8 py-8 flex flex-col justify-start items-start gap-4 rounded-[7px] w-[33%]">
+      <div className="border-[1px] border-solid border-[#BBBBBB] py-8 px-6 flex flex-col justify-start items-start gap-4 rounded-[7px] sm:w-[48.5%] md:w-[47%] lg:w-[31.5%] sm:px-8 ">
         <span className="flex gap-1">
           {Stars < 5
             ? Array.from({ length: Stars }).map((_, i) => (
@@ -56,8 +57,8 @@ const Testimonials = ({
           <h1 className="font-Inter font-bold text-[22px] leading-[25px]">
             {RevTitle}
           </h1>
-          <p className="text-md font-Inter font-medium text-pretty text-Paracolor mt-2 sm:text-[15px]/5.5  ">
-            {RevParagraph}
+          <p className="text-[14.5px] font-Inter font-medium text-pretty text-Paracolor mt-2 sm:text-[14px]/5.5  ">
+            <TruncatedText text={RevParagraph} maxLength={220} />
           </p>
         </span>
         <div className="flex justify-center gap-3">

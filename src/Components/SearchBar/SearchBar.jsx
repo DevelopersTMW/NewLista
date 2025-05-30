@@ -129,7 +129,7 @@ const SearchBar = () => {
 
   return (
     <>
-      <div className="hidden sm:mb-8 sm:flex sm:justify-center mt-8">
+      <div className=" sm:mb-8 sm:flex sm:justify-center mt-8">
         <div className="relative w-[84%] flex rounded-full px-6.5 py-3.5 text-sm/6 text-gray-600 ring-1 ring-gray-900/10 hover:ring-gray-900/20 bg-textColor justify-center items-center">
           <div className="w-[15%] px-4 py-2 border-r-[1px] border-solid border-Paracolor">
             <Select

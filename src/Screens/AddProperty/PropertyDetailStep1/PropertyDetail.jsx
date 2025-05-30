@@ -29,17 +29,20 @@ const Step1 = ({ onNext, defaultValues }) => {
   const PropertyRadio = watch("propertyType");
   const propertyType = watch("propertyName");
 
+  console.log(propertyType);
+  
+
   const renderFormFields = () => {
     switch (propertyType) {
-      case "Retail For Lease":
+      case "Retail Center":
         return (
           <RentailForm register={register} propertyTypeName={propertyType} />
         );
-      case "Warehouse For Lease":
+      case "Warehouse":
         return (
           <WareHouseForm register={register} control={control} propertyTypeName={propertyType} />
         );
-      case "Land For Lease":
+      case "Vacant Land":
         return <LandForm register={register} propertyTypeName={propertyType} />;
       default:
         return (

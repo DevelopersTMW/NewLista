@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-// IMAGES 
+// IMAGES
 import WhiteLogo from "../../assets/WhiteLogo.png";
 import FooterIcon from "../../assets/FooterIcon.png";
 import FooterIcon2 from "../../assets/FooterIcon2.png";
@@ -10,9 +10,9 @@ const Footer = () => {
     <footer>
       {/* Footer Section START  */}
       <div className="">
-        <div className="md:flex md:justify-between bg-[#0F0F0F] px-20 lg:py-20 gap-10 w-full  ">
+        <div className="py-12 px-8 lg:flex lg:justify-between bg-[#0F0F0F] sm:px-10 md:px-14 lg:px-20 lg:py-20 gap-10 w-full  ">
           {/* SECTION 1  */}
-          <div className="mb-6 md:mb-0 flex flex-col gap-10 w-[35%]">
+          <div className="mb-6 md:mb-0 flex flex-col gap-10 lg:w-[35%]">
             <div>
               <Link to={"/"} className="flex items-center">
                 <img
@@ -23,7 +23,7 @@ const Footer = () => {
               </Link>
             </div>
 
-            <form className="w-[80%] bg-[#262626] rounded-lg py-0.5 border-[1px] border-solid border-[#5f5f5f]">
+            <form className="w-[90%] bg-[#262626] rounded-lg  py-0.5 border-[1px] border-solid border-[#5f5f5f] sm:w-[80%]">
               <div className="relative flex justify-center items-center">
                 <div className=" inset-y-0  start-0 flex items-center pl-4 pointer-events-none">
                   <img src={FooterIcon} alt="" />
@@ -45,19 +45,31 @@ const Footer = () => {
             </form>
           </div>
           {/* SECTION 2  */}
-          <div className="flex justify-end grid-cols-2 gap-10 sm:gap-12 sm:grid-cols-5 w-[65%]">
+          <div className="flex flex-col lg:justify-end grid-cols-2 gap-5 sm:gap-7 sm:flex-row sm:grid-cols-5 sm:mt-10 lg:w-[65%] md:gap-12">
             {/* TAB 1  */}
             <div>
               <h2 className="mb-4 text-[15px] font-semibold font-Urbanist text-[#999999] uppercase dark:text-white">
                 Quick Links
               </h2>
-              <ul className="text-white dark:text-gray-400 text-[15px] font-[500] font-Urbanist">
-                <li className="mb-4 hover:text-[#c4c4c4]"><Link to={"/"}>Home</Link></li>
-                <li className="mb-4 hover:text-[#c4c4c4]"><Link to={"/about-us"}>About Us</Link></li>
-                <li className="mb-4 hover:text-[#c4c4c4]"><Link to={"/view-property"}>Properties</Link></li>
-                <li className="mb-4 hover:text-[#c4c4c4]"><Link to={'/add-property'}>Add Properties</Link></li>
-                <li className="mb-4 hover:text-[#c4c4c4]"><Link to={"/contact-us"}>Contact Us</Link></li>
-                <span className=" hover:text-[#c4c4c4]"><Link to={"/"}>Terms & Conditions</Link></span>
+              <ul className="text-white flex flex-col gap-2 sm:gap-4 dark:text-gray-400 text-[15px] font-[500] font-Urbanist">
+                <li className=" hover:text-[#c4c4c4]">
+                  <Link to={"/"}>Home</Link>
+                </li>
+                <li className=" hover:text-[#c4c4c4]">
+                  <Link to={"/about-us"}>About Us</Link>
+                </li>
+                <li className=" hover:text-[#c4c4c4]">
+                  <Link to={"/properties"}>Properties</Link>
+                </li>
+                <li className=" hover:text-[#c4c4c4]">
+                  <Link to={"/add-property"}>Add Properties</Link>
+                </li>
+                <li className="hover:text-[#c4c4c4]">
+                  <Link to={"/contact-us"}>Contact Us</Link>
+                </li>
+                <span className=" hover:text-[#c4c4c4]">
+                  <Link to={"/"}>Terms & Conditions</Link>
+                </span>
               </ul>
             </div>
             {/* TAB 2  */}
@@ -65,22 +77,36 @@ const Footer = () => {
               <h2 className="mb-4 text-[15px] font-semibold font-Urbanist text-[#999999] uppercase dark:text-white">
                 Our Services
               </h2>
-              <ul className="text-white dark:text-gray-400 font-[500] text-[15px] font-Urbanist">
-                <li className="mb-4 hover:text-[#c4c4c4]">Exclusive Off-Market Listings</li>
-                <li className="mb-4 hover:text-[#c4c4c4]">Seamless Property Transactions</li>
-                <li className="mb-4 hover:text-[#c4c4c4]">Real Estate Networking</li>
-                <li className="mb-4 hover:text-[#c4c4c4]">Data-Driven Market Insights</li>
+              <ul className="text-white flex flex-col gap-2 sm:gap-4 dark:text-gray-400 font-[500] text-[15px] font-Urbanist">
+                <li className=" hover:text-[#c4c4c4]">
+                  Exclusive Off-Market Listings
+                </li>
+                <li className=" hover:text-[#c4c4c4]">
+                  Seamless Property Transactions
+                </li>
+                <li className=" hover:text-[#c4c4c4]">
+                  Real Estate Networking
+                </li>
+                <li className=" hover:text-[#c4c4c4]">
+                  Data-Driven Market Insights
+                </li>
               </ul>
             </div>
             {/* TAB 3 */}
             <div>
               <h2 className="mb-4 text-[15px] font-semibold font-Urbanist text-[#999999] uppercase dark:text-white">
-                Secure 
+                Secure
               </h2>
-              <ul className="text-white text-[15px] dark:text-gray-400 font-[500] font-Urbanist">
-                <li className="mb-4 hover:text-[#c4c4c4]"><Link to={'/login'}>Login</Link></li>
-                <li className="mb-4 hover:text-[#c4c4c4]"><Link to={"/register"}>Register</Link></li>
-                <li className="mb-4 hover:text-[#c4c4c4]"><Link to={"/our-plans"}>Our Plans</Link></li>
+              <ul className="flex flex-col gap-2 sm:gap-4 text-white text-[15px] dark:text-gray-400 font-[500] font-Urbanist">
+                <li className="hover:text-[#c4c4c4]">
+                  <Link to={"/login"}>Login</Link>
+                </li>
+                <li className="hover:text-[#c4c4c4]">
+                  <Link to={"/register"}>Register</Link>
+                </li>
+                <li className=" hover:text-[#c4c4c4]">
+                  <Link to={"/our-plans"}>Our Plans</Link>
+                </li>
               </ul>
             </div>
             {/* TAB 5 */}
@@ -88,22 +114,31 @@ const Footer = () => {
               <h2 className="mb-4 text-[15px] font-semibold font-Urbanist text-[#999999] uppercase dark:text-white">
                 Contact Us
               </h2>
-              <ul className="text-white dark:text-gray-400 text-[15px] font-[500] font-Urbanist">
-                <li className="mb-4 hover:text-[#c4c4c4]"><Link to={"tel:123456789"}>123-456-789</Link></li>
-                <li className="mb-4 hover:text-[#c4c4c4]"><Link to={"mailto:info@gmail.com"}>info@gmail.com</Link></li>
-                <li className="mb-4 hover:text-[#c4c4c4]"><Link to={"https://maps.google.com"}>Your Address</Link></li>
+              <ul className="flex flex-col gap-2 sm:gap-4 text-white dark:text-gray-400 text-[15px] font-[500] font-Urbanist">
+                <li className=" hover:text-[#c4c4c4]">
+                  <Link to={"tel:123456789"}>123-456-789</Link>
+                </li>
+                <li className="hover:text-[#c4c4c4]">
+                  <Link to={"mailto:info@gmail.com"}>info@gmail.com</Link>
+                </li>
+                <li className=" hover:text-[#c4c4c4]">
+                  <Link to={"https://maps.google.com"}>Your Address</Link>
+                </li>
               </ul>
             </div>
           </div>
         </div>
         {/* COPYRIGHT AND SOCIAL MEDIA  */}
-        <div className="sm:flex sm:items-center sm:justify-between bg-[#1A1A1A] py-6 p-4 lg:py-8 mx-auto w-full px-20 ">
-          <span className="text-sm text-white font-Urbanist sm:text-center dark:text-gray-400">
-            © 2025 <Link to={"/"} className="hover:underline">NewLista</Link>. All Rights
-            Reserved.
+        <div className=" px-6 sm:flex sm:items-center sm:px-8 sm:justify-between bg-[#1A1A1A] py-6 md:p-4 lg:py-8 mx-auto w-full md:px-20 ">
+          <span className="text-[15px] text-white font-Urbanist sm:text-center dark:text-gray-400">
+            © 2025{" "}
+            <Link to={"/"} className="hover:underline">
+              NewLista
+            </Link>
+            . All Rights Reserved.
           </span>
-          <div className="flex  mt-4 sm:justify-center sm:mt-0">
-            <Link className="text-white hover:bg-PurpleColor bg-[#141414] px-2 py-2 rounded-full dark:hover:text-white ms-5">
+          <div className="flex  mt-4 gap-4 sm:justify-center sm:mt-0">
+            <Link className="text-white hover:bg-PurpleColor bg-[#141414] px-2 py-2 rounded-full dark:hover:text-white">
               <svg
                 className="w-4 h-4"
                 aria-hidden="true"
@@ -119,9 +154,7 @@ const Footer = () => {
               </svg>
               <span className="sr-only">Facebook page</span>
             </Link>
-            <Link
-              className="text-white hover:bg-PurpleColor bg-[#141414] px-2 py-2 rounded-full dark:hover:text-white ms-5"
-            >
+            <Link className="text-white hover:bg-PurpleColor bg-[#141414] px-2 py-2 rounded-full dark:hover:text-white ">
               <svg
                 className="w-4 h-4"
                 aria-hidden="true"
@@ -133,9 +166,7 @@ const Footer = () => {
               </svg>
               <span className="sr-only">Discord community</span>
             </Link>
-            <Link
-              className="text-white hover:bg-PurpleColor bg-[#141414] px-2 py-2 rounded-full dark:hover:text-white ms-5"
-            >
+            <Link className="text-white hover:bg-PurpleColor bg-[#141414] px-2 py-2 rounded-full dark:hover:text-white">
               <svg
                 className="w-4 h-4"
                 aria-hidden="true"
@@ -151,9 +182,7 @@ const Footer = () => {
               </svg>
               <span className="sr-only">Twitter page</span>
             </Link>
-            <Link
-              className="text-white hover:bg-PurpleColor bg-[#141414] px-2 py-2 rounded-full dark:hover:text-white ms-5"
-            >
+            <Link className="text-white hover:bg-PurpleColor bg-[#141414] px-2 py-2 rounded-full dark:hover:text-white">
               <svg
                 className="w-4 h-4"
                 aria-hidden="true"
@@ -169,9 +198,7 @@ const Footer = () => {
               </svg>
               <span className="sr-only">GitHub account</span>
             </Link>
-            <Link
-              className="text-white hover:bg-PurpleColor bg-[#141414] px-2 py-2 rounded-full dark:hover:text-white ms-5"
-            >
+            <Link className="text-white hover:bg-PurpleColor bg-[#141414] px-2 py-2 rounded-full dark:hover:text-white">
               <svg
                 className="w-4 h-4"
                 aria-hidden="true"

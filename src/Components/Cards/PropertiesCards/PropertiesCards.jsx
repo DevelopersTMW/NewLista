@@ -7,7 +7,7 @@ import PropertyIcon2 from "../../../assets/PropertyIcon2.png";
 const PropertiesCards = ({ Img, Heading, desc, Status , type, Price , id}) => {
   return (
     <>
-      <div className="w-[100%] bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700 relative">
+      <div className="w-[100%] bg-white border border-gray-200 rounded-lg shadow-sm relative">
         <Link>
           <img className="rounded-t-lg h-[270px] object-cover w-[100%]" src={Img} alt="" />
         </Link>
@@ -34,11 +34,11 @@ const PropertiesCards = ({ Img, Heading, desc, Status , type, Price , id}) => {
           </div>
           <div>
             <Link>
-              <h1 className="mb-2 text-[25px] font-[600] font-Inter tracking-tight leading-[27px] mt-3 text-gray-900 dark:text-white ">
+              <h1 className="mb-2 text-[25px] font-[600] font-Inter tracking-tight leading-[27px] mt-3 text-gray-900 sm:text-[22px] ">
                 {Heading}
               </h1>
             </Link>
-            <p className="mb-2 font-Inter text-[14px] font-normal text-gray-700 dark:text-gray-400">
+            <p className="mb-2 font-Inter text-[14px] font-normal text-gray-700">
               {desc}
             </p>
           </div>
@@ -52,13 +52,13 @@ const PropertiesCards = ({ Img, Heading, desc, Status , type, Price , id}) => {
               Units
             </span>
           </div>
-          <div className="flex justify-between items-center mt-5">
+          <div className="flex justify-between items-center mt-5 flex-wrap gap-3">
             <div>
               <h5 className="font-Inter text-[16px] font-[500]">Price</h5>
               <h1 className="font-Inter text-[18px] font-bold">${Price}</h1>
             </div>
             <div>
-              <Link to={`/properties/${id}`}  className="inline-flex font-Inter text-[15.3px] items-center px-5 py-2.5 rounded-full text-sm font-medium text-center focus:outline-none  hover-btn-purple hover-btn">
+              <Link to={`/properties/${id}`}  className="inline-flex font-Inter text-[15.3px] items-center px-5 py-2.5 rounded-full text-sm font-medium text-center focus:outline-none  hover-btn-purple hover-btn sm:text-[14px]">
               <span>View Property Details</span>
               </Link>
             </div>

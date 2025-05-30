@@ -39,12 +39,8 @@ const PropertyDetails = () => {
   const ApiKey = import.meta.env.VITE_API_KEY;
   const params = useParams();
   const [Properties, setProperties] = useState([]);
-  const [FilterValue, setFilterValue] = useState("");
-  const isLoggedIn = localStorage.getItem("token");
-  const [ShowEmpty, setShowEmpty] = useState(false);
   const [SingleProperty, setSingleProperty] = useState();
   const [Loading, setLoading] = useState(true);
-  const [ErrorMessage, setErrorMessage] = useState("");
 
   useEffect(() => {
     async function GetSingleProperty() {
@@ -53,7 +49,6 @@ const PropertyDetails = () => {
           `${ApiKey}/view-property/${params.id}`
         );
         const Response = GetSingleProperty.data.data;
-        console.log(GetSingleProperty.data.data);
         setSingleProperty(Response);
 
         const GetPropertyData = await axios.get(`${ApiKey}/properties`);
@@ -74,14 +69,11 @@ const PropertyDetails = () => {
     GetSingleProperty();
   }, [params.id]);
 
-  console.log(Properties);
-
   return (
     <>
       <Navbar></Navbar>
       {Loading && (
         <div className="flex justify-center items-center py-60">
-          {" "}
           <Spinner style={"w-14 h-20 text-PurpleColor"} />
         </div>
       )}
@@ -477,7 +469,11 @@ const PropertyDetails = () => {
                         Heading={items.property_name}
                         desc={items.description}
                         Status={items.listing_type}
-                        Price={items.listing_type === "For Sale" ? items.sale_price  : items.lease_rate }
+                        Price={
+                          items.listing_type === "For Sale"
+                            ? items.sale_price
+                            : items.lease_rate
+                        }
                         id={items.id}
                         images={items.images[0]}
                       ></PropertiesCards2>
