@@ -481,7 +481,7 @@ const Home = () => {
             <div className="min-h-screen pt-8 min-[420px]:pt-28 flex flex-col justify-center sm:items-center  sm:py-44 lg:py-44">
               {/* CONTENT SECTION START  */}
               <div className="sm:text-center max-[891px]:pt-7 min-[891px]:pt-10 lg:pt-20">
-                <h1 className="text-[42.5px] leading-[47px] sm:text-[41px] sm:leading-[46px]  md:text-[47px]	md:leading-[53px] lg:text-[53px] lg:leading-[65px] xl:text-[60px] font-[600] font-Poppins tracking-tight lg:text-balance text-white ">
+                <h1 className="text-[35.5px] leading-[47px] sm:text-[41px] sm:leading-[46px]  md:text-[47px]	md:leading-[53px] lg:text-[53px] lg:leading-[65px] xl:text-[60px] font-[600] font-Poppins tracking-tight lg:text-balance text-white ">
                   The Ultimate Commercial  Estate Marketplace & Investor
                   Network
                 </h1>

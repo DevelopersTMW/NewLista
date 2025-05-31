@@ -83,7 +83,7 @@ function ResponsiveTabs() {
   const moreTabs = tabItems.slice(visibleTabs);
 
   return (
-    <div className="">
+    <div className="relative">
       {/* <TabGroup selectedIndex={selectedIndex} onChange={setSelectedIndex}> */}
         <TabList className="flex items-end justify-center gap-7 sm:gap-8 md: flex-wrap">
           {mainTabs.map((item, idx) => (
