@@ -114,7 +114,10 @@ const ViewProperty = () => {
       <section>
         <TabGroup selectedIndex={selectedIndex} onChange={setSelectedIndex}>
           <div className="flex gap-8 px-8 pt-6 items-end  justify-center  border-b-[1px] border-[#BBBBBB] border-solid">
+            <div>
             <ResponsiveTabList/>
+
+            </div>
 
             <div className="flex justify-center gap-2 font-Poppins border-[1px] px-4  border-solid border-[#bebebe] rounded-[6px] text-Paracolor text-[15px] items-center font-semibold mb-6 ">
               <img className="w-5 h-5" src={FilterIcon2} alt="" />
