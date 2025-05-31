@@ -478,11 +478,11 @@ const Home = () => {
             style={HeroBackground}
             className="relative px-6   -mt-[40%] sm:pt-10 sm:-mt-[18%] max-[891px]:pt-12 min-[891px]:pt-18 md:-mt-[15%] lg:px-8 lg:pt-18  xl:-mt-[10%] xl:pt-14"
           >
-            <div className="min-h-screen pt-8 min-[420px]:pt-28 flex flex-col justify-center items-center  sm:py-44 lg:py-44">
+            <div className="min-h-screen pt-8 min-[420px]:pt-28 flex flex-col justify-center sm:items-center  sm:py-44 lg:py-44">
               {/* CONTENT SECTION START  */}
               <div className="sm:text-center max-[891px]:pt-7 min-[891px]:pt-10 lg:pt-20">
-                <h1 className="text-[36.5px] leading-[45px] sm:text-[41px] sm:leading-[46px]  md:text-[47px]	md:leading-[53px] lg:text-[53px] lg:leading-[65px] xl:text-[60px] font-[600] font-Poppins tracking-tight lg:text-balance text-white ">
-                  The Ultimate Commercial Real Estate Marketplace & Investor
+                <h1 className="text-[42.5px] leading-[47px] sm:text-[41px] sm:leading-[46px]  md:text-[47px]	md:leading-[53px] lg:text-[53px] lg:leading-[65px] xl:text-[60px] font-[600] font-Poppins tracking-tight lg:text-balance text-white ">
+                  The Ultimate Commercial  Estate Marketplace & Investor
                   Network
                 </h1>
                 {/* <p className="mt-8 text-md font-medium text-pretty text-textColor sm:text-lg/8 ">
@@ -490,7 +490,7 @@ const Home = () => {
                 off-the-market deals—all in one powerful platform.
               </p> */}
               </div>
-              <div className="lg:w-[100%] xl:w-[100%] 2xl:w-[80%]">
+              <div className="w-[80%] sm:w-[80%] md:w-[90%] min-[800px]:w-[80%] lg:w-[100%] xl:w-[100%] 2xl:w-[80%]">
                 <SearchBar></SearchBar>
               </div>
             </div>
@@ -556,7 +556,7 @@ const Home = () => {
               ButtonLink={"/properties"}
             />
             {/* PROPERTY CARD SECTION  */}
-            <div  className="flex gap-7 sm:gap-3 sm:-ml-4 md:gap-5  md:w-[84%] blur-[px]">
+            <div  className="flex gap-7 sm:gap-3 sm:-ml-4 md:gap-5  md:w-[84%] blur-[12px]">
               {Properties?.filter((items) => items.off_market_listing)
                 .slice(0, 3)
                 .map((items) => (
@@ -701,7 +701,7 @@ const Home = () => {
               <InvestorCards
                 InvesImage={Testimonials1}
                 InvesUserName={"John Doe"}
-                InvesDesc={"Real Estate Investor"}
+                InvesDesc={" Estate Investor"}
               ></InvestorCards> */}
             </div>
           </section>

@@ -51,6 +51,7 @@ const PropertiesCards2 = ({ Img, Heading, desc, Status, Price, Features , id  , 
           </div>
         </div>
       </div>
+      
     </>
   );
 };

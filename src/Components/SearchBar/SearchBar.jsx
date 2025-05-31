@@ -4,6 +4,8 @@ import React, { useEffect, useState } from "react";
 import ComboboxSelector from "../ComboboxSelector/ComboboxSelector";
 import Selection from "../InputFields/Selection";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
+import { Grip, GripVertical, Search } from "lucide-react";
+import MobileMenu from "./MobileMenu";
 
 const propertyType = [
   { name: "Select Your Property" },
@@ -129,8 +131,8 @@ const SearchBar = () => {
   return (
     <>
       <div className=" sm:mb-8 sm:flex sm:justify-center mt-8">
-        <div className="relative w-[84%] flex rounded-full px-6.5 py-3.5 text-sm/6 text-gray-600 ring-1 ring-gray-900/10 hover:ring-gray-900/20 bg-textColor justify-center items-center">
-          <div className="w-[95%] sm:w-[15%] px-4 py-2 sm:border-r-[1px] border-solid border-Paracolor">
+        <div className="relative w-[100%] md:w-[100%] lg:w-[94%] xl:w-[84%] flex rounded-full py-3 px-5 sm:px-6.5 sm:py-3.5 text-sm/6 text-gray-600 ring-1 ring-gray-900/10 hover:ring-gray-900/20 bg-textColor justify-center items-center">
+          <div className="w-[45%] sm:w-[40%] md:w-[25%] lg:w-[15%] px-4 py-2 sm:border-r-[1px] border-solid border-Paracolor">
             <Select
               name="status"
               aria-label="Project status"
@@ -146,51 +148,7 @@ const SearchBar = () => {
               </option>
             </Select>
           </div>
-
-          <div className="sm:hidden flex justify-center items-center">
-            <div className={`relative mr-3 `}>
-              <Select
-                className={
-                  "bg-[#dddddd] border-[#F3EEFF]  rounded-full text-[#4b4b4b] font-[600] font-Urbanist text-[14px] w-[100%] h-8 px-4  outline-none appearance-none cursor-pointer focus:outline-none"
-                }
-                name="status"
-                aria-label="Project status"
-              >
-                <option value="" className="text-black">
-                  {"Select"}
-                </option>
-              </Select>
-              <ChevronDownIcon
-                className={`group pointer-events-none absolute top-1.5 right-1.5 size-5 fill-black text-black  `}
-                aria-hidden="true"
-              />
-            </div>
-          </div>
-
-          <div className="hidden w-[20%] px-8 py-1 border-r-[1px] border-solid border-Paracolor sm:flex flex-col ">
-            <h1 className="text-[14px] font-Inter text-black font-[600]">
-              State
-            </h1>
-            <ComboboxSelector
-              options={statesArray}
-              onSelect={StateSelectionHandler}
-              placeholder={"Select Your State"}
-            ></ComboboxSelector>
-          </div>
-
-          <div className="hidden w-[190px] whitespace-nowrap text-ellipsis px-8 py-1 border-r-[1px] border-solid border-Paracolor sm:flex flex-col  ">
-            <h1 className="text-[14px] font-Inter text-black font-[600]">
-              City
-            </h1>
-
-            <ComboboxSelector
-              options={citiess}
-              onSelect={CitySelectionHandler}
-              placeholder={"Select Your City"}
-              disabled={citiess.length > 0 ? false : true}
-            ></ComboboxSelector>
-          </div>
-          <div className="hidden w-[22%] px-8 py-1 border-r-[1px] border-solid border-Paracolor sm:flex flex-col ">
+          <div className="hidden sm:w-[50%] md:w-[50%] lg:w-[20%] px-8 py-1 md:border-r-[1px] border-solid border-Paracolor sm:flex flex-col ">
             <h1 className="text-[14px] font-semibold font-Inter text-black ">
               Property Type
             </h1>
@@ -212,7 +170,35 @@ const SearchBar = () => {
               ))}
             </Select>
           </div>
-          <div className="hidden w-[20%] px-8 py-1  sm:flex flex-col ">
+          <div className=" hidden md:w-[40%] lg:w-[190px] whitespace-nowrap text-ellipsis px-8 py-1 lg:border-r-[1px] border-solid border-Paracolor md:flex flex-col">
+            <h1 className="text-[14px] font-Inter text-black font-[600]">
+              State
+            </h1>
+            <ComboboxSelector
+              options={statesArray}
+              onSelect={StateSelectionHandler}
+              placeholder={"Select Your State"}
+            ></ComboboxSelector>
+          </div>
+
+          <div className="w-[40%] flex justify-center items-center lg:hidden md:w-[10%] sm:w-[25%]">
+            <MobileMenu></MobileMenu>
+          </div>
+
+          <div className=" hidden lg:w-[22%] px-8 py-1 border-r-[1px] border-solid border-Paracolor lg:flex flex-col ">
+            <h1 className="text-[14px] font-Inter text-black font-[600]">
+              City
+            </h1>
+
+            <ComboboxSelector
+              options={citiess}
+              onSelect={CitySelectionHandler}
+              placeholder={"Select Your City"}
+              disabled={citiess.length > 0 ? false : true}
+            ></ComboboxSelector>
+          </div>
+
+          <div className="hidden lg:w-[20%] px-8 py-1  lg:flex flex-col ">
             <h1 className="text-[14px] font-Inter text-black font-[600]">
               Price Range
             </h1>
@@ -256,20 +242,7 @@ const SearchBar = () => {
           <div>
             <button className="hover-btn hover-btn-purple text-white px-2 py-2 rounded-full text-[14px] cursor-pointer">
               <span>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth="1.5"
-                  stroke="currentColor"
-                  className="size-5 font-bold"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"
-                  />
-                </svg>
+                <Search />
               </span>
             </button>
           </div>

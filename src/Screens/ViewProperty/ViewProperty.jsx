@@ -1,5 +1,7 @@
 import React, { useEffect, useMemo, useState } from "react";
 import {
+  MenuButton,
+  MenuItems,
   Select,
   Tab,
   TabGroup,
@@ -7,6 +9,8 @@ import {
   TabPanel,
   TabPanels,
 } from "@headlessui/react";
+import { Menu } from "@headlessui/react";
+import { EllipsisVerticalIcon } from "@heroicons/react/24/solid";
 // COMPONENTS
 import Navbar from "../../Components/Navbar/Navbar";
 import Footer from "../../Components/Footer/Footer";
@@ -31,47 +35,8 @@ import SearchBar from "../../Components/SearchBar/SearchBar";
 import axios from "axios";
 import TruncatedText from "../../Components/TruncatedText/TruncatedText";
 import EmptyCards from "../../Components/EmptyCard/EmptyCard";
+import ResponsiveTabList from "./PropertyTabs/PropertyTabs";
 
-// TAB ITEMS
-const tabItems = [
-  {
-    label: "All Properties",
-    image: ViewPropertyIcon1,
-  },
-  {
-    label: "Office Buildings",
-    image: ViewPropertyIcon2,
-  },
-  {
-    label: "Retail Spaces",
-    image: ViewPropertyIcon3,
-  },
-  {
-    label: "Industrial Properties",
-    image: ViewPropertyIcon4,
-  },
-  {
-    label: "Apartments",
-    image: ViewPropertyIcon5,
-  },
-  {
-    label: "Development Sites",
-    image: ViewPropertyIcon6,
-  },
-
-  {
-    label: "Office Buildings",
-    image: ViewPropertyIcon7,
-  },
-  {
-    label: "Storage Facilities",
-    image: ViewPropertyIcon8,
-  },
-  {
-    label: "Shopping Centers",
-    image: ViewPropertyIcon9,
-  },
-];
 
 // BACKGORUND
 const BannerBackground = {
@@ -88,6 +53,10 @@ const ViewProperty = () => {
   const [FilterValue, setFilterValue] = useState("");
   const isLoggedIn = localStorage.getItem("token");
   const [ShowEmpty, setShowEmpty] = useState(false);
+
+
+  const [selectedIndex, setSelectedIndex] = useState(0);
+
 
   useEffect(() => {
     async function GetProperty() {
@@ -135,7 +104,7 @@ const ViewProperty = () => {
       <Navbar></Navbar>
       {/* BANNER START  */}
       <section style={BannerBackground}>
-        <div className="py-28 px-12">
+        <div className="px-10 pt-16 pb-20 sm:py-28 sm:px-12">
           <SearchBar></SearchBar>
         </div>
       </section>
@@ -143,32 +112,10 @@ const ViewProperty = () => {
 
       {/* PROPERTY TABS START */}
       <section>
-        <TabGroup>
-          <div className="flex gap-8 px-8 pt-7 items-end  justify-center  border-b-[1px] border-[#BBBBBB] border-solid">
-            <TabList className={"flex gap-5 items-end  justify-center"}>
-              {tabItems.map((item, index) => (
-                <Tab key={index} as={React.Fragment}>
-                  {({ selected }) => (
-                    <span
-                      className={`flex flex-col justify-evenly items-center text-center pb-5 gap-1 focus:outline-none cursor-pointer ${
-                        selected
-                          ? "border-b-2 border-Paracolor"
-                          : "border-b-2 border-transparent"
-                      }`}
-                    >
-                      <img
-                        className="w-[25px]"
-                        src={item.image}
-                        alt={item.label}
-                      />
-                      <h5 className="font-Poppins text-Paracolor text-[13px]  font-semibold">
-                        {item.label}
-                      </h5>
-                    </span>
-                  )}
-                </Tab>
-              ))}
-            </TabList>
+        <TabGroup selectedIndex={selectedIndex} onChange={setSelectedIndex}>
+          <div className="flex gap-8 px-8 pt-6 items-end  justify-center  border-b-[1px] border-[#BBBBBB] border-solid">
+            <ResponsiveTabList/>
+
             <div className="flex justify-center gap-2 font-Poppins border-[1px] px-4  border-solid border-[#bebebe] rounded-[6px] text-Paracolor text-[15px] items-center font-semibold mb-6 ">
               <img className="w-5 h-5" src={FilterIcon2} alt="" />
               <Select
@@ -183,19 +130,19 @@ const ViewProperty = () => {
                 }}
               >
                 <option
-                  className="text-[#1a1919] font-[500] font-Urbanist text-[15px]"
+                  className="text-[#1a1919] text-[11.5px] font-[500] font-Urbanist sm:text-[15px]"
                   value="Filter"
                 >
                   Filter
                 </option>
                 <option
-                  className="text-[#1a1919] font-[500] font-Urbanist text-[15px]"
+                  className="text-[#1a1919] text-[11.5px] font-[500] font-Urbanist sm:text-[15px]"
                   value="Features Property"
                 >
                   Features Property
                 </option>
                 <option
-                  className="text-[#1a1919] font-[500] font-Urbanist text-[15px]"
+                  className="text-[#1a1919] text-[11.5px] font-[500] font-Urbanist sm:text-[15px]"
                   value="Off Market Properties"
                 >
                   Off Market Properties
@@ -205,7 +152,10 @@ const ViewProperty = () => {
           </div>
 
           <TabPanels>
-            <TabPanel id="offmarket" className="w-[100%] my-20 flex flex-wrap gap-4 px-16">
+            <TabPanel
+              id="offmarket"
+              className="w-[100%] flex flex-wrap justify-center gap-8 py-14 px-10 sm:py-12 lg:py-16 xl:my-1 sm:gap-4 sm:px-13 md:gap-10 md:px-16 lg:gap-5 xl:gap-5 2xl:gap-10"
+            >
               {ShowEmpty ? (
                 <EmptyCards
                   Title={
@@ -213,19 +163,25 @@ const ViewProperty = () => {
                   }
                 />
               ) : (
-                filteredProperties.slice(0, 6).map((items) => (
-                  <div key={items.id} className="w-[23.5%]">
+                Properties.slice(0, 6).map((items) => (
+                  <div key={items.id} className="sm:w-[48.5%] md:w-[43%] lg:w-[31%] xl:w-[23.5%] 2xl:w-[20.5%]">
                     {
                       <PropertiesCards2
                         Img={PropertiesImage3}
                         Heading={items.property_name}
                         desc={items.description}
                         Status={items.listing_type}
-                        Price={items.listing_type === "For Sale" ? items.sale_price  : items.lease_rate }
+                        Price={
+                          items.listing_type === "For Sale"
+                            ? items.sale_price
+                            : items.lease_rate
+                        }
                         id={items.id}
                         images={items.images[0]}
                       ></PropertiesCards2>
+                      
                     }
+                    
                   </div>
                 ))
               )}

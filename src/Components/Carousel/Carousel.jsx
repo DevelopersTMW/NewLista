@@ -133,7 +133,11 @@ const InvestorCarousel = () => {
           },
           640: {
             slidesPerView: 2, 
-            spaceBetween: 30,
+            spaceBetween: 20,
+          },
+          950: {
+            slidesPerView: 3, 
+            spaceBetween: 80,
           },
           1024: {
             slidesPerView: 4, 

@@ -50,6 +50,9 @@ const PropertyDetails = () => {
         );
         const Response = GetSingleProperty.data.data;
         setSingleProperty(Response);
+        console.log('====================================');
+        console.log(Response);
+        console.log('====================================');
 
         const GetPropertyData = await axios.get(`${ApiKey}/properties`);
         const Responses = GetPropertyData.data.data;
@@ -90,7 +93,7 @@ const PropertyDetails = () => {
                 </h1>
                 <p className="border-solid border-[1px] border-[#222222] flex items-center font-Urbanist gap-1 font-[550] px-2 text-[13.5px] py-1 w-max rounded-[5px]">
                   <MapPin size={15} />
-                  {SingleProperty.address}
+                  {SingleProperty.address + " " + SingleProperty.state + " " + SingleProperty.city}
                 </p>
                 <div className="top-8 end-8">
                   {"Available" === SingleProperty.listing_status ? (

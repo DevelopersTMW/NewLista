@@ -20,7 +20,7 @@ const InvestorCards = ({
   
   return (
     <>
-      <div className="border-[1px] border-solid border-[#BBBBBB] px-7 py-7 rounded-[8px] w-[94%] sm:w-[290px]">
+      <div className="border-[1px] border-solid border-[#BBBBBB] px-7 py-7 rounded-[8px] w-[94%] sm:w-[280px] md:w-[320px] min-[950px]:w-[280px] lg:w-[290px]">
         {/* IMAGES AND USERNAME  */}
         <div className="flex justify-start items-center gap-3 border-b-[1px] border-solid border-Paracolor pb-7">
           <span>

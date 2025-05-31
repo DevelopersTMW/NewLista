@@ -146,7 +146,7 @@ const Pricing = () => {
           {/* HEADER SECTION END  */}
 
           {/* TABS SEC START  */}
-          <div className=" mt-16 px-20">
+          <div className=" mt-16 px-20 w-[85%]">
             {/* Cards */}
             <div className="flex gap-10 justify-center">
               {activeTab === "monthly" && (
