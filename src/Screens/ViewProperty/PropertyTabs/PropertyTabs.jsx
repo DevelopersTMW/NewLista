@@ -53,6 +53,8 @@ const propertyType = [
 const DummyIcon = () => <div className="w-6 h-6 bg-Paracolor rounded"></div>;
 
 function ResponsiveTabs() {
+  const [showMoreTabs, setShowMoreTabs] = useState(false);
+
   const [visibleTabs, setVisibleTabs] = useState(2);
   const [selectedIndex, setSelectedIndex] = useState(0);
 
@@ -85,45 +87,51 @@ function ResponsiveTabs() {
   return (
     <div className="relative">
       {/* <TabGroup selectedIndex={selectedIndex} onChange={setSelectedIndex}> */}
-        <TabList className="flex items-end justify-center gap-7 sm:gap-8 md: flex-wrap">
-          {mainTabs.map((item, idx) => (
-            <Tab as={Fragment} key={idx}>
-              {({ selected }) => (
-                <span
-                  className={classNames(
-                    "flex flex-col items-center pb-3.5 cursor-pointer focus:outline-none",
-                    selected
-                      ? "border-b-2  font-semibold"
-                      : "border-b-2 border-transparent "
-                  )}
-                >
-                  <img className="w-[25px]" src={item.icon} alt="" />
-                  <span className="text-[13.5px] mt-1 font-Urbanist font-[600]">
-                    {item.label}
-                  </span>
+      <TabList className="flex items-end justify-center gap-7 sm:gap-8 md: flex-wrap">
+        {mainTabs.map((item, idx) => (
+          <Tab as={Fragment} key={idx}>
+            {({ selected }) => (
+              <span
+                className={classNames(
+                  "flex flex-col items-center pb-3.5 cursor-pointer focus:outline-none",
+                  selected
+                    ? "border-b-2  font-semibold"
+                    : "border-b-2 border-transparent "
+                )}
+              >
+                <img className="w-[25px]" src={item.icon} alt="" />
+                <span className="text-[13.5px] mt-1 font-Urbanist font-[600]">
+                  {item.label}
                 </span>
-              )}
-            </Tab>
-          ))}
-
-          {moreTabs.length > 0 && (
-            <div className="relative group cursor-pointer">
-              <span className="flex  items-center pb-8 text-gray-600 hover:text-Paracolor">
-                <Grip />
               </span>
+            )}
+          </Tab>
+        ))}
+        {moreTabs.length > 0 && (
+          <div className="relative">
+            <span
+              className="flex items-center pb-8 text-gray-600 hover:text-Paracolor cursor-pointer"
+              onClick={() => setShowMoreTabs(!showMoreTabs)}
+            >
+              <Grip />
+            </span>
 
-              <div className="absolute top-full left-1/2 -translate-x-1/2 hidden group-hover:block bg-white border border-gray-200 rounded-md shadow-lg mt-1 w-48 max-h-64 overflow-auto z-20">
+            {showMoreTabs && (
+              <div className="absolute top-full left-1/2 -translate-x-1/2 bg-white border border-gray-200 rounded-md shadow-lg mt-1 w-48 max-h-64 overflow-auto z-20">
                 <TabList className="flex flex-col py-4">
                   {moreTabs.map((item, idx) => (
                     <Tab key={visibleTabs + idx} as={Fragment}>
                       {({ selected }) => (
-                        <div className="flex items-center px-4 py-2 border-b-[1px] border-[#e9e9e9] hover:bg-[#ececec] hover:text-white ">
+                        <div
+                          className="flex items-center px-4 py-2 border-b-[1px] border-[#e9e9e9] hover:bg-[#ececec] hover:text-white"
+                          onClick={() => setShowMoreTabs(false)} // Close dropdown on selection
+                        >
                           <span>
                             <img className="w-[24px]" src={item.icon} alt="" />
                           </span>
                           <span
                             className={classNames(
-                              "block font-Urbanist text-[17px] font-[600] px-4 py-2 cursor-pointerrounded-md leading-[19px]",
+                              "block font-Urbanist text-[17px] font-[600] px-4 py-2 cursor-pointer rounded-md leading-[19px]",
                               selected
                                 ? "bg-Paracolor text-white"
                                 : "text-gray-800"
@@ -137,9 +145,10 @@ function ResponsiveTabs() {
                   ))}
                 </TabList>
               </div>
-            </div>
-          )}
-        </TabList>
+            )}
+          </div>
+        )}
+      </TabList>
       {/* </TabGroup> */}
     </div>
   );
