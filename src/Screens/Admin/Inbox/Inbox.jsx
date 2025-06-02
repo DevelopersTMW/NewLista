@@ -49,11 +49,11 @@ const Inbox = () => {
 
   return (
 
-    <div className="flex flex-col sm:flex-row w-full mt-3 gap-10 text-black">
+    <div className="flex flex-col sm:flex-row w-full mt-3 sm:gap-5 lg:gap-10 text-black">
       {/* Sidebar / User List */}
-      <div className={`w-full sm:w-[25%] ${selectedUser ? "hidden sm:block" : ""}`}>
+      <div className={`w-full sm:w-[60%] md:w-[70%] lg:w-[35%] xl:w-[25%] ${selectedUser ? "hidden lg:block" : ""}`}>
         <div className="pt-7 pb-29 sm:py-10 h-full overflow-y-auto bg-white rounded-[20px]">
-          <h1 className="font-Urbanist px-6 pb-2 sm:pb-4 text-[#222222] text-[28px] sm:text-[26px] font-[700]">
+          <h1 className="font-Urbanist px-6 pb-2 sm:pb-4 text-[#222222] text-[25px] sm:text-[26px] font-[700]">
             Connections
           </h1>
           <div className="flex flex-col">

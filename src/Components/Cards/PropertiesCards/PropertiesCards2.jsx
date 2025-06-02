@@ -7,7 +7,7 @@ const PropertiesCards2 = ({ Img, Heading, desc, Status, Price, Features , id  , 
   return (
     <>
       <div className="w-[100%] bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700 relative">
-          <img className="rounded-t-lg h-[230px] object-cover w-[100%]" src={images} alt="" />
+          <img className="rounded-t-lg h-[200px] min-[350px]:h-[230px] object-cover w-[100%]" src={images} alt="" />
         <div className="py-3 pb-4 px-4 flex flex-col gap-2">
           <div className="absolute top-8 end-8">
             {"Active" === Status ? (

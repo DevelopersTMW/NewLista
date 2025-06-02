@@ -37,7 +37,6 @@ import TruncatedText from "../../Components/TruncatedText/TruncatedText";
 import EmptyCards from "../../Components/EmptyCard/EmptyCard";
 import ResponsiveTabList from "./PropertyTabs/PropertyTabs";
 
-
 // BACKGORUND
 const BannerBackground = {
   backgroundImage: `url(${AddPropertyBanner})`,
@@ -54,9 +53,7 @@ const ViewProperty = () => {
   const isLoggedIn = localStorage.getItem("token");
   const [ShowEmpty, setShowEmpty] = useState(false);
 
-
   const [selectedIndex, setSelectedIndex] = useState(0);
-
 
   useEffect(() => {
     async function GetProperty() {
@@ -103,8 +100,11 @@ const ViewProperty = () => {
     <>
       <Navbar></Navbar>
       {/* BANNER START  */}
-      <section style={BannerBackground}>
-        <div className="px-10 pt-16 pb-20 sm:py-28 sm:px-12">
+      <section
+        style={BannerBackground}
+        className="flex items-center justify-center"
+      >
+        <div className=" pt-16 pb-20 ml-10 sm:ml-0 md:py-16 lg:py-28 lg:px-12  max-[350px]:w-[90%] w-[75%] sm:w-[50%] md:w-[90%] min-[800px]:w-[80%] lg:w-[100%] xl:w-[100%] 2xl:w-[80%]">
           <SearchBar></SearchBar>
         </div>
       </section>
@@ -113,13 +113,12 @@ const ViewProperty = () => {
       {/* PROPERTY TABS START */}
       <section>
         <TabGroup selectedIndex={selectedIndex} onChange={setSelectedIndex}>
-          <div className="flex gap-8 px-8 pt-6 items-end  justify-center  border-b-[1px] border-[#BBBBBB] border-solid">
+          <div className="flex gap-5 sm:gap-8 px-4 sm:px-8 pt-6 items-end  justify-center  border-b-[1px] border-[#BBBBBB] border-solid ">
             <div>
-            <ResponsiveTabList/>
-
+              <ResponsiveTabList />
             </div>
 
-            <div className="flex justify-center gap-2 font-Poppins border-[1px] px-4  border-solid border-[#bebebe] rounded-[6px] text-Paracolor text-[15px] items-center font-semibold mb-6 ">
+            <div className="flex justify-center gap-2 font-Poppins border-[1px] px-3 sm:px-4  border-solid border-[#bebebe] rounded-[6px] text-Paracolor text-[15px] items-center font-semibold mb-5 sm:mb-6  ">
               <img className="w-5 h-5" src={FilterIcon2} alt="" />
               <Select
                 className={
@@ -154,10 +153,10 @@ const ViewProperty = () => {
             </div>
           </div>
 
-          <TabPanels>
+          <TabPanels className={"flex justify-center"}>
             <TabPanel
               id="offmarket"
-              className="w-[100%] flex flex-wrap justify-center gap-8 py-14 px-10 sm:py-12 lg:py-16 xl:my-1 sm:gap-4 sm:px-13 md:gap-10 md:px-16 lg:gap-5 xl:gap-5 2xl:gap-10"
+              className="w-[100%] flex flex-wrap justify-center gap-8 py-14 px-6 min-[350px]:px-10 sm:py-12 lg:py-16 xl:my-1 sm:gap-4 sm:px-13 md:gap-10 md:px-16 lg:gap-5 xl:gap-5 2xl:gap-10  2xl:w-[90%]"
             >
               {ShowEmpty ? (
                 <EmptyCards
@@ -167,7 +166,10 @@ const ViewProperty = () => {
                 />
               ) : (
                 Properties.slice(0, 6).map((items) => (
-                  <div key={items.id} className="sm:w-[48.5%] md:w-[43%] lg:w-[31%] xl:w-[23.5%] 2xl:w-[20.5%]">
+                  <div
+                    key={items.id}
+                    className="sm:w-[48.5%] md:w-[43%] lg:w-[31%] xl:w-[23.5%] 2xl:w-[20.5%]"
+                  >
                     {
                       <PropertiesCards2
                         Img={PropertiesImage3}
@@ -182,9 +184,7 @@ const ViewProperty = () => {
                         id={items.id}
                         images={items.images[0]}
                       ></PropertiesCards2>
-                      
                     }
-                    
                   </div>
                 ))
               )}

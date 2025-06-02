@@ -10,7 +10,7 @@ import InvestorIcon3 from "../../../assets/InvestorIcon3.png";
 const AddToNetwork = ({InvesImage , InvesUserName , InvesDesc}) => {
   return (
     <>
-      <div className="w-[90%] border-[1px] border-solid border-[#BBBBBB] px-7 py-7 rounded-[8px] sm:w-[32%]">
+      <div className="w-[92%] min-[450px]:w-[70%] border-[1px] border-solid border-[#BBBBBB] px-7 py-7 rounded-[8px] sm:w-[46%] md:w-[48%]  lg:w-[40%] xl:w-[32%]">
         {/* IMAGES AND USERNAME  */}
         <div className="flex justify-start items-center gap-3 border-b-[1px] border-solid border-Paracolor pb-7">
           <span>
@@ -51,8 +51,8 @@ const AddToNetwork = ({InvesImage , InvesUserName , InvesDesc}) => {
           </ul>
           {/* BUTTONS  */}
           <div className="flex  gap-3 pt-5">
-            <button className="font-Inter text-[#fff] font-semibold text-[14px] px-3.5 py-1.5 rounded-full border-solid border-[2px] border-[#64AAE9] bg-[#64AAE9]">Add to Network</button>
-            <button className="font-Inter text-[#fff] font-semibold text-[14px] px-3.5 py-1.5 rounded-full border-solid border-[2px] border-[#F61418] bg-[#F61418]">Block User</button>
+            <button className="font-Inter text-[#fff] font-semibold text-[14px] sm:text-[12.5px] sm:px-2.5 sm:py-1.5 px-3.5 py-1.5 lg:px-3.5 lg:py-2 rounded-full border-solid border-[2px] border-[#64AAE9] bg-[#64AAE9]">Add to Network</button>
+            <button className="font-Inter text-[#fff] font-semibold text-[14px] px-3.5 py-1.5 sm:text-[12.5px] sm:px-2.5 sm:py-1 lg:px-3.5 rounded-full border-solid border-[2px] border-[#F61418] bg-[#F61418]">Block User</button>
           </div>
         </div>
       </div>

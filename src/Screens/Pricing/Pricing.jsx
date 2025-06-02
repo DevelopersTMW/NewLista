@@ -165,7 +165,7 @@ const Pricing = () => {
                     Name={"$29.99 USD"}
                     Desc={""}
                     benefits={premium}
-                    ButtonText={"Upgrade your plan"}
+                    ButtonText={"Subscribe Now"}
                   />
                 </>
               )}
@@ -185,7 +185,7 @@ const Pricing = () => {
                     Name={"$299 USD "}
                     Desc={""}
                     benefits={premium}
-                    ButtonText={"Upgrade your plan"}
+                    ButtonText={"Subscribe Now"}
                   />
                 </>
               )}

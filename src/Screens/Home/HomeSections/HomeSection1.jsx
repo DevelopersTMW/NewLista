@@ -31,8 +31,8 @@ const HomeSection1 = ({ token }) => {
 
   return (
     <>
-      <section className="flex flex-col items-center justify-center gap-8 px-6 sm:px-0 py-20 sm:py-14 sm:gap-10  ">
-        <div className="flex flex-col justify-center items-center sm:w-[80%] md:w-[80%] lg:w-[60%] sm:text-center">
+      <section className="flex flex-col sm:items-center justify-center gap-8 px-6 sm:px-0 py-20 sm:py-14 sm:gap-10 w-[100%] xl:w-[97%] 2xl:w-[85%] 2xl:py-16">
+        <div className="flex flex-col justify-center items-center sm:w-[80%] md:w-[80%] lg:w-[69%] xl:w-[63%] sm:text-center">
           <h1 className="text-[32px] leading-[38px] font-[700] font-Urbanist  text-[#1E1E1E] sm:text-[37px] sm:leading-[43px] md:text-[39px] md:leading-[45px]">
             Seamless Real Estate Investing Starts Here
           </h1>

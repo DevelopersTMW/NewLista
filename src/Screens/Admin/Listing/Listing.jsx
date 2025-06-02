@@ -71,12 +71,12 @@ const Listing = () => {
       {/* HEADING SECTION  */}
       <section className="py-6">
         {/* PAGE TITTLE  */}
-        <div className="flex flex-co gap-5 sm:flex-row justify-between items-center">
+        <div className="flex flex-co flex-wrap max-[350px]:gap-3 gap-5 sm:flex-row justify-between items-center">
           <h1 className="font-Urbanist text-[#222222] text-[30px] font-[700]">
             My Listings
           </h1>
           <Link to={'/add-property'}>
-            <button className="text-[13.5px] px-3 sm:px-5 sm:text-[15px] font-Inter hover-btn hover-btn-black  bg-[#1E1E1E] text-white py-2.5 sm:py-3 rounded-[7px]">
+            <button className="text-[13.5px] px-3 sm:px-5 md:text-[15px] font-Inter hover-btn hover-btn-black  bg-[#1E1E1E] text-white py-2.5 sm:py-3 max-[350px]:text-[12.5px] rounded-[7px]">
               <span>Add New Property</span>
             </button>
           </Link>
@@ -89,7 +89,7 @@ const Listing = () => {
         {/* UPPER TAB  */}
         <div className="flex sm:gap-5 sm:px-7 bg-white">
           {/* SEARCH  */}
-          <div className="relative w-[67%] items-center flex sm:w-[28%]">
+          <div className="relative max-[350px]:w-[57%] w-[67%] items-center flex md:w-[80%]  xl:w-[23%] 2xl:w-[50%]">
             <div className="absolute inset-y-0 start-0 flex items-center ps-4 pointer-events-none">
               <svg
                 className="w-4 h-4 text-[#444444] "
@@ -117,7 +117,7 @@ const Listing = () => {
           </div>
           {/* FILTER  */}
           {/* Desktop filter bar (hidden on mobile) */}
-          <div className="hidden sm:flex gap-2 px-0 bg-white  w-[85%] border-[1px] border-solid border-[#1E1E1E] rounded-[10px]">
+          <div className="hidden xl:flex gap-2 px-0 bg-white  w-[85%] border-[1px] border-solid border-[#1E1E1E] rounded-[10px]">
             {/* FILTER BUTTON  */}
             <button className=" font-Inter bg-[#1E1E1E] text-white py-2.5 rounded-l-[7px] flex items-center px-4 gap-1">
               <img className="w-5 h-5" src={FilterIcon} alt="" />{" "}
@@ -224,13 +224,13 @@ const Listing = () => {
             </div>
           </div>
           {/* Mobile filter button (visible only on small screens) */}
-          <div className="flex sm:hidden  px-4 w-[30%] py-2 bg-white">
+          <div className="flex xl:hidden  px-4 w-[30%]  md:w-[20%] py-2 bg-white">
             <button
               onClick={() => setIsFilterOpen(true)}
-              className="bg-[#1E1E1E] text-white py-2.5 pl-3.5 pr-9.5 rounded-[10px] flex items-center gap-2"
+              className="bg-[#1E1E1E] text-white py-2.5 pl-3.5 pr-9.5 lg:pl-5 lg:pr-10 rounded-[10px] flex items-center gap-2"
             >
-              <img className="w-5 h-5" src={FilterIcon} alt="Filter" />
-              <span className="font-Urbanist font-medium text-[15px]">Filter</span>
+              <img className="w-5 h-5 lg:w-7 lg:h-7" src={FilterIcon} alt="Filter" />
+              <span className="font-Urbanist font-medium text-[15px] lg:text-[18px]">Filter</span>
             </button>
 
           </div>
@@ -292,9 +292,9 @@ const Listing = () => {
         </div>
 
         {/* LOWER TAB  */}
-        <div className="mt-7  sm:mt-10 sm:px-7 bg-white w-[98%] rounded-[13px]  sm:w-full overflow-x-auto">
+        <div className="mt-7  sm:mt-10 sm:px-4 md:px-7 bg-white w-[98%] rounded-[13px]  xl:w-full overflow-x-auto">
           <table className="min-w-[880px] w-full text-sm text-left rtl:text-right text-gray-500 bg-[#fcfcfc]">
-            <thead className="text-[16px] tracking-[1.5px] sm:tracking-normal sm:text-[15px] text-white font-Urbanist uppercase bg-[#1E1E1E]">
+            <thead className="text-[13.5px] tracking-[1.5px] sm:tracking-normal sm:text-[14px] md:text-[15px] text-white font-Urbanist uppercase bg-[#1E1E1E]">
               <tr>
                 <th className="px-6 py-4.5 rounded-tl-2xl">Property Name & Address</th>
                 <th className="px-6 py-4.5">Type</th>
@@ -312,7 +312,7 @@ const Listing = () => {
                 >
                   <th
                     scope="row"
-                    className="w-[30%] text-[16.5px]  px-4 py-6 font-medium text-gray-900 whitespace-nowra sm:text-[16px]"
+                    className="w-[30%] text-[14px]  px-4 py-6 font-medium text-gray-900 whitespace-nowra sm:text-[14px] md:text-[16px]"
                   >
                     {items.name}
                   </th>
@@ -371,7 +371,7 @@ const Listing = () => {
       <section className="pt-6 pb-4 sm:py-6 px-2 sm:px-0 ">
         {/* PAGE TITTLE  */}
         <div className="flex justify-between">
-          <h1 className="font-Urbanist text-[#222222] text-[30px] font-[700]">
+          <h1 className="font-Urbanist text-[#222222] text-[26px]  sm:text-[30px] font-[700]">
             Performance Overview
           </h1>
         </div>
@@ -380,66 +380,66 @@ const Listing = () => {
       {/* CARDS  */}
       <section className="flex  flex-wrap gap-3  ">
         {/* CARD 1 */}
-        <div className="flex flex-col justify-between bg-white px-5 gap-5 sm:py-7 py-10 w-[90%] sm:w-[30%] rounded-[14px]">
+        <div className="flex flex-col justify-between bg-white px-5 gap-5 sm:py-7 py-10 max-[350px]:w-[100%] w-[90%] sm:w-[47%] md:w-[35%] 2xl:w-[24%] rounded-[14px]">
           <div className="flex justify-between ">
             <span>
               <h4 className="sm:text-[14px] text-[15px]  font-Urbanist font-[500] text-[#666666]">
                 Days on the Market
               </h4>
-              <h1 className="font-Urbanist text-[#222222] text-[28px] sm:text-[25px] font-[700]">
+              <h1 className="font-Urbanist text-[#222222] text-[25px] sm:text-[25px] font-[700]">
                 42 Days
               </h1>
             </span>
             <span>
-              <img src={ListingImage1_1} alt="" />
+              <img className="max-[350px]:w-14" src={ListingImage1_1} alt="" />
             </span>
           </div>
         </div>
         {/* CARD 2 */}
-        <div className="flex flex-col justify-between bg-white px-5 gap-5 sm:py-7 py-10 w-[90%] sm:w-[30%] rounded-[14px]">
+        <div className="flex flex-col justify-between bg-white px-5 gap-5 sm:py-7 py-10 w-[90%] max-[350px]:w-[100%] sm:w-[47%] md:w-[35%] 2xl:w-[24%] rounded-[14px]">
           <div className="flex justify-between">
             <span>
               <h4 className="sm:text-[14px] text-[15px]  font-Urbanist font-[500] text-[#666666]">
                 Total Views
               </h4>
-              <h1 className="font-Urbanist text-[#222222] text-[28px] sm:text-[25px] font-[700]">
+              <h1 className="font-Urbanist text-[#222222] text-[25px] sm:text-[25px] font-[700]">
                 2,430 Views
               </h1>
             </span>
             <span>
-              <img src={ListingImage1_2} alt="" />
+              <img className="max-[350px]:w-14" src={ListingImage1_2} alt="" />
             </span>
           </div>
         </div>
         {/* CARD 3 */}
-        <div className="flex flex-col justify-between bg-white px-5 gap-5 sm:py-7 py-10 w-[90%] sm:w-[30%] rounded-[14px]">
+        <div className="flex flex-col justify-between bg-white px-5 gap-5 sm:py-7 py-10 w-[90%] max-[350px]:w-[100%] sm:w-[47%] md:w-[35%] 2xl:w-[24%] rounded-[14px]">
           <div className="flex justify-between">
             <span>
               <h4 className="sm:text-[14px] text-[15px] font-Urbanist font-[500] text-[#666666]">
                 Number of Offers
               </h4>
-              <h1 className="font-Urbanist text-[#222222] text-[28px] sm:text-[25px] font-[700]">
+              <h1 className="font-Urbanist text-[#222222] text-[25px] sm:text-[25px] font-[700]">
                 3 Offers
               </h1>
             </span>
             <span>
-              <img src={ListingImage1_3} alt="" />
+              <img className="max-[350px]:w-14" src={ListingImage1_3} alt="" />
             </span>
           </div>
         </div>
         {/* CARD 4 */}
-        <div className="flex flex-col justify-between bg-white px-5 gap-5 sm:py-7 py-10 w-[90%] sm:w-[30%] rounded-[14px]">
+        <div className="flex flex-col justify-between bg-white px-5 gap-5 sm:py-7 py-10 w-[90%] max-[350px]:w-[100%] sm:w-[47%] md:w-[35%] 2xl:w-[24%] rounded-[14px]">
           <div className="flex justify-between">
             <span>
               <h4 className="sm:text-[14px] text-[15px] font-Urbanist font-[500] text-[#666666]">
                 Number of Rejections
               </h4>
-              <h1 className="font-Urbanist text-[#222222] text-[28px] sm:text-[25px] font-[700]">
+              <h1 className="font-Urbanist text-[#222222] text-[25px] sm:text-[25px] font-[700]">
                 1 Rejection
               </h1>
             </span>
             <span>
-              <img src={ListingImage1_4} alt="" />
+              <img className="max-[350px]:w-13" src={ListingImage1_4} alt="" />
             </span>
           </div>
         </div>
