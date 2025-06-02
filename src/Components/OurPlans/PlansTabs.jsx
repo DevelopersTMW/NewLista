@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import "../../index.css";
 // IMAGES
 import CheckIcon from "../../assets/Icon.png";
+import { X } from "lucide-react";
 
 
   
@@ -50,11 +51,11 @@ const PlansTabs = ({ PlanNum, PlanCard, Name, Desc, ButtonText , benefits }) => 
                 />
               )}
               {!item.checked&& (
-                <img
-                  src={CheckIcon}
-                  alt="Checked"
-                  className="bg-PurpleColor text-[10px] px-[5px] py-1.5 rounded-full text-white"
-                />
+
+                <div>
+                  <X size={22} className="bg-red-600 text-[19px] px-[1.5px] py-1 rounded-full text-white"  />
+                </div>
+                
               )}
               <span className="text-sm text-gray-800">{item.label}</span>
             </li>

@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import ComboboxSelector from "../ComboboxSelector/ComboboxSelector";
 import Selection from "../InputFields/Selection";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
-import { Grip, GripVertical, Search } from "lucide-react";
+import { Grip, GripVertical, Search, Turtle } from "lucide-react";
 import MobileMenu from "./MobileMenu";
 
 const propertyType = [
@@ -87,6 +87,7 @@ const statesArray = [
 ];
 
 const SearchBar = () => {
+  const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [selectedState, setSelectedState] = useState("");
   const [cities, setCities] = useState([]);
   const [selectedCity, setSelectedCity] = useState("");
@@ -128,27 +129,41 @@ const SearchBar = () => {
     name,
   }));
 
+  const [listingType, setListingType] = useState(""); // "For Sale" or "For Lease"
+
   return (
     <>
       <div className=" sm:mb-8 sm:flex sm:justify-center mt-8">
-        <div className="relative w-[100%] md:w-[100%] lg:w-[94%] xl:w-[84%] flex rounded-full py-3 px-5 sm:px-6.5 sm:py-3.5 text-sm/6 text-gray-600 ring-1 ring-gray-900/10 hover:ring-gray-900/20 bg-textColor justify-center items-center">
-          <div className="w-[45%] sm:w-[40%] md:w-[25%] lg:w-[15%] px-4 py-2 sm:border-r-[1px] border-solid border-Paracolor">
+        <div className="relative w-[85%] justify-between md:w-[35%] lg:w-[94%] xl:w-[84%] flex rounded-full py-3 px-5 lg:px-6.5 sm:py-3.5 text-sm/6 text-gray-600 ring-1 ring-gray-900/10 hover:ring-gray-900/20 bg-textColor lg:justify-center items-center">
+          <div className="w-[45%] lg:w-[15%] px-4 py-2 lg:border-r-[1px] border-solid border-Paracolor">
             <Select
               name="status"
               aria-label="Project status"
               className={
-                "overline-none text-[16px] font-Inter text-black font-[500]"
+                "overline-none text-[16px] font-Inter text-black font-[500] focus:outline-none border-none focus:ring-0"
               }
+              onChange={(e) => {
+                const value = e.target.value;
+                setListingType(value);
+                setIsFilterOpen(value !== "Select" && value !== ""); // Open only if valid
+              }}
+              defaultValue="Select"
             >
-              <option className="overline-none font-Inter" value="active">
+              <option
+                className="overline-none font-Inter block lg:hidden "
+                value="Select"
+              >
+                Select
+              </option>
+              <option className="overline-none font-Inter" value="For Sale">
                 For Sale
               </option>
-              <option className="overline-none font-Inter" value="active">
+              <option className="overline-none font-Inter" value="For Lease">
                 For Lease
               </option>
             </Select>
           </div>
-          <div className="hidden sm:w-[50%] md:w-[50%] lg:w-[20%] px-8 py-1 md:border-r-[1px] border-solid border-Paracolor sm:flex flex-col ">
+          <div className="hidden lg:flex lg:w-[20%] px-8 py-1 md:border-r-[1px] border-solid border-Paracolor flex-col ">
             <h1 className="text-[14px] font-semibold font-Inter text-black ">
               Property Type
             </h1>
@@ -170,7 +185,7 @@ const SearchBar = () => {
               ))}
             </Select>
           </div>
-          <div className=" hidden md:w-[40%] lg:w-[190px] whitespace-nowrap text-ellipsis px-8 py-1 lg:border-r-[1px] border-solid border-Paracolor md:flex flex-col">
+          <div className=" hidden  lg:flex lg:w-[190px] whitespace-nowrap text-ellipsis px-8 py-1 lg:border-r-[1px] border-solid border-Paracolor flex-col">
             <h1 className="text-[14px] font-Inter text-black font-[600]">
               State
             </h1>
@@ -182,7 +197,13 @@ const SearchBar = () => {
           </div>
 
           <div className="w-[40%] flex justify-center items-center lg:hidden md:w-[10%] sm:w-[25%]">
-            <MobileMenu></MobileMenu>
+            {isFilterOpen && (
+              <MobileMenu
+                setIsFilterOpen={setIsFilterOpen}
+                isFilterOpen={isFilterOpen}
+                listingType={listingType}
+              ></MobileMenu>
+            )}
           </div>
 
           <div className=" hidden lg:w-[22%] px-8 py-1 border-r-[1px] border-solid border-Paracolor lg:flex flex-col ">

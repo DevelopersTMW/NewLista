@@ -2,7 +2,7 @@ import { ChevronDownIcon, ChevronUpDownIcon } from "@heroicons/react/20/solid";
 import { ChevronDown } from "lucide-react";
 import React, { useState, useRef, useEffect } from "react";
 
-const ComboboxSelection = ({ options = [], onSelect, placeholder , disabled,  }) => {
+const ComboboxSelection = ({ options = [], onSelect, placeholder , disabled, style }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [query, setQuery] = useState("");
   const [selected, setSelected] = useState(null);
@@ -45,7 +45,7 @@ const ComboboxSelection = ({ options = [], onSelect, placeholder , disabled,  })
           </div>
 
           {isOpen && (
-            <div className="absolute z-10 py-1 mt-1 w-[160px] rounded-md shadow-lg bg-[#f8f8f8] border border-gray-200 max-h-100 overflow-y-auto ">
+            <div className="absolute z-10 py-1 mt-1 w-full sm:w-[160px] rounded-md shadow-lg bg-[#f8f8f8] border border-gray-200 max-h-100 overflow-y-auto ">
               <div className="p-2">
                 <input
                   type="text"
