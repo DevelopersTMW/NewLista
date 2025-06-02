@@ -11,16 +11,16 @@ import DashboardIcon1_22 from "../../../assets/DashboardIcon1.22.png"
 const Dashboard = () => {
   return (
     <>
-    <section className='py-6'>
+    <section className='py-6 px-2 sm:px-0'>
       {/* PAGE TITTLE  */}
       <div>
-        <h1 className='font-Urbanist text-[#222222] text-[30px] font-[700]'>Dashboard</h1>
+        <h1 className='text-[38px] font-Urbanist text-[#222222] sm:text-[30px] font-[700]'>Dashboard</h1>
       </div>
 
       {/* CARDS SECTION  */}
-      <div className='flex flex-wrap gap-5 mt-9'> 
+      <div className='flex flex-wrap gap-5 mt-7 sm:mt-9'> 
         {/* CARD 1 */}
-        <div className='flex flex-col justify-between bg-white px-5 gap-5 py-7 w-[30%] rounded-[14px]'>
+        <div className='w-[95%] flex flex-col justify-between bg-white px-5 gap-5 py-7 sm:w-[30%] rounded-[14px]'>
           <div className='flex justify-between '>
             <span>
               <h4 className='text-[15px] font-Urbanist font-[500] text-[#666666]'>Total Listings</h4>
@@ -40,7 +40,7 @@ const Dashboard = () => {
           </div>
         </div>
         {/* CARD 2 */}
-        <div className='flex flex-col justify-between bg-white px-5 gap-5 py-7 w-[30%] rounded-[14px]'>
+        <div className='w-[95%] flex flex-col justify-between bg-white px-5 gap-5 py-7 sm:w-[30%] rounded-[14px]'>
           <div className='flex justify-between'>
             <span>
               <h4 className='text-[15px] font-Urbanist font-[500] text-[#666666]'>Active Listings</h4>
@@ -60,7 +60,7 @@ const Dashboard = () => {
           </div>
         </div>
         {/* CARD 3 */}
-        <div className='flex flex-col justify-between bg-white px-5 gap-5 py-7 w-[30%] rounded-[14px]'>
+        <div className='w-[95%] flex flex-col justify-between bg-white px-5 gap-5 py-7 sm:w-[30%] rounded-[14px]'>
           <div className='flex justify-between'>
             <span>
               <h4 className='text-[15px] font-Urbanist font-[500] text-[#666666]'>Network Connections</h4>
@@ -80,7 +80,7 @@ const Dashboard = () => {
           </div>
         </div>
         {/* CARD 4 */}
-        <div className='flex flex-col justify-between bg-white px-5 gap-5 py-7 w-[30%] rounded-[14px]'>
+        <div className='w-[95%] flex flex-col justify-between bg-white px-5 gap-5 py-7 sm:w-[30%] rounded-[14px]'>
           <div className='flex justify-between'>
             <span>
               <h4 className='text-[15px] font-Urbanist font-[500] text-[#666666]'>Pending Offers</h4>

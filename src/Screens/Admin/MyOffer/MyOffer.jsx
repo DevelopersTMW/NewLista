@@ -22,7 +22,7 @@ const MyOffers = () => {
           <h3 className="font-Urbanist font-[600] text-[#00000] text-[18px]">
             No offers yet!
           </h3>
-          <h1 className="font-Urbanist font-[600] text-[#00000] text-[20px]">
+          <h1 className="font-Urbanist font-[600] text-[#00000] text-[20px] text-center">
             Start exploring properties and make your first deal.
           </h1>
         </div>

@@ -11,7 +11,3 @@ h1{
   font-size: 48px;
 }
 
-.swiper-no-swiping {
-  touch-action: auto !important;
-  pointer-events: auto !important;
-}

@@ -48,22 +48,22 @@ const ListItem = [
 const Analytics = () => {
   return (
     <>
-      
-        <section className="py-6 ">
-          {/* PAGE TITTLE  */}
-          <div className="flex justify-between">
-            <h1 className="font-Urbanist text-[#222222] text-[30px] font-[700]">
-              Analytics
-            </h1>
-          </div>
-        </section>
 
-        <div className="flex gap-5">
-        <section className="w-[70%]">
+      <section className="py-6 px-2 sm:px-0">
+        {/* PAGE TITTLE  */}
+        <div className="flex justify-between">
+          <h1 className="font-Urbanist text-[#222222] text-[30px] font-[700]">
+            Analytics
+          </h1>
+        </div>
+      </section>
+
+      <div className="flex flex-col sm:flex-row gap-5 px-2 sm:px-0">
+        <section className="sm:w-[70%]">
           {/* CARD SECTION  */}
-          <div className="flex flex-wrap gap-5 w-[] ">
+          <div className="flex flex-wrap gap-5 ">
             {/* CARD 1 */}
-            <div className="flex flex-col justify-between bg-white px-5 gap-3 py-7 w-[40%] rounded-[14px]">
+            <div className="w-[90%] flex flex-col justify-between bg-white px-5 gap-3 py-7 sm:w-[40%] rounded-[14px]">
               <div className="flex justify-between items-center">
                 <span>
                   <h4 className="text-[15px] font-Urbanist font-[500] text-[#666666]">
@@ -89,7 +89,7 @@ const Analytics = () => {
               </div>
             </div>
             {/* CARD 2 */}
-            <div className="flex flex-col justify-between bg-white px-5 gap-3 py-7 w-[40%] rounded-[14px]">
+            <div className="w-[90%] flex flex-col justify-between bg-white px-5 gap-3 py-7 sm:w-[40%] rounded-[14px]">
               <div className="flex justify-between items-center">
                 <span>
                   <h4 className="text-[15px] font-Urbanist font-[500] text-[#666666]">
@@ -115,7 +115,7 @@ const Analytics = () => {
               </div>
             </div>
             {/* CARD 3 */}
-            <div className="flex flex-col justify-between bg-white px-5 gap-3 py-7 w-[40%] rounded-[14px]">
+            <div className="w-[90%] flex flex-col justify-between bg-white px-5 gap-3 py-7 sm:w-[40%] rounded-[14px]">
               <div className="flex justify-between items-center">
                 <span>
                   <h4 className="text-[15px] font-Urbanist font-[500] text-[#666666]">
@@ -143,96 +143,100 @@ const Analytics = () => {
           </div>
 
           {/* TABLE SECTION  */}
-          <div className="mt-10 ">
-            <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-              <thead className="text-[15px] text-[#fff] rounded-t-2xl font-Urbanist uppercase bg-[#1E1E1E] ">
-                <tr className="">
-                  <th scope="col" className="px-5 py-4.5 rounded-tl-2xl">
+
+          <div className="mt-10 overflow-x-auto rounded-[10px]">
+            <table className="min-w-full text-sm text-left rtl:text-right text-gray-500 font-Urbanist">
+              <thead className="text-[14px] text-white uppercase bg-[#1E1E1E]">
+                <tr>
+                  <th scope="col" className="px-5 py-4 rounded-tl-2xl min-w-[120px]">
                     Metric
                   </th>
-                  <th scope="col" className="px-4 py-4.5">
-                    Value
-                  </th>
-                  <th scope="col" className="px-4 py-4.5 rounded-tr-3xl ">
+                  <th scope="col" className="px-4 py-4 min-w-[100px]">Value</th>
+                  <th scope="col" className="px-4 py-4 rounded-tr-2xl min-w-[100px]">
                     Change
                   </th>
                 </tr>
               </thead>
               <tbody>
-                {ListItem.map((items, index) => (
-                  <>
-                    <tr className="bg-white border-b dark:bg-gray-800  dark:border-gray-700 border-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600 font-Urbanist "></tr>
+                {ListItem.map((item, index) => (
+                  <tr
+                    key={index}
+                    className="bg-white border-b border-gray-200 hover:bg-gray-50 "
+                  >
                     <th
                       scope="row"
-                      className="px-1 py-4.5 font-medium text-gray-900 whitespace-nowrap  text-[16px]"
+                      className="px-5 py-4 text-gray-900 whitespace-nowrap text-[15px] font-semibold"
                     >
-                      {items.metric}
+                      {item.metric}
                     </th>
-                    <td className="px-3.5 py-4.5 text-[#222222] font-[550] text-[16px]">
-                      {items.value}
+                    <td className="px-4 py-4 text-[#222222] font-semibold text-[15px]">
+                      {item.value}
                     </td>
-                    <td className="px-3.5 py-4.5 text-[#222222] font-[550] text-[16px] flex gap-1 items-center">
-                      {items.sign === "positive" ? (
-                        <div className="text-[#008316] font-[600] text-[16px] font-Urbanist">
-                          {items.change}
-                        </div>
-                      ) : (
-                        <div className="text-[#E31D1C] font-[600] text-[16px] font-Urbanist">
-                          {items.change}
-                        </div>
-                      )}
+                    <td className="px-4 py-4 text-[15px]">
+                      <span
+                        className={`font-semibold ${item.sign === "positive" ? "text-[#008316]" : "text-[#E31D1C]"
+                          }`}
+                      >
+                        {item.change}
+                      </span>
                     </td>
-                    <tr />
-                  </>
+                  </tr>
                 ))}
               </tbody>
             </table>
           </div>
+
+
+          
+
+
         </section>
+        
 
         <section>
           <div className="flex justify-between">
-            <h1 className="font-Urbanist text-[#222222] text-[30px] font-[700] -mt-[65px]">
+            <h1 className="font-Urbanist text-[#222222] text-[30px] font-[700] sm:-mt-[65px]">
               Network Insights
             </h1>
           </div>
-          <div className="flex flex-col gap-4 mt-1">
-          <div className="bg-white rounded-[10px] px-5 py-2.5">
-            <h1 className="font-Urbanist text-[#222222] text-[18px] font-[500]">
-              New Connections This Month
-            </h1>
-            <h3 className="font-Urbanist text-[#222222] text-[18px] font-[700]">
-              24
-            </h3>
-          </div>
-          <div className="bg-white rounded-[7px] px-5 py-2.5">
-            <h1 className="font-Urbanist text-[#222222] text-[18px] font-[500]">
-            Messages Sent/Received
-            </h1>
-            <h3 className="font-Urbanist text-[#222222] text-[18px] font-[700]">
-            128 conversations
-            </h3>
-          </div>
-          <div className="bg-white rounded-[7px] px-5 py-2.5">
-            <h1 className="font-Urbanist text-[#222222] text-[18px] font-[500]">
-            Top Profile Viewers
-            </h1>
-            <h3 className="font-Urbanist text-[#222222] text-[18px] font-[700]">
-            Investor Group A (5 views)
-            </h3>
-          </div>
-          <div className="bg-white rounded-[7px] px-5 py-2.5">
-            <h1 className="font-Urbanist text-[#222222] text-[18px] font-[500]">
-            Pending Connection Requests
-            </h1>
-            <h3 className="font-Urbanist text-[#222222] text-[18px] font-[700]">
-            12
-            </h3>
-          </div>
+          <div className="flex flex-col gap-4 mt-3 sm:mt-1 w-[95%]">
+            <div className="bg-white rounded-[10px] px-5 py-2.5">
+              <h1 className="font-Urbanist text-[#222222] text-[18px] font-[500]">
+                New Connections This Month
+              </h1>
+              <h3 className="font-Urbanist text-[#222222] text-[18px] font-[700]">
+                24
+              </h3>
+            </div>
+            <div className="bg-white rounded-[7px] px-5 py-2.5">
+              <h1 className="font-Urbanist text-[#222222] text-[18px] font-[500]">
+                Messages Sent/Received
+              </h1>
+              <h3 className="font-Urbanist text-[#222222] text-[18px] font-[700]">
+                128 conversations
+              </h3>
+            </div>
+            <div className="bg-white rounded-[7px] px-5 py-2.5">
+              <h1 className="font-Urbanist text-[#222222] text-[18px] font-[500]">
+                Top Profile Viewers
+              </h1>
+              <h3 className="font-Urbanist text-[#222222] text-[18px] font-[700]">
+                Investor Group A (5 views)
+              </h3>
+            </div>
+            <div className="bg-white rounded-[7px] px-5 py-2.5">
+              <h1 className="font-Urbanist text-[#222222] text-[18px] font-[500]">
+                Pending Connection Requests
+              </h1>
+              <h3 className="font-Urbanist text-[#222222] text-[18px] font-[700]">
+                12
+              </h3>
+            </div>
 
           </div>
         </section>
       </div>
+      
     </>
   );
 };

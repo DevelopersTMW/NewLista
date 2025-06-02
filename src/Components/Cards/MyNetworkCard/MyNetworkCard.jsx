@@ -10,7 +10,7 @@ import InvestorIcon3 from "../../../assets/InvestorIcon3.png";
 const MyNetworkCard = ({InvesImage , InvesUserName , InvesDesc}) => {
   return (
     <>
-      <div className="border-[1px] border-solid border-[#BBBBBB] px-7 py-7 rounded-[8px] w-[31%]">
+      <div className="w-[90%] border-[1px] border-solid border-[#BBBBBB] px-7 py-7 rounded-[8px] sm:w-[32%]">
         {/* IMAGES AND USERNAME  */}
         <div className="flex justify-start items-center gap-3 border-b-[1px] border-solid border-Paracolor pb-7">
           <span>

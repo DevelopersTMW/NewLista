@@ -1,12 +1,18 @@
-import React from "react";
+import React, { useState } from "react";
 import AddPropertyBanner from "../../../assets/AddPropertyBanner.jpg";
 import AccountSettingImage from "../../../assets/AccountSettingImage.png";
 import CrossImage from "../../../assets/CrossImage.png";
 import { Checkbox, Select, Switch, Textarea } from "@headlessui/react";
-import CountrySelector from "../../../Components/RegisterCountrySelector/RegisterCountrySelector";
 import Checkboxs from "../../../Components/InputFields/Checkboxs";
+import CountrySelector from "../../../Components/RegisterCountrySelector/CountrySelection";
+import Inputs from "../../../Components/InputFields/Inputs";
+import Selection from "../../../Components/InputFields/Selection";
+
 
 const AccountSetting = () => {
+
+  const [phone, setPhone] = useState()
+
   return (
     <>
       {/* BANNER START  */}
@@ -18,9 +24,9 @@ const AccountSetting = () => {
             alt=""
           />
         </div>
-        <div className="ml-12 -mt-28">
+        <div className="ml-4 sm:ml-12 -mt-28">
           <img
-            className="border-solid  border-white border-[2px]  rounded-[15px]"
+            className="border-solid w-[49%] sm:w-[19%]  border-white border-[2px]  rounded-[15px]"
             src={AccountSettingImage}
             alt=""
           />
@@ -30,105 +36,27 @@ const AccountSetting = () => {
 
       {/* FORM  */}
 
-      <section className="mt-10">
+      <section className="mt-7 sm:mt-10">
         {/* CONTACT FORM */}
         <form className="flex flex-col gap-4">
-          <section className="flex gap-14">
-            <div className="w-[47%] flex flex-col gap-6">
+          <section className="flex flex-col justify-start items-start sm:flex-row gap-14 px-2">
+            <div className="sm:w-[47%] w-[98%] flex flex-col gap-6">
               {/* Name  */}
               <div className="w-[100%]">
-                <label
-                  for="email"
-                  className="block mb-1 text-[15px] font-[700] text-PurpleColor"
-                >
-                  Full Name
-                </label>
-                <input
-                  type="text"
-                  id="email"
-                  className="bg-[#F3EEFF] border-[#F3EEFF] text-[#1d1d1d] font-[600] font-Urbanist text-[14px] w-[100%] h-12 px-4 rounded-[6px] outline-none"
-                  placeholder="Enter your first name"
-                />
+                <Inputs labels={"Full Name"} placeholder={"Enter your first name"}></Inputs>
               </div>
               <div>
-                <label
-                  for="text"
-                  className="block mb-1 text-[15px] font-[700] text-PurpleColor"
-                >
-                  Select your title
-                </label>
-                <Select
-                  className={
-                    "bg-[#F3EEFF] border-[#F3EEFF] text-[#868686] font-[600] font-Urbanist text-[14px] w-[100%] h-12 px-4 rounded-[6px] outline-none  "
-                  }
-                  name="status"
-                  aria-label="Project status"
-                >
-                  <option className="text-[#c4c4c4]" value="active">
-                    Real Estate Seller
-                  </option>
-                  <option className="text-[#c4c4c4]" value="active">
-                    Active
-                  </option>
-                  <option className="text-[#c4c4c4]" value="paused">
-                    Paused
-                  </option>
-                  <option className="text-[#c4c4c4]" value="delayed">
-                    Delayed
-                  </option>
-                  <option className="text-[#c4c4c4]" value="canceled">
-                    Canceled
-                  </option>
-                </Select>
+                <Selection labels={"Select your title"} defaultOption={"Real Estate Seller"} />
               </div>
               <div>
-                <label
-                  for="text"
-                  className="block mb-1 text-[15px] font-[700] text-PurpleColor"
-                >
-                  Preferred Investment Type
-                </label>
-                <Select
-                  className={
-                    "bg-[#F3EEFF] border-[#F3EEFF] text-[#868686] font-[600] font-Urbanist text-[14px] w-[100%] h-12 px-4 rounded-[6px] outline-none  "
-                  }
-                  name="status"
-                  aria-label="Project status"
-                >
-                  <option className="text-[#c4c4c4]" value="active">
-                    Value-Add Property
-                  </option>
-                  <option className="text-[#c4c4c4]" value="active">
-                    Active
-                  </option>
-                  <option className="text-[#c4c4c4]" value="paused">
-                    Paused
-                  </option>
-                  <option className="text-[#c4c4c4]" value="delayed">
-                    Delayed
-                  </option>
-                  <option className="text-[#c4c4c4]" value="canceled">
-                    Canceled
-                  </option>
-                </Select>
+                <Selection labels={"Preferred Investment Type"} defaultOption={"Value-Add Property"} />
               </div>
 
               {/* Phone Number*/}
-              <CountrySelector />
+              <CountrySelector setPhone={setPhone} phone={phone} />
 
               <div>
-                <label
-                  for="email"
-                  className="block mb-1 text-[15px] font-[700] text-PurpleColor"
-                >
-                  Preferred CAP Rate
-                </label>
-                <input
-                  type="text"
-                  id="email"
-                  className="bg-[#F3EEFF] border-[#F3EEFF] text-[#1d1d1d] font-[600] font-Urbanist text-[14px] w-[100%] h-12 px-4 rounded-[6px] outline-none"
-                  placeholder="Enter Value in %"
-                />
+                <Inputs labels={"Preferred CAP Rate"} placeholder={"Enter Value in %"}></Inputs>
               </div>
 
               <div>
@@ -152,35 +80,7 @@ const AccountSetting = () => {
               </div>
               {/* Location  */}
               <div>
-                <label
-                  for="text"
-                  className="block mb-1 text-[15px] font-[700] text-PurpleColor"
-                >
-                  Experience Level
-                </label>
-                <Select
-                  className={
-                    "bg-[#F3EEFF] border-[#F3EEFF] text-[#868686] font-[600] font-Urbanist text-[14px] w-[100%] h-12 px-4 rounded-[6px] outline-none  "
-                  }
-                  name="status"
-                  aria-label="Project status"
-                >
-                  <option className="text-[#c4c4c4]" value="active">
-                    Intermediate
-                  </option>
-                  <option className="text-[#c4c4c4]" value="active">
-                    Active
-                  </option>
-                  <option className="text-[#c4c4c4]" value="paused">
-                    Paused
-                  </option>
-                  <option className="text-[#c4c4c4]" value="delayed">
-                    Delayed
-                  </option>
-                  <option className="text-[#c4c4c4]" value="canceled">
-                    Canceled
-                  </option>
-                </Select>
+                <Selection labels={"Experience Level"} defaultOption={"Intermediate"} />
               </div>
 
               {/* Message */}
@@ -201,14 +101,9 @@ const AccountSetting = () => {
                 ></Textarea>
               </div>
 
-              {/* Send Message Button */}
-              <div className="mt-1">
-                <button className="bg-PurpleColor font-[700] w-[100%] h-11 text-white font-Urbanist rounded-[6px]">
-                  Send Message
-                </button>
-              </div>
+
             </div>
-            <div className="w-[50%] flex flex-col gap-9  ">
+            <div className="sm:w-[50%] flex flex-col gap-9  ">
               <div>
                 {/* CHECK BOXS  */}
                 <label
@@ -217,7 +112,7 @@ const AccountSetting = () => {
                 >
                   Property Interests
                 </label>
-                <div className="flex gap-14">
+                <div className="flex gap-1 sm:gap-14">
                   <span className="flex flex-col gap-2.5 justify-center">
                     <Checkboxs labels={"Apartment"}></Checkboxs>
                     <Checkboxs labels={"Retail"}></Checkboxs>
@@ -283,7 +178,7 @@ const AccountSetting = () => {
                     min="0"
                     max="10"
                     value="5"
-                    class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700"
+                    class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer"
                   />
 
                   <div className="flex gap-2 items-center">
@@ -329,7 +224,7 @@ const AccountSetting = () => {
                 <div class="relative  w-[100%]">
                   <div class="absolute inset-y-0 start-0 flex items-center ps-4 pointer-events-none">
                     <svg
-                      class="w-4 h-4 text-[#444444] dark:text-gray-400"
+                      class="w-4 h-4 text-[#444444] "
                       aria-hidden="true"
                       xmlns="http://www.w3.org/2000/svg"
                       fill="none"
@@ -362,6 +257,12 @@ const AccountSetting = () => {
               </div>
             </div>
           </section>
+          {/* Send Message Button */}
+          <div className="mt-1 w-[50%] sm:w-[46%] px-2">
+            <button className="bg-PurpleColor font-[700] w-[100%] h-11 text-white font-Urbanist rounded-[6px]">
+              Send Message
+            </button>
+          </div>
         </form>
       </section>
     </>
