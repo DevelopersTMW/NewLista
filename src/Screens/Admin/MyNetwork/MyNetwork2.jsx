@@ -360,7 +360,7 @@ const MyNetwork2 = () => {
               <button className="bg-[#1E1E1E] text-white py-2.5 px-4 rounded-[7px] flex items-center gap-2 w-full">
                 <img className="w-5 h-5" src={SortIcon} alt="Sort" />
                 <span className="font-Urbanist font-medium text-[14px]">
-                 Filter By
+                  Filter By
                 </span>
               </button>
 
@@ -458,24 +458,26 @@ const MyNetwork2 = () => {
             </h1>
             <div className="flex flex-wrap gap-4 justify-center sm:justify-start">
               {users.map((user) => (
-                <AddToNetwork
-                  key={user.id}
-                  id={user.id}
-                  InvesImage={user.image}
-                  InvesUserName={user.name}
-                  InvesDesc={user.desc}
-                  location={user.location}
-                  propertyTypes={user.propertyTypes}
-                  memberSince={user.memberSince}
-                  email={user.email}
-                  phone={user.phone}
-                  showModal={showModal}
-                  setShowModal={setShowModal}
-                  onReject={handleReject}
-                />
+                <>
+                  <AddToNetwork
+                    key={user.id}
+                    id={user.id}
+                    InvesImage={user.image}
+                    InvesUserName={user.name}
+                    InvesDesc={user.desc}
+                    location={user.location}
+                    propertyTypes={user.propertyTypes}
+                    memberSince={user.memberSince}
+                    email={user.email}
+                    phone={user.phone}
+                    showModal={showModal}
+                    setShowModal={setShowModal}
+                    onReject={handleReject}
+                  />
+                  <ProfileModal id={user.id} onReject={handleReject} />
+                </>
               ))}
             </div>
-            <ProfileModal />
           </section>
         )}
 

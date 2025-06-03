@@ -33,33 +33,33 @@ const AboutUs = () => {
       <Navbar></Navbar>
       {/* About Us Start */}
       <section style={AboutBgImage} className="flex justify-center">
-        <div className="flex flex-col gap-10 px-16 md:px-20 py-28 2xl:w-[95%]">
-          <div className=" flex w-[50%] md:justify-end lg:justify-center">
+        <div className="flex flex-col md:flex-row gap-10 px-6 py-28 sm:px-14 sm:py-28 md:px-10 lg:px-20 md:py-28 2xl:w-[95%]">
+          <div className="hidden md:flex w-[50%] md:justify-center lg:justify-center">
             <img
-              className=" h-[320px] md:w-[300px] md:h-[380px] lg:w-[360px] lg:h-[410px] xl:w-[400px] xl:h-[440px] object-cover "
+              className=" h-[330px] w-[260px] md:w-[290px] md:h-[360px] lg:w-[360px] lg:h-[410px] xl:w-[400px] xl:h-[440px] object-cover rounded-[15px] "
               src={AboutUs1_2}
               alt=""
             />
             <img
-              className="w-[220px] h-[230px] md:w-[220px] md:h-[230px] lg:w-[250px] lg:h-[260px] xl:w-[280px] xl:h-[280px] border-solid border-[#161616] border-[5px] mt-48 md:mt-64 -ml-34 lg:-ml-38 xl:-ml-48"
+              className="w-[200px] h-[200px] md:w-[210px] md:h-[220px] lg:w-[250px] lg:h-[260px] xl:w-[280px] xl:h-[280px] border-solid border-[#161616] border-[5px] mt-48 md:mt-64 -ml-24 md:-ml-34 lg:-ml-38 xl:-ml-48 z-index layering	rounded-[15px]"
               src={AboutUs1_3}
               alt=""
             />
           </div>
-          <div className="w-[80%] md:w-[50%] flex flex-col justify-center">
+          <div className="w-[100%]  md:w-[50%] flex flex-col justify-center">
             {/* Heading  */}
             <div className="border-b-[1px] border-[#BBBBBB] border-solid pb-7">
-              <h1 class="font-Urbanist font-bold text-[#ffffff] text-[30px] md:text-[34px] lg:text-[37px] xl:text-[42px] 2xl:text-[46px]">
+              <h1 class="font-Urbanist font-bold text-[#ececec] text-[27px] sm:text-[30px] md:text-[33px] lg:text-[37px] xl:text-[42px] 2xl:text-[46px]">
                 About NewLista
               </h1>
-              <p class="mx-auto max-w-3xl  font-semibold text-pretty text-white font-Urbanist text-[13.5px] md:text-[14px] lg:text-[15px] xl:text-[17px]  2xl:text-[19px]">
+              <p class="mx-auto max-w-3xl  font-semibold text-pretty text-[#ececec] font-Urbanist text-[13px] sm:text-[13.5px] md:text-[14px] lg:text-[15px] xl:text-[17px]  2xl:text-[19px]">
                 Discover the story behind NewLista, where a passion for real
                 estate meets innovation and integrity.
               </p>
             </div>
             {/* Paragraph  */}
             <div>
-              <p class="mx-auto mt-6 max-w-3xl font-medium text-pretty text-[#ffff] sm:text-md/8 font-Urbanist text-[13.5px] md:text-[14px] lg:text-[15px] xl:text-[17px] 2xl:text-[19px]">
+              <p class="mx-auto mt-6 max-w-3xl font-medium text-pretty text-[#ececec] sm:text-md/8 text-[13px]  font-Urbanist sm:text-[13.5px] md:text-[14px] lg:text-[15px] xl:text-[17px] 2xl:text-[19px]">
                 {" "}
                 At NewLista, we're redefining how real estate investors connect,
                 collaborate, and close deals. Our platform offers seamless
@@ -101,30 +101,30 @@ const AboutUs = () => {
       {/* About Us End */}
 
       {/* SECTION 1 START  */}
-      <section className="flex justify-center pt-20 pb-10">
-        <div className="bg-[#F1ECFF] flex flex-col justify-center  w-[87%]   gap-8 rounded-[15px] px-7 py-10 lg:py-14 md:w-[90%] lg:w-[88%] xl:px-10 xl:w-[84%] 2xl:w-[72%]">
+      <section className="flex justify-center py-16 md:pt-20 md:pb-10">
+        <div className="bg-[#F1ECFF] flex flex-col justify-center w-[90%] sm:w-[87%] gap-3  md:gap-8 rounded-[15px] px-5 sm:px-7 py-5 md:py-10 lg:py-14 md:w-[90%] lg:w-[88%] xl:px-10 xl:w-[84%] 2xl:w-[72%]">
           <div className="flex flex-col  text-center">
-            <h1 className="text-[30px] font-[700] font-Urbanist  text-[#1E1E1E]  md:text-[37px] xl:text-[42px] leading-[48px] 2xl:text-[44px]">
+            <h1 className="text-[27px] font-[700] font-Urbanist  text-[#1E1E1E]  md:text-[37px] xl:text-[42px] leading-[48px] 2xl:text-[44px]">
               Our Services
             </h1>
           </div>
           <div className="flex flex-col flex-wrap">
             {/* CARD 1 PART  */}
             <div className="flex flex-wrap lg:flex-nowrap gap-7">
-              <div className="bg-white w-[47%] lg:w-[33%] px-5 py-5 rounded-[8px] flex justify-center flex-col lg:py-7 xl:py-5  gap-3 2xl:px-6 2xl:py-8">
+              <div className="bg-white sm:w-[47%] lg:w-[33%] px-5 py-5 rounded-[8px] flex justify-center flex-col lg:py-7 xl:py-5  gap-3 2xl:px-6 2xl:py-8">
                 <h1 className="font-semibold font-Urbanist text-[17px] md:text-[19px] xl:text-[21px] 2xl:text-[24.5px]">
                   🏢 Off-Market Listings
                 </h1>
-                <p className="text-[#222222] font-Inter text-[13.5px] md:text-[14px] lg:text-[13.5px] xl:text-[15px] 2xl:text-[16px]">
+                <p className="text-[#222222] font-Inter text-[12.5px] md:text-[14px] lg:text-[13.5px] xl:text-[15px] 2xl:text-[16px]">
                   Gain access to exclusive property listings not available on
                   public platforms.
                 </p>
               </div>
-              <div className="bg-white px-5 w-[47%] lg:w-[33%] py-5 rounded-[8px]  flex justify-center flex-col  gap-3 2xl:px-6 2xl:py-8">
+              <div className="bg-white px-5 sm:w-[47%] lg:w-[33%] py-5 rounded-[8px]  flex justify-center flex-col  gap-3 2xl:px-6 2xl:py-8">
                 <h1 className="font-semibold font-Urbanist text-[17px] md:text-[19px] xl:text-[21px] 2xl:text-[24.5px]">
                   🔗 Real Estate Networking
                 </h1>
-                <p className="text-[#222222] font-Inter text-[13.5px] md:text-[14px] lg:text-[13.5px] xl:text-[15px] 2xl:text-[16px]">
+                <p className="text-[#222222] font-Inter text-[12.5px] md:text-[14px] lg:text-[13.5px] xl:text-[15px] 2xl:text-[16px]">
                   Connect with fellow investors to build valuable relationships
                   and explore collaborative opportunities.
                 </p>
@@ -133,7 +133,7 @@ const AboutUs = () => {
                 <h1 className="font-semibold font-Urbanist text-[17px] md:text-[19px] xl:text-[21px] 2xl:text-[24.5px]">
                   📊 Investment Insights
                 </h1>
-                <p className="text-[#222222] font-Inter text-[13.5px] md:text-[14px] lg:text-[13.5px] xl:text-[15px] 2xl:text-[16px]">
+                <p className="text-[#222222] font-Inter text-[12.5px] md:text-[14px] lg:text-[13.5px] xl:text-[15px] 2xl:text-[16px]">
                   Stay informed with the latest market trends and data to make
                   strategic investment decisions.
                 </p>
@@ -145,28 +145,28 @@ const AboutUs = () => {
       {/* SECTION 1 END  */}
 
       {/* SECTION 2 START  */}
-      <section className="flex justify-center  py-16 ">
+      <section className="flex justify-center py-0 md:py-16 ">
         <div className="flex flex-col xl:items-center justify-center gap-7 w-[87%] md:w-[90%] lg:w-[88%]  xl:w-[100%] 2xl:w-[84%]">
           <div className="flex flex-col  xl:w-[85%] ">
-            <h1 className="text-[33px] leading-[39px] font-[700] font-Urbanist  text-[#1E1E1E] md:text-[37px] sm:leading-[48px]">
+            <h1 className="text-[26px] sm:text-[32px] leading-[39px] font-[700] font-Urbanist  text-[#1E1E1E] md:text-[37px] sm:leading-[48px]">
               How Can We Help You?
             </h1>
           </div>
           <div className="flex flex-wrap lg:flex-nowrap gap-8 xl:w-[85%]">
             {/* CARD 1  */}
-            <div className="w-[47%] lg:w-[33%] bg-black rounded-[10px] px-5.5 py-8 flex flex-col gap-4 min-h-[190px] justify-center">
+            <div className="sm:w-[47%] lg:w-[33%] bg-black rounded-[10px] px-5.5 py-8 flex flex-col gap-4 min-h-[190px] justify-center">
               <div>
                 <img
-                  className="w-[20%] lg:w-[23%] xl:w-[21.5%]"
+                  className="w-[20%] sm:w-[24%] md:w-[20%] lg:w-[23%] xl:w-[21.5%]"
                   src={AboutIcon1_1}
                   alt=""
                 />
               </div>
               <div className="flex flex-col gap-3">
-                <h1 className="text-textColor font-Inter font-semibold text-[20px] xl:text-[23px] leading-[25px]">
+                <h1 className="text-textColor font-Inter font-semibold text-[18px] md:text-[20px] xl:text-[23px] leading-[25px]">
                   Tailored Investment Support
                 </h1>
-                <p className="text-textColor font-Inter text-[13px] md:text-[13.5px] xl:text-[16px]">
+                <p className="text-textColor font-Inter text-[12px] md:text-[13.5px] xl:text-[16px]">
                   Whether you're a first-time investor or an experienced
                   professional, we provide insights and resources to help you
                   find and secure the best opportunities.
@@ -174,19 +174,19 @@ const AboutUs = () => {
               </div>
             </div>
             {/* CARD 2 */}
-            <div className="w-[47%] lg:w-[33%] bg-black rounded-[10px] px-5.5 py-8 flex flex-col gap-4 min-h-[190px] justify-center">
+            <div className="sm:w-[47%] lg:w-[33%] bg-black rounded-[10px] px-5.5 py-8 flex flex-col gap-4 min-h-[190px] justify-center">
               <div>
                 <img
-                  className="w-[22%] lg:w-[23%] xl:w-[22.5%]"
+                  className="w-[20%] sm:w-[24%] md:w-[22%] lg:w-[23%] xl:w-[22.5%]"
                   src={AboutIcon1_2}
                   alt=""
                 />
               </div>
               <div className="flex flex-col gap-3">
-                <h1 className="text-textColor font-Inter font-semibold text-[20px] xl:text-[23px]  leading-[22px]">
+                <h1 className="text-textColor font-Inter font-semibold text-[18px] md:text-[20px] xl:text-[23px]  leading-[22px]">
                   Seamless Connections
                 </h1>
-                <p className="text-textColor font-Inter text-[13px] md:text-[13.5px] xl:text-[16px]">
+                <p className="text-textColor font-Inter text-[12px] md:text-[13.5px] xl:text-[16px]">
                   Build meaningful relationships with real estate professionals,
                   buyers, and sellers through our intuitive networking tools
                   designed to foster collaboration.
@@ -197,16 +197,16 @@ const AboutUs = () => {
             <div className="w-[98%] lg:w-[33%] bg-black rounded-[10px] px-5.5 py-8 flex flex-col gap-4 min-h-[190px] justify-center">
               <div className="w-[100px]">
                 <img
-                  className=" lg:w-[60%] xl:w-[70%]"
+                  className="w-[55%] sm:w-[60%] md:w-[60%] xl:w-[70%]"
                   src={AboutIcon1_3}
                   alt=""
                 />
               </div>
               <div className="flex flex-col gap-3">
-                <h1 className="text-textColor font-Inter font-semibold text-[20px] xl:text-[23px]  leading-[29px]">
+                <h1 className="text-textColor font-Inter font-semibold text-[18px] md:text-[20px] xl:text-[23px]  sm:leading-[29px] leading-[24px] ">
                   Efficient Commercial Transactions
                 </h1>
-                <p className="text-textColor font-Inter text-[13px] md:text-[13.5px] xl:text-[16px]">
+                <p className="text-textColor font-Inter text-[12px] md:text-[13.5px] xl:text-[16px]">
                   From listing to closing, execute your commercial real estate
                   deals with precision on our streamlined platform. Designed
                   exclusively for commercial professionals.
@@ -219,15 +219,15 @@ const AboutUs = () => {
       {/* SECTION 2 END  */}
 
       {/* SECTION 3 START  */}
-      <section className="flex justify-center">
+      <section className="flex justify-center py-10 md:py-0">
         <div className="flex flex-col justify-center items-center pt-3  gap-10 px-6 sm:gap-7 sm:py-5 pb-16 sm:px-8 md:px-0 lg:py-16 w-[95%] md:w-[91%] xl:w-[100%] 2xl:w-[85%]">
           {/* CONTENT SECTION  */}
           <div className="lg:w-[87%] xl:w-[84%]">
-            <h1 className="text-[33px] leading-[39px] font-[700] font-Urbanist  text-[#1E1E1E] md:text-[37px] sm:leading-[48px]">
+            <h1 className="text-[27px] sm:text-[32px] leading-[39px] font-[700] font-Urbanist  text-[#1E1E1E] md:text-[37px] sm:leading-[48px]">
               What Our Clients Say
             </h1>
 
-            <p className="text-[13px] font-Inter font-medium text-pretty text-Paracolor mt-2  md:text-[14px]/5.5  ">
+            <p className="text-[12.5px] sm:text-[13px] font-Inter font-medium text-pretty text-Paracolor mt-2  md:text-[14px]/5.5  ">
               Read the success stories and heartfelt testimonials from our
               valued clients. Discover why they chose NewLista for their real
               estate needs

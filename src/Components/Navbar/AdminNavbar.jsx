@@ -57,9 +57,8 @@ function AdminNavbar() {
             {/* Go Home (Desktop Only) */}
             <Link to="/" className="hidden sm:flex">
               <button className="flex items-center gap-2 px-4 py-2 bg-[#EBEBEB] text-[#666666] rounded-full">
-                <img className="h-3.5 w-3.5" src={HomeIcon} alt="Home" />
-                <span className="font-Urbanist font-medium text-[#222222] text-sm">
-                  Go Home
+                <span className="font-Urbanist font-[600] text-[#222222] text-sm">
+                  Return to dashboard
                 </span>
               </button>
             </Link>

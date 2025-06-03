@@ -8,6 +8,8 @@ const ProfileModal = ({
   InvesImage,
   InvesUserName,
   Invessubtitle,
+  onReject,
+  id
 }) => {
   if (!isOpen) return null;
 
@@ -104,10 +106,22 @@ const ProfileModal = ({
               </div>
             </div>
             {/* Message Button */}
-            <div className="mt-7">
+            <div className="mt-7 flex gap-2">
               <button className="font-Inter text-[#fff] font-[500] text-[15px] px-6 py-2 rounded-full border-2 border-PurpleColor bg-PurpleColor hover:opacity-90 transition">
                 Message
               </button>
+              <button
+              onClick={() => onReject(id)}
+              className="font-Inter cursor-pointer text-[#fff] font-semibold text-[14px] px-6 py-2 sm:text-[12.5px] sm:px-2.5 sm:py-1 lg:px-3.5 rounded-full border-solid border-[2px] border-[#000] bg-[#000]"
+            >
+              Reject
+            </button>
+             <button
+            //   onClick={() => onReject(id)}
+              className="font-Inter cursor-pointer text-[#fff] font-semibold text-[14px] px-6 py-2 sm:text-[12.5px] sm:px-2.5 sm:py-1 lg:px-3.5 rounded-full border-solid border-[2px] border-[#F61418] bg-[#F61418]"
+            >
+              Block
+            </button>
             </div>
           </div>
         </DialogPanel>
