@@ -12,8 +12,8 @@ const ProfileModal = ({ isOpen, onClose }) => {
   return (
     <Dialog open={isOpen} onClose={onClose} className="relative z-50">
       <DialogBackdrop className="fixed inset-0 bg-[#000000d7] bg-opacity-50" />
-      <div className="fixed inset-0 z-50 flex items-center justify-center p-4 overflow-y-auto">
-        <DialogPanel className="bg-white mt-[35%] md:mt-[30%] lg:mt-[20%] xl:mt-[20%] 2xl:mt-[10%] rounded-lg shadow-xl max-w-lg w-full relative">
+      <div className="fixed inset-0 z-50 flex items-start justify-center min-[380px]:p-4 min-[380px]:my-[0.5%]  overflow-y-auto  min-[380px]:rounded-lg ">
+        <DialogPanel className="bg-white shadow-xl sm:max-w-md  md:max-w-lg overflow-y-auto 2xl:max-w-xl w-full relative  min-[380px]:rounded-lg ">
           {/* Close Button */}
           <button
             onClick={onClose}
