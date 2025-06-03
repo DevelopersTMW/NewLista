@@ -26,7 +26,7 @@ const AdminSidebar = ({ screen }) => {
         <button
           type="button"
           onClick={toggleDrawer}
-          className="absolute inline-flex w-max top-9.5 sm:top-8.5 left-2 sm:ml-4 items-center p-2 mt-2 ms-3 text-sm text-gray-500 rounded-lg min-[890px]:hidden sm:hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200"
+          className="absolute inline-flex w-max top-9 sm:top-8.5 left-2 sm:ml-4 items-center p-2 mt-2 ms-3 text-sm text-gray-500 rounded-lg min-[890px]:hidden sm:hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200"
         >
           <span className="sr-only">Open sidebar</span>
           <svg

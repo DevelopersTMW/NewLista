@@ -17,7 +17,7 @@ const ContactUs = () => {
     <>
       <Navbar></Navbar>
       {/* CONTACT SECTION START   */}
-      <section className=" relative px-7 sm:px-16 md:px-20 gap-28 py-20 sm:py-24 md:py-32 overflow-x-hidden flex justify-center items-center  ">
+      <section className=" relative px-6 sm:px-16 md:px-20 gap-28 py-20 sm:py-24 md:py-32 overflow-x-hidden flex justify-center items-center  ">
         {/* SHAPE  */}
         <div className="absolute -z-10 -end-30 overflow -top-10">
           <img className="w-[80%]" src={ContactImage1_2} alt="" />
@@ -40,51 +40,27 @@ const ContactUs = () => {
             {/* CONTACT FORM */}
             <form className="flex flex-col gap-4">
               {/* Name  */}
-              <div className="flex gap-5 w-[100%]">
-                <span className="w-[50%]">
-                  <label
-                    for="email"
-                    className="block mb-1 text-[15px] font-[700] text-PurpleColor"
-                  >
-                    First Name
-                  </label>
-                  <input
-                    type="text"
-                    id="email"
-                    className="bg-[#F3EEFF] border-[#F3EEFF] text-[#1d1d1d] font-[600] font-Urbanist text-[14px] w-[100%] h-12 px-4 rounded-[6px] outline-none"
-                    placeholder="Enter your first name"
-                  />
+              <div className="flex flex-wrap gap-5 w-[100%]">
+                <span className="sm:w-[50%] w-full">
+                   <Inputs
+                    labels={"First Name"}
+                    placeholder={"Enter your first name"}
+                  ></Inputs>
                 </span>
-                <span className="w-[50%]">
-                  <label
-                    for="email"
-                    className="block mb-1 text-[15px] font-[700] text-PurpleColor"
-                  >
-                    Last Name
-                  </label>
-                  <input
-                    type="text"
-                    id="email"
-                    className="bg-[#F3EEFF] border-[#F3EEFF] text-[#1d1d1d] font-[600] font-Urbanist text-[14px] w-[100%] h-12 px-4 rounded-[6px] outline-none"
-                    placeholder="Enter your last name"
-                  />
+                <span className=" sm:w-[50%] w-full">
+                  <Inputs
+                    labels={"Last Name"}
+                    placeholder={"Enter your last name"}
+                  ></Inputs>
                 </span>
               </div>
 
               {/* Email  */}
               <div>
-                <label
-                  for="email"
-                  className="block mb-1 text-[15px] font-[700] text-PurpleColor"
-                >
-                  Email Address
-                </label>
-                <input
-                  type="email"
-                  id="email"
-                  className="bg-[#F3EEFF] border-[#F3EEFF] text-[#1d1d1d] font-[600] font-Urbanist text-[14px] w-[100%] h-12 px-4 rounded-[6px] outline-none"
-                  placeholder="Enter a valid email (e.g., you@email.com)"
-                />
+                <Inputs
+                  labels={"Email Address"}
+                  placeholder={"Enter a valid email (e.g., you@email.com)"}
+                ></Inputs>
               </div>
 
               {/* Phone Number*/}
@@ -117,10 +93,8 @@ const ContactUs = () => {
 
               {/* Send Message Button */}
               <div className="mt-1">
-                <button className=" hover-btn hover-btn-purple font-[700] w-[100%] h-11 text-white font-Urbanist rounded-[6px]">
-                  <span>
-                    Send Message
-                  </span>
+                <button className="text-[15px] sm:text-[16px] hover-btn hover-btn-purple font-[700] w-[100%] h-11 text-white font-Urbanist rounded-[6px]">
+                  <span>Send Message</span>
                 </button>
               </div>
             </form>
