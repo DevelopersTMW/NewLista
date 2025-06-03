@@ -39,7 +39,7 @@ const initialNetworkUsers = [
     email: "janesmith@gmail.com",
     phone: "(312) 123 456",
   },
-   {
+  {
     id: 3,
     image: Testimonials1,
     name: "Jane Smith",
@@ -59,7 +59,7 @@ const BackgroundImages = {
 
 const MyNetwork2 = () => {
   const [showMobileFilter, setShowMobileFilter] = useState(false);
-
+  const [showModal, setShowModal] = useState(false);
   const [users, setUsers] = useState(initialNetworkUsers);
 
   const handleReject = (id) => {
@@ -68,8 +68,7 @@ const MyNetwork2 = () => {
     setUsers((prev) => prev.filter((user) => user.id !== id));
   };
 
-
-   const [showModal, setShowModal] = useState(false);
+  const [activeTab, setActiveTab] = useState("myNetwork");
   return (
     <>
       {/* BANNER START  */}
@@ -98,16 +97,7 @@ const MyNetwork2 = () => {
             alt=""
           />
         </div>
-        <div className="p-4">
-      <button
-        onClick={() => setShowModal(true)}
-        className="bg-blue-600 text-white px-4 py-2 rounded"
-      >
-        Show Profile
-      </button>
 
-      <ProfileModal isOpen={showModal} onClose={() => setShowModal(false)} />
-    </div>
         <div className="flex items-center gap-2 flex-col sm:items-start sm:gap-2">
           <h4 className="font-Inter font-bold text-[35px] sm:text-[43px]">
             John Doe
@@ -406,62 +396,101 @@ const MyNetwork2 = () => {
       </section>
       {/* SECTION 1 END  */}
 
-      {/* SECTION 2 MY NETWORK  START*/}
-      <section className="mt-10 flex flex-col gap-7 sm:gap-10 px- sm:px-0 items-center sm:items-start">
-        <div>
-          <h1 className="text-[26px] font-Urbanist text-[#f5f5f5] bg-PurpleColor w-max px-5 rounded-[7px] sm:text-[30px] font-[700]">
-            My Networks
-          </h1>
-        </div>
-        <div className="flex flex-wrap justify-center sm:justify-start gap-4 ">
-          <MyNetworkCard
-            InvesImage={Testimonials1}
-            InvesUserName={"John Doe"}
-            InvesDesc={"Real Estate Investor"}
-          ></MyNetworkCard>
-          <MyNetworkCard
-            InvesImage={Testimonials1}
-            InvesUserName={"John Doe"}
-            InvesDesc={"Real Estate Investor"}
-          ></MyNetworkCard>
-          <MyNetworkCard
-            InvesImage={Testimonials1}
-            InvesUserName={"John Doe"}
-            InvesDesc={"Real Estate Investor"}
-          ></MyNetworkCard>
-        </div>
-      </section>
-      {/* SECTION 2 MY NETWORK  END*/}
-      {/* SECTION 2 ADD TO NETWORK  START*/}
-      <section className="mt-10 flex flex-col gap-7 sm:gap-10 px- sm:px-0 items-center sm:items-start">
-        <div>
-          <h1 className="text-[26px] font-Urbanist text-[#f5f5f5] bg-PurpleColor w-max px-5 rounded-[7px] sm:text-[30px] font-[700]">
-            ADD TO NETWORK
-          </h1>
-        </div>
-        <div className=" flex flex-wrap gap-4 justify-center sm:justify-start">
-          {users.map((user) => (
-            <AddToNetwork
-              key={user.id}
-              id={user.id}
-              InvesImage={user.image}
-              InvesUserName={user.name}
-              InvesDesc={user.desc}
-              location={user.location}
-              propertyTypes={user.propertyTypes}
-              memberSince={user.memberSince}
-              email={user.email}
-              phone={user.phone}
-              onReject={handleReject}
-            />
-          ))}
+      <div className="w-full">
+        {/* Tabs Header */}
+        <div className="flex flex-wrap justify-between gap-2 sm:gap-4 mt-11 mb-6 bg-gray-200 rounded-[10px] w-full">
+          <button
+            onClick={() => setActiveTab("myNetwork")}
+            className={`flex-1 min-w-[100px] text-[15px] sm:text-[18px] font-Urbanist py-2.5 md:py-2 px-2.5 md:px-4 rounded-[7px] font-semibold text-center transition duration-200 cursor-pointer ${
+              activeTab === "myNetwork"
+                ? "bg-PurpleColor text-white"
+                : "bg-gray-200 text-gray-700"
+            }`}
+          >
+            My Network
+          </button>
+          <button
+            onClick={() => setActiveTab("addToNetwork")}
+            className={`flex-1 min-w-[100px] text-[15px] sm:text-[18px] font-Urbanist px-2.5 md:px-4 rounded-[7px] font-semibold text-center transition duration-200 cursor-pointer ${
+              activeTab === "addToNetwork"
+                ? "bg-PurpleColor text-white"
+                : "bg-gray-200 text-gray-700"
+            }`}
+          >
+            Discover
+          </button>
+          <button
+            onClick={() => setActiveTab("pending")}
+            className={`flex-1 min-w-[100px] text-[15px] sm:text-[18px] font-Urbanist px-2.5 md:px-4 rounded-[7px] font-semibold text-center transition duration-200 cursor-pointer ${
+              activeTab === "pending"
+                ? "bg-PurpleColor text-white"
+                : "bg-gray-200 text-gray-700"
+            }`}
+          >
+            Pending
+          </button>
         </div>
 
-        <div>
-          <ProfileModal/>
-        </div>
-      </section>
-      {/* SECTION 2 ADD TO NETWORK  END*/}
+        {/* Tabs Content */}
+        {activeTab === "myNetwork" && (
+          <section className="flex flex-col gap-7 sm:gap-10 items-center sm:items-start">
+            <h1 className="text-[26px] mt-5 font-Urbanist text-[#f5f5f5] bg-PurpleColor w-max px-5 rounded-[7px] sm:text-[30px] font-[700]">
+              My Network
+            </h1>
+            <div className="flex flex-wrap gap-4 justify-center sm:justify-start">
+              {users.map((user) => (
+                <MyNetworkCard
+                  InvesImage={user.image}
+                  InvesUserName={user.name}
+                  InvesDesc={user.desc}
+                  showModal={showModal}
+                  setShowModal={setShowModal}
+                />
+              ))}
+            </div>
+          </section>
+        )}
+
+        {activeTab === "addToNetwork" && (
+          <section className="flex flex-col gap-7 sm:gap-10 items-center sm:items-start">
+            <h1 className="text-[26px] mt-5 font-Urbanist text-[#f5f5f5] bg-PurpleColor w-max px-5 rounded-[7px] sm:text-[30px] font-[700]">
+              Add To Network
+            </h1>
+            <div className="flex flex-wrap gap-4 justify-center sm:justify-start">
+              {users.map((user) => (
+                <AddToNetwork
+                  key={user.id}
+                  id={user.id}
+                  InvesImage={user.image}
+                  InvesUserName={user.name}
+                  InvesDesc={user.desc}
+                  location={user.location}
+                  propertyTypes={user.propertyTypes}
+                  memberSince={user.memberSince}
+                  email={user.email}
+                  phone={user.phone}
+                  showModal={showModal}
+                  setShowModal={setShowModal}
+                  onReject={handleReject}
+                />
+              ))}
+            </div>
+            <ProfileModal />
+          </section>
+        )}
+
+        {activeTab === "pending" && (
+          <section className="flex flex-col gap-7 sm:gap-10 items-center sm:items-start">
+            <h1 className="text-[26px] mt-5 font-Urbanist text-[#f5f5f5] bg-PurpleColor w-max px-5 rounded-[7px] sm:text-[30px] font-[700]">
+              Pending Requests
+            </h1>
+            <div className="flex flex-wrap gap-4 justify-center sm:justify-start">
+              {/* Replace with your pending request components */}
+              <div className="text-white">No pending requests.</div>
+            </div>
+          </section>
+        )}
+      </div>
     </>
   );
 };

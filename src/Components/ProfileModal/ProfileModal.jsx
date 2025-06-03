@@ -1,12 +1,14 @@
 import React from "react";
-import {
-  Dialog,
-  DialogBackdrop,
-  DialogPanel,
-} from "@headlessui/react";
+import { Dialog, DialogBackdrop, DialogPanel } from "@headlessui/react";
 import { Calendar, DollarSign, MapPin, Phone } from "lucide-react";
 
-const ProfileModal = ({ isOpen, onClose }) => {
+const ProfileModal = ({
+  isOpen,
+  onClose,
+  InvesImage,
+  InvesUserName,
+  Invessubtitle,
+}) => {
   if (!isOpen) return null;
 
   return (
@@ -24,26 +26,34 @@ const ProfileModal = ({ isOpen, onClose }) => {
 
           {/* Header Image Area */}
           <div className="bg-gray-100 h-36 flex justify-center items-center relative rounded-t-[10px]">
-            <div className="absolute left-6 bottom-[-40px] w-24 h-24 bg-gray-300 rounded-full border-4 border-white shadow-md"></div>
+            <div className="absolute left-6 bottom-[-40px] w-[105px] h-[105px] bg-gray-300 rounded-full border-4 border-PurpleColor shadow-md">
+              <img
+                className="rounded-full h-full object-cover"
+                src={InvesImage}
+                alt=""
+              />
+            </div>
             <div className="text-gray-400">📷</div>
           </div>
 
           {/* Content */}
-          <div className="px-6 pt-16 pb-6"> {/* increased top padding here */}
+          <div className="px-6 pt-16 pb-6">
+            {" "}
+            {/* increased top padding here */}
             {/* Heading */}
             <h1 className="font-Urbanist text-[23px] mb-3 font-semibold">
               Profile Details
             </h1>
-
             {/* Basic Info */}
-            <h2 className="text-2xl font-bold font-Urbanist">Sarah Johnson</h2>
+            <h2 className="text-2xl font-bold font-Urbanist">
+              {InvesUserName}
+            </h2>
             <p className="text-gray-600 font-Urbanist font-[500]">
-              Senior Investment Advisor
+              {Invessubtitle}
             </p>
             <p className="text-sm text-gray-500 font-Urbanist font-[500]">
               Johnson Real Estate Group
             </p>
-
             {/* Info Grid */}
             <div className="mt-4 space-y-2 text-sm text-gray-600">
               <div className="flex items-center gap-2">
@@ -71,7 +81,6 @@ const ProfileModal = ({ isOpen, onClose }) => {
                 </span>
               </div>
             </div>
-
             {/* About */}
             <div className="mt-4 pt-4 border-t border-[#dfdfdf]">
               <h3 className="text-[20px] font-bold font-Urbanist">About Us</h3>
@@ -80,7 +89,6 @@ const ProfileModal = ({ isOpen, onClose }) => {
                 properties and multi-family residential units.
               </p>
             </div>
-
             {/* Property Interests */}
             <div>
               <h3 className="text-[18px] font-bold mt-3 font-Urbanist">
@@ -95,7 +103,6 @@ const ProfileModal = ({ isOpen, onClose }) => {
                 </span>
               </div>
             </div>
-
             {/* Message Button */}
             <div className="mt-7">
               <button className="font-Inter text-[#fff] font-[500] text-[15px] px-6 py-2 rounded-full border-2 border-PurpleColor bg-PurpleColor hover:opacity-90 transition">

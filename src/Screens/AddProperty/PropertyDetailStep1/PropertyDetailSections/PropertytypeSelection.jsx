@@ -7,15 +7,12 @@ import RadioButton from "../../../../Components/InputFields/RadioButton";
 
 const propertyTypes = [
   "Church",
-  "Condominium",
   "Gas Station",
   "Hotel",
   "Industrial Park",
   "Medical Building",
   "Mixed Use",
-  "Mobile Home Park",
   "Motel",
-  "Multifamily",
   "Office Building",
   "Recreation Center",
   "Retail Center",
@@ -25,7 +22,6 @@ const propertyTypes = [
   "Shopping Center",
   "Single Tenant Retail Building",
   "Storage Facility",
-  "Townhomes",
   "Vacant Land",
   "Warehouse",
   "Other"

@@ -6,8 +6,10 @@ import CallIcon from "../../../assets/CallIcon.png";
 import InvestorIcon1 from "../../../assets/InvestorIcon1.png";
 import InvestorIcon2 from "../../../assets/InvestorIcon2.png";
 import InvestorIcon3 from "../../../assets/InvestorIcon3.png";
+import ProfileModal from "../../ProfileModal/ProfileModal";
 
-const AddToNetwork = ({ id,
+const AddToNetwork = ({
+  id,
   InvesImage,
   InvesUserName,
   InvesDesc,
@@ -16,12 +18,25 @@ const AddToNetwork = ({ id,
   memberSince,
   email,
   phone,
-  onReject, }) => {
+  onReject,
+  setShowModal,
+  showModal
+}) => {
   return (
     <>
-      <div className="max-[400px]:w-[280px]  w-[305px] border-[1px] border-solid border-[#BBBBBB] px-7 py-7 rounded-[8px] sm:w-[300px] md:w-[315px]  lg:w-[310px] xl:w-[304px] 2xl:w-[310px]">
+      <div className="max-[400px]:w-[280px]  w-[305px] border-[1px] border-solid border-[#BBBBBB] px-7 py-7 rounded-[8px] sm:w-[290px] md:w-[280px]  lg:w-[300px] xl:w-[290px] 2xl:w-[310px]">
         {/* IMAGES AND USERNAME  */}
-        <div className="flex justify-start items-center gap-3 border-b-[1px] border-solid border-Paracolor pb-7">
+        <div
+          onClick={() => setShowModal(true)}
+          className="flex justify-start items-center gap-3 border-b-[1px] border-solid border-Paracolor pb-7"
+        >
+          <ProfileModal
+            InvesImage={InvesImage}
+            InvesUserName={InvesUserName}
+            Invessubtitle={InvesDesc}
+            isOpen={showModal}
+            onClose={() => setShowModal(false)}
+          />
           <span>
             <img
               className="w-[60px] h-[60px] object-cover rounded-full"
