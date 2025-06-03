@@ -50,9 +50,9 @@ const AddToNetwork = ({InvesImage , InvesUserName , InvesDesc}) => {
             </li>
           </ul>
           {/* BUTTONS  */}
-          <div className="flex  gap-3 pt-5">
-            <button className="font-Inter text-[#fff] font-semibold text-[14px] sm:text-[12.5px] sm:px-2.5 sm:py-1.5 px-3.5 py-1.5 lg:px-3.5 lg:py-2 rounded-full border-solid border-[2px] border-[#64AAE9] bg-[#64AAE9]">Add to Network</button>
-            <button className="font-Inter text-[#fff] font-semibold text-[14px] px-3.5 py-1.5 sm:text-[12.5px] sm:px-2.5 sm:py-1 lg:px-3.5 rounded-full border-solid border-[2px] border-[#F61418] bg-[#F61418]">Block User</button>
+          <div className="flex gap-1 sm:gap-3 pt-5">
+            <button className="font-Inter text-[#fff] font-semibold text-[12px] sm:text-[12.5px] sm:px-2.5 sm:py-1.5 px-2.5 py-1.5 lg:px-3.5 lg:py-2 rounded-full border-solid border-[2px] border-[#64AAE9] bg-[#64AAE9]">Add to Network</button>
+            <button className="font-Inter text-[#fff] font-semibold text-[12px] px-2 py-1.5 sm:text-[12.5px] sm:px-2.5 sm:py-1 lg:px-3.5 rounded-full border-solid border-[2px] border-[#F61418] bg-[#F61418]">Block User</button>
           </div>
         </div>
       </div>

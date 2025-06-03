@@ -26,9 +26,9 @@ const CountrySelector = ({setPhone , phone}) => {
         disableDropdown={false}
         disableCountryCode={false}
         placeholder="Enter Your Phone Number"
-        containerClass="w-full !flex !justify-between !gap-10"
-        inputClass="!bg-[#F3EEFF] !text-[#1d1d1d] !font-[600] !font-Urbanist !text-[14px] rounded-[6px] outline-none !w-[100%] !ml-24 !h-12 !placeholder:text-black !placeholder:text-[13px]  !rounded-md !pl-4 !border !border-gray-300 focus:!outline-none focus:!ring-none focus:!ring-none border-none !bg-[#F3EEFF]"
-        buttonClass="!bg-[#F3EEFF] !w-[14%] !rounded-[8px] border !hover:bg-[#F3EEFF] !border-[#F3EEFF] !mr-10"
+        containerClass="w-full !flex !justify-between sm:!gap-10 "
+        inputClass="!bg-[#F3EEFF] !text-[#1d1d1d] !font-[600] !font-Urbanist !text-[14px] rounded-[6px] outline-none !w-[100%] !ml-20 sm:!ml-24 !h-12 !placeholder:text-black !placeholder:text-[13px]  !rounded-md !pl-4 !border !border-gray-300 focus:!outline-none focus:!ring-none focus:!ring-none border-none !bg-[#F3EEFF]"
+        buttonClass="!bg-[#F3EEFF] max-[450px]:!w-[23%] !w-[13%] sm:!w-[14%] xl:!w-[10%] md:!w-[10%] lg:!w-[14%] !rounded-[8px] border !hover:bg-[#F3EEFF] !border-[#F3EEFF] !mr-10"
       />
       <style>
         {`

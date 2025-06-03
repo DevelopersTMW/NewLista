@@ -32,7 +32,7 @@ const MyNetwork2 = () => {
           className="relative flex items-center justify-center overflow-hidden rounded-[10px]"
         >
           <img className="absolute -top-[40%]  w-[100%]" src={fade} alt="" />
-          <h1 className="font-Inter font-bold text-[40px]  sm:text-[43px] text-white  text-center py-16 relative ">
+          <h1 className="font-Inter font-bold text-[35px]  sm:text-[43px] text-white  text-center py-16 relative ">
             My Networks
           </h1>
           <button className="absolute z-10 right-5 top-4 h-6 w-6 ">
@@ -44,16 +44,16 @@ const MyNetwork2 = () => {
 
       {/* PROFILE SECTION START */}
       <section className="flex flex-col items-center gap-0 sm:gap-7 sm:flex-row ">
-        <div className=" z-10 relative py-3 sm:ml-3 sm:py-5 sm:w-[20%]">
+        <div className=" z-10 relative py-3 ml-3 sm:py-5 sm:w-[20%]">
           <img
-            className="border-solid  border-PurpleColor w-[100%] h-[100%] border-[3px]  rounded-full"
+            className="border-solid  border-PurpleColor w-[90%] h-[100%] border-[3px]  rounded-full"
             src={AccountSettingImage}
             alt=""
           />
         </div>
         <div className="flex items-center gap-2 flex-col sm:items-start sm:gap-2">
-          <h4 className="font-Inter font-bold text-[43px]">John Doe</h4>
-          <h6 className="font-Inter text-[18px] font-[500]">
+          <h4 className="font-Inter font-bold text-[35px] sm:text-[43px]">John Doe</h4>
+          <h6 className="font-Inter text-[18px] font-[500] text-center sm:text-start">
             Director Manager | Arme Properties
           </h6>
           <ul className="flex flex-wrap items-center justify-center gap-4 sm:justify-start sm:items-start sm:gap-5 ">
