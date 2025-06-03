@@ -24,7 +24,7 @@ function TransparentNavbar() {
         <div className="flex lg:flex-1">
           <Link to={"/"} className="-m-1.5 p-1.5">
             <span className="sr-only">New Lista</span>
-            <img alt="" src={Logo} className="h-14 sm:h-16 w-auto" />
+            <img alt="" src={Logo} className="h-12 sm:h-16 w-auto" />
           </Link>
         </div>
         {/* MENU ICON MOBILE  */}
@@ -35,7 +35,7 @@ function TransparentNavbar() {
             className="-m-2 inline-flex items-center justify-center rounded-md p-3 text-white"
           >
             <span className="sr-only">Open main menu</span>
-            <Bars3Icon aria-hidden="true" className="size-9 md:size-8 font-bold" />
+            <Bars3Icon aria-hidden="true" className="size-7.5 md:size-8 font-bold" />
           </button>
         </div>
         {/* MAIN MENU SECTION  */}
