@@ -61,7 +61,7 @@ const MyNetwork2 = () => {
   const [showMobileFilter, setShowMobileFilter] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [users, setUsers] = useState(initialNetworkUsers);
-
+  const [isFilterOpen, setIsFilterOpen] = useState(true);
   const handleReject = (id) => {
     // Optionally call an API here to report or reject the user
     // await api.rejectUser(id)
@@ -250,7 +250,7 @@ const MyNetwork2 = () => {
           {/* Mobile filter button (visible only on small screens) */}
           <div className="flex xl:hidden  px-4 w-[30%]  md:w-[20%] py-2">
             <button
-              onClick={() => setIsFilterOpen(true)}
+              onClick={() => setShowMobileFilter(true)}
               className="bg-[#1E1E1E] text-white py-2.5 pl-3.5 pr-9.5 lg:pl-5 lg:pr-10 rounded-[10px] flex items-center gap-2"
             >
               <img
@@ -294,13 +294,13 @@ const MyNetwork2 = () => {
                 <button className="bg-[#1E1E1E] text-white py-2.5 px-4 rounded-[7px] flex items-center gap-2 w-full">
                   <img className="w-5 h-5" src={SortIcon} alt="Sort" />
                   <span className="font-Urbanist font-medium text-[14px]">
-                    Sort by
+                    Filter By
                   </span>
                 </button>
 
                 {[
-                  ["Recently Added", "Paused"],
-                  ["Name", "Paused"],
+                  ["Property type", "Paused"],
+                  ["Investment Range", "Paused"],
                   ["Location", "Paused"],
                 ].map((options, idx) => (
                   <select
@@ -360,13 +360,13 @@ const MyNetwork2 = () => {
               <button className="bg-[#1E1E1E] text-white py-2.5 px-4 rounded-[7px] flex items-center gap-2 w-full">
                 <img className="w-5 h-5" src={SortIcon} alt="Sort" />
                 <span className="font-Urbanist font-medium text-[14px]">
-                  Sort by
+                 Filter By
                 </span>
               </button>
 
               {[
-                ["Recently Added", "Paused"],
-                ["Name", "Paused"],
+                ["Property Type", "Paused"],
+                ["Investment Range", "Paused"],
                 ["Location", "Paused"],
               ].map((options, idx) => (
                 <select
