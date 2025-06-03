@@ -51,7 +51,7 @@ const MyNetworkCard = ({InvesImage , InvesUserName , InvesDesc}) => {
           </ul>
           {/* BUTTONS  */}
           <div className="flex items-end justify-end gap-4 pt-5">
-            <button className="font-Inter text-[#fff] font-semibold text-[15px] px-7 py-1.5 rounded-full border-solid border-[2px] border-[#43B274] bg-[#43B274]">Connect</button>
+            <button className="font-Inter text-[#fff] font-semibold text-[15px] px-7 py-1.5 rounded-full border-solid border-[2px] border-[#43B274] bg-[#43B274]">Message</button>
           </div>
         </div>
       </div>

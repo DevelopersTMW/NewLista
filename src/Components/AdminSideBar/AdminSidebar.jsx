@@ -45,7 +45,7 @@ const AdminSidebar = ({ screen }) => {
         {/* SIDE BAR MENU  */}
         <aside
           id="logo-sidebar"
-          className={`fixed top-0 left-0 z-40 w-[90%] min-[890px]:top-8  sm:w-[50%] md:w-[43%] lg:w-[35%] xl:w-[32%] lg:min-h-screen flex justify-center lg:justify-start flex-col transition-transform bg-white  min-[890px]:rounded-r-[20px]
+          className={`max-h-screen overflow-y-auto  fixed top-0 left-0 z-40 w-[90%] min-[890px]:top-8  sm:w-[50%] md:w-[43%] lg:w-[35%] xl:w-[32%] lg:min-h-screen flex justify-center lg:justify-start flex-col transition-transform bg-white  min-[890px]:rounded-r-[20px]
              h-full min-[890px]:translate-x-0
             ${isMobileDrawerOpen ? "translate-x-0" : "-translate-x-full"} min-[890px]:static`}
           aria-label="Sidebar"

@@ -14,6 +14,43 @@ import InvestorIcon1 from "../../../assets/InvestorIcon1.png";
 import CallIcon from "../../../assets/CallIcon.png";
 import MyNetworkCard from "../../../Components/Cards/MyNetworkCard/MyNetworkCard";
 import AddToNetwork from "../../../Components/Cards/AddToNetwork/AddToNetwork";
+import ProfileModal from "../../../Components/ProfileModal/ProfileModal";
+
+const initialNetworkUsers = [
+  {
+    id: 1,
+    image: Testimonials1,
+    name: "John Doe",
+    desc: "Real Estate Investor",
+    location: "New York",
+    propertyTypes: "Multifamily - Retail - Industrial",
+    memberSince: "2022",
+    email: "johndoe@gmail.com",
+    phone: "(224) 523 321",
+  },
+  {
+    id: 2,
+    image: Testimonials1,
+    name: "Jane Smith",
+    desc: "Commercial Investor",
+    location: "Los Angeles",
+    propertyTypes: "Office - Warehouse",
+    memberSince: "2021",
+    email: "janesmith@gmail.com",
+    phone: "(312) 123 456",
+  },
+   {
+    id: 3,
+    image: Testimonials1,
+    name: "Jane Smith",
+    desc: "Commercial Investor",
+    location: "Los Angeles",
+    propertyTypes: "Office - Warehouse",
+    memberSince: "2021",
+    email: "janesmith@gmail.com",
+    phone: "(312) 123 456",
+  },
+];
 
 const BackgroundImages = {
   backgroundImage: `url(${MyNetwork})`,
@@ -23,6 +60,16 @@ const BackgroundImages = {
 const MyNetwork2 = () => {
   const [showMobileFilter, setShowMobileFilter] = useState(false);
 
+  const [users, setUsers] = useState(initialNetworkUsers);
+
+  const handleReject = (id) => {
+    // Optionally call an API here to report or reject the user
+    // await api.rejectUser(id)
+    setUsers((prev) => prev.filter((user) => user.id !== id));
+  };
+
+
+   const [showModal, setShowModal] = useState(false);
   return (
     <>
       {/* BANNER START  */}
@@ -51,8 +98,20 @@ const MyNetwork2 = () => {
             alt=""
           />
         </div>
+        <div className="p-4">
+      <button
+        onClick={() => setShowModal(true)}
+        className="bg-blue-600 text-white px-4 py-2 rounded"
+      >
+        Show Profile
+      </button>
+
+      <ProfileModal isOpen={showModal} onClose={() => setShowModal(false)} />
+    </div>
         <div className="flex items-center gap-2 flex-col sm:items-start sm:gap-2">
-          <h4 className="font-Inter font-bold text-[35px] sm:text-[43px]">John Doe</h4>
+          <h4 className="font-Inter font-bold text-[35px] sm:text-[43px]">
+            John Doe
+          </h4>
           <h6 className="font-Inter text-[18px] font-[500] text-center sm:text-start">
             Director Manager | Arme Properties
           </h6>
@@ -86,7 +145,7 @@ const MyNetwork2 = () => {
 
         <div className="flex sm:gap-5 sm:px-0  items-center sm:flex-row gap-4 px-2">
           {/* SEARCH  */}
-          <div className="relative max-[350px]:w-[57%] w-[67%] items-center flex md:w-[80%]  xl:w-[24%] 2xl:w-[58%]">
+          <div className="relative max-[350px]:w-[57%] w-[67%] items-center flex md:w-[80%]  xl:w-[24%] 2xl:w-[39%]">
             <div className="absolute inset-y-0 start-0 flex items-center ps-4 pointer-events-none">
               <svg
                 className="w-4 h-4 text-[#444444] "
@@ -114,7 +173,7 @@ const MyNetwork2 = () => {
           </div>
           {/* FILTER  */}
           {/* Desktop filter bar (hidden on mobile) */}
-          <div className="hidden xl:flex gap-2 px-0 bg-white  w-[85%] border-[1px] border-solid border-[#1E1E1E] rounded-[10px]">
+          <div className="hidden xl:flex   gap-2 pr-5 bg-white   border-[1px] border-solid border-[#1E1E1E] rounded-[10px]">
             {/* FILTER BUTTON  */}
             <button className=" font-Inter bg-[#1E1E1E] text-white py-2.5 rounded-l-[7px] flex items-center px-4 gap-1">
               <img className="w-5 h-5" src={SortIcon} alt="" />{" "}
@@ -123,28 +182,6 @@ const MyNetwork2 = () => {
               </span>
             </button>
             {/* STATUS  */}
-            <div className="flex gap-1 border-r-[1px] border-solid px-3.5 border-[#BBBBBB]">
-              <Select
-                className={
-                  " border-[#F3EEFF] text-[#444444] font-[600] font-Urbanist text-[14px] w-[100%] h-12 rounded-[6px] outline-none  "
-                }
-                name="status"
-                aria-label="Project status"
-              >
-                <option
-                  className="text-[#1a1919] font-[500] font-Urbanist text-[15px]"
-                  value="active"
-                >
-                  Status
-                </option>
-                <option
-                  className="text-[#1a1919] font-[500] font-Urbanist text-[14px]"
-                  value="paused"
-                >
-                  Paused
-                </option>
-              </Select>
-            </div>
             <div className="flex gap-1  border-r-[1px] border-solid px-3.5 border-[#BBBBBB]">
               <Select
                 className={
@@ -179,7 +216,7 @@ const MyNetwork2 = () => {
                   className="text-[#1a1919] font-[500] font-Urbanist text-[15px]"
                   value="active"
                 >
-                  Date Range
+                  Investment Range
                 </option>
                 <option
                   className="text-[#1a1919] font-[500] font-Urbanist text-[14px]"
@@ -201,7 +238,7 @@ const MyNetwork2 = () => {
                   className="text-[#1a1919] font-[500] font-Urbanist text-[15px]"
                   value="active"
                 >
-                  Sort
+                  Location
                 </option>
                 <option
                   className="text-[#1a1919] font-[500] font-Urbanist text-[14px]"
@@ -403,21 +440,25 @@ const MyNetwork2 = () => {
           </h1>
         </div>
         <div className=" flex flex-wrap gap-4 justify-center sm:justify-start">
-          <AddToNetwork
-            InvesImage={Testimonials1}
-            InvesUserName={"John Doe"}
-            InvesDesc={"Real Estate Investor"}
-          ></AddToNetwork>
-          <AddToNetwork
-            InvesImage={Testimonials1}
-            InvesUserName={"John Doe"}
-            InvesDesc={"Real Estate Investor"}
-          ></AddToNetwork>
-          <AddToNetwork
-            InvesImage={Testimonials1}
-            InvesUserName={"John Doe"}
-            InvesDesc={"Real Estate Investor"}
-          ></AddToNetwork>
+          {users.map((user) => (
+            <AddToNetwork
+              key={user.id}
+              id={user.id}
+              InvesImage={user.image}
+              InvesUserName={user.name}
+              InvesDesc={user.desc}
+              location={user.location}
+              propertyTypes={user.propertyTypes}
+              memberSince={user.memberSince}
+              email={user.email}
+              phone={user.phone}
+              onReject={handleReject}
+            />
+          ))}
+        </div>
+
+        <div>
+          <ProfileModal/>
         </div>
       </section>
       {/* SECTION 2 ADD TO NETWORK  END*/}
