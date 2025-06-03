@@ -18,7 +18,7 @@ const Footer = () => {
                 <Link to={"/"} className="flex items-center">
                   <img
                     src={WhiteLogo}
-                    className="h-[75px] sm:h-[80px] me-3"
+                    className="h-[65px] sm:h-[80px] me-3"
                     alt="FlowBite Logo"
                   />
                 </Link>
