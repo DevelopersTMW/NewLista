@@ -146,9 +146,9 @@ const Pricing = () => {
           {/* HEADER SECTION END  */}
 
           {/* TABS SEC START  */}
-          <div className=" mt-16 max-[350px]:px-0  sm:px-5 lg:px-20 md:w-[100%] xl:w-[85%]">
+          <div className=" mt-16 max-[350px]:px-0  sm:px-5 lg:px-20  min-[890px]:w-[100%] xl:w-[85%] 2xl:w-[75%]">
             {/* Cards */}
-            <div className="flex flex-col md:flex-row gap-10 justify-center">
+            <div className="flex flex-col min-[870px]:flex-row gap-10 justify-center">
               {activeTab === "monthly" && (
                 <>
                   <PlansTabs

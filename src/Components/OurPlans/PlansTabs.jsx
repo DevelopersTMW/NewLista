@@ -12,14 +12,14 @@ import { X } from "lucide-react";
 const PlansTabs = ({ PlanNum, PlanCard, Name, Desc, ButtonText , benefits }) => {
   return (
     <>
-      <div className="relative w-[100%] bg-white shadow-2xl rounded-3xl max-[350px]:px-6.5 p-8 ring-1 ring-gray-900/10 sm:p-10">
+      <div className="relative w-[100%] bg-white shadow-2xl rounded-3xl max-[350px]:px-6.5 p-8 ring-1 ring-gray-900/10 sm:p-10 2xl:py-12 flex flex-col justify-between">
         <h3 className={"text-PurpleColor text-base/7 font-semibold"}>
           {PlanCard}
         </h3>
         <p className="mt-4 max-[350px]:mt-2 flex items-baseline gap-x-2">
           <span
             className={
-              "text-black max-[350px]:text-[35px]  text-[37px] sm:text-[46px] font-semibold tracking-tight font-Poppins leading-[39px]"
+              "text-black max-[350px]:text-[35px]  text-[37px] sm:text-[43px] sm:leading-[48px] font-semibold tracking-tight font-Poppins leading-[39px]"
             }
           >
             {Name}
