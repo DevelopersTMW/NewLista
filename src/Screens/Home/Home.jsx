@@ -654,7 +654,7 @@ const Home = () => {
                   Reach serious buyers, close deals faster, and maximize your
                   property's potential.{" "}
                 </h1>
-                <Link className="w-full" to={"/form"}>
+                <Link className="w-full" to={"/create-property"}>
                   <button className="hover-btn-purple hover-btn py-2 text-[16px] text-white font-Inter rounded-[8px] w-full cursor-pointer">
                     <span>Sell your Property</span>
                   </button>

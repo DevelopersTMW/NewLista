@@ -20,7 +20,6 @@ import OptVerification from "../../Screens/ProtectedScreen/OptVerification";
 import SetNewPassword from "../../Screens/ProtectedScreen/SetNewPassword";
 import AddProperty2 from "../../Screens/AddProperty/AddProperty2";
 import AddProperty3 from "../../Screens/AddProperty/AddProperty3.jsx";
-import StepForm from "../../Screens/AddProperty/form";
 import ScrollToTop from "../../Components/ScrollToTop/ScrollToTop.jsx";
 
 const Routing = () => {
@@ -33,7 +32,6 @@ const Routing = () => {
           <Route path={"/about-us"} element={<AboutUs />} />
           <Route path={"/add-property"} element={<AddProperty />} />
           <Route path={"/create-property"} element={<AddProperty3 />} />
-          <Route path={"/form"} element={<StepForm />} />
           <Route path={"/properties"} element={<ViewProperty />} />
           <Route path={"/properties/:id"} element={<PropertyDetails />} />
           <Route path={"/pricing"} element={<Pricing />} />

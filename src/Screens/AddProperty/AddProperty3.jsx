@@ -13,7 +13,7 @@ import AddPropertyBanner from "../../assets/AddPropertyBanner1.1.jpg";
 
 
 const PropertyForm = () => {
-  const [currentStep, setCurrentStep] = useState(2);
+  const [currentStep, setCurrentStep] = useState(0);
   const [formData, setFormData] = useState({});
 
   const nextStep = (data) => {

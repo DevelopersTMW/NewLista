@@ -84,7 +84,7 @@ function TransparentNavbar() {
           </div> */}
           <div>
             <Link
-              to={"/form"}
+              to={"/create-property"}
               className="text-sm/6 font-semibold text-gray-900"
             >
               <button className="hover-btn-yellow hover-btn text-black px-5 py-2 rounded-md font-Inter cursor-pointer">
@@ -169,7 +169,7 @@ function TransparentNavbar() {
                 <Link className="-mx-2  rounded-lg px-3 py-2.5 text-base/7 font-semibold text-[#e9e9e9]   gap-4 flex flex-col">
                   <div>
                     <Link
-                      to={"/properties"}
+                      to={"/create-property"}
                       className="text-sm/7 font-[500] text-gray-900"
                     >
                       <button className="bg-YellowColor px-5 py-2 text-[15px]  rounded-md font-Inter">

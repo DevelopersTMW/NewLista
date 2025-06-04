@@ -11,7 +11,7 @@ const HomeSection1 = ({ token }) => {
       name: "List & Promote",
       desc: "Post properties and attract serious buyers.",
       buttonName: "Add a Property",
-      ButtonLink: "/form",
+      ButtonLink: "/create-property",
     },
     {
       image: HomeSec1_2,

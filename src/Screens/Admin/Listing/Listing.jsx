@@ -75,7 +75,7 @@ const Listing = () => {
           <h1 className="font-Urbanist text-[#222222] text-[30px] font-[700]">
             My Listings
           </h1>
-          <Link to={'/add-property'}>
+          <Link to={'/create-property'}>
             <button className="text-[13.5px] px-3 sm:px-5 md:text-[15px] font-Inter hover-btn hover-btn-black  bg-[#1E1E1E] text-white py-2.5 sm:py-3 max-[350px]:text-[12.5px] rounded-[7px]">
               <span>Add New Property</span>
             </button>
