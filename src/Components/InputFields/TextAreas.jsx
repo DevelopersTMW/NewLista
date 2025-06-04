@@ -1,7 +1,7 @@
 import { Textarea } from "@headlessui/react";
 import React from "react";
 
-const TextAreas = ({label , placeholder , name , register}) => {
+const TextAreas = ({label , placeholder , name , register , require}) => {
   return (
     <div>
       <label
@@ -11,10 +11,11 @@ const TextAreas = ({label , placeholder , name , register}) => {
         {label}
       </label>
       <Textarea
+       required={require}
         className={
-          "bg-[#F3EEFF] border-[#F3EEFF] text-[#868686] font-[500] font-Urbanist text-[15px] w-[100%]  px-4 rounded-[6px] outline-none py-5"
+          "bg-[#F3EEFF] border-[#F3EEFF] placeholder:text-[#868686] font-[500] font-Urbanist text-[15px] w-[100%]  px-4 rounded-[6px] outline-none py-5"
         }
-        rows={4}
+        rows={6}
         name="description"
         placeholder={placeholder}
         {...(register && typeof register === "function" ? register(name) : {})}

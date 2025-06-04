@@ -30,7 +30,7 @@ const Routing = () => {
         <Routes>
           <Route path={"/"} element={<Home />} />
           <Route path={"/about-us"} element={<AboutUs />} />
-          <Route path={"/add-property"} element={<AddProperty />} />
+          {/* <Route path={"/add-property"} element={<AddProperty />} /> */}
           <Route path={"/create-property"} element={<AddProperty3 />} />
           <Route path={"/properties"} element={<ViewProperty />} />
           <Route path={"/properties/:id"} element={<PropertyDetails />} />
@@ -41,7 +41,7 @@ const Routing = () => {
           <Route path={"/verify-otp"} element={<OptVerification />} />
           <Route path={"/set-new-password"} element={<SetNewPassword />} />
           <Route path={"/register"} element={<Register />} />
-          <Route path={"/plans"} element={<OurPlans />} />
+          {/* <Route path={"/plans"} element={<OurPlans />} /> */}
           {/* <Route path={"/residential"} element={<Residential />} /> */}
           {/* <Route path={"/commercial"} element={<Commercial />} /> */}
           {/* <Route path={"/industrial"} element={<Industrial />} /> */}

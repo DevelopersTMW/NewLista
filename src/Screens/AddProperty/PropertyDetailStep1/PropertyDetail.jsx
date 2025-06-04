@@ -22,15 +22,13 @@ const Step1 = ({ onNext, defaultValues }) => {
     formState: { errors },
     watch,
     control,
+    reset
   } = useForm({
     defaultValues});
 
   // CHECK RADIO VALUE
   const PropertyRadio = watch("propertyType");
   const propertyType = watch("propertyName");
-
-  console.log(propertyType);
-  
 
   const renderFormFields = () => {
     switch (propertyType) {
@@ -100,3 +98,4 @@ const Step1 = ({ onNext, defaultValues }) => {
 };
 
 export default Step1;
+

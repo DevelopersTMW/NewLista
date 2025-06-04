@@ -9,9 +9,43 @@ import CountrySelector from "../../Components/RegisterCountrySelector/CountrySel
 import ContactImage1_1 from "../../assets/ContactImage1.1.png";
 import ContactImage1_2 from "../../assets/ContactImage1.2.png";
 import Inputs from "../../Components/InputFields/Inputs";
+import { useForm } from "react-hook-form";
+import TextAreas from "../../Components/InputFields/TextAreas";
+import Swal from "sweetalert2";
+import AlertModal from "../../Components/AlertModal/AlertModal";
 
 const ContactUs = () => {
   const [phone, setPhone] = useState("");
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    watch,
+    control,
+    reset,
+  } = useForm();
+
+  // CONTACT FORM
+  const ContactForm = (Value) => {
+    if (phone) {
+      console.log("FormValue  :", Value, phone);
+      AlertModal({
+        icon: "success",
+        title: "Thank You",
+        iconColor: "#703BF7",
+        text: "Your Form has Been Submitted",
+      });
+    } else {
+      AlertModal({
+        icon: "error",
+        iconColor: "red",
+        title: "Failed Request",
+        text: "Enter Phone Number",
+      });
+    }
+    setPhone("");
+    reset();
+  };
 
   return (
     <>
@@ -28,7 +62,7 @@ const ContactUs = () => {
           <div className=" w-[100%] lg:w-[58%] flex flex-col gap-8">
             {/* CONTACT INFO  */}
             <div>
-              <h1 className="max-[400px]:text-[] text-[32px] leading-[36px] sm:text-[35px] font-[700] font-Urbanist  text-[#1E1E1E] md:text-[43px] md:leading-[48px]">
+              <h1 className="max-[400px]:text-[31px] text-[32px] leading-[36px] sm:text-[35px] font-[700] font-Urbanist  text-[#1E1E1E] md:text-[43px] md:leading-[48px]">
                 Get in Touch with NewLista
               </h1>
               <p className="text-[12.5px] font-Inter font-medium text-pretty text-Paracolor mt-2 sm:text-[14px]/8 sm:leading-[18px] ">
@@ -38,17 +72,24 @@ const ContactUs = () => {
             </div>
 
             {/* CONTACT FORM */}
-            <form className="flex flex-col gap-4">
+            <form
+              onSubmit={handleSubmit(ContactForm)}
+              className="flex flex-col gap-4"
+            >
               {/* Name  */}
               <div className="flex flex-wrap sm:flex-nowrap gap-5 w-[100%]">
                 <span className="sm:w-[50%] w-full">
-                   <Inputs
+                  <Inputs
+                    register={register}
+                    name={"FirstName"}
                     labels={"First Name"}
                     placeholder={"Enter your first name"}
                   ></Inputs>
                 </span>
                 <span className=" sm:w-[50%] w-full">
                   <Inputs
+                    register={register}
+                    name={"LastName"}
                     labels={"Last Name"}
                     placeholder={"Enter your last name"}
                   ></Inputs>
@@ -58,6 +99,9 @@ const ContactUs = () => {
               {/* Email  */}
               <div>
                 <Inputs
+                  register={register}
+                  type={"email"}
+                  name={"Email"}
                   labels={"Email Address"}
                   placeholder={"Enter a valid email (e.g., you@email.com)"}
                 ></Inputs>
@@ -68,6 +112,8 @@ const ContactUs = () => {
               {/* Location  */}
               <div>
                 <Inputs
+                  register={register}
+                  name={"Subject"}
                   labels={"Subject"}
                   placeholder={"Enter General Inquiry"}
                 ></Inputs>
@@ -75,25 +121,21 @@ const ContactUs = () => {
 
               {/* Message */}
               <div>
-                <label
-                  for="text"
-                  className="block mb-1 text-[15px] font-[700] text-PurpleColor"
-                >
-                  Message
-                </label>
-                <Textarea
-                  className={
-                    "bg-[#F3EEFF] border-[#F3EEFF] text-[#868686] font-[500] font-Urbanist text-[15px] w-[100%]  px-4 rounded-[6px] outline-none py-5"
-                  }
-                  rows={6}
-                  name="description"
-                  placeholder="Please enter your message here..."
-                ></Textarea>
+                <TextAreas
+                  require={true}
+                  label={"Message"}
+                  placeholder={"Please enter your message here..."}
+                  register={register}
+                  name={"Message"}
+                ></TextAreas>
               </div>
 
               {/* Send Message Button */}
               <div className="mt-1">
-                <button className="text-[15px] sm:text-[16px] hover-btn hover-btn-purple font-[700] w-[100%] h-11 text-white font-Urbanist rounded-[6px]">
+                <button
+                  className="text-[15px] sm:text-[16px] hover-btn hover-btn-purple font-[700] w-[100%] h-11 text-white font-Urbanist rounded-[6px]"
+                  type="submit"
+                >
                   <span>Send Message</span>
                 </button>
               </div>
