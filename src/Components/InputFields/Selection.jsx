@@ -47,13 +47,13 @@ const Selection = ({
           aria-label="Project status"
         >
           {defaultOption !== null && !autoSelectFirst && (
-            <option value="">{defaultOption}</option>
+            <option className="text-[11px] sm:text-[14px]" value="">{defaultOption}</option>
           )}
           {Optionss?.map((items, index) => {
             return (
               <option
                 key={index}
-                className="text-[#1a1919] font-[500] font-Urbanist text-[14px] "
+                className="text-[#1a1919] font-[500] font-Urbanist text-[11px] sm:text-[14px] "
                 value={items}
               >
                 {items}

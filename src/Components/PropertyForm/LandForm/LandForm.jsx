@@ -16,8 +16,7 @@ const currencies = [
 const LandForm = ({ propertyTypeName, register }) => {
   return (
     <div className="border-[2px] rounded-[8px] px-4 border-solid border-[#ececec] mt-5 bg-[#fcfcfc] py-8">
-      <div className="grid grid-cols-1 gap-8">
-        <div className="flex gap-8">
+      <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-5 md:gap-8">
           <span className="w-[100%]">
             <Selection
               labels={"Currency"}
@@ -64,8 +63,6 @@ const LandForm = ({ propertyTypeName, register }) => {
               register={register}
             ></Selection>
           </span>
-        </div>
-        <div className="flex gap-8">
           <span className="w-[100%]">
             <Inputs
               labels={"Year Built"}
@@ -111,7 +108,6 @@ const LandForm = ({ propertyTypeName, register }) => {
               register={register}
             ></Selection>
           </span>
-        </div>
       </div>
     </div>
   );

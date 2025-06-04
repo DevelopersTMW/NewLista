@@ -106,7 +106,7 @@ const ListingVisibilitySwitches = ({ register, controls }) => {
               </h1>
             </span>
             <button className="border-PurpleColor ml-2 border  font-[600] cursor-pointer text-[13px] w-max px-3 flex justify-center items-center text-PurpleColor font-Urbanist rounded-[14px] text-center">
-              Premium
+              Free
             </button>
           </div>
         </div>
@@ -127,7 +127,7 @@ const ListingVisibilitySwitches = ({ register, controls }) => {
               </h1>
             </span>
             <button className="border-PurpleColor ml-2 border  font-[600] cursor-pointer text-[13px] w-max px-3 flex justify-center items-center text-PurpleColor font-Urbanist rounded-[14px] text-center">
-              Premium
+              Free
             </button>
           </div>
         </div>

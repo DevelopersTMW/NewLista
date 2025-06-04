@@ -488,7 +488,7 @@ const MyNetwork2 = () => {
             </h1>
             <div className="flex flex-wrap gap-4 justify-center sm:justify-start">
               {/* Replace with your pending request components */}
-              <div className="text-white">No pending requests.</div>
+              <div className="text-black font-Urbanist font-semibold">No pending requests.</div>
             </div>
           </section>
         )}

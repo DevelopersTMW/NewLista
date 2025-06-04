@@ -46,7 +46,7 @@ const WareHouseForm = ({ propertyTypeName, register , control }) => {
   return (
     <div className="border-[2px] rounded-[8px] px-4 border-solid border-[#ececec] mt-5 bg-[#fcfcfc] py-8">
       <div className="">
-        <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 flex-col gap-8">
+        <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 flex-col gap-5 md:gap-8">
             <span className="w-[100%]">
               <Selection
                 labels={"Select"}
