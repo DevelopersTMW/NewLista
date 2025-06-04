@@ -40,7 +40,7 @@ const ContactUs = () => {
             {/* CONTACT FORM */}
             <form className="flex flex-col gap-4">
               {/* Name  */}
-              <div className="flex flex-wrap gap-5 w-[100%]">
+              <div className="flex flex-wrap sm:flex-nowrap gap-5 w-[100%]">
                 <span className="sm:w-[50%] w-full">
                    <Inputs
                     labels={"First Name"}

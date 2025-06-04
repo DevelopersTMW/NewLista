@@ -78,7 +78,7 @@ const DefaultForm = ({ propertyTypeName, register }) => {
             ></Inputs>
           </span>
         </div>
-        <div className="flex gap-8">
+        <div className="flex items-end gap-8">
           <span className="w-[100%]">
             <Inputs
               labels={"Building Levels"}
@@ -116,8 +116,8 @@ const DefaultForm = ({ propertyTypeName, register }) => {
             ></Inputs>
           </span>
         </div>
-        <div className="flex gap-8">
-          <span className="w-[100%]">
+        <div className="flex flex-wrap items-end gap-8">
+          <span className="w-[50%] md:w-[100%]">
             <Inputs
               labels={"CAM (Common Area Maint..) Cost"}
               type={"number"}

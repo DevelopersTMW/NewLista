@@ -19,7 +19,7 @@ import ForgetPassword from "../../Screens/ProtectedScreen/ForgetPassword";
 import OptVerification from "../../Screens/ProtectedScreen/OptVerification";
 import SetNewPassword from "../../Screens/ProtectedScreen/SetNewPassword";
 import AddProperty2 from "../../Screens/AddProperty/AddProperty2";
-import AddProperty3 from "../../Screens/AddProperty/AddProperty3";
+import AddProperty3 from "../../Screens/AddProperty/AddProperty3.jsx";
 import StepForm from "../../Screens/AddProperty/form";
 
 const Routing = () => {
@@ -30,7 +30,7 @@ const Routing = () => {
           <Route path={"/"} element={<Home />} />
           <Route path={"/about-us"} element={<AboutUs />} />
           <Route path={"/add-property"} element={<AddProperty />} />
-          <Route path={"/add-property2"} element={<AddProperty2 />} />
+          <Route path={"/create-property"} element={<AddProperty3 />} />
           <Route path={"/form"} element={<StepForm />} />
           <Route path={"/properties"} element={<ViewProperty />} />
           <Route path={"/properties/:id"} element={<PropertyDetails />} />

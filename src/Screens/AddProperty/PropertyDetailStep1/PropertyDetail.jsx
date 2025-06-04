@@ -59,7 +59,7 @@ const Step1 = ({ onNext, defaultValues }) => {
 
   return (
     <>
-      <div>
+      <div className="">
         <form onSubmit={handleSubmit(SubmitPropertyForm)}>
           <PropertyRadios register={register}></PropertyRadios>
           <div className="border border-[#ececec] rounded-2xl px-5 py-8">
@@ -87,7 +87,7 @@ const Step1 = ({ onNext, defaultValues }) => {
           {/* Send Message Button */}
           <div className="mt-1 flex justify-end gap-5 py-5">
             <button
-              className="bg-PurpleColor hover-btn hover-btn-purple font-[600] cursor-pointer text-[17px] px-6 py-3 text-white font-Urbanist rounded-[6px]"
+              className="bg-PurpleColor hover-btn hover-btn-purple font-[600] cursor-pointer text-[14.5px] lg:text-[17px] px-6 py-3 text-white font-Urbanist rounded-[6px]"
               type="submit"
             >
               <span>Continue To Photo And Media</span>

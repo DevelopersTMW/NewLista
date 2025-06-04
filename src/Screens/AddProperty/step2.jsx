@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import step2Schema from "./step2schema.js";
 import Checkboxs from "../../Components/InputFields/Checkboxs.jsx";
 import { Facebook, Instagram, Linkedin, Twitter, Upload } from "lucide-react";
 import { NavLink } from "react-router-dom";
@@ -16,26 +15,26 @@ const Step2 = ({ onNext, onBack, defaultValues }) => {
   } = useForm({
     defaultValues,
   });
-const files = watch("fileInput"); // will be FileList
-const [previews, setPreviews] = useState([]);
+  const files = watch("fileInput"); // will be FileList
+  const [previews, setPreviews] = useState([]);
 
-useEffect(() => {
-  if (!files || files.length === 0) {
-    setPreviews([]);
-    return;
-  }
+  useEffect(() => {
+    if (!files || files.length === 0) {
+      setPreviews([]);
+      return;
+    }
 
-  const urls = Array.from(files)
-    .filter((file) => file.type.startsWith("image/"))
-    .map((file) => URL.createObjectURL(file));
+    const urls = Array.from(files)
+      .filter((file) => file.type.startsWith("image/"))
+      .map((file) => URL.createObjectURL(file));
 
-  setPreviews(urls);
+    setPreviews(urls);
 
-  // Cleanup object URLs
-  return () => {
-    urls.forEach((url) => URL.revokeObjectURL(url));
-  };
-}, [files]);
+    // Cleanup object URLs
+    return () => {
+      urls.forEach((url) => URL.revokeObjectURL(url));
+    };
+  }, [files]);
 
   const onSubmits = (value) => {
     console.log("hello");
@@ -44,18 +43,6 @@ useEffect(() => {
   };
 
   return (
-    // <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-    //   <input {...register("email")} placeholder="Email" />
-    //   <p>{errors.email?.message}</p>
-
-    //   <input {...register("phone")} placeholder="Phone Number" />
-    //   <p>{errors.phone?.message}</p>
-
-    //   <div className="flex gap-2">
-    //     <button type="button" onClick={onBack}>Back</button>
-    //     <button type="submit">Next</button>
-    //   </div>
-    // </form>
     <>
       <form onSubmit={handleSubmit(onSubmits)} action="" className="">
         <div className="border border-[#ececec] rounded-2xl px-10 py-8">

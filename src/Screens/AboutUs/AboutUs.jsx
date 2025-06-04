@@ -21,7 +21,6 @@ const AboutBgImage = {
   backgroundImage: `url(${BgImage})`,
   backgroundSize: "cover",
   backgroundRepeat: "no-repeat",
-  backgroundSize: "cover",
   backgroundColor: "rgb(0 0 0 / 79%)",
   backgroundBlendMode: "color",
   backgroundPosition: "bottom",
@@ -197,7 +196,7 @@ const AboutUs = () => {
             <div className="w-[98%] lg:w-[33%] bg-black rounded-[10px] px-5.5 py-8 flex flex-col gap-4 min-h-[190px] justify-center">
               <div className="w-[100px]">
                 <img
-                  className="w-[55%] sm:w-[60%] md:w-[60%] xl:w-[70%]"
+                  className="w-[55%] min-[380px]:w-[60%] md:w-[60%] xl:w-[70%]"
                   src={AboutIcon1_3}
                   alt=""
                 />
@@ -220,7 +219,7 @@ const AboutUs = () => {
 
       {/* SECTION 3 START  */}
       <section className="flex justify-center py-10 md:py-0">
-        <div className="flex flex-col justify-center items-center pt-3  gap-10 px-6 sm:gap-7 sm:py-5 pb-16 sm:px-8 md:px-0 lg:py-16 w-[95%] md:w-[91%] xl:w-[100%] 2xl:w-[85%]">
+        <div className="flex flex-col justify-center items-center pt-3  gap-10 px-6 sm:gap-7 sm:py-5 pb-16 sm:px-8 md:px-0 lg:py-16 w-[95%] md:w-[91%] xl:w-[100%] 2xl:w-[85%] ">
           {/* CONTENT SECTION  */}
           <div className="lg:w-[87%] xl:w-[84%]">
             <h1 className="text-[27px] sm:text-[32px] leading-[39px] font-[700] font-Urbanist  text-[#1E1E1E] md:text-[37px] sm:leading-[48px]">

@@ -2,7 +2,7 @@ import { Radio } from "flowbite-react";
 
 const RadioButton = ({ label, register, name , DefaultCheck }) => {
   return (
-    <label className="flex items-center gap-2 font-Urbanist text-[16px] font-[500] outline-none focus:outline-none">
+    <label className="flex items-center gap-2 font-Urbanist text-[14px]  md:ext-[16px] font-[500] outline-none focus:outline-none">
       <Radio
         {...register(name)}
         value={label}

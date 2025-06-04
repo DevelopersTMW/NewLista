@@ -14,12 +14,12 @@ const AddressFields = ({register}) => {
             name={'PropertyAddress'}
           ></Inputs>
         </div>
-        <div className="flex justify-between gap-8">
-          <span className="w-[100%]">
+        <div className="flex justify-between flex-wrap sm:flex-nowrap gap-5 md:gap-8">
+          <span className="w-[46%] sm:w-[100%]">
             <Inputs labels={"City"} type={"text"} placeholder={"City"} register={register}
             name={'City'}></Inputs>
           </span>
-          <span className="w-[100%]">
+          <span className="w-[46%] sm:w-[100%]">
             <Inputs
               labels={"State / Province"}
               type={"text"}
@@ -28,7 +28,7 @@ const AddressFields = ({register}) => {
             name={'StateProvince'}
             ></Inputs>
           </span>
-          <span className="w-[100%]">
+          <span className="w-[100%] sm:w-[100%]">
             <Inputs
               labels={"Zip /Postal Code"}
               type={"number"}
