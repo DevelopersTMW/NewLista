@@ -62,7 +62,7 @@ const Step1 = ({ onNext, defaultValues }) => {
       <div className="">
         <form onSubmit={handleSubmit(SubmitPropertyForm)}>
           <PropertyRadios register={register}></PropertyRadios>
-          <div className="border border-[#ececec] rounded-2xl px-5 py-8">
+          <div className="border border-[#ececec] rounded-2xl mx-3 md:mx-0 px-3 md:px-5 py-8">
             <PropertytypeSelection
               PropertyRadios={PropertyRadio}
               register={register}

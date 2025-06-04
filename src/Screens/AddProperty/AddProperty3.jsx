@@ -51,9 +51,9 @@ const PropertyForm = () => {
 
       {/* PROPERTY FORM  */}
       <section className="sm:px-7 lg:px-10 xl:px-20 py-16 lg:py-20 flex justify-center">
-        <div className="flex flex-col gap-10 w-[100%] 2xl:w-[85%]">
-          <div>
-            <h1 className="text-[32px] font-[700] font-Urbanist text-[#1E1E1E] md:text-[35px] lg:text-[39px] xl:text-[43px] leading-[48px]">
+        <div className="flex flex-col gap-10 w-[100%] 2xl:w-[85%] ">
+          <div className="px-2.5 sm:px-0">
+            <h1 className="text-[32px] leading-[38px] font-[700] font-Urbanist text-[#1E1E1E] md:text-[35px] lg:text-[39px] xl:text-[43px] sm:leading-[48px]">
               Add New Property Listing
             </h1>
             <p className="text-[13.5px] font-Inter font-medium text-pretty text-Paracolor mt-2 md:text-[14px]/8 sm:leading-[18px]">
@@ -62,7 +62,7 @@ const PropertyForm = () => {
           </div>
 
           {/* STEP TABS*/}
-          <div className="flex justify-center gap-3 md:gap-5 bg-[#F3EEFF] items-center px-4 py-3 rounded-[5px]">
+          <div className="flex justify-center gap-3 md:gap-5 bg-[#F3EEFF] items-center px-4 py-3 rounded-[5px] mx-2.5 sm:mx-0">
             {["Property Details", "Photo & Media", "Preview & Submit"].map(
               (label, index) => (
                 <div

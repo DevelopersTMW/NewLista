@@ -60,13 +60,13 @@ function Navbar() {
             Properties
           </Link>
           <Link
-            to={token ? "/admin/netowrking" : "/login"}
+            to={token ? "/admin/network" : "/login"}
             className="text-sm/6 font-[500]  text-textColor  font-Inter hover:text-[#c4c4c4] "
           >
             Networking
           </Link>
           <Link
-            to={"contact-us"}
+            to={"/contact-us"}
             className="text-sm/6 font-[500] text-textColor font-Inter hover:text-[#c4c4c4]"
           >
             Contact
@@ -151,7 +151,7 @@ function Navbar() {
                   Properties
                 </Link>
                 <Link
-                  to={"/admin/networking"}
+                  to={"/admin/network"}
                   className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-[500] text-[#e9e9e9] hover:bg-gray-50 font-Inter"
                 >
                   Networking

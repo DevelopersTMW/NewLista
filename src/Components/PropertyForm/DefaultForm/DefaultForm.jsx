@@ -40,8 +40,8 @@ const DefaultForm = ({ propertyTypeName, register }) => {
   return (
     <div className="border-[2px] rounded-[8px] px-4 border-solid border-[#ececec] mb-10 bg-[#fcfcfc] py-8">
       <div className="flex flex-col gap-8">
-        <div className="flex gap-8">
-          <span className="w-[100%]">
+        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-5 items-end md:gap-8">
+          <span className="">
             <Selection
               labels={"Currency"}
               Options={currencies}
@@ -50,7 +50,7 @@ const DefaultForm = ({ propertyTypeName, register }) => {
               register={register}
             ></Selection>
           </span>
-          <span className="w-[100%]">
+          <span className="">
             <Inputs
               labels={"Monthly Rental*"}
               type={"text"}
@@ -59,7 +59,7 @@ const DefaultForm = ({ propertyTypeName, register }) => {
               register={register}
             ></Inputs>
           </span>
-          <span className="w-[100%]">
+          <span className="">
             <Selection
               labels={"Building Size"}
               defaultOption={"Select"}
@@ -68,7 +68,7 @@ const DefaultForm = ({ propertyTypeName, register }) => {
               register={register}
             ></Selection>
           </span>
-          <span className="w-[100%]">
+          <span className="">
             <Inputs
               labels={"SPACE"}
               type={"text"}
@@ -77,9 +77,7 @@ const DefaultForm = ({ propertyTypeName, register }) => {
               register={register}
             ></Inputs>
           </span>
-        </div>
-        <div className="flex items-end gap-8">
-          <span className="w-[100%]">
+          <span className="">
             <Inputs
               labels={"Building Levels"}
               type={"text"}
@@ -88,7 +86,7 @@ const DefaultForm = ({ propertyTypeName, register }) => {
               register={register}
             ></Inputs>
           </span>
-          <span className="w-[100%]">
+          <span className="">
             <Inputs
               labels={"Year Built"}
               type={"number"}
@@ -97,16 +95,16 @@ const DefaultForm = ({ propertyTypeName, register }) => {
               register={register}
             ></Inputs>
           </span>
-          <span className="w-[100%]">
+          <span className="">
             <Selection
               labels={"Tenancy"}
               defaultOption={"Select"}
-              Options={["Multiple" , "Single"]}
+              Options={["Multiple", "Single"]}
               name={"Tenancy"}
               register={register}
             ></Selection>
           </span>
-          <span className="w-[100%]">
+          <span className="">
             <Inputs
               labels={"Parking Spaces"}
               type={"number"}
@@ -115,9 +113,7 @@ const DefaultForm = ({ propertyTypeName, register }) => {
               register={register}
             ></Inputs>
           </span>
-        </div>
-        <div className="flex flex-wrap items-end gap-8">
-          <span className="w-[50%] md:w-[100%]">
+          <span className="">
             <Inputs
               labels={"CAM (Common Area Maint..) Cost"}
               type={"number"}
@@ -126,7 +122,7 @@ const DefaultForm = ({ propertyTypeName, register }) => {
               register={register}
             ></Inputs>
           </span>
-          <span className="w-[100%]">
+          <span className="">
             <Inputs
               labels={"Number of Units"}
               type={"number"}
@@ -135,16 +131,16 @@ const DefaultForm = ({ propertyTypeName, register }) => {
               register={register}
             ></Inputs>
           </span>
-          <span className="w-[100%]">
+          <span className="">
             <Selection
               labels={"Building Class"}
               defaultOption={"Select"}
-              Options={["A" , "B" , "C" , "D"]}
+              Options={["A", "B", "C", "D"]}
               name={"BuildingClass"}
               register={register}
             ></Selection>
           </span>
-          <span className="w-[100%]">
+          <span className="">
             <Inputs
               labels={"Percentage Leased (%)"}
               type={"number"}

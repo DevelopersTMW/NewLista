@@ -21,11 +21,13 @@ import SetNewPassword from "../../Screens/ProtectedScreen/SetNewPassword";
 import AddProperty2 from "../../Screens/AddProperty/AddProperty2";
 import AddProperty3 from "../../Screens/AddProperty/AddProperty3.jsx";
 import StepForm from "../../Screens/AddProperty/form";
+import ScrollToTop from "../../Components/ScrollToTop/ScrollToTop.jsx";
 
 const Routing = () => {
   return (
     <>
       <BrowserRouter>
+        <ScrollToTop />
         <Routes>
           <Route path={"/"} element={<Home />} />
           <Route path={"/about-us"} element={<AboutUs />} />
