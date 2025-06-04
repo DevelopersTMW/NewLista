@@ -133,32 +133,32 @@ function Navbar() {
                 {/* DROP DOWN MENU END  */}
                 <Link
                   to={"/about-us"}
-                  className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-[500] text-[#e9e9e9] hover:bg-gray-50 font-Inter"
+                  className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-[500] text-[#e9e9e9]  font-Inter"
                 >
                   About Us
                 </Link>
                 <Link
                   to={"/pricing"}
-                  className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-[500] text-[#e9e9e9] hover:bg-gray-50 font-Inter"
+                  className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-[500] text-[#e9e9e9]  font-Inter"
                 >
                   Pricing
                 </Link>
                 
                 <Link
                   to={"/properties"}
-                  className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-[500] text-[#e9e9e9] hover:bg-gray-50 font-Inter"
+                  className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-[500] text-[#e9e9e9]  font-Inter"
                 >
                   Properties
                 </Link>
                 <Link
                   to={"/admin/network"}
-                  className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-[500] text-[#e9e9e9] hover:bg-gray-50 font-Inter"
+                  className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-[500] text-[#e9e9e9]  font-Inter"
                 >
                   Networking
                 </Link>
                 <Link
                   to={"/contact-us"}
-                  className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-[500] text-[#e9e9e9] hover:bg-gray-50 font-Inter"
+                  className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-[500] text-[#e9e9e9]  font-Inter"
                 >
                   Contact
                 </Link>
@@ -166,7 +166,7 @@ function Navbar() {
               {/* MAIN MENU SECTION START  */}
 
               <div className="py-4 border-t-[1px] border-[#e9e9e9]">
-                <Link className="-mx-2  rounded-lg px-3 py-2.5 text-base/7 font-semibold text-[#e9e9e9] hover:bg-gray-50 gap-4 flex flex-col">
+                <Link className="-mx-2  rounded-lg px-3 py-2.5 text-base/7 font-semibold text-[#e9e9e9]  gap-4 flex flex-col">
                   <div>
                     <Link
                       to={"/properties"}

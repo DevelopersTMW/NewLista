@@ -71,7 +71,7 @@ const Step1 = ({ onNext, defaultValues }) => {
             {propertyType && renderFormFields()}
             <AddressFields register={register} />
             {/* DESCRIPTION SECTION  */}
-            <div className="border-b-[1px]  border-[#BBBBBB] py-7 flex-col gap-4 flex">
+            <div className="border-b-[1px]  border-[#BBBBBB] pb-7 sm:py-7 flex-col gap-4 flex">
               <TextAreas
                 label={"Description"}
                 placeholder={
@@ -87,7 +87,7 @@ const Step1 = ({ onNext, defaultValues }) => {
           {/* Send Message Button */}
           <div className="mt-1 flex justify-end gap-5 py-5">
             <button
-              className="bg-PurpleColor hover-btn hover-btn-purple font-[600] cursor-pointer text-[14.5px] lg:text-[17px] px-6 py-3 text-white font-Urbanist rounded-[6px]"
+              className="bg-PurpleColor hover-btn hover-btn-purple font-[600] cursor-pointer text-[14px] mr-3 sm:mr-0 sm:text-[14.5px] lg:text-[17px] px-6 py-3 text-white font-Urbanist rounded-[6px]"
               type="submit"
             >
               <span>Continue To Photo And Media</span>

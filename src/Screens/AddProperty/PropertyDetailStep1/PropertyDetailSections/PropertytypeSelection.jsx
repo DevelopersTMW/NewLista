@@ -53,10 +53,10 @@ const PropertytypeSelection = ({ PropertyRadios, register }) => {
         </span>
       </div>
 
-      <div className="flex justify-between flex-wrap gap-8">
+      <div className="grid  sm:grid-cols-2 gap-6 md:gap-8">
         {(PropertyRadios === "For Sale" ||
           PropertyRadios === "Both (For Sale & For Lease)") && (
-          <span className="w-[100%] md:w-[47.5%]">
+          <span className="">
             <Inputs
               labels={"Sale Price"}
               type={"number"}
@@ -69,7 +69,7 @@ const PropertytypeSelection = ({ PropertyRadios, register }) => {
 
         {(PropertyRadios === "For Lease" ||
           PropertyRadios === "Both (For Sale & For Lease)") && (
-          <span className="w-[100%] md:w-[47.5%] flex gap-4">
+          <span className="flex gap-4">
             <span className="w-[100%]">
               <Inputs
                 labels={"Lease Rate"}
@@ -92,7 +92,7 @@ const PropertytypeSelection = ({ PropertyRadios, register }) => {
           </span>
         )}
 
-        <span className="w-[100%] md:w-[47.5%]">
+        <span className="">
           <Inputs
             labels={"Building Size (sq ft)"}
             type={"number"}

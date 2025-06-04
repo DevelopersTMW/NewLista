@@ -40,7 +40,7 @@ const DefaultForm = ({ propertyTypeName, register }) => {
   return (
     <div className="border-[2px] rounded-[8px] px-4 border-solid border-[#ececec] mb-10 bg-[#fcfcfc] py-8">
       <div className="flex flex-col gap-8">
-        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-5 items-end md:gap-8">
+        <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 items-end md:gap-8">
           <span className="">
             <Selection
               labels={"Currency"}

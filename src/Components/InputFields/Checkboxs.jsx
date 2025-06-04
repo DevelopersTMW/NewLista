@@ -21,7 +21,7 @@ function Checkboxs({ labels, name, value, onChange }) {
           />
         </svg>
       </Checkbox>
-      <label className="block text-[15px] font-[600] text-[#222222] w-[100%]">
+      <label className="block text-[13.5px] sm:text-[15px] font-[600] text-[#222222] w-[100%]">
         {labels}
       </label>
     </div>

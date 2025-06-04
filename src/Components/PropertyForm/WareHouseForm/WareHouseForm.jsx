@@ -46,8 +46,7 @@ const WareHouseForm = ({ propertyTypeName, register , control }) => {
   return (
     <div className="border-[2px] rounded-[8px] px-4 border-solid border-[#ececec] mt-5 bg-[#fcfcfc] py-8">
       <div className="">
-        <div className="flex flex-col gap-8">
-          <div className="flex gap-8">
+        <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 flex-col gap-8">
             <span className="w-[100%]">
               <Selection
                 labels={"Select"}
@@ -82,8 +81,6 @@ const WareHouseForm = ({ propertyTypeName, register , control }) => {
                 register={register}
               ></Inputs>
             </span>
-          </div>
-          <div className="flex gap-8">
             <span className="w-[100%]">
               <Inputs
                 labels={"Ceiling Height (FT/M)"}
@@ -120,8 +117,6 @@ const WareHouseForm = ({ propertyTypeName, register , control }) => {
                 register={register}
               ></Inputs>
             </span>
-          </div>
-          <div className="flex gap-8">
             <span className="w-[100%]">
               <Selection
                 labels={"‎"}
@@ -158,8 +153,6 @@ const WareHouseForm = ({ propertyTypeName, register , control }) => {
                 register={register}
               ></Inputs>
             </span>
-          </div>
-          <div className="flex gap-8">
             <span className="w-[100%]">
               <Inputs
                 labels={"Number of Docks"}
@@ -196,7 +189,6 @@ const WareHouseForm = ({ propertyTypeName, register , control }) => {
                 register={register}
               ></Inputs>
             </span>
-          </div>
         </div>
       </div>
       <div className="">
@@ -206,7 +198,7 @@ const WareHouseForm = ({ propertyTypeName, register , control }) => {
               Electrical Power
             </h1>
           </span>
-          <div className="flex gap-5">
+          <div className="flex flex-wrap gap-1.5 sm:gap-3 md:gap-5">
             <Controller
               name="Phase 3"
               control={control}
