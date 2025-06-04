@@ -3,10 +3,10 @@ import React, { useState } from "react";
 import Navbar from "../../Components/Navbar/Navbar";
 import Footer from "../../Components/Footer/Footer";
 import Step1 from "./PropertyDetailStep1/PropertyDetail.jsx";
-import Step2 from "./step2";
 import Step3 from "./step3";
 // IMAGES
 import AddPropertyBanner from "../../assets/AddPropertyBanner1.1.jpg";
+import Step2 from "./Photo&MediaStep2/Photo&Media.jsx";
 
 const StepForm = () => {
   

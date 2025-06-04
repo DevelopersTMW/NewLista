@@ -1,16 +1,19 @@
 import React, { useState } from "react";
 // COMPONENTS
-import Navbar from "../../Components/Navbar/Navbar";
 import Footer from "../../Components/Footer/Footer";
+import Navbar from "../../Components/Navbar/Navbar";
+import Step2 from "./Photo&MediaStep2/Photo&Media.jsx";
 import Step1 from "./PropertyDetailStep1/PropertyDetail.jsx";
-import Step2 from "./step2";
-import Step3 from "./step3";
+import Step3 from "./PreviewPropertyStep3/PreviewProperty.jsx";
 import MiniFooter from "../../Components/Footer/MiniFooter.jsx";
+
 // IMAGES
 import AddPropertyBanner from "../../assets/AddPropertyBanner1.1.jpg";
 
+
+
 const PropertyForm = () => {
-  const [currentStep, setCurrentStep] = useState(0);
+  const [currentStep, setCurrentStep] = useState(2);
   const [formData, setFormData] = useState({});
 
   const nextStep = (data) => {
@@ -62,7 +65,7 @@ const PropertyForm = () => {
           </div>
 
           {/* STEP TABS*/}
-          <div className="flex justify-center gap-1 min-[400px]:gap-3 md:gap-5 bg-[#F3EEFF] items-center px-2 min-[380px]:px-4 py-3 rounded-[5px] mx-2.5 sm:mx-0">
+          <div className="flex justify-center gap-1 min-[400px]:gap-3 md:gap-5 bg-[#F3EEFF] items-center px-2 min-[420px]:px-4 py-3 rounded-[5px] mx-2.5 sm:mx-0">
             {["Property Details", "Photo & Media", "Preview & Submit"].map(
               (label, index) => (
                 <div
