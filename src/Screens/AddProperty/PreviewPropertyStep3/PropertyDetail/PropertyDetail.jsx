@@ -56,11 +56,11 @@ const PropertyDetail = () => {
         </div>
         {/* LOCATION  */}
         <div className="md:w-[50%]">
-          <div className="flex flex-co justify-between items-center mb-2 ">
-            <h1 className="text-[21px] lg:text-[22px] font-[700] font-Urbanist  text-[#1E1E1E]">
+          <div className="flex justify-between items-center mb-2 ">
+            <h1 className="text-[20px] sm:text-[21px] lg:text-[22px] font-[700] font-Urbanist  text-[#1E1E1E]">
               Location:
             </h1>
-            <p className="font-Inter text-[13px] text-pretty text-Paracolor sm:text-[13.5px] lg:text-[14px]/8 sm:leading-[18px] ">
+            <p className="font-Inter text-[12.5px] text-end min-[400px]:text-[13px] text-pretty text-Paracolor sm:text-[13.5px] lg:text-[14px]/8 sm:leading-[18px] ">
               123 Main Street Anytown, CA 12345
             </p>
           </div>

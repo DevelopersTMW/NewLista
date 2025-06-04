@@ -27,19 +27,19 @@ const Step3 = ({ formData, onBack, onSubmit }) => {
             </p>
           </div>
           <div className="flex gap-3">
-            <button className="bg-transparent border-[#6C757D] cursor-pointer max-[400px]:text-[13.5px] text-[14px] md:text-[15px] lg:text-[16px] border-solid border-[2px] font-[600] pl-3 pr-4 py-2 text-[#6C757D] font-Urbanist rounded-[6px] flex gap-1 items-center">
+            <button className="bg-transparent border-[#6C757D] cursor-pointer max-[400px]:text-[13px] text-[14px] md:text-[15px] lg:text-[16px] border-solid border-[2px] font-[600] pl-2.5 pr-2.5 min-[400px]:pl-3 min-[400px]:pr-4 py-2 text-[#6C757D] font-Urbanist rounded-[6px] flex gap-1 items-center">
               <Phone className="size-4 md:size-4.5 lg:size-5" /> Direct Contact
             </button>
-            <button className="bg-PurpleColor font-[600] cursor-pointer max-[400px]:text-[13.5px] text-[14px] md:text-[15px] lg:text-[16px]  pl-2 pr-4 py-2 text-white font-Urbanist rounded-[6px] flex gap-1 items-center">
+            <button className="bg-PurpleColor font-[600] cursor-pointer max-[400px]:text-[13px] text-[14px] md:text-[15px] lg:text-[16px]  pl-2.5 pr-2.5 min-[400px]:pl-3 min-[400px]:pr-4 py-2 text-white font-Urbanist rounded-[6px] flex gap-1 items-center">
               <DollarSign className="size-4 md:size-4.5 lg:size-5" /> Make an Offer
             </button>
           </div>
         </div>
         {/* IMAGE  */}
         <div>
-          <div className="mt-7 rounded-lg bg-muted flex items-center justify-center bg-[#f5f5f5] py-24 sm:py-28 lg:py-40">
+          <div className="mt-7 rounded-lg bg-muted flex items-center justify-center bg-[#f5f5f5] max-[400px]:py-20 py-24 sm:py-28 lg:py-40">
             <div className="text-center flex flex-col justify-center items-center gap-2">
-              <Image  color="#737373" className="max-[400px]:size-14 size-15 sm:size-16 lg:size-20" />
+              <Image  color="#737373" className="max-[400px]:size-13 size-15 sm:size-16 lg:size-20" />
               <p className="text-muted-foreground font-Inter text-[16px] text-[#737373]">
                 No images uploaded
               </p>
@@ -79,13 +79,13 @@ const Step3 = ({ formData, onBack, onSubmit }) => {
       </div>
       <div className="flex gap-2 justify-between px-1.5 py-5 mx-3 sm:mx-0">
         <button
-            className="bg-transparent border-[#6C757D] cursor-pointer max-[400px]:text-[14px] text-[15.5px] lg:text-[17px] border-solid border-[2px] font-[600] px-5 py-2 sm:px-6 sm:py-2.5 text-[#6C757D] font-Urbanist rounded-[6px]"
+            className="bg-transparent border-[#6C757D] cursor-pointer max-[400px]:text-[13.5px] text-[15.5px] lg:text-[17px] border-solid border-[2px] font-[600] px-2.5 min-[400px]:px-5 py-2 sm:px-6 sm:py-2.5 text-[#6C757D] font-Urbanist rounded-[6px]"
             onClick={onBack}
           >
            Back to Photo & Media
           </button>
           <button
-            className="bg-PurpleColor font-[600] cursor-pointer max-[400px]:text-[14px] text-[15.5px] lg:text-[17px] px-5 py-2 sm:px-6 sm:py-2.5 text-white font-Urbanist rounded-[6px]"
+            className="bg-PurpleColor font-[600] cursor-pointer max-[400px]:text-[13.5px] text-[15.5px] lg:text-[17px] px-2.5 min-[400px]:px-5 py-2 sm:px-6 sm:py-2.5 text-white font-Urbanist rounded-[6px]"
             // onClick={onNext}
             type="submit"
           >

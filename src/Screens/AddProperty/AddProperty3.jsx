@@ -44,7 +44,7 @@ const PropertyForm = () => {
       <section>
         <div>
           <img
-            className="h-[40vh] object-cover w-[100%]"
+            className="h-[25vh] sm:h-[40vh] object-cover w-[100%]"
             src={AddPropertyBanner}
             alt=""
           />
@@ -56,10 +56,10 @@ const PropertyForm = () => {
       <section className="sm:px-7 lg:px-10 xl:px-20 py-16 lg:py-20 flex justify-center">
         <div className="flex flex-col gap-8 sm:gap-10 w-[100%] 2xl:w-[85%] ">
           <div className="px-2.5 sm:px-0">
-            <h1 className="text-[32px] leading-[38px] font-[700] font-Urbanist text-[#1E1E1E] md:text-[35px] lg:text-[39px] xl:text-[43px] sm:leading-[48px]">
+            <h1 className="text-[28px] leading-[32px] min-[400px]:text-[32px] min-[400px]:leading-[38px] font-[700] font-Urbanist text-[#1E1E1E] md:text-[35px] lg:text-[39px] xl:text-[43px] sm:leading-[48px]">
               Add New Property Listing
             </h1>
-            <p className="text-[13.5px] font-Inter font-medium text-pretty text-Paracolor mt-2 md:text-[14px]/8 sm:leading-[18px]">
+            <p className="text-[13px] min-[400px]:text-[13.5px] font-Inter font-medium text-pretty text-Paracolor mt-2 md:text-[14px]/8 sm:leading-[18px]">
               Fill out the form below to create your property listing
             </p>
           </div>
