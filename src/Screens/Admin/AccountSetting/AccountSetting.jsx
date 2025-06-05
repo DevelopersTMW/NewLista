@@ -2,16 +2,15 @@ import React, { useState } from "react";
 import AddPropertyBanner from "../../../assets/AddPropertyBanner.jpg";
 import AccountSettingImage from "../../../assets/AccountSettingImage.png";
 import CrossImage from "../../../assets/CrossImage.png";
-import { Checkbox, Select, Switch, Textarea } from "@headlessui/react";
+import { Select, Switch, Textarea } from "@headlessui/react";
 import Checkboxs from "../../../Components/InputFields/Checkboxs";
 import CountrySelector from "../../../Components/RegisterCountrySelector/CountrySelection";
 import Inputs from "../../../Components/InputFields/Inputs";
 import Selection from "../../../Components/InputFields/Selection";
-
+import TextAreas from "../../../Components/InputFields/TextAreas";
 
 const AccountSetting = () => {
-
-  const [phone, setPhone] = useState()
+  const [phone, setPhone] = useState();
 
   return (
     <>
@@ -42,21 +41,95 @@ const AccountSetting = () => {
           <section className="flex flex-col justify-start items-start sm:flex-row gap-14 px-2">
             <div className="sm:w-[47%] w-[98%] flex flex-col gap-6">
               {/* Name  */}
-              <div className="w-[100%]">
-                <Inputs labels={"Full Name"} placeholder={"Enter your first name"}></Inputs>
+              <div className="w-[100%] flex gap-5">
+                <span>
+                  <Inputs
+                    labels={"First Name"}
+                    placeholder={"Enter your first name"}
+                  ></Inputs>
+                </span>
+                <span>
+                  <Inputs
+                    labels={"Last Name"}
+                    placeholder={"Enter your Last name"}
+                  ></Inputs>
+                </span>
               </div>
-              <div>
-                <Selection labels={"Select your title"} defaultOption={"Real Estate Seller"} />
-              </div>
-              <div>
-                <Selection labels={"Preferred Investment Type"} defaultOption={"Value-Add Property"} />
+              <div className="flex gap-6 flex-col">
+                <span>
+                  <Inputs
+                    labels={"Email"}
+                    placeholder={"Enter a valid email (e.g., you@email.com)"}
+                    type={"email"}
+                  ></Inputs>
+                </span>
+
+                <span>
+                  <Inputs
+                    labels={"Create Password"}
+                    placeholder={"Create a password"}
+                    type={"password"}
+                  ></Inputs>
+                </span>
+                <span>
+                  <Inputs
+                    labels={"Re Enter Password"}
+                    placeholder={"Enter your password"}
+                    type={"password"}
+                  ></Inputs>
+                </span>
+
+                {/* Phone Number*/}
+                <CountrySelector setPhone={setPhone} phone={phone} />
+
+                <span>
+                  <Inputs
+                    labels={"Street Address"}
+                    placeholder={"Enter street address"}
+                  ></Inputs>
+                </span>
               </div>
 
-              {/* Phone Number*/}
-              <CountrySelector setPhone={setPhone} phone={phone} />
-
-              <div>
-                <Inputs labels={"Preferred CAP Rate"} placeholder={"Enter Value in %"}></Inputs>
+              <div className="grid grid-cols-2 gap-6">
+                <span>
+                  <Selection labels={"Country"} defaultOption={"USA"} />
+                </span>
+                <span>
+                  <Selection
+                    labels={"State/Province"}
+                    defaultOption={"Select state or province"}
+                  />
+                </span>
+                <span>
+                  <Inputs
+                    labels={"Zip/Postal Code"}
+                    placeholder={"Enter zip/postal code"}
+                  ></Inputs>
+                </span>
+                <span>
+                  <Selection
+                    labels={"Enter City"}
+                    defaultOption={"Enter city"}
+                  />
+                </span>
+              </div>
+              <div className="flex flex-col gap-6">
+                <span>
+                  <Inputs
+                    labels={"Personal Website"}
+                    placeholder={"Enter zip/postal code"}
+                  ></Inputs>
+                </span>
+                <span>
+                   <Selection
+                  labels={"Select your title"}
+                  defaultOption={"Real Estate Seller"}
+                />
+                </span>
+                <Selection
+                  labels={"Experience Level"}
+                  defaultOption={"Intermediate"}
+                />
               </div>
 
               <div>
@@ -79,29 +152,8 @@ const AccountSetting = () => {
                 </span>
               </div>
               {/* Location  */}
-              <div>
-                <Selection labels={"Experience Level"} defaultOption={"Intermediate"} />
-              </div>
 
               {/* Message */}
-              <div>
-                <label
-                  for="text"
-                  className="block mb-1 text-[15px] font-[700] text-PurpleColor"
-                >
-                  About You
-                </label>
-                <Textarea
-                  className={
-                    "bg-[#F3EEFF] border-[#F3EEFF] text-[#868686] font-[500] font-Urbanist text-[15px] w-[100%]  px-4 rounded-[6px] outline-none py-5"
-                  }
-                  rows={6}
-                  name="description"
-                  placeholder="Tell us about your experience in real estate, your role, and your background..."
-                ></Textarea>
-              </div>
-
-
             </div>
             <div className="sm:w-[50%] flex flex-col gap-9  ">
               <div>
@@ -110,7 +162,7 @@ const AccountSetting = () => {
                   for="email"
                   className="block mb-3 text-[15px] font-[700] text-PurpleColor"
                 >
-                  Property Interests
+                  Preferred Investment Range
                 </label>
                 <div className="flex gap-1 sm:gap-14">
                   <span className="flex flex-col gap-2.5 justify-center">
@@ -249,18 +301,36 @@ const AccountSetting = () => {
                 </div>
               </div>
               <div className="flex gap-2 flex-wrap">
-                <span className="flex items-center font-Urbanist text-[14px] font-semibold bg-[#E7E7E7] rounded-full px-4 py-2 gap-2">Location 1 <img className="w-5 h-5" src={CrossImage} alt="" /></span>
-                <span className="flex items-center font-Urbanist text-[14px] font-semibold bg-[#E7E7E7] rounded-full px-4 py-2 gap-2">Location 2 <img className="w-5 h-5" src={CrossImage} alt="" /></span>
-                <span className="flex items-center font-Urbanist text-[14px] font-semibold bg-[#E7E7E7] rounded-full px-4 py-2 gap-2">Location 3 <img className="w-5 h-5" src={CrossImage} alt="" /></span>
-                <span className="flex items-center font-Urbanist font-semibold text-[14px] bg-[#E7E7E7] rounded-full px-4 py-2 gap-2">Location 4 <img className="w-5 h-5" src={CrossImage} alt="" /></span>
-                <span className="flex items-center font-Urbanist font-semibold text-[14px] bg-[#E7E7E7] rounded-full px-4 py-2 gap-2">Location 5 <img className="w-5 h-5" src={CrossImage} alt="" /></span>
+                <span className="flex items-center font-Urbanist text-[14px] font-semibold bg-[#E7E7E7] rounded-full px-4 py-2 gap-2">
+                  Location 1 <img className="w-5 h-5" src={CrossImage} alt="" />
+                </span>
+                <span className="flex items-center font-Urbanist text-[14px] font-semibold bg-[#E7E7E7] rounded-full px-4 py-2 gap-2">
+                  Location 2 <img className="w-5 h-5" src={CrossImage} alt="" />
+                </span>
+                <span className="flex items-center font-Urbanist text-[14px] font-semibold bg-[#E7E7E7] rounded-full px-4 py-2 gap-2">
+                  Location 3 <img className="w-5 h-5" src={CrossImage} alt="" />
+                </span>
+                <span className="flex items-center font-Urbanist font-semibold text-[14px] bg-[#E7E7E7] rounded-full px-4 py-2 gap-2">
+                  Location 4 <img className="w-5 h-5" src={CrossImage} alt="" />
+                </span>
+                <span className="flex items-center font-Urbanist font-semibold text-[14px] bg-[#E7E7E7] rounded-full px-4 py-2 gap-2">
+                  Location 5 <img className="w-5 h-5" src={CrossImage} alt="" />
+                </span>
+              </div>
+              <div>
+                <TextAreas
+                  label={"About You"}
+                  placeholder={
+                    "Tell us about your experience in real estate, your role, and your background..."
+                  }
+                ></TextAreas>
               </div>
             </div>
           </section>
           {/* Send Message Button */}
           <div className="mt-1 w-[50%] sm:w-[46%] px-2">
             <button className="bg-PurpleColor font-[700] w-[100%] h-11 text-white font-Urbanist rounded-[6px]">
-              Send Message
+              Save Details
             </button>
           </div>
         </form>

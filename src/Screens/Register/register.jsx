@@ -11,62 +11,55 @@ import "intl-tel-input/build/js/utils"; // Optional: for validation
 import "intl-tel-input/build/css/intlTelInput.css";
 import intlTelInput from "intl-tel-input";
 import CountrySelector from "../../Components/RegisterCountrySelector/CountrySelection";
-
-const countries = [
-  { code: "+91", label: "India", flag: "https://flagcdn.com/w40/in.png" },
-  { code: "+1", label: "USA", flag: "https://flagcdn.com/w40/us.png" },
-  { code: "+44", label: "UK", flag: "https://flagcdn.com/w40/gb.png" },
-  { code: "+61", label: "Australia", flag: "https://flagcdn.com/w40/au.png" },
-];
+import { Controller, useForm } from "react-hook-form";
+import Inputs from "../../Components/InputFields/Inputs";
+// import { Phone } from "lucide-react";
 
 const register = () => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    watch,
+    control,
+    setError,
+    reset,
+  } = useForm();
+
   const clientId = import.meta.env.VITE_GOOGLE_CLIENT_ID;
   const ApiKey = import.meta.env.VITE_API_KEY;
-
-  const [phone, setPhone] = useState("");
-  const [countryCode, setCountryCode] = useState("+91");
-
-  const selectedCountry = countries.find((c) => c.code === countryCode);
-
   const navigate = useNavigate();
   const [ErrorMessage, setErrorMessage] = useState("");
   const [Loading, setLoading] = useState(false);
 
-  // FORM VALUES
-  const [formData, setFormData] = useState({
-    FirstName: "",
-    LastName: "",
-    Location: "",
-    Password: "",
-    ConfirmPassword: "",
-    Email: "",
-  });
-
-  // CHANGE VALUE IN STRING AND ALSO SET IN FORMDATA OBJECT
-  const handleChanges = (e) => {
-    const { name, value } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
-  };
-
-  const RegisterForm = async (e) => {
-    e.preventDefault();
-    if (formData.Password.length < 8) {
-      setErrorMessage("Password must be 8 characters Long");
+  const RegisterForm = async (Data) => {
+    console.log("RegisterUser :", Data);
+    if (Data.Password.length < 8) {
+      setError("Password", {
+        type: "manual",
+        message: "Password must be 8 characters long",
+      });
       return;
     }
-    if (formData.Password !== formData.ConfirmPassword) {
-      setErrorMessage("Password must be Same");
+    if (Data.Password !== Data.ConfirmPassword) {
+      setError("ConfirmPassword", {
+        type: "manual",
+        message: "Passwords do not match",
+      });
       return;
     }
-    if (!/[!@#$%^&*()<>,."]/.test(formData.Password)) {
-      setErrorMessage("Password must contain any special character");
+    if (!/[!@#$%^&*()<>,."]/.test(Data.Password)) {
+      setError("Password", {
+        type: "manual",
+        message: "Password must contain any special character",
+      });
       return;
     }
-    if (!/[A-Z]/.test(formData.Password)) {
-      setErrorMessage("Password must contain any capital letter");
+    if (!/[A-Z]/.test(Data.Password)) {
+      setError("Password", {
+        type: "manual",
+        message: "Password must contain any capital letter",
+      });
       return;
     }
     try {
@@ -74,25 +67,30 @@ const register = () => {
       const Response = await axios.post(
         `${ApiKey}/register`,
         {
-          first_name: formData.FirstName,
-          last_name: formData.LastName,
-          email: formData.Email,
-          phone: phone,
-          location: formData.Location,
-          password: formData.Password,
+          first_name: Data.FirstName,
+          last_name: Data.LastName,
+          email: Data.Email,
+          phone: Data.phone,
+          location: Data.Location,
+          password: Data.Password,
         },
         {
           contenttype: "application/json",
         }
       );
-      localStorage.setItem("token", Response.data.token);
-      navigate("/admin");
-      setLoading(false);
+      console.log(Response.data);
     } catch (error) {
-      console.log(error);
+      const message = error?.response?.data?.message;
+      if (message?.toLowerCase().includes("email")) {
+        setError("Email", {
+          type: "manual",
+          message: "Email already exists",
+        });
+      } else {
+        alert(message || "An unexpected error occurred");
+      }
+    } finally {
       setLoading(false);
-      console.log(error.response.data.errors[0].msg);
-      alert(error.response.data.errors[0].msg);
     }
     setErrorMessage("");
   };
@@ -155,156 +153,133 @@ const register = () => {
 
   return (
     <>
-      <div className="flex">
+      <div className=" md:flex ">
         {/* IMAGE SECTION  */}
-        <div className="w-[43%]">
-          <img className="w-[100%] object-cover h-full" src={Image} alt="" />
+        <div className="md:w-[30%] min-[900px]:!w-[45%] lg:!w-[43%] xl:!w-[48%]">
+          <img className="w-[100%] object-cover h-[20vh] sm:h-[30vh] md:h-full" src={Image} alt="" />
         </div>
 
         {/* LOGIN FOR SECTION  */}
-        <div className="w-[55%] px-28 py-24 flex flex-col justify-center gap-7 ">
+        <div className="flex flex-col justify-center gap-7 py-10 max-[380px]:px-6 px-8 sm:px-16 md:py-20 md:w-[70%] lg:w-[55%] lg:px-20 lg:py-20 xl:py-24 xl:px-24  2xl:px-32">
           {/* Heading Info  */}
           <div>
-            <h1 className="font-Poppins font-[700] text-[44px]">
+            <h1 className="font-Poppins font-[700] text-[32px] max-[380px]:text-[28px] sm:text-[35px] md:text-[38px] lg:text-[44px]">
               Join NewLista
             </h1>
-            <p className="font-Urbanist text-Paracolor font-[600] text-[15px] pl-2">
+            <p className="font-Urbanist text-Paracolor font-[600] max-[380px]:text-[12px] text-[13px] sm:text-[13.5px] lg:text-[15px] lg:pl-2">
               Sign up to list properties, connect with top investors, and
               explore off-market deals.
             </p>
           </div>
 
           <form
-            onSubmit={(e) => {
-              RegisterForm(e);
-            }}
+            onSubmit={handleSubmit(RegisterForm)}
             className="flex flex-col gap-4"
           >
             {/* Name  */}
-            <div className="flex gap-5 w-[100%]">
-              <span className="w-[50%]">
-                <label
-                  // for="email"
-                  className="block mb-1 text-[15px] font-[700] text-PurpleColor"
-                >
-                  First Name
-                </label>
-                <input
-                  type="text"
-                  onChange={handleChanges}
-                  value={formData.FirstName}
-                  name="FirstName"
-                  className="bg-[#F3EEFF] border-[#F3EEFF] text-[#1d1d1d] font-[600] font-Urbanist text-[14px] w-[100%] h-12 px-4 rounded-[6px] outline-none"
-                  placeholder="Enter your first name"
-                  required
-                />
+            <div className="grid  min-[400px]:grid-cols-2 gap-5 w-[100%]">
+              <span className="">
+                <Inputs
+                  name={"FirstName"}
+                  register={register("FirstName", {
+                    required: "First name is required",
+                  })}
+                  labels={"First Name"}
+                  error={errors.FirstName?.message}
+                  placeholder={"Enter your first name"}
+                ></Inputs>
               </span>
-              <span className="w-[50%]">
-                <label className="block mb-1 text-[15px] font-[700] text-PurpleColor">
-                  Last Name
-                </label>
-                <input
-                  type="text"
-                  onChange={handleChanges}
-                  value={formData.LastName}
-                  name="LastName"
-                  className="bg-[#F3EEFF] border-[#F3EEFF] text-[#1d1d1d] font-[600] font-Urbanist text-[14px] w-[100%] h-12 px-4 rounded-[6px] outline-none"
-                  placeholder="Enter your last name"
-                  required
-                />
+              <span className="">
+                <Inputs
+                  name={"LastName"}
+                  register={register("LastName", {
+                    required: "Last name is required",
+                  })}
+                  labels={"Last Name"}
+                  error={errors.LastName?.message}
+                  placeholder={"Enter your last name"}
+                ></Inputs>
               </span>
             </div>
 
             {/* Email  */}
-            <div>
-              <label
-                // for="email"
-                className="block mb-1 text-[15px] font-[700] text-PurpleColor"
-              >
-                Email Address
-              </label>
-              <input
-                type="email"
-                onChange={handleChanges}
-                value={formData.Email}
-                name="Email"
-                className="bg-[#F3EEFF] border-[#F3EEFF] text-[#1d1d1d] font-[600] font-Urbanist text-[14px] w-[100%] h-12 px-4 rounded-[6px] outline-none"
-                placeholder="Enter a valid email (e.g., you@email.com)"
-                required
-              />
-            </div>
+            <div className="flex flex-col gap-4">
+              <span className="">
+                <Inputs
+                  name={"Email"}
+                  register={register("Email", {
+                    required: "Email is required",
+                  })}
+                  labels={"Email"}
+                  placeholder={"Enter your email"}
+                  error={errors.Email?.message}
+                ></Inputs>
+              </span>
 
-            {/* Phone Number*/}
-            <CountrySelector setPhone={setPhone} phone={phone}  />
-            {/* Location  */}
-            <div>
-              <label className="block mb-1 text-[15px] font-[700] text-PurpleColor">
-                Location
-              </label>
-              <input
-                type="text"
-                onChange={handleChanges}
-                value={formData.Location}
-                name="Location"
-                className="bg-[#F3EEFF] border-[#F3EEFF] text-[#1d1d1d] font-[600] font-Urbanist text-[14px] w-[100%] h-12 px-4 rounded-[6px] outline-none"
-                placeholder="Enter your city"
-                required
+              {/* Phone Number*/}
+              <Controller
+                name="phone"
+                control={control}
+                rules={{ required: "Phone number is required" }}
+                render={({ field }) => (
+                  <CountrySelector
+                    phone={field.value}
+                    setPhone={field.onChange}
+                    error={errors.phone?.message}
+                  />
+                )}
               />
+              {/* LOCATION */}
+              <span className="">
+                <Inputs
+                  name={"Location"}
+                  register={register("Location", {
+                    required: "Location is required",
+                  })}
+                  labels={"Location"}
+                  placeholder={"Enter your city"}
+                  error={errors.Location?.message}
+                ></Inputs>
+              </span>
+              {/* PASSOWRD  */}
+              <span className="">
+                <Inputs
+                  name={"Password"}
+                  register={register("Password", {
+                    required: "Password is required",
+                  })}
+                  labels={"Password"}
+                  type={"password"}
+                  placeholder={"Create a strong password"}
+                  error={errors.Password?.message}
+                ></Inputs>
+              </span>
+              {/* CONFIRM PASSWORD  */}
+              <span className="">
+                <Inputs
+                  name={"ConfirmPassword"}
+                  register={register("ConfirmPassword", {
+                    required: "Please confirm your password",
+                  })}
+                  labels={"ConfirmPassword"}
+                  type={"password"}
+                  placeholder={"Re-enter your password"}
+                  error={errors.ConfirmPassword?.message}
+                ></Inputs>
+              </span>
             </div>
-            {/* Password */}
-            <div>
-              <label className="block mb-1 text-[15px] font-[700] text-PurpleColor">
-                Password
-              </label>
-              <input
-                type="password"
-                onChange={handleChanges}
-                value={formData.Password}
-                name="Password"
-                className={`bg-[#F3EEFF] outline-none border text-[#1d1d1d] font-[600] font-Urbanist text-[14px] w-[100%] h-12 px-4 rounded-[6px]   ${
-                  ErrorMessage === "Password must be Same"
-                    ? " border-red-400"
-                    : "border-[#F3EEFF]  outline-none"
-                }`}
-                placeholder="Create a strong password"
-                required
-              />
-            </div>
-            <div>
-              <label
-                // for="password"
-                className="block mb-1 text-[15px] font-[700] text-PurpleColor"
-              >
-                Confirm Password
-              </label>
-              <input
-                type="password"
-                onChange={handleChanges}
-                value={formData.ConfirmPassword}
-                name="ConfirmPassword"
-                className={`bg-[#F3EEFF] outline-none border text-[#1d1d1d] font-[600] font-Urbanist text-[14px] w-[100%] h-12 px-4 rounded-[6px]   ${
-                  ErrorMessage === "Password must be Same"
-                    ? " border-red-400"
-                    : "border-[#F3EEFF]  outline-none"
-                }`}
-                placeholder="Re-enter your password"
-                required
-              />
-            </div>
-            {ErrorMessage && (
-              <p className="text-red-500 font-medium text-[14px]  font-Urbanist tracking-wide">
-                {ErrorMessage}
-              </p>
-            )}
             {/* Sign Up Button */}
             <div className="mt-1">
               <button
                 type="submit"
-                className="bg-PurpleColor font-[700] w-[100%] h-11 mt-3 text-white font-Urbanist rounded-[6px]"
+                disabled={Loading}
+                className={`bg-PurpleColor w-full h-11 cursor-pointer mt-3 text-white font-Urbanist rounded-[6px] font-[700] ${
+                  Loading ? "opacity-50 cursor-not-allowed" : ""
+                }`}
               >
-                Sign Up
+                {Loading ? "Signing Up..." : "Sign Up"}
               </button>
-              <p className="font-Urbanist text-Paracolor font-[600] text-[15px] text-center mt-3">
+              <p className="font-Urbanist text-Paracolor font-[600] max-[380px]:text-[12.5px] text-[13.5px] sm:text-[14.5px] lg:text-[15px] text-center mt-3">
                 Already have an account?{" "}
                 <Link to={"/"} className="font-bold">
                   Sign in now
@@ -314,17 +289,15 @@ const register = () => {
 
             {/* Other Info */}
             <div className="flex justify-center items-center gap-3 mt-2">
-              <div className="bg-[#a5a5a5] h-0.5 w-[90px]"></div>
-              <p className="font-Urbanist text-Paracolor font-[600] text-[16px] text-center">
+              <div className="bg-[#a5a5a5] h-0.5 max-[380px]:w-[70px]  w-[80px] sm:w-[90px]"></div>
+              <p className="font-Urbanist text-Paracolor font-[600] max-[380px]:text-[13px] text-[15px] sm:text-[16px] text-center">
                 or continue with{" "}
               </p>
-              <div className="bg-[#a5a5a5] h-0.5 w-[90px]"></div>
+              <div className="bg-[#a5a5a5] h-0.5 max-[380px]:w-[70px] w-[80px] sm:w-[90px]"></div>
             </div>
           </form>
           <div className="flex justify-center gap-2">
             <div id="google-login-button"></div>
-            {/* <img className="w-[33px] h-8" src={Facebook} alt="" />
-            <img className="w-[33px] h-8" src={Linkedin} alt="" /> */}
           </div>
         </div>
       </div>
