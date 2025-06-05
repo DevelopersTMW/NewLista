@@ -93,15 +93,15 @@ const PropertyDetails = () => {
         {SingleProperty && (
           <>
             {/* PROPERTY DETAIL  */}
-            <section className=" md:px-20 pt-20 pb-10 w-[100%] 2xl:w-[87%]">
+            <section className="pt-20 pb-10 w-[100%] lg:px-20 2xl:w-[87%] ">
               {/* ADDRESS AND SOCIAL ICONS  */}
-              <div className="flex flex-col md:flex-row justify-between max-[400px]:px-5 px-8 sm:px-10 lg:px-0">
-                <div className="flex flex-col  md:flex-row gap-3 md:justify-center md:items-center">
-                  <h1 className="font-Urbanist max-[400px]:text-[22px] text-[25px] sm:text-[28px] font-[700]">
+              <div className="flex flex-col lg:flex-row justify-between max-[400px]:px-5 px-8 sm:px-10 lg:px-0">
+                <div className="flex flex-col flex-wrap  md:flex-row gap-3 xl:justify-center md:items-center">
+                  <h1 className="font-Urbanist max-[400px]:text-[22px] text-[25px] sm:text-[28px] lg:text-[26px] font-[700]">
                     {SingleProperty.property_name}
                   </h1>
                   <div className="flex flex-wrap gap-3">
-                    <p className="border-solid border-[1px] border-[#222222] flex items-center font-Urbanist gap-1 font-[550] px-2 text-[12.5px] sm:text-[13.5px] py-1 w-max rounded-[5px]">
+                    <p className="border-solid border-[1px] border-[#222222] flex items-center font-Urbanist gap-1 font-[550] px-2 text-[12.5px] sm:text-[13.5px] lg:text-[13px] py-1 w-max rounded-[5px]">
                       <MapPin size={15} />
                       {SingleProperty.address +
                         " " +
@@ -127,7 +127,7 @@ const PropertyDetails = () => {
                     </div>
                   </div>
                 </div>
-                <div className="flex md:justify-center md:items-center flex-col sm:flex-row mt-4 gap-2">
+                <div className="flex lg:justify-center md:items-center flex-col sm:flex-row mt-4 lg:mt-0 gap-2">
                   <h1 className="font-Poppins text-[20px] font-[500] text-[#222222]">
                     Share
                   </h1>
@@ -153,19 +153,19 @@ const PropertyDetails = () => {
             </section>
 
             {/* DETAIL SECTION  */}
-            <section className="max-[400px]:px-5 px-8 sm:px-10 md:px-20 flex flex-col md:flex-row gap-3 w-[100%]">
+            <section className="max-[400px]:px-5 px-8 sm:px-10  lg:px-20 flex flex-col min-[850px]:!flex-row gap-3 w-[100%] 2xl:w-[87%]">
               {/* LEFT SIDE START  */}
-              <div className=" flex gap-8 flex-col sm:gap-12 md:w-[50%] ">
-                <div className="flex flex-col sm:flex-row lg:flex-col gap-8 ">
-                  <div className="sm:w-[75%] lg:w-full">
+              <div className=" flex gap-8 flex-col sm:gap-12 min-[850px]:!w-[50%] ">
+                <div className="flex flex-col sm:flex-row min-[850px]:!flex-col gap-8 md:gap-0 min-[850px]:!gap-8 md:pr-10 min-[850px]:!pr-0 ">
+                  <div className="sm:w-[75%] md:w-full xl:w-[99%]">
                     <img
-                      className="w-full md:w-[93%] h-[280px] sm:h-[400px] md:h-[600px] object-cover rounded-[8px]"
+                      className="w-full md:w-[93%] h-[280px] sm:h-[400px] md:h-[535px] lg:h-[600px] object-cover rounded-[8px]"
                       src={SingleProperty.images[0]}
                       alt=""
                     />
                   </div>
 
-                  <div className="grid max-[400px]:grid-cols-2 grid-cols-3 sm:grid-cols-1 lg:grid-cols-4 gap-5 justify-start items-center sm:w-[25%] lg:w-[94%]">
+                  <div className="grid max-[400px]:grid-cols-2 grid-cols-3 sm:grid-cols-1 min-[850px]:!grid-cols-2 lg:!grid-cols-3 xl:!grid-cols-4 gap-5 justify-start items-center sm:w-[25%] min-[850px]:!w-[94%] xl:!w-[93%]">
                     <img
                       className="w-[100%] h-[110px] md:h-[120px] rounded-[6px]"
                       src={SingleProperty.images[1]}
@@ -192,13 +192,13 @@ const PropertyDetails = () => {
                   </div>
                 </div>
 
-                <div className="w-full px-0 md:px-10 lg:px-0 lg:w-[94%]">
-                  <div className="max-w-4xl mx-auto border border-[#BBBBBB] rounded-lg py-6 max-[400px]:px-3 px-6 sm:p-6 bg-white">
-                    <h2 className="text-[21px] md:text-3xl font-bold font-Urbanist text-[#222222] mb-4 lg:mb-6">
+                <div className="w-full px-0 lg:px-1 lg:px-0 md:w-[94%]">
+                  <div className="max-w-4xl mx-auto border border-[#BBBBBB] rounded-lg py-6 max-[400px]:px-3 px-6  lg:px-6 md:px-4 sm:p-6 bg-white">
+                    <h2 className="text-[21px] md:text-[28px] leading-[34px] lg:text-3xl font-bold font-Urbanist text-[#222222] mb-4 lg:mb-6">
                       Key Features & Amenities
                     </h2>
 
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-4 sm:gap-5">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-1 gap-4 sm:gap-5">
                       {features.map((feature, index) => (
                         <Disclosure key={index}>
                           {({ open }) => (
@@ -235,7 +235,7 @@ const PropertyDetails = () => {
               </div>
 
               {/* RIGHT SIDE  */}
-              <div className="md:w-[50%] flex flex-col gap-8 pt-6">
+              <div className="min-[850px]:!w-[50%] flex flex-col gap-8 pt-6">
                 <div>
                   <h5 className="font-Urbanist text-[#222222] font-semibold text-[17px]">
                     Price
@@ -320,9 +320,9 @@ const PropertyDetails = () => {
                     </p>
                   </div>
 
-                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-0 pt-4">
+                  <div className="grid xl:flex grid-cols-1 sm:grid-cols-2 md:grid-cols-3 min-[850px]:!grid-cols-1 lg:!grid-cols-2 2xl:!grid-cols-3 gap-6 sm:gap-0 lg:gap-4 pt-4 xl:justify-between ">
                     {/* Year Built */}
-                    <div className="flex flex-col gap-1 border-b sm:border-b-0 lg:border-r border-[#BBBBBB] pb-4 lg:pb-0">
+                    <div className="flex flex-col gap-1 border-b sm:border-b-0 lg:mr-5 lg:border-r border-[#BBBBBB] pb-4 lg:pb-0 xl:w-[25%] ">
                       <span className="flex gap-2 items-center">
                         <img
                           className="w-[20px] h-5"
@@ -339,7 +339,7 @@ const PropertyDetails = () => {
                     </div>
 
                     {/* Property Type */}
-                    <div className="flex flex-col gap-1 border-b sm:border-b-0 lg:border-r border-[#BBBBBB] pb-4 lg:pb-0">
+                    <div className="flex flex-col gap-1 border-b sm:border-b-0 lg:border-r border-[#BBBBBB] pb-4 lg:pb-0 xl:w-[33%]">
                       <span className="flex gap-2 items-center">
                         <img
                           className="w-[20px] h-5"
@@ -356,7 +356,7 @@ const PropertyDetails = () => {
                     </div>
 
                     {/* Area */}
-                    <div className="flex flex-col gap-1">
+                    <div className="flex flex-col gap-1 ">
                       <span className="flex gap-2 items-center">
                         <img
                           className="w-[20px] h-5"
@@ -396,7 +396,7 @@ const PropertyDetails = () => {
                 <div className="flex justify-center items-center">
                   <iframe
                     src={`https://www.google.com/maps?q=404${SingleProperty.address}&output=embed`}
-                    className="w-full h-[220px] sm:h-[300px] rounded-[8px]"
+                    className="w-full h-[220px] sm:h-[300px] md:h-[250px] lg:h-[300px] rounded-[8px]"
                     allowFullScreen=""
                     loading="lazy"
                     referrerPolicy="no-referrer-when-downgrade"
@@ -405,18 +405,18 @@ const PropertyDetails = () => {
               </div>
             </section>
 
-            <section className="max-[370px]:px-5 px-8 py-14 sm:px-10 md:px-20 sm:py-28 w-[100%] 2xl:w-[88%]">
+            <section className="max-[370px]:px-5 px-8 py-14 sm:px-10 lg:px-20 sm:py-28 w-[100%] 2xl:w-[88%]">
               <div>
                 <h1 className="text-center sm:text-start max-[370px]:text-[28px] text-[32px] leading-[35px] font-[700] font-Urbanist  text-[#1E1E1E] sm:text-[33px] lg:text-[38px] sm:leading-[48px]">
                   Other Properties you might like
                 </h1>
               </div>
-              <div className="w-[100%] grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 mt-5 gap-5 sm:mt-5 lg:mt-10 place-items-center sm:place-items-start">
+              <div className="w-[100%] grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 mt-5 gap-5 sm:mt-5 lg:mt-10 place-items-center sm:place-items-start">
                 {Properties &&
                   Properties.slice(0, 4).map((items) => (
                     <div
                       key={items.id}
-                      className="max-[400px]:w-[270px] w-[300px] sm:w-[275px]"
+                      className="max-[400px]:w-[270px] w-[300px] sm:w-[275px] md:w-[300px] xl:w-[275px]"
                     >
                       {
                         <PropertiesCards2
