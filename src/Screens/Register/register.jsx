@@ -1,26 +1,21 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import Image from "../../assets/LoginPage.jpg";
-import Google from "../../assets/google.png";
-import Facebook from "../../assets/facebook.png";
-import Linkedin from "../../assets/linkedin.png";
-import axios from "axios";
-
-import "intl-tel-input/build/js/utils"; // Optional: for validation
-
-import "intl-tel-input/build/css/intlTelInput.css";
-import intlTelInput from "intl-tel-input";
-import CountrySelector from "../../Components/RegisterCountrySelector/CountrySelection";
 import { Controller, useForm } from "react-hook-form";
+import axios from "axios";
+import { setUser } from "../../Reducers/UserCredientails/userSlice";
+// import {user}  from '../../Reducers/UserCredientails/userSlice'
+// COMPONENTS
+import CountrySelector from "../../Components/RegisterCountrySelector/CountrySelection";
 import Inputs from "../../Components/InputFields/Inputs";
-// import { Phone } from "lucide-react";
+// IMAGES
+import Image from "../../assets/LoginPage.jpg";
+import { useDispatch } from "react-redux";
 
-const register = () => {
+const Register = () => {
   const {
     register,
     handleSubmit,
     formState: { errors },
-    watch,
     control,
     setError,
     reset,
@@ -62,6 +57,7 @@ const register = () => {
       });
       return;
     }
+    
     try {
       setLoading(true);
       const Response = await axios.post(
@@ -79,9 +75,10 @@ const register = () => {
         }
       );
       console.log(Response.data);
-      const UserEmail = Response.data.user.email
-      localStorage.setItem("UserEmail" , UserEmail)
-      navigate("/verify-otp")
+      const UserEmail = Response.data.user.email;
+      localStorage.setItem("UserEmail", UserEmail);
+      navigate("/verify-otp");
+      reset();
     } catch (error) {
       const message = error?.response?.data?.message;
       if (message?.toLowerCase().includes("email")) {
@@ -98,19 +95,24 @@ const register = () => {
     setErrorMessage("");
   };
 
-  const GoogleLogin = async (e) => {
-    const idToken = e.credential;
-    const base64Url = idToken.split(".")[1];
+  // DECODE JWT CODE
+  // BCZ GOOGLE DOES NOT PROVIDE DIRECT DATA
+  function decodeJwt(token) {
+    const base64Url = token.split(".")[1];
     const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
     const jsonPayload = decodeURIComponent(
       atob(base64)
         .split("")
-        .map(function (c) {
-          return "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2);
-        })
+        .map((c) => "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2))
         .join("")
     );
-    const userData = JSON.parse(jsonPayload);
+    return JSON.parse(jsonPayload);
+  }
+
+  // GOOGLE LOGIN
+  const GoogleLogin = async (e) => {
+    const idToken = e.credential;
+    const userData = decodeJwt(idToken);
     try {
       setLoading(true);
       const Response = await axios.post(
@@ -122,17 +124,24 @@ const register = () => {
           profile_photo: userData.picture,
         },
         {
-          contenttype: "application/json",
+          headers: {
+            "Content-Type": "application/json",
+          },
         }
       );
-      localStorage.setItem("token", Response.data.token);
-      navigate("/admin");
-      setLoading(false);
+      if (Response.data.profile_complete) {
+        localStorage.setItem("token", Response.data.token);
+        navigate("/admin");
+      } else {
+        navigate("/admin/account-setting");
+      }
     } catch (error) {
       console.log(error);
       setLoading(false);
       console.log(error.response.data.errors[0].msg);
       alert(error.response.data.errors[0].msg);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -159,7 +168,11 @@ const register = () => {
       <div className=" md:flex ">
         {/* IMAGE SECTION  */}
         <div className="md:w-[30%] min-[900px]:!w-[45%] lg:!w-[43%] xl:!w-[48%]">
-          <img className="w-[100%] object-cover h-[20vh] sm:h-[30vh] md:h-full" src={Image} alt="" />
+          <img
+            className="w-[100%] object-cover h-[20vh] sm:h-[30vh] md:h-full"
+            src={Image}
+            alt=""
+          />
         </div>
 
         {/* LOGIN FOR SECTION  */}
@@ -308,4 +321,4 @@ const register = () => {
   );
 };
 
-export default register;
+export default Register;

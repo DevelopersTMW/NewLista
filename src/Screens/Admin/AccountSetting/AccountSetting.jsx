@@ -1,16 +1,56 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import AddPropertyBanner from "../../../assets/AddPropertyBanner.jpg";
 import AccountSettingImage from "../../../assets/AccountSettingImage.png";
 import CrossImage from "../../../assets/CrossImage.png";
-import { Select, Switch, Textarea } from "@headlessui/react";
+import { Select, Switch } from "@headlessui/react";
 import Checkboxs from "../../../Components/InputFields/Checkboxs";
 import CountrySelector from "../../../Components/RegisterCountrySelector/CountrySelection";
 import Inputs from "../../../Components/InputFields/Inputs";
 import Selection from "../../../Components/InputFields/Selection";
 import TextAreas from "../../../Components/InputFields/TextAreas";
+import { Controller, useForm } from "react-hook-form";
+import Switches from "../../../Components/InputFields/Switch";
+import { useSelector } from "react-redux";
 
 const AccountSetting = () => {
-  const [phone, setPhone] = useState();
+  const user = useSelector((state) => state.user);
+  console.log("====================================");
+  console.log(user.first_name);
+  console.log("====================================");
+  const [AutoSelect, setAutoSelect] = useState(true);
+
+
+ 
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    control,
+    setError,
+    reset,
+  } = useForm({
+    defaultValues: {
+      FirstName: user.first_name,
+    }
+  });
+
+   useEffect(() => {
+  if (user && user.first_name) {
+    reset({
+      FirstName: user.first_name,
+      LastName: user.last_name || "",
+      Email: user.email || "",
+      // add any other fields from user you want to set as default
+    });
+  }
+}, [user, reset]);
+
+  const ProfileComplete = (Data) => {
+    console.log(Data);
+    setAutoSelect(false);
+    reset(Data);
+  };
 
   return (
     <>
@@ -33,23 +73,30 @@ const AccountSetting = () => {
       </section>
       {/* BANNER END   */}
 
-      {/* FORM  */}
+      {/* htmlForM  */}
 
       <section className="mt-7 sm:mt-10">
-        {/* CONTACT FORM */}
-        <form className="flex flex-col gap-4">
+        {/* CONTACT Form */}
+        <form
+          onSubmit={handleSubmit(ProfileComplete)}
+          className="flex flex-col gap-4"
+        >
           <section className="flex flex-col justify-start items-start sm:flex-row gap-14 px-2">
             <div className="sm:w-[47%] w-[98%] flex flex-col gap-6">
               {/* Name  */}
               <div className="w-[100%] flex gap-5">
                 <span>
                   <Inputs
+                    name={"FirstName"}
+                    register={register}
                     labels={"First Name"}
                     placeholder={"Enter your first name"}
                   ></Inputs>
                 </span>
                 <span>
                   <Inputs
+                    name={"LastName"}
+                    register={register}
                     labels={"Last Name"}
                     placeholder={"Enter your Last name"}
                   ></Inputs>
@@ -58,32 +105,32 @@ const AccountSetting = () => {
               <div className="flex gap-6 flex-col">
                 <span>
                   <Inputs
+                    name={"Email"}
+                    register={register}
                     labels={"Email"}
                     placeholder={"Enter a valid email (e.g., you@email.com)"}
                     type={"email"}
                   ></Inputs>
                 </span>
 
-                <span>
-                  <Inputs
-                    labels={"Create Password"}
-                    placeholder={"Create a password"}
-                    type={"password"}
-                  ></Inputs>
-                </span>
-                <span>
-                  <Inputs
-                    labels={"Re Enter Password"}
-                    placeholder={"Enter your password"}
-                    type={"password"}
-                  ></Inputs>
-                </span>
-
                 {/* Phone Number*/}
-                <CountrySelector setPhone={setPhone} phone={phone} />
+                <Controller
+                  name="phone"
+                  control={control}
+                  rules={{ required: "Phone number is required" }}
+                  render={({ field }) => (
+                    <CountrySelector
+                      phone={field.value}
+                      setPhone={field.onChange}
+                      error={errors.phone?.message}
+                    />
+                  )}
+                />
 
                 <span>
                   <Inputs
+                    name={"StreetAddress"}
+                    register={register}
                     labels={"Street Address"}
                     placeholder={"Enter street address"}
                   ></Inputs>
@@ -92,22 +139,39 @@ const AccountSetting = () => {
 
               <div className="grid grid-cols-2 gap-6">
                 <span>
-                  <Selection labels={"Country"} defaultOption={"USA"} />
+                  <Controller
+                    name="Country"
+                    control={control}
+                    render={({ field }) => (
+                      <Selection
+                        {...field}
+                        labels="Country"
+                        Options={["USA"]}
+                        defaultOption="Select"
+                      />
+                    )}
+                  />
                 </span>
                 <span>
                   <Selection
+                    name={"State"}
+                    register={register}
                     labels={"State/Province"}
                     defaultOption={"Select state or province"}
                   />
                 </span>
                 <span>
                   <Inputs
+                    name={"ZipCode"}
+                    register={register}
                     labels={"Zip/Postal Code"}
                     placeholder={"Enter zip/postal code"}
                   ></Inputs>
                 </span>
                 <span>
                   <Selection
+                    name={"City"}
+                    register={register}
                     labels={"Enter City"}
                     defaultOption={"Enter city"}
                   />
@@ -116,25 +180,33 @@ const AccountSetting = () => {
               <div className="flex flex-col gap-6">
                 <span>
                   <Inputs
+                    name={"PersonalWebsite"}
+                    register={register}
                     labels={"Personal Website"}
                     placeholder={"Enter zip/postal code"}
                   ></Inputs>
                 </span>
                 <span>
-                   <Selection
-                  labels={"Select your title"}
-                  defaultOption={"Real Estate Seller"}
-                />
+                  <Inputs
+                    name={"Title"}
+                    register={register}
+                    labels={"Title"}
+                    placeholder={"Select your title"}
+                  ></Inputs>
                 </span>
                 <Selection
+                  name={"ExperienceLevel"}
+                  register={register}
                   labels={"Experience Level"}
-                  defaultOption={"Intermediate"}
+                  defaultOption={"Select"}
+                  autoSelectFirst={AutoSelect}
+                  Options={["Beginner", "Intermediate", "Experienced"]}
                 />
               </div>
 
               <div>
                 <label
-                  for="email"
+                  htmlFor="email"
                   className="block mb-2 text-[15px] font-[700] text-PurpleColor"
                 >
                   Investor Status
@@ -143,9 +215,12 @@ const AccountSetting = () => {
                   <h4 className="font-Urbanist font-[500] text-[16px] text-[#444444]">
                     Non-Active
                   </h4>
-                  <Switch className="group inline-flex h-6 w-11 items-center rounded-full bg-gray-200 transition data-checked:bg-PurpleColor">
-                    <span className="size-4 translate-x-1 rounded-full bg-white transition group-data-checked:translate-x-6" />
-                  </Switch>
+                  <Controller
+                    name="InvestorStatus"
+                    control={control}
+                    defaultValue={false}
+                    render={({ field }) => <Switches {...field} />}
+                  />
                   <h4 className="font-Urbanist font-[500] text-[16px] text-[#444444]">
                     Active
                   </h4>
@@ -159,7 +234,7 @@ const AccountSetting = () => {
               <div>
                 {/* CHECK BOXS  */}
                 <label
-                  for="email"
+                  htmlFor="email"
                   className="block mb-3 text-[15px] font-[700] text-PurpleColor"
                 >
                   Preferred Investment Range
@@ -186,7 +261,7 @@ const AccountSetting = () => {
               </div>
               <div className="w-[90%] ">
                 <label
-                  for="email"
+                  htmlFor="email"
                   className="block mb-3 text-[15px] font-[700] text-PurpleColor"
                 >
                   Property Interests
@@ -194,7 +269,7 @@ const AccountSetting = () => {
                 <div className="flex items-center gap-3">
                   <div className="flex items-center gap-2">
                     <label
-                      for="text"
+                      htmlFor="text"
                       className="block mb-1 text-[15px] font-[700] text-Paracolor"
                     >
                       Min
@@ -229,13 +304,12 @@ const AccountSetting = () => {
                     type="range"
                     min="0"
                     max="10"
-                    value="5"
-                    class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer"
+                    className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer"
                   />
 
                   <div className="flex gap-2 items-center">
                     <label
-                      for="text"
+                      htmlFor="text"
                       className="block mb-1 text-[15px] font-[700] text-Paracolor"
                     >
                       Max
@@ -268,15 +342,15 @@ const AccountSetting = () => {
               </div>
               <div>
                 <label
-                  for="email"
+                  htmlFor="email"
                   className="block mb-3 text-[15px] font-[700] text-PurpleColor"
                 >
                   Preferred Investment Location
                 </label>
-                <div class="relative  w-[100%]">
-                  <div class="absolute inset-y-0 start-0 flex items-center ps-4 pointer-events-none">
+                <div className="relative  w-[100%]">
+                  <div className="absolute inset-y-0 start-0 flex items-center ps-4 pointer-events-none">
                     <svg
-                      class="w-4 h-4 text-[#444444] "
+                      className="w-4 h-4 text-[#444444] "
                       aria-hidden="true"
                       xmlns="http://www.w3.org/2000/svg"
                       fill="none"
@@ -284,19 +358,20 @@ const AccountSetting = () => {
                     >
                       <path
                         stroke="currentColor"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
                         d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
                       />
                     </svg>
                   </div>
                   <input
+                    {...register("GetLocation")}
                     type="search"
                     id="default-search"
-                    class=" w-[90%] text-[#444444] placeholder:text-[#444444] font-Urbanist font-semibold py-3 pl-11 rounded-[10px] text-[15px] bg-[#F3EEFF] outline-none"
+                    className=" w-[90%] text-[#444444] placeholder:text-[#444444] font-Urbanist font-semibold py-3 pl-11 rounded-[10px] text-[15px] bg-[#F3EEFF] outline-none"
                     placeholder="Search by name, company, location "
-                    required
+                    // required
                   />
                 </div>
               </div>
@@ -319,6 +394,8 @@ const AccountSetting = () => {
               </div>
               <div>
                 <TextAreas
+                  name={"AboutYou"}
+                  register={register}
                   label={"About You"}
                   placeholder={
                     "Tell us about your experience in real estate, your role, and your background..."
@@ -329,7 +406,10 @@ const AccountSetting = () => {
           </section>
           {/* Send Message Button */}
           <div className="mt-1 w-[50%] sm:w-[46%] px-2">
-            <button className="bg-PurpleColor font-[700] w-[100%] h-11 text-white font-Urbanist rounded-[6px]">
+            <button
+              type="submit"
+              className="bg-PurpleColor font-[700] w-[100%] h-11 text-white font-Urbanist rounded-[6px]"
+            >
               Save Details
             </button>
           </div>

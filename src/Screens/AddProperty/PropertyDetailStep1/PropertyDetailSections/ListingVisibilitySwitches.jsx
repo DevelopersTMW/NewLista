@@ -1,8 +1,8 @@
 import { Switch } from "@headlessui/react";
 import { AlertCircle } from "lucide-react";
 import React from "react";
-import Switches from "../../../../Components/InputFields/Switch";
 import { Controller } from "react-hook-form";
+import Switches from "../../../../Components/InputFields/Switch";
 
 const ListingVisibilitySwitches = ({ register, controls }) => {
   return (

@@ -7,6 +7,8 @@ import OtpInput from "../../Components/OtpSender/OtpSender";
 import axios from "axios";
 import Spinner from "../../Components/Spinner/Spinner";
 import { Controller, useForm } from "react-hook-form";
+import { useDispatch } from "react-redux";
+import { setUser } from "../../Reducers/UserCredientails/userSlice";
 
 const OptVerification = () => {
   const ApiKey = import.meta.env.VITE_API_KEY;
@@ -17,6 +19,7 @@ const OptVerification = () => {
   const [OtpSendMess, setOtpSendMess] = useState("");
   const storedEmail = localStorage.getItem("UserEmail");
   const navigate = useNavigate();
+  const dispatch = useDispatch()
   const {
     handleSubmit,
     formState: { errors },
@@ -58,20 +61,23 @@ const OptVerification = () => {
     setLoading(true);
     setErrorMessage("");
     try {
-      const response = await axios.post(
-        `${ApiKey}/verify-otp`,
-        {
-          otp: data.otp,
-          email: storedEmail,
-        },
-      );
-      console.log("====================================");
-      console.log(response);
-      console.log("====================================");
-      setLoading(false);
+      const response = await axios.post(`${ApiKey}/verify-otp`, {
+        otp: data.otp,
+        email: storedEmail,
+      });
+      dispatch(setUser(response.data.user))
+      console.log('====================================');
+      console.log(response.data);
+      console.log('====================================');
+      if (response.data.profile_complete) {
+        localStorage.removeItem("email");
+        localStorage.setItem("token", response.data.token);
+        navigate("/admin");
+        reset();
+      } else {
+        navigate("/admin/account-setting");
+      }
       reset();
-      localStorage.removeItem("email");
-      navigate("/admin");
     } catch (error) {
       setLoading(false);
       const msg =
@@ -82,6 +88,8 @@ const OptVerification = () => {
       } else {
         setErrorMessage(msg);
       }
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -150,15 +158,15 @@ const OptVerification = () => {
                   {errors.otp.message}
                 </p>
               )}
-              <p className="font-Urbanist text-Paracolor mt-3 font-[700] text-[12.5px] min-[410px]:text-[14px]">
-                Didn’t receive a code?{" "}
-                <Link className="text-[#FF8682]">Resend</Link>
-              </p>
               {ErrorMessage && (
                 <p className="font-Poppins mt-2 font-[500] border-red-500 text-red-600  text-[13px]">
                   {ErrorMessage}
                 </p>
               )}
+              <p className="font-Urbanist text-Paracolor mt-3 font-[700] text-[12.5px] min-[410px]:text-[14px]">
+                Didn’t receive a code?{" "}
+                <Link className="text-[#FF8682]">Resend</Link>
+              </p>
             </div>
             {/* Sign Up Button */}
             <div className="mt-1">

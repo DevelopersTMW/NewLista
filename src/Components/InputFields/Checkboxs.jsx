@@ -6,10 +6,10 @@ function Checkboxs({ labels, name, value, onChange }) {
       <Checkbox
         checked={value}
         onChange={onChange}
-        className="group block size-3.5 border w-[20px] rounded-[2px] bg-white data-checked:bg-PurpleColor"
+        className="group block size-3.5 border w-[20px] h-[16.5px] rounded-[2px] bg-white data-checked:bg-PurpleColor"
       >
         <svg
-          className="stroke-white opacity-0 group-data-checked:opacity-100"
+          className="stroke-white opacity-0 group-data-checked:opacity-100 "
           viewBox="-1 -1 16 16"
           fill="none"
         >
