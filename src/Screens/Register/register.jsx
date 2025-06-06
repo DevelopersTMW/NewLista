@@ -79,6 +79,9 @@ const register = () => {
         }
       );
       console.log(Response.data);
+      const UserEmail = Response.data.user.email
+      localStorage.setItem("UserEmail" , UserEmail)
+      navigate("/verify-otp")
     } catch (error) {
       const message = error?.response?.data?.message;
       if (message?.toLowerCase().includes("email")) {

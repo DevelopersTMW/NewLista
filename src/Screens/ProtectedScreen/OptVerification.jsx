@@ -6,46 +6,29 @@ import ListingRightArrow from "../../assets/ListingRightSideArrow.png";
 import OtpInput from "../../Components/OtpSender/OtpSender";
 import axios from "axios";
 import Spinner from "../../Components/Spinner/Spinner";
+import { Controller, useForm } from "react-hook-form";
 
 const OptVerification = () => {
+  const ApiKey = import.meta.env.VITE_API_KEY;
+  const [Loading, setLoading] = useState(false);
   const [ErrorMessage, setErrorMessage] = useState("");
   const [otpValue, setOtpValue] = useState("");
   const [loading, setloading] = useState(false);
-  const [OtpSendMess , setOtpSendMess] = useState("")
-  const email = localStorage.getItem("email");
-  const navigate = useNavigate()
+  const [OtpSendMess, setOtpSendMess] = useState("");
+  const storedEmail = localStorage.getItem("UserEmail");
+  const navigate = useNavigate();
+  const {
+    handleSubmit,
+    formState: { errors },
+    control,
+    setError,
+    reset,
+  } = useForm();
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    if (otpValue.length === 6) {
-      setloading(true)
-      setOtpSendMess("")
-      try {
-        const Response = await axios.post(
-          "https://newlista.secureserverinternal.com/api/verify-reset-otp",
-          {
-            otp: otpValue,
-            email: email,
-          }
-        );
-        setloading(false)
-        navigate("/set-new-password")
-      } catch (error) {
-        setloading(false)
-        if (error.response.data.message === "Invalid OTP") {
-          setErrorMessage("Invalid OTP");
-        }
-      }
-    } else {
-      setErrorMessage("Please enter the full 6-digit code");
-    }
-  };
-
-
-  const ResendCode = async (e)=>{
+  const ResendCode = async (e) => {
     e.preventDefault();
     setloading(true);
-    setErrorMessage("")
+    setErrorMessage("");
     try {
       const Response = await axios.post(
         "https://newlista.secureserverinternal.com/api/forgot-password",
@@ -55,92 +38,141 @@ const OptVerification = () => {
       );
       console.log(Response.data);
       localStorage.setItem("email", email);
-      setOtpSendMess("Otp Send SuccessFully")
+      setOtpSendMess("Otp Send SuccessFully");
       setloading(false);
     } catch (error) {
       setloading(false);
       const ErrorMessa = error.response.data.message;
       setErrorMessage(ErrorMessa);
     }
-  }
+  };
+
+  const VerifyOtp = async (data) => {
+    console.log("====================================");
+    console.log(data.otp);
+    console.log("====================================");
+    if (!storedEmail) {
+      setErrorMessage("Email not found. Please try again from the start.");
+      return;
+    }
+    setLoading(true);
+    setErrorMessage("");
+    try {
+      const response = await axios.post(
+        `${ApiKey}/verify-otp`,
+        {
+          otp: data.otp,
+          email: storedEmail,
+        },
+      );
+      console.log("====================================");
+      console.log(response);
+      console.log("====================================");
+      setLoading(false);
+      reset();
+      localStorage.removeItem("email");
+      navigate("/admin");
+    } catch (error) {
+      setLoading(false);
+      const msg =
+        error?.response?.data?.message ||
+        "An error occurred. Please try again.";
+      if (msg.toLowerCase().includes("otp")) {
+        setError("otp", { type: "manual", message: msg });
+      } else {
+        setErrorMessage(msg);
+      }
+    }
+  };
 
   return (
     <>
-      <div className="flex">
+      <div className="min-h-screen md:flex ">
         {/* IMAGE SECTION  */}
-        <div className="w-[42%] min-h-screen ">
-          <img className="h-[100%] object-cover" src={Image} alt="" />
+        <div className="md:w-[40%] min-[900px]:!w-[48%] lg:!w-[43%] xl:!w-[42%] 2xl:!w-[48%]">
+          <img
+            className="w-[100%] object-cover h-[20vh] sm:h-[30vh] md:h-full"
+            src={Image}
+            alt=""
+          />
         </div>
 
         {/* LOGIN FOR SECTION  */}
-        <div className="w-[58%] px-36 flex flex-col justify-center gap-7 ">
+        <div className="flex flex-col justify-center gap-7 py-20 max-[380px]:px-6 px-8 sm:px-16 md:py-20 md:w-[50%] lg:w-[55%] lg:px-20 lg:py-20 xl:py-24 xl:px-28  2xl:px-32">
+          {/* Heading Info  */}
           <div>
-            <div>
-              <p className="font-Urbanist  text-Paracolor font-[700] text-[15px]">
-                <Link to={"/login"} className="flex items-center gap-1.5">
-                  <img className="h-3 w-2" src={ListingRightArrow} alt="" />{" "}
-                  Back to login
-                </Link>
-              </p>
-            </div>
-            <div className="flex flex-col ">
-              <h1 className="font-Poppins font-[700] text-[40px]">
-                Verify code
-              </h1>
-              <p className="font-Urbanist text-Paracolor font-[600] text-[14px]">
-                An authentication code has been sent to your email.
-              </p>
-            </div>
+            <p className="font-Urbanist  text-Paracolor font-[700] text-[15px] 2xl:text-[16px]">
+              <Link to={"/login"} className="flex items-center gap-1.5">
+                <img className="h-3 w-2" src={ListingRightArrow} alt="" /> Back
+                to login
+              </Link>
+            </p>
+            <h1 className="font-Poppins font-[700] text-[32px] max-[380px]:text-[28px] sm:text-[35px] md:text-[38px] lg:text-[44px] 2xl:text-[48px]">
+              Verify code
+            </h1>
+            <p className="font-Urbanist text-Paracolor font-[600] max-[380px]:text-[12px] text-[13px] sm:text-[13.5px] lg:text-[15px] 2xl:text-[17px] lg:pl-2">
+              An authentication code has been sent to your email.
+            </p>
           </div>
 
           <form
-            onSubmit={(e) => {
-              handleSubmit(e);
-            }}
-            className="flex flex-col gap-5"
+            onSubmit={handleSubmit(VerifyOtp)}
+            className="flex flex-col gap-4"
           >
+            {/* Name  */}
             <div>
-                 {OtpSendMess && (
+              {OtpSendMess && (
                 <p className="font-Poppins mb-2 font-[500] border-green-500 text-green-500  text-[13px]">
                   {OtpSendMess}
                 </p>
               )}
-              <OtpInput
-                onChangeOtp={(otp) => {
-                  setOtpValue(otp);
+              <Controller
+                name="otp"
+                control={control}
+                rules={{
+                  required: "OTP is required",
+                  minLength: {
+                    value: 6,
+                    message: "OTP must be 6 digits",
+                  },
                 }}
-                error={ErrorMessage}
+                render={({ field }) => (
+                  <OtpInput
+                    length={6}
+                    value={field.value || ""}
+                    onChange={field.onChange}
+                    error={errors.otp}
+                  />
+                )}
               />
-              <p className="font-Urbanist text-Paracolor mt-3 font-[700] text-[14px]">
+              {errors.otp && (
+                <p className="text-red-500 font-[500] text-[13.5px] pt-1  font-Urbanist tracking-wide">
+                  {errors.otp.message}
+                </p>
+              )}
+              <p className="font-Urbanist text-Paracolor mt-3 font-[700] text-[12.5px] min-[410px]:text-[14px]">
                 Didn’t receive a code?{" "}
-                <Link onClick={ResendCode} className="text-[#FF8682]">Resend</Link>
+                <Link className="text-[#FF8682]">Resend</Link>
               </p>
               {ErrorMessage && (
                 <p className="font-Poppins mt-2 font-[500] border-red-500 text-red-600  text-[13px]">
                   {ErrorMessage}
                 </p>
               )}
-             
             </div>
-
+            {/* Sign Up Button */}
             <div className="mt-1">
               <button
                 type="submit"
-                className="bg-PurpleColor cursor-pointer font-[700] w-[90%] h-11 text-white font-Urbanist rounded-[6px]"
+                disabled={Loading}
+                className={`bg-PurpleColor w-[100%] 2xl:w-[80%] h-11 cursor-pointer mt-3 text-white font-Urbanist rounded-[6px] font-[700] ${
+                  Loading ? "opacity-50 cursor-not-allowed" : ""
+                }`}
               >
-                {loading ? (
-                  <div className="flex justify-center">
-                    <Spinner />
-                  </div>
-                ) : (
-                  "Verify"
-                )}
-                
+                {Loading ? "Verifying..." : "Verify"}
               </button>
             </div>
           </form>
-
-          <div></div>
         </div>
       </div>
     </>

@@ -1,77 +1,80 @@
-import React, { useRef, useState } from "react";
+// OtpInput.jsx
+import React, { useEffect, useRef } from "react";
 
-const OtpInput = ({ length = 6, onChangeOtp , error }) => {
-  const [otp, setOtp] = useState(new Array(length).fill(""));
+const OtpInput = ({ length = 6, value = "", onChange, error }) => {
   const inputsRef = useRef([]);
 
-  const handleChange = (e, index) => {
-    const value = e.target.value.replace(/\D/, ""); // Allow only digits
+  // Keep OTP in array form for managing individual inputs
+  const otp = value.split("").concat(Array(length).fill("")).slice(0, length);
 
-    if (!value) return;
+  const focusInput = (index) => {
+    if (inputsRef.current[index]) {
+      inputsRef.current[index].focus();
+    }
+  };
+
+  const handleChange = (e, index) => {
+    const val = e.target.value.replace(/\D/, "");
+    if (!val) return;
 
     const newOtp = [...otp];
-    newOtp[index] = value;
-    setOtp(newOtp);
+    newOtp[index] = val;
+    onChange(newOtp.join(""));
 
-    // Auto-focus next input
     if (index < length - 1) {
-      inputsRef.current[index + 1].focus();
+      focusInput(index + 1);
     }
-
-    // Call parent on change
-    onChangeOtp(newOtp.join(""));
   };
 
   const handleKeyDown = (e, index) => {
     if (e.key === "Backspace") {
       const newOtp = [...otp];
-
-      if (otp[index]) {
+      if (newOtp[index]) {
         newOtp[index] = "";
+        onChange(newOtp.join(""));
       } else if (index > 0) {
-        inputsRef.current[index - 1].focus();
+        focusInput(index - 1);
         newOtp[index - 1] = "";
+        onChange(newOtp.join(""));
       }
-
-      setOtp(newOtp);
-      onChangeOtp(newOtp.join(""));
     }
   };
 
   const handlePaste = (e) => {
     e.preventDefault();
-    const pastedData = e.clipboardData.getData("text").slice(0, length).split("");
+    const pasted = e.clipboardData.getData("text").slice(0, length).replace(/\D/g, "").split("");
 
     const newOtp = [...otp];
-    pastedData.forEach((char, i) => {
-      if (i < length && /\d/.test(char)) {
+    pasted.forEach((char, i) => {
+      if (i < length) {
         newOtp[i] = char;
       }
     });
 
-    setOtp(newOtp);
-    onChangeOtp(newOtp.join(""));
-
-    // Focus last filled input
-    const lastFilledIndex = pastedData.length - 1;
-    if (inputsRef.current[lastFilledIndex]) {
-      inputsRef.current[lastFilledIndex].focus();
+    onChange(newOtp.join(""));
+    if (pasted.length < length) {
+      focusInput(pasted.length);
+    } else {
+      inputsRef.current[length - 1].blur();
     }
   };
 
   return (
-    <div className="flex gap-4">
-      {otp.map((digit, index) => (
+    <div className="flex gap-2 min-[410px]:gap-4">
+      {Array.from({ length }).map((_, index) => (
         <input
           key={index}
           ref={(el) => (inputsRef.current[index] = el)}
           type="text"
+          inputMode="numeric"
           maxLength="1"
-          value={digit}
+          value={otp[index] || ""}
           onChange={(e) => handleChange(e, index)}
           onKeyDown={(e) => handleKeyDown(e, index)}
           onPaste={handlePaste}
-          className={`w-11 h-12 text-center border outline-none rounded-md text-lg font-medium ${error ? "border-red-600" : "border-gray-300"}`}
+          className={`w-9 h-10 min-[410px]:w-11 min-[410px]:h-12 text-center border outline-none rounded-md text-lg font-medium ${
+            error ? "border-red-600" : "border-gray-300"
+          }`}
         />
       ))}
     </div>
