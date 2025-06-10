@@ -3,8 +3,6 @@ import Inputs from "../../../../Components/InputFields/Inputs";
 import Selection from "../../../../Components/InputFields/Selection";
 import RadioButton from "../../../../Components/InputFields/RadioButton";
 
-
-
 const propertyTypes = [
   "Church",
   "Gas Station",
@@ -24,13 +22,24 @@ const propertyTypes = [
   "Storage Facility",
   "Vacant Land",
   "Warehouse",
-  "Other"
+  "Other",
 ];
 
-
-const PropertytypeSelection = ({ PropertyRadios, register }) => {
+const PropertytypeSelection = ({ PropertyRadios, register, errors }) => {
   return (
     <div className="flex flex-col gap-6 pb-10">
+      <div>
+        <span className="w-[100%]">
+          <Inputs
+            labels={"Property Name"}
+            placeholder={"Enter Property Name"}
+            register={register("PropertyTitle", {
+              required: "Property Name is required",
+            })}
+            error={errors.PropertyTitle?.message}
+          />
+        </span>
+      </div>
       <div className="flex flex-col md:flex-row gap-8">
         <span className="w-[100%]">
           <Selection
@@ -39,6 +48,8 @@ const PropertytypeSelection = ({ PropertyRadios, register }) => {
             Options={propertyTypes}
             name={"propertyName"}
             register={register}
+            rules={{ required: "Please select an option." }}
+            error={errors.propertyName?.message}
           />
         </span>
 
@@ -49,6 +60,8 @@ const PropertytypeSelection = ({ PropertyRadios, register }) => {
             Options={["Available", "Withdraw", "Pending", "Loss", "Lease"]}
             name={"ListingStatus"}
             register={register}
+            rules={{ required: "Please select an option." }}
+            error={errors.ListingStatus?.message}
           />
         </span>
       </div>
@@ -61,8 +74,10 @@ const PropertytypeSelection = ({ PropertyRadios, register }) => {
               labels={"Sale Price"}
               type={"number"}
               placeholder={"Enter Price"}
-              name={"salePrice"}
-              register={register}
+              register={register("salePrice", {
+                required: "Sales Price is required",
+              })}
+              error={errors.salePrice?.message}
             />
           </span>
         )}
@@ -75,18 +90,27 @@ const PropertytypeSelection = ({ PropertyRadios, register }) => {
                 labels={"Lease Rate"}
                 type={"number"}
                 placeholder={"Enter Price"}
-                name={"leaseRate"}
-                register={register}
+                register={register("leaseRate", {
+                  required: "Lease Rate is required",
+                })}
+                error={errors.leaseRate?.message}
               />
             </span>
 
             <span className="w-[100%]">
               <Selection
-                labels={"Space"}
-                defaultOption={"Per SF/Month"}
-                Options={["Per SF/Year", "Per Month", "Per Year"]}
-                name={"persf"}
+                labels="ㅤ"
+                defaultOption="Select"
+                Options={[
+                  "Per SF/Month",
+                  "Per SF/Year",
+                  "Per Month",
+                  "Per Year",
+                ]}
+                name="persf"
                 register={register}
+                rules={{ required: "Please select an option." }}
+                error={errors.persf?.message}
               />
             </span>
           </span>
@@ -97,8 +121,10 @@ const PropertytypeSelection = ({ PropertyRadios, register }) => {
             labels={"Building Size (sq ft)"}
             type={"number"}
             placeholder={"Total Building Square Footage"}
-            name={"buildingSize"}
-            register={register}
+            register={register("BuildingSize_sqft", {
+              required: "Building Size is required",
+            })}
+            error={errors.BuildingSize_sqft?.message}
           />
         </span>
       </div>
@@ -112,29 +138,36 @@ const PropertytypeSelection = ({ PropertyRadios, register }) => {
           <span className="flex gap-4 flex-wrap">
             <RadioButton
               label={"N (Single Net)"}
-              register={register}
-              name="leaseType" // Use consistent name here
+              register={register("leaseType", {
+                required: "Please select a lease type.",
+              })}
+              name="leaseType"
               value="N"
             />
             <RadioButton
               label={"NN (Double Net)"}
-              register={register}
+              register={register("leaseType")}
               name="leaseType"
               value="NN"
             />
             <RadioButton
               label={"NNN (Triple Net)"}
-              register={register}
+             register={register("leaseType")}
               name="leaseType"
               value="NNN"
             />
             <RadioButton
               label={"None"}
-              register={register}
+              register={register("leaseType")}
               name="leaseType"
               value="None"
             />
           </span>
+          {errors.leaseType && (
+            <p className="text-red-500 text-sm mt-1">
+              {errors.leaseType.message}
+            </p>
+          )}
         </div>
       )}
     </div>

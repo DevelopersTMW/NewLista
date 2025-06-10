@@ -22,9 +22,10 @@ const Step1 = ({ onNext, defaultValues }) => {
     formState: { errors },
     watch,
     control,
-    reset
+    reset,
   } = useForm({
-    defaultValues});
+    defaultValues,
+  });
 
   // CHECK RADIO VALUE
   const PropertyRadio = watch("propertyType");
@@ -38,21 +39,30 @@ const Step1 = ({ onNext, defaultValues }) => {
         );
       case "Warehouse":
         return (
-          <WareHouseForm register={register} control={control} propertyTypeName={propertyType} />
+          <WareHouseForm
+            register={register}
+            control={control}
+            propertyTypeName={propertyType}
+          />
         );
       case "Vacant Land":
         return <LandForm register={register} propertyTypeName={propertyType} />;
       default:
         return (
-          <DefaultForm register={register} propertyTypeName={propertyType} />
+          <DefaultForm
+            errors={errors}
+            register={register}
+            propertyTypeName={propertyType}
+          />
         );
     }
   };
 
   const SubmitPropertyForm = (value) => {
     console.log("Validated Form Data:", value);
-    // onNext(data);
-    reset();
+    if(value){
+    onNext(value);
+    } return
   };
 
   return (
@@ -64,10 +74,11 @@ const Step1 = ({ onNext, defaultValues }) => {
             <PropertytypeSelection
               PropertyRadios={PropertyRadio}
               register={register}
+              errors={errors}
             />
             {/* CUSTOM FIELD  */}
             {propertyType && renderFormFields()}
-            <AddressFields register={register} />
+            <AddressFields register={register} errors={errors} />
             {/* DESCRIPTION SECTION  */}
             <div className="border-b-[1px]  border-[#BBBBBB] pb-7 sm:py-7 flex-col gap-4 flex">
               <TextAreas
@@ -75,8 +86,10 @@ const Step1 = ({ onNext, defaultValues }) => {
                 placeholder={
                   "Describe the property, its features, location advantages, and any unique selling points."
                 }
-                name={"description"}
-                register={register}
+                register={register("description", {
+                  required: "Sales Price is required",
+                })}
+                error={errors.description?.message}
               ></TextAreas>
             </div>
             <ListingVisibilitySwitches controls={control} />
@@ -98,4 +111,3 @@ const Step1 = ({ onNext, defaultValues }) => {
 };
 
 export default Step1;
-

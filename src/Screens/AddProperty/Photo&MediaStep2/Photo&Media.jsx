@@ -1,12 +1,7 @@
-import React, { useEffect, useState } from "react";
-import { Controller, useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { Facebook, Instagram, Linkedin, Twitter, Upload } from "lucide-react";
-import { NavLink } from "react-router-dom";
+import { useForm } from "react-hook-form";
+import { Facebook, Instagram, Linkedin, Twitter } from "lucide-react";
 import AddPhotoSection from "./AddPhotoSection/AddPhotoSection.jsx";
-import Checkboxs from "../../../Components/InputFields/Checkboxs.jsx";
 import Features from "./Features/Features.jsx";
-
 
 const socialPlatforms = [
   { name: "Facebook", icon: Facebook },
@@ -15,56 +10,40 @@ const socialPlatforms = [
   { name: "Instagram", icon: Instagram },
 ];
 
-
 const Step2 = ({ onNext, onBack, defaultValues }) => {
   const {
     register,
     handleSubmit,
     formState: { errors },
-    watch,
+    setValue,
     control,
   } = useForm({
     defaultValues,
   });
-  const files = watch("fileInput"); // will be FileList
-  const [previews, setPreviews] = useState([]);
 
-  useEffect(() => {
-    if (!files || files.length === 0) {
-      setPreviews([]);
-      return;
+  const FormSubmit = async (Data) => {
+    console.log(Data);
+    if (Data) {
+      onNext(Data);
     }
-
-    const urls = Array.from(files)
-      .filter((file) => file.type.startsWith("image/"))
-      .map((file) => URL.createObjectURL(file));
-
-    setPreviews(urls);
-
-    // Cleanup object URLs
-    return () => {
-      urls.forEach((url) => URL.revokeObjectURL(url));
-    };
-  }, [files]);
-
-  const onSubmits = (value) => {
-    console.log("hello");
-
-    console.log(value);
   };
 
   return (
     <>
-      <form onSubmit={handleSubmit(onSubmits)} action="" className="">
+      <form onSubmit={handleSubmit(FormSubmit)} action="" className="">
         <div className="border border-[#ececec] rounded-2xl px-4.5 sm:px-10 py-8 mx-3.5 sm:mx-0">
           <div className="relative">
             <AddPhotoSection
-              previews={previews}
+              setValue={setValue}
+              //  register={register("fileInput", {
+              //   required: "atleast One Image is required",
+              // })}
               register={register}
+              error={errors.fileInput}
             ></AddPhotoSection>
           </div>
           <div className="border-y-[1px] border-[#BBBBBB] border-solid my-10 py-9">
-            <Features control={control}></Features>
+            <Features errors={errors} control={control}></Features>
           </div>
           <div>
             <div>

@@ -11,7 +11,9 @@ const Selection = ({
   onchange,
   register,
   name,
-   autoSelectFirst = false
+  error,
+  rules,
+  autoSelectFirst = false,
 }) => {
   const [Optionss, setOptions] = useState([]);
 
@@ -32,9 +34,9 @@ const Selection = ({
           {labels}
         </label>
         <Select
-          className={
-            "bg-[#F3EEFF] border-[#F3EEFF]  text-[#4b4b4b] font-[600] font-Urbanist text-[14px] w-[100%] h-12 px-4 rounded-[6px] outline-none appearance-none cursor-pointer focus:outline-none"
-          }
+          className={`bg-[#F3EEFF] border text-[#4b4b4b] font-[600] font-Urbanist text-[14px] w-[100%] h-12 px-4 rounded-[6px] outline-none appearance-none cursor-pointer focus:outline-none ${
+            error ? "border-red-500 " : "border-[#F3EEFF]"
+          }`}
           defaultValue={
             autoSelectFirst ? Options[0] : defaultOption === null ? "" : ""
           }
@@ -42,12 +44,14 @@ const Selection = ({
           value={values}
           onChange={onchange}
           {...(register && typeof register === "function"
-            ? register(name)
+            ? {...register(name, rules)}
             : {})}
           aria-label="Project status"
         >
           {defaultOption !== null && !autoSelectFirst && (
-            <option className="text-[11px] sm:text-[14px]" value="">{defaultOption}</option>
+            <option className="text-[11px] sm:text-[14px]" value="">
+              {defaultOption}
+            </option>
           )}
           {Optionss?.map((items, index) => {
             return (
@@ -66,6 +70,11 @@ const Selection = ({
           aria-hidden="true"
         />
       </div>
+       {error && (
+        <p className="text-red-500 font-[500] text-[14px] pt-1 font-Urbanist tracking-wide">
+          {typeof error === "string" ? error : error.message}
+        </p>
+      )}
     </>
   );
 };

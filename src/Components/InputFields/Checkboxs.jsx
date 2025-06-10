@@ -1,29 +1,32 @@
 import { Checkbox } from "@headlessui/react";
 
-function Checkboxs({ labels, name, value, onChange }) {
+function Checkboxs({ labels, value, onChange, checked, error }) {
   return (
-    <div className="flex justify-center items-center gap-2">
-      <Checkbox
-        checked={value}
-        onChange={onChange}
-        className="group block size-3.5 border w-[20px] h-[16.5px] rounded-[2px] bg-white data-checked:bg-PurpleColor"
-      >
-        <svg
-          className="stroke-white opacity-0 group-data-checked:opacity-100 "
-          viewBox="-1 -1 16 16"
-          fill="none"
+    <div className="flex flex-col gap-1">
+      <div className="flex items-center gap-2">
+        <Checkbox
+          checked={checked}
+          onChange={onChange}
+          className="group block size-3.5 border w-[20px] h-[16.5px] rounded-[2px] bg-white data-checked:bg-PurpleColor"
         >
-          <path
-            d="M3 8L6 11L11 3.5"
-            strokeWidth={2}
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-        </svg>
-      </Checkbox>
-      <label className="block text-[13.5px] sm:text-[15px] font-[600] text-[#222222] w-[100%]">
-        {labels}
-      </label>
+          <svg
+            className="stroke-white opacity-0 group-data-checked:opacity-100"
+            viewBox="-1 -1 16 16"
+            fill="none"
+          >
+            <path
+              d="M3 8L6 11L11 3.5"
+              strokeWidth={2}
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
+        </Checkbox>
+        <label className="text-[13.5px] sm:text-[15px] font-[600] text-[#222222]">
+          {labels}
+        </label>
+      </div>
+      {error && <p className="text-red-500 text-sm">{error}</p>}
     </div>
   );
 }

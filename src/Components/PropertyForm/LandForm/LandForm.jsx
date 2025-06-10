@@ -24,7 +24,6 @@ const LandForm = ({ propertyTypeName, register }) => {
               Options={currencies}
               name={"Currency"}
               register={register}
-               autoSelectFirst={false}
             ></Selection>
           </span>
           <span className="w-[100%]">

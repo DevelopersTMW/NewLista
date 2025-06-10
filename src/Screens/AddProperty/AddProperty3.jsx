@@ -9,12 +9,16 @@ import MiniFooter from "../../Components/Footer/MiniFooter.jsx";
 
 // IMAGES
 import AddPropertyBanner from "../../assets/AddPropertyBanner1.1.jpg";
-
-
+import axios from "axios";
+import AlertModal from "../../Components/AlertModal/AlertModal.js";
+import { useNavigate } from "react-router-dom";
 
 const PropertyForm = () => {
   const [currentStep, setCurrentStep] = useState(0);
   const [formData, setFormData] = useState({});
+  const ApiKey = import.meta.env.VITE_API_KEY;
+  const token = localStorage.getItem("token");
+  const navigate = useNavigate()
 
   const nextStep = (data) => {
     setFormData((prev) => ({ ...prev, ...data }));
@@ -23,8 +27,72 @@ const PropertyForm = () => {
 
   const prevStep = () => setCurrentStep((prev) => prev - 1);
 
-  const handleFinalSubmit = () => {
+  const handleFinalSubmit = async () => {
+    if (!formData || Object.keys(formData).length === 0) {
+      console.error("Form submission failed: no data.");
+      return;
+    }
+
     console.log("Submitted Data:", formData);
+    try {
+      const Response = await axios.post(
+        `${ApiKey}/add-update-property`,
+
+        {
+          user_id: 10,
+
+          property_name: formData.PropertyTitle,
+
+          listing_type: formData.propertyType,
+
+          property_type: formData.propertyName,
+
+          listing_status: formData.ListingStatus,
+
+          lease_rate: formData.leaseRate,
+
+          lease_rate_unit: formData.persf,
+
+          lease_type: formData.leaseType,
+
+          building_size: Number(formData.BuildingSize_sqft),
+
+          sale_price: Number(formData.salePrice),
+
+          address: formData.PropertyAddress,
+
+          city: formData.City,
+
+          state: formData.StateProvince,
+
+          zip: formData.ZipPostalCode,
+
+          description: formData.description,
+
+          images: formData.fileInput,
+
+          featured_listing: formData.FeaturedListing,
+
+          off_market_listing: formData.OfftheMarketListing,
+        },
+
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      AlertModal({
+        icon: "success",
+        title: "Thank You",
+        iconColor: "#703BF7",
+        text: "Your Form has Been Submitted",
+      });
+      navigate("/properties")
+      console.log(Response);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const steps = [

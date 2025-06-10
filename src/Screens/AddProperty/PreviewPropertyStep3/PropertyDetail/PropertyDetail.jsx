@@ -1,6 +1,6 @@
 import React from "react";
 
-const PropertyDetail = () => {
+const PropertyDetail = ({ formData }) => {
   return (
     <>
       <div className="flex flex-col gap-5 md:flex-row md:gap-10 py-10">
@@ -14,44 +14,76 @@ const PropertyDetail = () => {
           <div className="mb-2">
             <div className="flex justify-between mb-2">
               <h1 className="max-[400px]:text-[16px] text-[17px] lg:text-[18px] font-[700] font-Urbanist  text-[#1E1E1E]">
+                Name:
+              </h1>
+              <p className="max-[400px]:text-[14px] text-[14.5px] font-Inter font-medium text-pretty text-Paracolor sm:text-[14px]/8 sm:leading-[18px] ">
+                {formData.PropertyTitle}
+              </p>
+            </div>
+            <div className="flex justify-between mb-2">
+              <h1 className="max-[400px]:text-[16px] text-[17px] lg:text-[18px] font-[700] font-Urbanist  text-[#1E1E1E]">
                 Type:
               </h1>
               <p className="max-[400px]:text-[14px] text-[14.5px] font-Inter font-medium text-pretty text-Paracolor sm:text-[14px]/8 sm:leading-[18px] ">
-                Not specified
+                {formData.propertyName}
               </p>
             </div>
+            <div className="flex justify-between mb-2">
+              <h1 className="max-[400px]:text-[16px] text-[17px] lg:text-[18px] font-[700] font-Urbanist  text-[#1E1E1E]">
+                Listing Type:
+              </h1>
+              <p className="max-[400px]:text-[14px] text-[14.5px] font-Inter font-medium text-pretty text-Paracolor sm:text-[14px]/8 sm:leading-[18px] ">
+                {formData.propertyType}
+              </p>
+            </div>
+            
             <div className="flex justify-between mb-2">
               <h1 className="max-[400px]:text-[16px] text-[17px] lg:text-[18px] font-[700] font-Urbanist  text-[#1E1E1E]">
                 Status:
               </h1>
               <p className="max-[400px]:text-[14px] text-[14.5px] font-Inter font-medium text-pretty text-Paracolor sm:text-[14px]/8 sm:leading-[18px] ">
-                Available
+                {formData.ListingStatus}
               </p>
             </div>
             <div className="flex justify-between mb-2">
-              <h1 className="max-[400px]:text-[16px] text-[17px] lg:text-[18px] font-[700] font-Urbanist  text-[#1E1E1E]">
-                Sale Price:
-              </h1>
-              <p className="max-[400px]:text-[14px] text-[14.5px] font-Inter font-medium text-pretty text-Paracolor sm:text-[14px]/8 sm:leading-[18px] ">
-                $2,500,000
-              </p>
+              {formData.salePrice ? (
+                <>
+                  <h1 className="max-[400px]:text-[16px] text-[17px] lg:text-[18px] font-[700] font-Urbanist  text-[#1E1E1E]">
+                    Sale Price:
+                  </h1>
+                  <p className="max-[400px]:text-[14px] text-[14.5px] font-Inter font-medium text-pretty text-Paracolor sm:text-[14px]/8 sm:leading-[18px] ">
+                    {formData.salePrice}
+                  </p>
+                </>
+              ) : (
+                <>
+                  <h1 className="max-[400px]:text-[16px] text-[17px] lg:text-[18px] font-[700] font-Urbanist  text-[#1E1E1E]">
+                    Lease Rate:
+                  </h1>
+                  <p className="max-[400px]:text-[14px] text-[14.5px] font-Inter font-medium text-pretty text-Paracolor sm:text-[14px]/8 sm:leading-[18px] ">
+                    {formData.leaseRate}
+                  </p>
+                </>
+              )}
             </div>
             <div className="flex justify-between mb-2">
               <h1 className="max-[400px]:text-[16px] text-[17px] lg:text-[18px] font-[700] font-Urbanist  text-[#1E1E1E]">
                 Building Size:
               </h1>
               <p className="max-[400px]:text-[14px] text-[14.5px] font-Inter font-medium text-pretty text-Paracolor sm:text-[14px]/8 sm:leading-[18px] ">
-                10,000 sq ft
+                {formData.BuildingSize_sqft + "sq ft"}
               </p>
             </div>
-            <div className="flex justify-between mb-2">
-              <h1 className="max-[400px]:text-[16px] text-[17px] lg:text-[18px] font-[700] font-Urbanist  text-[#1E1E1E]">
-                Lease Type:
-              </h1>
-              <p className="max-[400px]:text-[14px] text-[14.5px] font-Inter font-medium text-pretty text-Paracolor sm:text-[14px]/8 sm:leading-[18px] ">
-                NNN (Triple Net)
-              </p>
-            </div>
+            {formData.leaseType && (
+              <div className="flex justify-between mb-2">
+                <h1 className="max-[400px]:text-[16px] text-[17px] lg:text-[18px] font-[700] font-Urbanist  text-[#1E1E1E]">
+                  Lease Type:
+                </h1>
+                <p className="max-[400px]:text-[14px] text-[14.5px] font-Inter font-medium text-pretty text-Paracolor sm:text-[14px]/8 sm:leading-[18px] ">
+                  NNN (Triple Net)
+                </p>
+              </div>
+            )}
           </div>
         </div>
         {/* LOCATION  */}
@@ -61,13 +93,13 @@ const PropertyDetail = () => {
               Location:
             </h1>
             <p className="font-Inter text-[12.5px] text-end min-[400px]:text-[13px] text-pretty text-Paracolor sm:text-[13.5px] lg:text-[14px]/8 sm:leading-[18px] ">
-              123 Main Street Anytown, CA 12345
+              {formData.PropertyAddress + " " + formData.City + " " + formData.StateProvince + " " + formData.ZipPostalCode}
             </p>
           </div>
           <div>
             <iframe
-              src="https://www.google.com/maps?q=404 123 Main Street Anytown, CA 12345
-                &output=embed"
+              src={`https://www.google.com/maps?q=404 ${formData.PropertyAddress + formData.City + formData.StateProvince + formData.ZipPostalCode}
+                &output=embed`}
               className="w-full h-[200px]"
               allowFullScreen=""
               loading="lazy"
