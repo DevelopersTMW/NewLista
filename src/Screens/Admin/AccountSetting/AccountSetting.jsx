@@ -14,6 +14,7 @@ import { useSelector } from "react-redux";
 
 import ComboboxSelector from "../../../Components/ComboboxSelector/ComboboxSelector.jsx";
 import axios from "axios";
+import SuggestedState from "../../../Components/RegisterCountrySelector/SuggestedState.jsx";
 
 const statesArray = [
   { id: 1, name: "Alabama", code: "AL" },
@@ -94,10 +95,15 @@ const MaxPrice = [
 
 const AccountSetting = () => {
   const user = JSON.parse(localStorage.getItem("User"));
+  const profileData = JSON.parse(localStorage.getItem("ProfileData"));
+
   const [AutoSelect, setAutoSelect] = useState(true);
   const [selectedState, setSelectedState] = useState("");
   const [cities, setCities] = useState([]);
   const [selectedCity, setSelectedCity] = useState("");
+
+  console.log(user);
+
   const {
     register,
     handleSubmit,
@@ -108,18 +114,39 @@ const AccountSetting = () => {
     watch,
     reset,
   } = useForm({
-    defaultValues: {
-      FirstName: user.first_name,
-      LastName: user.last_name,
-      Email: user.email,
-      phone: user.phone,
-      StreetAddress: user.location,
-      PropertyInterests: {},
-      minPrice: 0,
-      maxPrice: 100000,
-      PropertyRange: 0,
-    },
+    defaultValues: user
+      ? {
+          FirstName: user.first_name,
+          LastName: user.last_name,
+          Email: user.email,
+          phone: user.phone,
+          StreetAddress: user.location,
+          PropertyInterests: {},
+          minPrice: 0,
+          maxPrice: 100000,
+          PropertyRange: 0,
+          PreferredLocation: [],
+        }
+      : profileData,
   });
+
+  const [selectedStates, setSelectedStates] = useState([]);
+
+  const handleSelectState = (state) => {
+    if (!state?.name) return;
+    if (!selectedStates.includes(state.name)) {
+      setSelectedStates((prev) => [...prev, state.name]);
+    }
+  };
+
+  const handleRemoveState = (name) => {
+    setSelectedStates((prev) => prev.filter((stateName) => stateName !== name));
+  };
+
+  useEffect(() => {
+    setValue("PreferredLocation", selectedStates);
+    setSelectedStates(profileData.PreferredLocation);
+  }, [selectedStates]);
 
   const minPrice = watch("minPrice");
   const maxPrice = watch("maxPrice");
@@ -154,11 +181,11 @@ const AccountSetting = () => {
       }, {});
 
     Data.PropertyInterests = cleaned;
-
     console.log(Data);
-
+    localStorage.setItem("ProfileData", JSON.stringify(Data));
+    localStorage.removeItem("User");
+    localStorage.setItem("ProfileComplete", true);
     reset(Data);
-    // localStorage.setItem("ProfileComplete", true);
   };
 
   const StateSelectionHandler = (value) => {
@@ -191,6 +218,10 @@ const AccountSetting = () => {
     setValue("City", value.name);
   };
 
+  const [profileImage, setProfileImage] = useState(null);
+
+  // Dummy image as fallback
+  const defaultImage = AccountSettingImage;
   return (
     <>
       {/* BANNER START  */}
@@ -202,12 +233,28 @@ const AccountSetting = () => {
             alt=""
           />
         </div>
-        <div className="ml-4 sm:ml-12 -mt-28">
-          <img
-            className="border-solid w-[49%] sm:w-[19%]  border-white border-[2px]  rounded-[15px]"
-            src={AccountSettingImage}
-            alt=""
-          />
+        <div className="ml-4 sm:ml-12 -mt-28 relative">
+          <div className="relative w-[100%]">
+            <img
+              className="border-solid w-[100%] sm:w-[19%] border-white border-[2px] rounded-[15px] object-cover"
+              src={
+                profileImage ? URL.createObjectURL(profileImage) : defaultImage
+              }
+              alt="Profile Preview"
+            />
+
+            {/* Upload Button */}
+            <input
+              type="file"
+              accept="image/*"
+              onChange={(e) => {
+                if (e.target.files && e.target.files[0]) {
+                  setProfileImage(e.target.files[0]);
+                }
+              }}
+              className="absolute top-2 left-0 opacity-0 bg-white p-1 rounded text-sm cursor-pointer"
+            />
+          </div>
         </div>
       </section>
       {/* BANNER END   */}
@@ -549,62 +596,57 @@ const AccountSetting = () => {
                 >
                   Preferred Investment Location
                 </label>
-                <div className="relative  w-[100%]">
-                  <div className="absolute inset-y-0 start-0 flex items-center ps-4 pointer-events-none">
-                    <svg
-                      className="w-4 h-4 text-[#444444] "
-                      aria-hidden="true"
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 20 20"
-                    >
-                      <path
-                        stroke="currentColor"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
-                      />
-                    </svg>
+                <div className="relative w-[100%]">
+                  <div className="bg-[#F3EEFF] flex w-[90%] gap-3 items-center rounded-[6px] ">
+                    <div className=" inset-y-0 start-0 flex items-center ps-4 pointer-events-none">
+                      <svg
+                        className="w-4 h-4 text-[#444444] "
+                        aria-hidden="true"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 20 20"
+                      >
+                        <path
+                          stroke="currentColor"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth="2"
+                          d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
+                        />
+                      </svg>
+                    </div>
+                    <div className="w-[80%]">
+                      <SuggestedState onSelect={handleSelectState} />
+                    </div>
                   </div>
-                  <input
-                    {...register("GetLocation", {
-                      required: "Location is required",
-                    })}
-                    type="search"
-                    id="default-search"
-                    className=" w-[90%] text-[#444444] placeholder:text-[#444444] font-Urbanist font-semibold py-3 pl-11 rounded-[10px] text-[15px] bg-[#F3EEFF] outline-none"
-                    placeholder="Search by name, company, location "
-                  />
                 </div>
               </div>
               <div className="flex gap-2 flex-wrap">
-                <span className="flex items-center font-Urbanist text-[14px] font-semibold bg-[#E7E7E7] rounded-full px-4 py-2 gap-2">
-                  Location 1 <img className="w-5 h-5" src={CrossImage} alt="" />
-                </span>
-                <span className="flex items-center font-Urbanist text-[14px] font-semibold bg-[#E7E7E7] rounded-full px-4 py-2 gap-2">
-                  Location 2 <img className="w-5 h-5" src={CrossImage} alt="" />
-                </span>
-                <span className="flex items-center font-Urbanist text-[14px] font-semibold bg-[#E7E7E7] rounded-full px-4 py-2 gap-2">
-                  Location 3 <img className="w-5 h-5" src={CrossImage} alt="" />
-                </span>
-                <span className="flex items-center font-Urbanist font-semibold text-[14px] bg-[#E7E7E7] rounded-full px-4 py-2 gap-2">
-                  Location 4 <img className="w-5 h-5" src={CrossImage} alt="" />
-                </span>
-                <span className="flex items-center font-Urbanist font-semibold text-[14px] bg-[#E7E7E7] rounded-full px-4 py-2 gap-2">
-                  Location 5 <img className="w-5 h-5" src={CrossImage} alt="" />
-                </span>
+                {selectedStates.map((name) => (
+                  <span
+                    key={name}
+                    className="flex items-center font-Urbanist text-[14px] font-semibold bg-[#E7E7E7] rounded-full px-4 py-2 gap-2"
+                  >
+                    {name}
+                    <img
+                      className="w-5 h-5 cursor-pointer"
+                      src={CrossImage}
+                      alt="Remove"
+                      onClick={() => handleRemoveState(name)}
+                    />
+                  </span>
+                ))}
               </div>
               <div>
                 <TextAreas
-                  {...register("Bio", {
-                    required: "Desciption is required",
+                  name="Bio"
+                  label="About Us"
+                  register={register("Bio", {
+                    required: "Description is required",
                   })}
                   error={errors.Bio?.message}
-                  placeholder={
-                    "Tell us about your experience in real estate, your role, and your background..."
-                  }
-                ></TextAreas>
+                  placeholder="Tell us about your experience in real estate, your role, and your background..."
+                />
               </div>
             </div>
           </section>
