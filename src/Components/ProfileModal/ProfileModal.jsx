@@ -103,8 +103,7 @@ const ProfileModal = ({
             <div className="mt-4 pt-4 border-t border-[#dfdfdf]">
               <h3 className="text-[20px] font-bold font-Urbanist">About Us</h3>
               <p className="text-Paracolor font-Urbanist font-[500] text-[15px] mt-1">
-                Experienced real estate investor specializing in commercial
-                properties and multi-family residential units.
+                {user.bio}
               </p>
             </div>
             {/* Property Interests */}
@@ -114,11 +113,11 @@ const ProfileModal = ({
               </h3>
               <div className="flex gap-2 mt-2 flex-wrap">
                 <span className="bg-[#E3E3E3] text-Paracolor font-semibold font-Inter px-3 py-1 text-[12.5px] rounded-full w-max">
-                  15 Units
+                  {user.property_interests}
                 </span>
-                <span className="bg-[#E3E3E3] text-Paracolor font-semibold font-Inter px-3 py-1 text-[12.5px] rounded-full w-max">
+                {/* <span className="bg-[#E3E3E3] text-Paracolor font-semibold font-Inter px-3 py-1 text-[12.5px] rounded-full w-max">
                   Office Space
-                </span>
+                </span> */}
               </div>
             </div>
             {/* Message Button */}

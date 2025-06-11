@@ -1,20 +1,116 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import ResetImage from "../../../assets/ResetImage.png";
 import SortIcon from "../../../assets/SortIcon1.1.png";
 import { Select } from "@headlessui/react";
 import { Search } from "lucide-react";
 import { useForm } from "react-hook-form";
+import ComboboxSelector from "../../../Components/ComboboxSelector/ComboboxSelector.jsx";
 
-const SearchFilters = ({ setShowMobileFilter, showMobileFilter , onSearchChange  }) => {
+const propertyTypes = [
+  { name: "Apartment" },
+  { name: "Retail" },
+  { name: "Mixed-Use Property" },
+  { name: "Office Building" },
+  { name: "Hospitality" },
+  { name: "Land" },
+  { name: "Others" },
+  { name: "Shopping/Strip Center" },
+  { name: "Industrial Building" },
+  { name: "Healthcare" },
+  { name: "Storage Facility" },
+  { name: "Automotive" },
+  { name: "Investment Homes" },
+];
+
+const statesArray = [
+  { id: 1, name: "Alabama", code: "AL" },
+  { id: 2, name: "Alaska", code: "AK" },
+  { id: 3, name: "Arizona", code: "AZ" },
+  { id: 4, name: "Arkansas", code: "AR" },
+  { id: 5, name: "California", code: "CA" },
+  { id: 6, name: "Colorado", code: "CO" },
+  { id: 7, name: "Connecticut", code: "CT" },
+  { id: 8, name: "Delaware", code: "DE" },
+  { id: 9, name: "Florida", code: "FL" },
+  { id: 10, name: "Georgia", code: "GA" },
+  { id: 11, name: "Hawaii", code: "HI" },
+  { id: 12, name: "Idaho", code: "ID" },
+  { id: 13, name: "Illinois", code: "IL" },
+  { id: 14, name: "Indiana", code: "IN" },
+  { id: 15, name: "Iowa", code: "IA" },
+  { id: 16, name: "Kansas", code: "KS" },
+  { id: 17, name: "Kentucky", code: "KY" },
+  { id: 18, name: "Louisiana", code: "LA" },
+  { id: 19, name: "Maine", code: "ME" },
+  { id: 20, name: "Maryland", code: "MD" },
+  { id: 21, name: "Massachusetts", code: "MA" },
+  { id: 22, name: "Michigan", code: "MI" },
+  { id: 23, name: "Minnesota", code: "MN" },
+  { id: 24, name: "Mississippi", code: "MS" },
+  { id: 25, name: "Missouri", code: "MO" },
+  { id: 26, name: "Montana", code: "MT" },
+  { id: 27, name: "Nebraska", code: "NE" },
+  { id: 28, name: "Nevada", code: "NV" },
+  { id: 29, name: "NewHampshire", code: "NH" },
+  { id: 30, name: "NewJersey", code: "NJ" },
+  { id: 31, name: "NewMexico", code: "NM" },
+  { id: 32, name: "NewYork", code: "NY" },
+  { id: 33, name: "NorthCarolina", code: "NC" },
+  { id: 34, name: "NorthDakota", code: "ND" },
+  { id: 35, name: "Ohio", code: "OH" },
+  { id: 36, name: "Oklahoma", code: "OK" },
+  { id: 37, name: "Oregon", code: "OR" },
+  { id: 38, name: "Pennsylvania", code: "PA" },
+  { id: 39, name: "RhodeIsland", code: "RA" },
+  { id: 40, name: "SouthCarolina", code: "SC" },
+  { id: 41, name: "SouthDakota", code: "SD" },
+  { id: 42, name: "Tennessee", code: "TN" },
+  { id: 43, name: "Texas", code: "TX" },
+  { id: 44, name: "Utah", code: "UT" },
+  { id: 45, name: "Vermont", code: "VT" },
+  { id: 46, name: "Virginia", code: "VA" },
+  { id: 47, name: "Washington", code: "WA" },
+  { id: 48, name: "WestVirginia", code: "WV" },
+  { id: 49, name: "Wisconsin", code: "WI" },
+  { id: 50, name: "Wyoming", code: "WY" },
+];
+
+const investmentRanges = [
+  { label: "Under $250K", value: "under_250k" },
+  { label: "$250K – $500K", value: "250k_500k" },
+  { label: "$500K – $1M", value: "500k_1m" },
+  { label: "$1M – $2.5M", value: "1m_2_5m" },
+  { label: "$2.5M – $5M", value: "2_5m_5m" },
+  { label: "$5M – $10M", value: "5m_10m" },
+  { label: "$10M – $25M", value: "10m_25m" },
+  { label: "$25M – $50M", value: "25m_50m" },
+  { label: "Over $50M", value: "over_50m" },
+];
+
+const SearchFilters = ({
+  setShowMobileFilter,
+  showMobileFilter,
+  onSearchChange,
+}) => {
   const { register, watch } = useForm();
 
-  const searchQuery = watch("search"); 
+  const searchQuery = watch("search");
+  const PropertyType = watch("propertyType");
+  const InvestmentRange = watch("InvestmentRange");
+  const [Location, setLocation] = useState();
 
   useEffect(() => {
-    if (searchQuery !== undefined) {
-        onSearchChange(searchQuery) 
-    }
-  }, [searchQuery , onSearchChange]);
+    onSearchChange({
+      search: searchQuery || "",
+      propertyType: PropertyType || "",
+      investmentRange: InvestmentRange || "",
+      location: Location || "",
+    });
+  }, [searchQuery, onSearchChange, PropertyType, Location]);
+
+  const StateSelectionHandler = (value) => {
+    setLocation(value.name);
+  };
 
   return (
     <>
@@ -39,80 +135,53 @@ const SearchFilters = ({ setShowMobileFilter, showMobileFilter , onSearchChange 
           {/* Desktop filter bar (hidden on mobile) */}
           <div className="hidden xl:flex   gap-2 pr-5 bg-white   border-[1px] border-solid border-[#1E1E1E] rounded-[10px]">
             {/* FILTER BUTTON  */}
-            <button className=" font-Inter bg-[#1E1E1E] text-white py-2.5 rounded-l-[7px] flex items-center px-4 gap-1">
+            <button className=" font-Inter bg-[#1E1E1E] text-white py-2.5 rounded-l-[7px] flex items-center px-4 gap-1 w-[13%]">
               <img className="w-5 h-5" src={SortIcon} alt="" />{" "}
               <span className="font-Urbanist font-[500] text-[15px]">
                 Filter
               </span>
             </button>
             {/* STATUS  */}
-            <div className="flex gap-1  border-r-[1px] border-solid px-3.5 border-[#BBBBBB]">
-              <Select
+            <div className="flex gap-1  border-r-[1px] border-solid px-3.5 border-[#BBBBBB] w-[22%]">
+              <select
                 className={
-                  " border-[#F3EEFF] text-[#444444] font-[600] font-Urbanist text-[14px] w-[100%] h-12 rounded-[6px] outline-none  "
+                  " border-[#F3EEFF] text-[#444444] font-[600] font-Urbanist text-[14px] h-12 rounded-[6px] outline-none w-[100%]"
                 }
-                name="status"
-                aria-label="Project status"
+                {...register("propertyType")}
               >
-                <option
-                  className="text-[#1a1919] font-[500] font-Urbanist text-[15px]"
-                  value="active"
-                >
-                  Property Type
-                </option>
-                <option
-                  className="text-[#1a1919] font-[500] font-Urbanist text-[14px]"
-                  value="paused"
-                >
-                  Paused
-                </option>
-              </Select>
+                <option value="">Property Type</option>
+                {propertyTypes.map((item, index) => (
+                  <option key={index} value={item.name}>
+                    {item.name}
+                  </option>
+                ))}
+              </select>
             </div>
-            <div className="flex gap-1  border-r-[1px] border-solid px-3.5 border-[#BBBBBB]">
-              <Select
+            <div className="flex gap-1  border-r-[1px] border-solid px-3.5 border-[#BBBBBB] w-[25%]">
+              <select
                 className={
-                  " border-[#F3EEFF] text-[#444444] font-[600] font-Urbanist text-[14px] w-[100%] h-12  rounded-[6px] outline-none  "
+                  "overline-none text-[13px] font-Inter text-Paracolor font-[500] -mt-0.5 -ml-1"
                 }
-                name="status"
-                aria-label="Project status"
+                {...register("InvestmentRange")}
               >
-                <option
-                  className="text-[#1a1919] font-[500] font-Urbanist text-[15px]"
-                  value="active"
-                >
-                  Investment Range
-                </option>
-                <option
-                  className="text-[#1a1919] font-[500] font-Urbanist text-[14px]"
-                  value="paused"
-                >
-                  Paused
-                </option>
-              </Select>
+                <option value="">Investment Range</option>
+                {investmentRanges.map((item, index) => (
+                  <option key={index} value={item.value}>
+                    {item.label}
+                  </option>
+                ))}
+              </select>
             </div>
-            <div className="flex gap-1  border-r-[1px] border-solid px-4 border-[#BBBBBB]">
-              <Select
-                className={
-                  " border-[#F3EEFF] text-[#444444] font-[600] font-Urbanist text-[14px] w-[100%] h-12 rounded-[6px] outline-none  "
-                }
-                name="status"
-                aria-label="Project status"
-              >
-                <option
-                  className="text-[#1a1919] font-[500] font-Urbanist text-[15px]"
-                  value="active"
-                >
-                  Location
-                </option>
-                <option
-                  className="text-[#1a1919] font-[500] font-Urbanist text-[14px]"
-                  value="paused"
-                >
-                  Paused
-                </option>
-              </Select>
+            <div className="flex gap-1  border-r-[1px] border-solid px-4 border-[#BBBBBB] w-[18%] items-center">
+              <div className="w-[100%]">
+                <ComboboxSelector
+                  options={statesArray}
+                  onSelect={StateSelectionHandler}
+                  placeholder={"Location"}
+                ></ComboboxSelector>
+              </div>
             </div>
-            <div className="flex justify-end ml-3">
+            <div className="flex justify-end ml-3 w-[15%]">
               <button className="flex items-center justify-end gap-2">
                 <span className="font-Urbanist font-[500] text-[15px] text-[#E31D1C]">
                   Reset Filter

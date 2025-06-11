@@ -7,12 +7,11 @@ import MessageIcon2 from "../../../assets/MessageIcon2.png";
 import InvestorIcon1 from "../../../assets/InvestorIcon1.png";
 import InvestorIcon2 from "../../../assets/InvestorIcon2.png";
 import InvestorIcon3 from "../../../assets/InvestorIcon3.png";
-import UnkownUser from "../../../../public/Images/UnknowUser.png";
+import UnkownUser from "/public/Images/UnknowUser.png";
 
-// COMPONENTS 
+// COMPONENTS
 import TruncatedText from "../../TruncatedText/TruncatedText";
 import ConfirmationModal from "../../ConfirmationModal/ConfirmationModal";
-
 
 const AddToNetwork = ({
   id,
@@ -29,8 +28,8 @@ const AddToNetwork = ({
   type,
   AddtoNetwork,
   PendingRequest,
+  button,
 }) => {
-  
   const [openModal, setOpenModal] = useState(false);
   const [modalData, setModalData] = useState({
     title: "",
@@ -38,7 +37,6 @@ const AddToNetwork = ({
     confirmLabel: "",
     onConfirm: () => {},
   });
-
 
   // SEND CONNECTION REQUEST
   const openConfirmation = (actionType) => {
@@ -68,7 +66,7 @@ const AddToNetwork = ({
           confirmLabel: "Accept",
           style: "bg-[#43B274]",
           onConfirm: () => {
-            PendingRequest("accepted" , id);
+            PendingRequest("accepted", id);
             setOpenModal(false);
           },
         };
@@ -83,7 +81,7 @@ const AddToNetwork = ({
           confirmLabel: "Decline",
           style: "bg-[#F61418]",
           onConfirm: () => {
-            PendingRequest("declined" , id);
+            PendingRequest("declined", id);
             setOpenModal(false);
           },
         };
@@ -96,8 +94,7 @@ const AddToNetwork = ({
     setOpenModal(true);
   };
 
-
-  // INFO ITEMS 
+  // INFO ITEMS
   const renderInfoItem = (icon, text, maxLength = null) => (
     <li className="flex gap-3 justify-center items-center">
       <img className="w-5 h-5" src={icon} alt="" />
@@ -107,7 +104,6 @@ const AddToNetwork = ({
     </li>
   );
 
-
   // RENDER BUTTONS
   const renderButtons = () => {
     if (type === "addToNetwork") {
@@ -115,23 +111,32 @@ const AddToNetwork = ({
         <>
           <button
             onClick={() => openConfirmation("add")}
-            className="font-Inter text-[#fff] font-semibold text-[12px] sm:text-[12.5px] sm:px-2.5 sm:py-1.5 px-2.5 py-1.5 lg:px-3.5 lg:py-2 rounded-full border-solid border-[2px] border-[#64AAE9] bg-[#64AAE9] cursor-pointer"
+            disabled={button === "pending"}
+            className={`font-Inter text-[#fff] font-semibold text-[12px] sm:text-[12.5px] sm:px-2.5 sm:py-1.5 px-2.5 py-1.5 lg:px-3.5 lg:py-2 rounded-full border-solid border-[2px] ${
+              button === "pending"
+                ? "bg-gray-400 border-gray-400 cursor-not-allowed"
+                : "bg-PurpleColor border-PurpleColor cursor-pointer 64AAE9"
+            }`}
           >
-            Add to Network
+            {button === "pending" ? "Already Sent" : "Add to Network"}
           </button>
 
-          <button
-            onClick={() => onReject(id)}
-            className="font-Inter cursor-pointer text-[#fff] font-semibold text-[12px] px-4 py-1.5 sm:text-[12.5px] sm:px-2.5 sm:py-1 lg:px-3.5 rounded-full border-solid border-[2px] border-[#F61418] bg-[#F61418]"
-          >
-            Reject
-          </button>
+          {button === "pending" ? (
+            " "
+          ) : (
+            <button
+              onClick={() => onReject(id)}
+              className="font-Inter cursor-pointer text-[#fff] font-semibold text-[12px] px-4 py-1.5 sm:text-[12.5px] sm:px-2.5 sm:py-1 lg:px-3.5 rounded-full border-solid border-[2px] border-[#F61418] bg-[#F61418]"
+            >
+              Reject
+            </button>
+          )}
         </>
       );
     }
     if (type === "myNetwork") {
       return (
-        <button className="font-Inter text-[#fff] font-semibold text-[15px] px-7 py-1.5 rounded-full border-solid border-[2px] border-[#43B274] bg-[#43B274]">
+        <button className="font-Inter text-[#fff] font-semibold text-[15px] px-7 py-1.5 rounded-full border-solid border-[2px] border-[#43B274] bg-[#43B274] cursor-pointer">
           Message
         </button>
       );
@@ -156,7 +161,6 @@ const AddToNetwork = ({
     }
     return null;
   };
-
 
   return (
     <>

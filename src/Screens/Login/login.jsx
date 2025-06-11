@@ -33,10 +33,8 @@ const Login = () => {
         navigate("/admin");
         reset();
       } else {
-        console.log('====================================');
-        console.log(Response.data.token);
-        console.log('====================================');
-         navigate("/admin/");
+        localStorage.setItem("token", Response.data.token);
+        navigate("/admin/network");
       }
       console.log(Response);
     } catch (error) {

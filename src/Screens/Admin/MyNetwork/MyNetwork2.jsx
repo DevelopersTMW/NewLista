@@ -1,12 +1,9 @@
 import axios from "axios";
-import { Select } from "@headlessui/react";
 import { useEffect, useState } from "react";
 
 // IMAGES
 import fade from "../../../assets/fade.png";
 import MyNetwork from "../../../assets/MyNetwork.jpg";
-import ResetImage from "../../../assets/ResetImage.png";
-import SortIcon from "../../../assets/SortIcon1.1.png";
 import MessageIcon2 from "../../../assets/MessageIcon2.png";
 import InvestorIcon1 from "../../../assets/InvestorIcon1.png";
 import CallIcon from "../../../assets/CallIcon.png";
@@ -26,15 +23,14 @@ const BackgroundImages = {
 const TabNames = [
   { name: "My Network", TabLink: "myNetwork" },
   { name: "Discover", TabLink: "addToNetwork" },
-  { name: "Pending", TabLink: "pending" },
+  { name: `My Request`, TabLink: "pending" },
 ];
 
 const MyNetwork2 = () => {
   // KEYS
   const ApiKey = import.meta.env.VITE_API_KEY;
-  // const tokens = localStorage.getItem("token");
-  const tokens = "51|Sebgg4VbS0sXkSkYKoaumnk1BDj6KR8lOMKZKYz737ee0329";
-
+  const tokens = localStorage.getItem("token");
+  // const tokens = "51|Sebgg4VbS0sXkSkYKoaumnk1BDj6KR8lOMKZKYz737ee0329";
   const [loading, setloading] = useState(false);
 
   // FILTER
@@ -49,12 +45,10 @@ const MyNetwork2 = () => {
   const [showMobileFilter, setShowMobileFilter] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [activeTab, setActiveTab] = useState("myNetwork");
-  const [isFilterOpen, setIsFilterOpen] = useState(true);
 
   // GET SEARCH VALUE
-  const handleSearchChange = (value) => {
-    console.log("Live value in parent:", value);
-    setSearchTerm(value);
+  const handleSearchChange = ({ search, propertyType, investmentRange , locations }) => {
+    setSearchTerm(search + " " + propertyType );
   };
 
   // REJECT CARD IN NETWORK
@@ -75,7 +69,6 @@ const MyNetwork2 = () => {
           },
         });
         const Data = response.data;
-        console.log(Data.received_requests);
         setMyNetwork(Data.my_connections);
         setAddNetwork(Data.all_users);
         setPendingNetwork(Data.received_requests);
@@ -99,13 +92,22 @@ const MyNetwork2 = () => {
         },
         {
           headers: {
-            Authorization: `Bearer ${tokens}
-`,
+            Authorization: `Bearer ${tokens}`,
           },
         }
       );
       const Data = response.data;
-      console.log(Data);
+      setAddNetwork((prev) =>
+        prev
+          .map((user) =>
+            user.id === id ? { ...user, connection_status: "pending" } : user
+          )
+          .filter(
+            (user) =>
+              user.connection_status === null ||
+              user.connection_status === "pending"
+          )
+      );
     } catch (error) {
       console.log(error);
       setloading(false);
@@ -123,14 +125,22 @@ const MyNetwork2 = () => {
         },
         {
           headers: {
-            Authorization: `Bearer ${tokens}
-
-`,
+            Authorization: `Bearer ${tokens}`,
           },
         }
       );
       const Data = response.data;
-      console.log(Data);
+      const acceptedUser = PendinNetwork.find(
+        (user) => user.id === id
+      )?.from_user;
+
+      // Remove from pending
+      setPendingNetwork((prev) => prev.filter((user) => user.id !== id));
+
+      // Add to My Network if accepted
+      if (Val === "accepted" && acceptedUser) {
+        setMyNetwork((prev) => [...prev, acceptedUser]);
+      }
     } catch (error) {
       console.log(error);
       setloading(false);
@@ -211,13 +221,18 @@ const MyNetwork2 = () => {
             <button
               key={index}
               onClick={() => setActiveTab(`${val.TabLink}`)}
-              className={`flex-1 min-w-[100px] text-[15px] sm:text-[18px] font-Urbanist py-2.5 md:py-2 px-2.5 md:px-4 rounded-[7px] font-semibold text-center transition duration-200 cursor-pointer ${
+              className={`flex-1 min-w-[100px] text-[15px] sm:text-[18px] font-Urbanist py-2.5 md:py-2 px-2.5 md:px-4 rounded-[7px] font-semibold text-center transition duration-200 items-center cursor-pointer relative ${
                 activeTab === `${val.TabLink}`
                   ? "bg-PurpleColor text-white"
                   : "bg-gray-200 text-gray-700"
               }`}
             >
-              {val.name}
+              <span>{val.name}</span>
+              {val.TabLink === "pending" && PendinNetwork.length > 0 && (
+                <span className="text-[11px]  absolute bg-red-600 ml-[4px] px-[6px] pt-[1px] text-white rounded-full font-bold">
+                  {PendinNetwork.length}
+                </span>
+              )}
             </button>
           ))}
         </div>
@@ -234,7 +249,11 @@ const MyNetwork2 = () => {
                   <Spinner style={"w-14 h-20 text-PurpleColor"} />
                 </div>
               ) : MyNetwork.length > 0 ? (
-                MyNetwork.map((user) => (
+                MyNetwork.filter((user) =>
+                  `${user.first_name} ${user.last_name} ${user.location} ${user.preferred_investment_type}`
+                    .toLowerCase()
+                    .includes(searchTerm.toLowerCase())
+                ).map((user) => (
                   <AddToNetwork
                     key={user.id}
                     id={user.id}
@@ -271,12 +290,12 @@ const MyNetwork2 = () => {
               Add To Network
             </h1>
             <div className="flex flex-wrap gap-4 justify-center sm:justify-start">
-              {loading ? (
-                <div className="flex justify-center items-center">
-                  <Spinner style={"w-14 h-20 text-PurpleColor"} />
-                </div>
-              ) : AddNetwork.length > 0 ? (
-                AddNetwork.map((user) => (
+              {AddNetwork.length > 0 ? (
+                AddNetwork.filter((user) =>
+                  `${user.first_name} ${user.last_name} ${user.location} ${user.preferred_investment_type}`
+                    .toLowerCase()
+                    .includes(searchTerm.toLowerCase())
+                ).map((user) => (
                   <AddToNetwork
                     key={user.id}
                     id={user.id}
@@ -291,6 +310,7 @@ const MyNetwork2 = () => {
                     showModal={showModal}
                     setShowModal={setShowModal}
                     onReject={handleReject}
+                    button={user.connection_status}
                     onViewProfile={() => {
                       setSelectedUser(user);
                       setShowModal(true);
@@ -319,7 +339,11 @@ const MyNetwork2 = () => {
                   <Spinner style={"w-14 h-20 text-PurpleColor"} />
                 </div>
               ) : PendinNetwork.length > 0 ? (
-                PendinNetwork.map((user) => (
+                PendinNetwork.filter((user) =>
+                  `${user.from_user.first_name} ${user.from_user.last_name}`
+                    .toLowerCase()
+                    .includes(searchTerm.toLowerCase())
+                ).map((user) => (
                   <AddToNetwork
                     key={user.id}
                     id={user.id}
