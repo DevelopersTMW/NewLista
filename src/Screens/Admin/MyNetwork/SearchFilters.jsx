@@ -149,7 +149,7 @@ const SearchFilters = ({
                 }
                 {...register("propertyType")}
               >
-                <option value="">Property Type</option>
+                <option value="">Property Interest</option>
                 {propertyTypes.map((item, index) => (
                   <option key={index} value={item.name}>
                     {item.name}

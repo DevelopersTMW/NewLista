@@ -12,44 +12,164 @@ import { Controller, useForm } from "react-hook-form";
 import Switches from "../../../Components/InputFields/Switch";
 import { useSelector } from "react-redux";
 
+import ComboboxSelector from "../../../Components/ComboboxSelector/ComboboxSelector.jsx";
+import axios from "axios";
+
+const statesArray = [
+  { id: 1, name: "Alabama", code: "AL" },
+  { id: 2, name: "Alaska", code: "AK" },
+  { id: 3, name: "Arizona", code: "AZ" },
+  { id: 4, name: "Arkansas", code: "AR" },
+  { id: 5, name: "California", code: "CA" },
+  { id: 6, name: "Colorado", code: "CO" },
+  { id: 7, name: "Connecticut", code: "CT" },
+  { id: 8, name: "Delaware", code: "DE" },
+  { id: 9, name: "Florida", code: "FL" },
+  { id: 10, name: "Georgia", code: "GA" },
+  { id: 11, name: "Hawaii", code: "HI" },
+  { id: 12, name: "Idaho", code: "ID" },
+  { id: 13, name: "Illinois", code: "IL" },
+  { id: 14, name: "Indiana", code: "IN" },
+  { id: 15, name: "Iowa", code: "IA" },
+  { id: 16, name: "Kansas", code: "KS" },
+  { id: 17, name: "Kentucky", code: "KY" },
+  { id: 18, name: "Louisiana", code: "LA" },
+  { id: 19, name: "Maine", code: "ME" },
+  { id: 20, name: "Maryland", code: "MD" },
+  { id: 21, name: "Massachusetts", code: "MA" },
+  { id: 22, name: "Michigan", code: "MI" },
+  { id: 23, name: "Minnesota", code: "MN" },
+  { id: 24, name: "Mississippi", code: "MS" },
+  { id: 25, name: "Missouri", code: "MO" },
+  { id: 26, name: "Montana", code: "MT" },
+  { id: 27, name: "Nebraska", code: "NE" },
+  { id: 28, name: "Nevada", code: "NV" },
+  { id: 29, name: "NewHampshire", code: "NH" },
+  { id: 30, name: "NewJersey", code: "NJ" },
+  { id: 31, name: "NewMexico", code: "NM" },
+  { id: 32, name: "NewYork", code: "NY" },
+  { id: 33, name: "NorthCarolina", code: "NC" },
+  { id: 34, name: "NorthDakota", code: "ND" },
+  { id: 35, name: "Ohio", code: "OH" },
+  { id: 36, name: "Oklahoma", code: "OK" },
+  { id: 37, name: "Oregon", code: "OR" },
+  { id: 38, name: "Pennsylvania", code: "PA" },
+  { id: 39, name: "RhodeIsland", code: "RA" },
+  { id: 40, name: "SouthCarolina", code: "SC" },
+  { id: 41, name: "SouthDakota", code: "SD" },
+  { id: 42, name: "Tennessee", code: "TN" },
+  { id: 43, name: "Texas", code: "TX" },
+  { id: 44, name: "Utah", code: "UT" },
+  { id: 45, name: "Vermont", code: "VT" },
+  { id: 46, name: "Virginia", code: "VA" },
+  { id: 47, name: "Washington", code: "WA" },
+  { id: 48, name: "WestVirginia", code: "WV" },
+  { id: 49, name: "Wisconsin", code: "WI" },
+  { id: 50, name: "Wyoming", code: "WY" },
+];
+
+const priceOptions = [
+  "$50K",
+  "$100K",
+  "$150K",
+  "$200K",
+  "$250K",
+  "$500K",
+  "$750K",
+  "$1M",
+  "$2M",
+  "$3M",
+];
+
 const AccountSetting = () => {
-  const user = useSelector((state) => state.user);
-  console.log("====================================");
-  console.log(user.first_name);
-  console.log("====================================");
+  const user = JSON.parse(localStorage.getItem("User"));
   const [AutoSelect, setAutoSelect] = useState(true);
-
-
- 
-
+  const [selectedState, setSelectedState] = useState("");
+  const [cities, setCities] = useState([]);
+  const [selectedCity, setSelectedCity] = useState("");
   const {
     register,
     handleSubmit,
     formState: { errors },
-    control,
     setError,
+    control,
+    setValue,
     reset,
   } = useForm({
     defaultValues: {
       FirstName: user.first_name,
-    }
+      LastName: user.last_name,
+      Email: user.email,
+      phone: user.phone,
+      StreetAddress: user.location,
+      PropertyInterests: {},
+    },
   });
 
-   useEffect(() => {
-  if (user && user.first_name) {
-    reset({
-      FirstName: user.first_name,
-      LastName: user.last_name || "",
-      Email: user.email || "",
-      // add any other fields from user you want to set as default
-    });
-  }
-}, [user, reset]);
+  //   CHECK IF CITY EXIST OR NOT
+  let citiess = cities.map((name, index) => ({
+    id: index + 1,
+    name,
+  }));
 
   const ProfileComplete = (Data) => {
+    const selected = Object.values(Data.PropertyInterests || {}).filter(
+      Boolean
+    );
+
+    if (selected.length === 0) {
+      // Manually set error for the group
+      setError("PropertyInterests", {
+        type: "manual",
+        message: "Please select at least one property interest.",
+      });
+      return;
+    }
+
+    // Remove unchecked options
+    const cleaned = Object.entries(Data.PropertyInterests || {})
+      .filter(([, val]) => val)
+      .reduce((acc, [key, val]) => {
+        acc[key] = val;
+        return acc;
+      }, {});
+
+    Data.PropertyInterests = cleaned;
+
     console.log(Data);
-    setAutoSelect(false);
+
     reset(Data);
+    // localStorage.setItem("ProfileComplete", true);
+  };
+
+  const StateSelectionHandler = (value) => {
+    setValue("State", value.name);
+    let state = value.name;
+    setSelectedState(state);
+    setSelectedCity("");
+    setCities([]);
+
+    try {
+      if (state) {
+        const stateShortNames = value.code;
+
+        axios
+          .get(`/states/${stateShortNames}.json`)
+          .then((res) => {
+            setCities(res.data);
+          })
+          .catch((error) => {
+            console.error("Failed to load cities:", error);
+            setCities([]);
+          });
+      }
+    } catch (error) {
+      console.error("Failed to load cities:", error);
+    }
+  };
+
+  const CitySelectionHandler = (value) => {
+    setValue("City", value.name);
   };
 
   return (
@@ -73,8 +193,6 @@ const AccountSetting = () => {
       </section>
       {/* BANNER END   */}
 
-      {/* htmlForM  */}
-
       <section className="mt-7 sm:mt-10">
         {/* CONTACT Form */}
         <form
@@ -87,29 +205,35 @@ const AccountSetting = () => {
               <div className="w-[100%] flex gap-5">
                 <span>
                   <Inputs
-                    name={"FirstName"}
-                    register={register}
+                    register={register("FirstName", {
+                      required: "First name is required",
+                    })}
                     labels={"First Name"}
                     placeholder={"Enter your first name"}
+                    error={errors.FirstName?.message}
                   ></Inputs>
                 </span>
                 <span>
                   <Inputs
-                    name={"LastName"}
-                    register={register}
+                    register={register("LastName", {
+                      required: "Last Name is required",
+                    })}
                     labels={"Last Name"}
                     placeholder={"Enter your Last name"}
+                    error={errors.LastName?.message}
                   ></Inputs>
                 </span>
               </div>
               <div className="flex gap-6 flex-col">
                 <span>
                   <Inputs
-                    name={"Email"}
-                    register={register}
+                    register={register("Email", {
+                      required: "Email is required",
+                    })}
                     labels={"Email"}
                     placeholder={"Enter a valid email (e.g., you@email.com)"}
                     type={"email"}
+                    error={errors.Email?.message}
                   ></Inputs>
                 </span>
 
@@ -126,81 +250,99 @@ const AccountSetting = () => {
                     />
                   )}
                 />
-
                 <span>
                   <Inputs
-                    name={"StreetAddress"}
-                    register={register}
+                    register={register("StreetAddress", {
+                      required: "StreetAddress is required",
+                    })}
                     labels={"Street Address"}
                     placeholder={"Enter street address"}
+                    error={errors.StreetAddress?.message}
                   ></Inputs>
                 </span>
               </div>
 
               <div className="grid grid-cols-2 gap-6">
                 <span>
-                  <Controller
+                  <Selection
+                    labels="Country"
+                    Options={["USA"]}
+                    defaultOption="Select"
                     name="Country"
-                    control={control}
-                    render={({ field }) => (
-                      <Selection
-                        {...field}
-                        labels="Country"
-                        Options={["USA"]}
-                        defaultOption="Select"
-                      />
-                    )}
+                    register={register}
+                    rules={{ required: "Please select an option." }}
+                    error={errors.Country?.message}
                   />
                 </span>
-                <span>
-                  <Selection
-                    name={"State"}
-                    register={register}
-                    labels={"State/Province"}
-                    defaultOption={"Select state or province"}
-                  />
+                <span className="flex flex-col justify-center">
+                  <label className="block mb-1 font-[700] text-PurpleColor w-full max-[1280px]:text-[14px] max-[1666px]:text-[15px] min-[1666px]:text-[16px]">
+                    State
+                  </label>
+                  <ComboboxSelector
+                    style={
+                      "flex items-center bg-[#F3EEFF]  text-[#4b4b4b] font-[600] font-Urbanist text-[14px] w-[100%] h-12 px-4 rounded-[6px] outline-none appearance-none cursor-pointer focus:outline-none "
+                    }
+                    icon={"top-3.5 right-3.5"}
+                    options={statesArray}
+                    onSelect={StateSelectionHandler}
+                    placeholder={"Select state or province"}
+                  ></ComboboxSelector>
                 </span>
                 <span>
                   <Inputs
-                    name={"ZipCode"}
-                    register={register}
+                    register={register("ZipCode", {
+                      required: "ZipCode is required",
+                    })}
                     labels={"Zip/Postal Code"}
                     placeholder={"Enter zip/postal code"}
+                    error={errors.ZipCode?.message}
                   ></Inputs>
                 </span>
                 <span>
-                  <Selection
-                    name={"City"}
-                    register={register}
-                    labels={"Enter City"}
-                    defaultOption={"Enter city"}
-                  />
+                  <label className="block mb-1 font-[700] text-PurpleColor w-full max-[1280px]:text-[14px] max-[1666px]:text-[15px] min-[1666px]:text-[16px]">
+                    City
+                  </label>
+                  <ComboboxSelector
+                    style={
+                      "flex items-center bg-[#F3EEFF]  text-[#4b4b4b] font-[600] font-Urbanist text-[14px] w-[100%] h-12 px-4 rounded-[6px] outline-none appearance-none cursor-pointer focus:outline-none "
+                    }
+                    icon={"top-3.5 right-3.5"}
+                    options={citiess}
+                    onSelect={CitySelectionHandler}
+                    placeholder={"Select Your City"}
+                    disabled={citiess.length > 0 ? false : true}
+                  ></ComboboxSelector>
                 </span>
               </div>
               <div className="flex flex-col gap-6">
                 <span>
                   <Inputs
-                    name={"PersonalWebsite"}
-                    register={register}
+                    register={register("PersonalWebsite", {
+                      required: "PersonalWebsite is required",
+                    })}
                     labels={"Personal Website"}
                     placeholder={"Enter zip/postal code"}
+                    error={errors.PersonalWebsite?.message}
                   ></Inputs>
                 </span>
                 <span>
                   <Inputs
-                    name={"Title"}
-                    register={register}
-                    labels={"Title"}
+                    register={register("Title", {
+                      required: "Property Title is required",
+                    })}
+                    labels={"Property Title"}
                     placeholder={"Select your title"}
+                    error={errors.Title?.message}
                   ></Inputs>
                 </span>
                 <Selection
-                  name={"ExperienceLevel"}
-                  register={register}
                   labels={"Experience Level"}
                   defaultOption={"Select"}
-                  autoSelectFirst={AutoSelect}
                   Options={["Beginner", "Intermediate", "Experienced"]}
+                  name="ExperienceLevel"
+                  register={register}
+                  rules={{ required: "Please select an option." }}
+                  error={errors.ExperienceLevel?.message}
                 />
               </div>
 
@@ -237,36 +379,72 @@ const AccountSetting = () => {
                   htmlFor="email"
                   className="block mb-3 text-[15px] font-[700] text-PurpleColor"
                 >
-                  Preferred Investment Range
+                  Property Interests
                 </label>
                 <div className="flex gap-1 sm:gap-14">
                   <span className="flex flex-col gap-2.5 justify-center">
-                    <Checkboxs labels={"Apartment"}></Checkboxs>
-                    <Checkboxs labels={"Retail"}></Checkboxs>
-                    <Checkboxs labels={"Mixed-Use Property"}></Checkboxs>
-                    <Checkboxs labels={"Office Building"}></Checkboxs>
-                    <Checkboxs labels={"Hospitality"}></Checkboxs>
-                    <Checkboxs labels={"Land"}></Checkboxs>
-                    <Checkboxs labels={"Others"}></Checkboxs>
+                    {[
+                      "Apartment",
+                      "MixedUseProperty",
+                      "Retail",
+                      "OfficeBuilding",
+                      "Hospitality",
+                      "Land",
+                      "Others",
+                    ].map((item) => (
+                      <Controller
+                        key={item}
+                        name={`PropertyInterests.${item}`}
+                        control={control}
+                        render={({ field }) => (
+                          <Checkboxs
+                            labels={item}
+                            checked={field.value || false}
+                            onChange={(val) => field.onChange(val)}
+                          />
+                        )}
+                      />
+                    ))}
                   </span>
+
                   <span className="flex flex-col gap-2.5">
-                    <Checkboxs labels={"Shopping/Strip Center"}></Checkboxs>
-                    <Checkboxs labels={"Industrial Building"}></Checkboxs>
-                    <Checkboxs labels={"Healthcare"}></Checkboxs>
-                    <Checkboxs labels={"Storage Facility"}></Checkboxs>
-                    <Checkboxs labels={"Automotive"}></Checkboxs>
-                    <Checkboxs labels={"Investment Homes"}></Checkboxs>
+                    {[
+                      "Shopping/StripCenter",
+                      "IndustrialBuilding",
+                      "Healthcare",
+                      "StorageFacility",
+                      "Automotive",
+                      "InvestmentHomes",
+                    ].map((item) => (
+                      <Controller
+                        key={item}
+                        name={`PropertyInterests.${item}`}
+                        control={control}
+                        render={({ field }) => (
+                          <Checkboxs
+                            labels={item}
+                            checked={field.value || false}
+                            onChange={(val) => field.onChange(val)}
+                          />
+                        )}
+                      />
+                    ))}
                   </span>
                 </div>
+                {errors.PropertyInterests && (
+                  <p className="text-red-500 mt-3 text-sm">
+                    {errors.PropertyInterests.message}
+                  </p>
+                )}
               </div>
               <div className="w-[90%] ">
                 <label
                   htmlFor="email"
                   className="block mb-3 text-[15px] font-[700] text-PurpleColor"
                 >
-                  Property Interests
+                  Preferred Investment Range
                 </label>
-                <div className="flex items-center gap-3">
+                <div className="flex items-center gap-2">
                   <div className="flex items-center gap-2">
                     <label
                       htmlFor="text"
@@ -281,25 +459,40 @@ const AccountSetting = () => {
                       name="status"
                       aria-label="Project status"
                     >
-                      <option className="text-[#c4c4c4]" value="active">
+                      <option className="text-[#c4c4c4]" value="0">
+                        Under
+                      </option>
+                      <option className="text-[#c4c4c4]" value="25">
                         $250K
                       </option>
-                      <option className="text-[#c4c4c4]" value="active">
-                        Active
-                      </option>
                       <option className="text-[#c4c4c4]" value="paused">
-                        Paused
+                        $500K
                       </option>
                       <option className="text-[#c4c4c4]" value="delayed">
-                        Delayed
+                        $1M
                       </option>
                       <option className="text-[#c4c4c4]" value="canceled">
-                        Canceled
+                        $2.5M
+                      </option>
+                      <option className="text-[#c4c4c4]" value="canceled">
+                        $5M
+                      </option>
+                      <option className="text-[#c4c4c4]" value="canceled">
+                        $10M
+                      </option>
+                      <option className="text-[#c4c4c4]" value="canceled">
+                        $20M
+                      </option>
+                      <option className="text-[#c4c4c4]" value="canceled">
+                        Over
                       </option>
                     </Select>
                   </div>
 
                   <input
+                    {...register("PropertyRange", {
+                      required: "Property Range is required",
+                    })}
                     id="minmax-range"
                     type="range"
                     min="0"
@@ -366,12 +559,13 @@ const AccountSetting = () => {
                     </svg>
                   </div>
                   <input
-                    {...register("GetLocation")}
+                    {...register("GetLocation", {
+                      required: "Location is required",
+                    })}
                     type="search"
                     id="default-search"
                     className=" w-[90%] text-[#444444] placeholder:text-[#444444] font-Urbanist font-semibold py-3 pl-11 rounded-[10px] text-[15px] bg-[#F3EEFF] outline-none"
                     placeholder="Search by name, company, location "
-                    // required
                   />
                 </div>
               </div>

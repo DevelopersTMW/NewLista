@@ -2,7 +2,7 @@ import { ChevronDownIcon, ChevronUpDownIcon } from "@heroicons/react/20/solid";
 import { ChevronDown } from "lucide-react";
 import React, { useState, useRef, useEffect } from "react";
 
-const ComboboxSelection = ({ options = [], onSelect, placeholder , disabled, style }) => {
+const ComboboxSelection = ({ options = [], onSelect, placeholder , disabled, style , icon }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [query, setQuery] = useState("");
   const [selected, setSelected] = useState(null);
@@ -35,11 +35,11 @@ const ComboboxSelection = ({ options = [], onSelect, placeholder , disabled, sty
         <div ref={dropdownRef} className="relative">
           <div
             onClick={() => !disabled && setIsOpen(!isOpen)}
-            className="overline-none text-[13px] font-Inter text-Paracolor font-[500] -mt-0.5  focus:outline-none cursor-pointer"
+            className={`overline-none text-[13px] font-Inter text-Paracolor font-[500] -mt-0.5  focus:outline-none cursor-pointer ${style}` }
           >
             {selected ? selected.name : placeholder}
             <ChevronDown 
-              className={`group pointer-events-none absolute top-1 right-0.5 size-[16px] font-[900]  text-black $} `}
+              className={`group pointer-events-none absolute top-1 right-0.5 size-[16px] font-[900]  text-black ${icon}  `}
               aria-hidden="true"
             />
           </div>

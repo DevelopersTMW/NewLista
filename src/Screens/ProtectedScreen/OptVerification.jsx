@@ -19,7 +19,7 @@ const OptVerification = () => {
   const [OtpSendMess, setOtpSendMess] = useState("");
   const storedEmail = localStorage.getItem("UserEmail");
   const navigate = useNavigate();
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const {
     handleSubmit,
     formState: { errors },
@@ -65,16 +65,15 @@ const OptVerification = () => {
         otp: data.otp,
         email: storedEmail,
       });
-      dispatch(setUser(response.data.user))
-      console.log('====================================');
-      console.log(response.data);
-      console.log('====================================');
+      dispatch(setUser(response.data.user));
+      console.log(response.data.user);
+      localStorage.removeItem("UserEmail");
       if (response.data.profile_complete) {
-        localStorage.removeItem("email");
-        localStorage.setItem("token", response.data.token);
         navigate("/admin");
         reset();
       } else {
+        localStorage.setItem("token", response.data.token);
+        localStorage.setItem("User", JSON.stringify(response.data.user));
         navigate("/admin/account-setting");
       }
       reset();

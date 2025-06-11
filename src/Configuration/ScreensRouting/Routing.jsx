@@ -21,6 +21,7 @@ import SetNewPassword from "../../Screens/ProtectedScreen/SetNewPassword";
 import AddProperty2 from "../../Screens/AddProperty/AddProperty2";
 import AddProperty3 from "../../Screens/AddProperty/AddProperty3.jsx";
 import ScrollToTop from "../../Components/ScrollToTop/ScrollToTop.jsx";
+import ProtectiveRoute from "../ProtectiveRoute/ProtectiveRoute.jsx";
 
 const Routing = () => {
   return (
@@ -31,7 +32,10 @@ const Routing = () => {
           <Route path={"/"} element={<Home />} />
           <Route path={"/about-us"} element={<AboutUs />} />
           {/* <Route path={"/add-property"} element={<AddProperty />} /> */}
-          <Route path={"/create-property"} element={<AddProperty3 />} />
+          <Route
+            path={"/create-property"}
+            element={<ProtectiveRoute component={<AddProperty3 />} />}
+          />
           <Route path={"/properties"} element={<ViewProperty />} />
           <Route path={"/properties/:id"} element={<PropertyDetails />} />
           <Route path={"/pricing"} element={<Pricing />} />

@@ -12,12 +12,12 @@ const ConfirmationModal = ({
 }) => {
   return (
     <div
-      className={`fixed inset-0 z-50 flex items-center justify-center bg-[#000000c2] bg-opacity-50 transition-opacity duration-300 ${
+      className={`fixed inset-0 z-[9999999] flex items-center justify-center bg-[#000000c2] bg-opacity-50 transition-opacity duration-300  ${
         isOpen ? "opacity-100 visible" : "opacity-0 invisible"
       }`}
     >
       <div
-        className={`bg-white rounded-lg shadow-lg dark:bg-gray-700 w-full max-w-md mx-auto p-6 transform transition-all duration-300 ${
+        className={`bg-white rounded-lg shadow-lg w-full max-w-md mx-auto p-6 transform transition-all duration-300 ${
           isOpen ? "scale-100" : "scale-90"
         }`}
       >

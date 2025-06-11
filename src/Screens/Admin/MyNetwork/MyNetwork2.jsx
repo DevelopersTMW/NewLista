@@ -351,7 +351,7 @@ const MyNetwork2 = () => {
         {activeTab === "pending" && (
           <section className="flex flex-col gap-7 sm:gap-10 items-center sm:items-start">
             <h1 className="text-[26px] mt-5 font-Urbanist text-[#f5f5f5] bg-PurpleColor w-max px-5 rounded-[7px] sm:text-[30px] font-[700]">
-              Pending Requests
+              My Requests
             </h1>
             <div className="flex flex-wrap gap-4 justify-center sm:justify-start">
               {loading ? (
@@ -385,7 +385,7 @@ const MyNetwork2 = () => {
                         onReject={handleReject}
                         onViewProfile={() => {
                           setSelectedUser(user);
-                          setSelectedUser({ user: user, type: "pending" });
+                          setSelectedUser({ user: user, type: "pending" , PendingRequest: PendingRequest });
                           setShowModal(true);
                         }}
                         PendingRequest={PendingRequest}
@@ -394,7 +394,7 @@ const MyNetwork2 = () => {
                     ))
                   ) : (
                     <div className="text-black font-Inter font-semibold">
-                      No Pending Requests Found
+                      No Requests Found
                     </div>
                   );
                 })()
@@ -403,6 +403,7 @@ const MyNetwork2 = () => {
           </section>
         )}
       </div>
+
 
       {selectedUser && (
         <ProfileModal

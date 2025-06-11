@@ -121,7 +121,7 @@ const AddToNetwork = ({
             {button === "pending" ? "Already Sent" : "Add to Network"}
           </button>
 
-          {button === "pending" ? (
+          {/* {button === "pending" ? (
             " "
           ) : (
             <button
@@ -130,7 +130,7 @@ const AddToNetwork = ({
             >
               Reject
             </button>
-          )}
+          )} */}
         </>
       );
     }
