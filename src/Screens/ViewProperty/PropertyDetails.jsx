@@ -192,7 +192,7 @@ const PropertyDetails = () => {
                   </div>
                 </div>
 
-                <div className="w-full px-0 lg:px-1 lg:px-0 md:w-[94%]">
+                <div className="w-full px-0 lg:px-1  md:w-[94%]">
                   <div className="max-w-4xl mx-auto border border-[#BBBBBB] rounded-lg py-6 max-[400px]:px-3 px-6  lg:px-6 md:px-4 sm:p-6 bg-white">
                     <h2 className="text-[21px] md:text-[28px] leading-[34px] lg:text-3xl font-bold font-Urbanist text-[#222222] mb-4 lg:mb-6">
                       Key Features & Amenities

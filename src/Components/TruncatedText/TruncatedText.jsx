@@ -9,7 +9,7 @@ function TruncatedText({ text, maxLength  }) {
 
   const displayedText = isExpanded || !isLongText
     ? text
-    : text.slice(0, maxLength) + '...';
+    : text.slice(0, maxLength) + '..';
 
   const toggleExpand = () => setIsExpanded(prev => !prev);
 

@@ -75,7 +75,6 @@ const PropertyForm = () => {
 
           off_market_listing: formData.OfftheMarketListing,
         },
-
         {
           headers: {
             Authorization: `Bearer ${token}`,

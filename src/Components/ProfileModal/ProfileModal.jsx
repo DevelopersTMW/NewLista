@@ -1,6 +1,8 @@
 import React from "react";
 import { Dialog, DialogBackdrop, DialogPanel } from "@headlessui/react";
 import { Calendar, DollarSign, MapPin, Phone } from "lucide-react";
+import UnkownUser from "../../../public/Images/UnknowUser.png"
+
 
 const ProfileModal = ({
   isOpen,
@@ -9,9 +11,23 @@ const ProfileModal = ({
   InvesUserName,
   Invessubtitle,
   onReject,
-  id
+  id,
+  user,
 }) => {
   if (!isOpen) return null;
+
+  console.log(user);
+
+  const formatJoinDate = (isoDate) => {
+  const date = new Date(isoDate);
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0"); // Months are 0-indexed
+  const day = String(date.getDate()).padStart(2, "0");
+
+  return `Joined ${year}-${month}-${day}`;
+};
+
+  
 
   return (
     <Dialog open={isOpen} onClose={onClose} className="relative z-50">
@@ -27,11 +43,11 @@ const ProfileModal = ({
           </button>
 
           {/* Header Image Area */}
-          <div className="bg-gray-100 h-36 flex justify-center items-center relative rounded-t-[10px]">
-            <div className="absolute left-6 bottom-[-40px] w-[105px] h-[105px] bg-gray-300 rounded-full border-4 border-PurpleColor shadow-md">
+          <div className="bg-gray-100 h-36 flex justify-center items-center relative rounded-t-[10px] cursor-pointer">
+            <div className="absolute left-6 bottom-[-40px] w-[105px] h-[105px] bg-gray-300 rounded-full border-4 border-PurpleColor shadow-md overflow-hidden">
               <img
-                className="rounded-full h-full object-cover"
-                src={InvesImage}
+                className="rounded-full w-full h-[120%] object-cover absolute -mt-1.5"
+                src={user.headshot ? user.headshot : UnkownUser}
                 alt=""
               />
             </div>
@@ -48,7 +64,7 @@ const ProfileModal = ({
             </h1>
             {/* Basic Info */}
             <h2 className="text-2xl font-bold font-Urbanist">
-              {InvesUserName}
+              {user.first_name + " " + user.last_name}
             </h2>
             <p className="text-gray-600 font-Urbanist font-[500]">
               {Invessubtitle}
@@ -61,25 +77,25 @@ const ProfileModal = ({
               <div className="flex items-center gap-2">
                 <Phone className="size-5 text-PurpleColor" />
                 <span className="font-Urbanist font-semibold text-[16px] text-Paracolor">
-                  +1 (555) 123-4567
+                  {user.phone}
                 </span>
               </div>
               <div className="flex items-center gap-2">
                 <Calendar className="size-5 text-PurpleColor" />
                 <span className="font-Urbanist font-semibold text-[16px] text-Paracolor">
-                  Joined 2023-01-15
+                  {formatJoinDate(user.created_at)}
                 </span>
               </div>
               <div className="flex items-center gap-2">
                 <MapPin className="size-5 text-PurpleColor" />
                 <span className="font-Urbanist font-semibold text-[16px] text-Paracolor">
-                  New York, NY
+                  {user.location}
                 </span>
               </div>
               <div className="flex items-center gap-2">
                 <DollarSign className="size-5 text-PurpleColor" />
                 <span className="font-Urbanist font-semibold text-[16px] text-Paracolor">
-                  $500K - $2M
+                  {user.preferred_investment_range}
                 </span>
               </div>
             </div>
@@ -111,17 +127,17 @@ const ProfileModal = ({
                 Message
               </button>
               <button
-              onClick={() => onReject(id)}
-              className="font-Inter cursor-pointer text-[#fff] font-semibold text-[14px] px-6 py-2 sm:text-[12.5px] sm:px-2.5 sm:py-1 lg:px-3.5 rounded-full border-solid border-[2px] border-[#000] bg-[#000]"
-            >
-              Reject
-            </button>
-             <button
-            //   onClick={() => onReject(id)}
-              className="font-Inter cursor-pointer text-[#fff] font-semibold text-[14px] px-6 py-2 sm:text-[12.5px] sm:px-2.5 sm:py-1 lg:px-3.5 rounded-full border-solid border-[2px] border-[#F61418] bg-[#F61418]"
-            >
-              Block
-            </button>
+                onClick={() => onReject(id)}
+                className="font-Inter cursor-pointer text-[#fff] font-semibold text-[14px] px-6 py-2 sm:text-[12.5px] sm:px-2.5 sm:py-1 lg:px-3.5 rounded-full border-solid border-[2px] border-[#000] bg-[#000]"
+              >
+                Reject
+              </button>
+              <button
+                //   onClick={() => onReject(id)}
+                className="font-Inter cursor-pointer text-[#fff] font-semibold text-[14px] px-6 py-2 sm:text-[12.5px] sm:px-2.5 sm:py-1 lg:px-3.5 rounded-full border-solid border-[2px] border-[#F61418] bg-[#F61418]"
+              >
+                Block
+              </button>
             </div>
           </div>
         </DialogPanel>
