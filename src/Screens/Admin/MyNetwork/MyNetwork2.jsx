@@ -40,15 +40,21 @@ const MyNetwork2 = () => {
   const [AddNetwork, setAddNetwork] = useState([]);
   const [MyNetwork, setMyNetwork] = useState([]);
   const [PendinNetwork, setPendingNetwork] = useState([]);
-  const [selectedUser, setSelectedUser] = useState(null);
+  const [selectedUser, setSelectedUser] = useState([null]);
+  const [type, settype] = useState();
 
   const [showMobileFilter, setShowMobileFilter] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [activeTab, setActiveTab] = useState("myNetwork");
 
   // GET SEARCH VALUE
-  const handleSearchChange = ({ search, propertyType, investmentRange , locations }) => {
-    setSearchTerm(search + " " + propertyType );
+  const handleSearchChange = ({
+    search,
+    propertyType,
+    investmentRange,
+    locations,
+  }) => {
+    setSearchTerm(search + " " + propertyType);
   };
 
   // REJECT CARD IN NETWORK
@@ -245,40 +251,43 @@ const MyNetwork2 = () => {
             </h1>
             <div className="flex flex-wrap gap-4 justify-center sm:justify-start">
               {loading ? (
-                <div className="flex justify-center items-center">
-                  <Spinner style={"w-14 h-20 text-PurpleColor"} />
-                </div>
-              ) : MyNetwork.length > 0 ? (
-                MyNetwork.filter((user) =>
-                  `${user.first_name} ${user.last_name} ${user.location} ${user.preferred_investment_type}`
-                    .toLowerCase()
-                    .includes(searchTerm.toLowerCase())
-                ).map((user) => (
-                  <AddToNetwork
-                    key={user.id}
-                    id={user.id}
-                    InvesImage={user.headshot}
-                    InvesUserName={user.first_name + " " + user.last_name}
-                    InvesDesc={user.title}
-                    location={user.location}
-                    propertyTypes={user.preferred_investment_type}
-                    memberSince={getJoinYear(user.created_at)}
-                    email={user.email}
-                    phone={user.phone}
-                    showModal={showModal}
-                    setShowModal={setShowModal}
-                    onReject={handleReject}
-                    onViewProfile={() => {
-                      setSelectedUser(user);
-                      setShowModal(true);
-                    }}
-                    type={"myNetwork"}
-                  />
-                ))
+                <Spinner style={"w-14 h-20 text-PurpleColor"} />
               ) : (
-                <div className="text-black font-Inter font-semibold">
-                  No Connections
-                </div>
+                (() => {
+                  const filtered = MyNetwork.filter((user) =>
+                    `${user.first_name} ${user.last_name} ${user.location} ${user.preferred_investment_type}`
+                      .toLowerCase()
+                      .includes(searchTerm.toLowerCase())
+                  );
+                  return filtered.length > 0 ? (
+                    filtered.map((user) => (
+                      <AddToNetwork
+                        key={user.id}
+                        id={user.id}
+                        InvesImage={user.headshot}
+                        InvesUserName={user.first_name + " " + user.last_name}
+                        InvesDesc={user.title}
+                        location={user.location}
+                        propertyTypes={user.preferred_investment_type}
+                        memberSince={getJoinYear(user.created_at)}
+                        email={user.email}
+                        phone={user.phone}
+                        showModal={showModal}
+                        setShowModal={setShowModal}
+                        onReject={handleReject}
+                        onViewProfile={() => {
+                          setSelectedUser({ user: user, type: "myNetwork" });
+                          setShowModal(true);
+                        }}
+                        type={"myNetwork"}
+                      />
+                    ))
+                  ) : (
+                    <div className="text-black font-Inter font-semibold">
+                      No Connections Found
+                    </div>
+                  );
+                })()
               )}
             </div>
           </section>
@@ -290,39 +299,50 @@ const MyNetwork2 = () => {
               Add To Network
             </h1>
             <div className="flex flex-wrap gap-4 justify-center sm:justify-start">
-              {AddNetwork.length > 0 ? (
-                AddNetwork.filter((user) =>
-                  `${user.first_name} ${user.last_name} ${user.location} ${user.preferred_investment_type}`
-                    .toLowerCase()
-                    .includes(searchTerm.toLowerCase())
-                ).map((user) => (
-                  <AddToNetwork
-                    key={user.id}
-                    id={user.id}
-                    InvesImage={user.headshot}
-                    InvesUserName={user.first_name + " " + user.last_name}
-                    InvesDesc={user.title}
-                    location={user.location}
-                    propertyTypes={user.preferred_investment_type}
-                    memberSince={getJoinYear(user.created_at)}
-                    email={user.email}
-                    phone={user.phone}
-                    showModal={showModal}
-                    setShowModal={setShowModal}
-                    onReject={handleReject}
-                    button={user.connection_status}
-                    onViewProfile={() => {
-                      setSelectedUser(user);
-                      setShowModal(true);
-                    }}
-                    AddtoNetwork={AddtoNetwork}
-                    type={"addToNetwork"}
-                  />
-                ))
+              {loading ? (
+                <Spinner style={"w-14 h-20 text-PurpleColor"} />
               ) : (
-                <div className="text-black font-Inter font-semibold">
-                  Not Found
-                </div>
+                (() => {
+                  const filtered = AddNetwork.filter((user) =>
+                    `${user.first_name} ${user.last_name} ${user.location} ${user.preferred_investment_type}`
+                      .toLowerCase()
+                      .includes(searchTerm.toLowerCase())
+                  );
+                  return filtered.length > 0 ? (
+                    filtered.map((user) => (
+                      <AddToNetwork
+                        key={user.id}
+                        id={user.id}
+                        InvesImage={user.headshot}
+                        InvesUserName={user.first_name + " " + user.last_name}
+                        InvesDesc={user.title}
+                        location={user.location}
+                        propertyTypes={user.preferred_investment_type}
+                        memberSince={getJoinYear(user.created_at)}
+                        email={user.email}
+                        phone={user.phone}
+                        showModal={showModal}
+                        setShowModal={setShowModal}
+                        onReject={handleReject}
+                        button={user.connection_status}
+                        onViewProfile={() => {
+                          setSelectedUser({
+                            user: user,
+                            type: "addToNetwork",
+                            button: user.connection_status,
+                          });
+                          setShowModal(true);
+                        }}
+                        AddtoNetwork={AddtoNetwork}
+                        type={"addToNetwork"}
+                      />
+                    ))
+                  ) : (
+                    <div className="text-black font-Inter font-semibold">
+                      No Users Found
+                    </div>
+                  );
+                })()
               )}
             </div>
           </section>
@@ -335,43 +355,49 @@ const MyNetwork2 = () => {
             </h1>
             <div className="flex flex-wrap gap-4 justify-center sm:justify-start">
               {loading ? (
-                <div className="flex justify-center items-center">
-                  <Spinner style={"w-14 h-20 text-PurpleColor"} />
-                </div>
-              ) : PendinNetwork.length > 0 ? (
-                PendinNetwork.filter((user) =>
-                  `${user.from_user.first_name} ${user.from_user.last_name}`
-                    .toLowerCase()
-                    .includes(searchTerm.toLowerCase())
-                ).map((user) => (
-                  <AddToNetwork
-                    key={user.id}
-                    id={user.id}
-                    InvesImage={user.from_user.headshot}
-                    InvesUserName={
-                      user.from_user.first_name + " " + user.from_user.last_name
-                    }
-                    InvesDesc={user.from_user.title}
-                    location={user.from_user.location}
-                    propertyTypes={user.from_user.preferred_investment_type}
-                    memberSince={getJoinYear(user.created_at)}
-                    email={user.from_user.email}
-                    phone={user.from_user.phone}
-                    showModal={showModal}
-                    setShowModal={setShowModal}
-                    onReject={handleReject}
-                    onViewProfile={() => {
-                      setSelectedUser(user);
-                      setShowModal(true);
-                    }}
-                    PendingRequest={PendingRequest}
-                    type={"pending"}
-                  />
-                ))
+                <Spinner style={"w-14 h-20 text-PurpleColor"} />
               ) : (
-                <div className="text-black font-Inter font-semibold">
-                  No pending requests.
-                </div>
+                (() => {
+                  const filtered = PendinNetwork.filter((user) =>
+                    `${user.from_user.first_name} ${user.from_user.last_name}`
+                      .toLowerCase()
+                      .includes(searchTerm.toLowerCase())
+                  );
+                  return filtered.length > 0 ? (
+                    filtered.map((user) => (
+                      <AddToNetwork
+                        key={user.id}
+                        id={user.id}
+                        InvesImage={user.from_user.headshot}
+                        InvesUserName={
+                          user.from_user.first_name +
+                          " " +
+                          user.from_user.last_name
+                        }
+                        InvesDesc={user.from_user.title}
+                        location={user.from_user.location}
+                        propertyTypes={user.from_user.preferred_investment_type}
+                        memberSince={getJoinYear(user.created_at)}
+                        email={user.from_user.email}
+                        phone={user.from_user.phone}
+                        showModal={showModal}
+                        setShowModal={setShowModal}
+                        onReject={handleReject}
+                        onViewProfile={() => {
+                          setSelectedUser(user);
+                          setSelectedUser({ user: user, type: "pending" });
+                          setShowModal(true);
+                        }}
+                        PendingRequest={PendingRequest}
+                        type={"pending"}
+                      />
+                    ))
+                  ) : (
+                    <div className="text-black font-Inter font-semibold">
+                      No Pending Requests Found
+                    </div>
+                  );
+                })()
               )}
             </div>
           </section>
@@ -388,6 +414,7 @@ const MyNetwork2 = () => {
             setShowModal(false);
             setSelectedUser(null);
           }}
+          type={type}
         />
       )}
     </>

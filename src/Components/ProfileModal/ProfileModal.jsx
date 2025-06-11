@@ -1,8 +1,7 @@
 import React from "react";
 import { Dialog, DialogBackdrop, DialogPanel } from "@headlessui/react";
 import { Calendar, DollarSign, MapPin, Phone } from "lucide-react";
-import UnkownUser from "../../../public/Images/UnknowUser.png"
-
+import UnkownUser from "../../../public/Images/UnknowUser.png";
 
 const ProfileModal = ({
   isOpen,
@@ -13,21 +12,77 @@ const ProfileModal = ({
   onReject,
   id,
   user,
+  type,
 }) => {
   if (!isOpen) return null;
 
-  console.log(user);
-
   const formatJoinDate = (isoDate) => {
-  const date = new Date(isoDate);
-  const year = date.getFullYear();
-  const month = String(date.getMonth() + 1).padStart(2, "0"); // Months are 0-indexed
-  const day = String(date.getDate()).padStart(2, "0");
+    const date = new Date(isoDate);
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0"); // Months are 0-indexed
+    const day = String(date.getDate()).padStart(2, "0");
 
-  return `Joined ${year}-${month}-${day}`;
-};
+    return `Joined ${year}-${month}-${day}`;
+  };
 
-  
+
+  const renderButtons = () => {
+  console.log(user.type);
+    if (user.type === "addToNetwork") {
+      return (
+        <>
+          <button
+            onClick={() => openConfirmation("add")}
+            disabled={user.button === "pending"}
+            className={`font-Inter text-[#fff] font-semibold text-[12px] sm:text-[12.5px] sm:px-2.5 sm:py-1.5 px-2.5 py-1.5 lg:px-3.5 lg:py-2 rounded-full border-solid border-[2px] ${
+              user.button === "pending"
+                ? "bg-gray-400 border-gray-400 cursor-not-allowed"
+                : "bg-PurpleColor border-PurpleColor cursor-pointer 64AAE9"
+            }`}
+          >
+            {user.button === "pending" ? "Already Sent" : "Add to Network"}
+          </button>
+
+          {user.button === "pending" ? (
+            " "
+          ) : (
+            <button
+              onClick={() => onReject(id)}
+              className="font-Inter cursor-pointer text-[#fff] font-semibold text-[12px] px-4 py-1.5 sm:text-[12.5px] sm:px-2.5 sm:py-1 lg:px-3.5 rounded-full border-solid border-[2px] border-[#F61418] bg-[#F61418]"
+            >
+              Reject
+            </button>
+          )}
+        </>
+      );
+    }
+    if (user.type === "myNetwork") {
+      return (
+        <button className="font-Inter text-[#fff] font-semibold text-[15px] px-7 py-1.5 rounded-full border-solid border-[2px] border-[#43B274] bg-[#43B274] cursor-pointer">
+          Message
+        </button>
+      );
+    }
+    if (user.type === "pending") {
+      return (
+        <>
+          <button
+            onClick={() => openConfirmation("accept")}
+            className="font-Inter text-[#fff] font-semibold text-[15px] px-6 py-1.5 rounded-full border-solid border-[2px] border-[#43B274] bg-[#43B274] cursor-pointer"
+          >
+            Accept
+          </button>
+          <button
+            onClick={() => openConfirmation("decline")}
+            className="font-Inter cursor-pointer text-[#fff] font-semibold text-[12px]  px-6 py-1.5  sm:text-[14.5px] sm:px-2.5 sm:py-1 lg:px-5 lg:py-1.5 rounded-full border-solid border-[2px] border-[#F61418] bg-[#F61418]"
+          >
+            Decline
+          </button>
+        </>
+      );
+    }
+    return null;
+  };
 
   return (
     <Dialog open={isOpen} onClose={onClose} className="relative z-50">
@@ -47,7 +102,7 @@ const ProfileModal = ({
             <div className="absolute left-6 bottom-[-40px] w-[105px] h-[105px] bg-gray-300 rounded-full border-4 border-PurpleColor shadow-md overflow-hidden">
               <img
                 className="rounded-full w-full h-[120%] object-cover absolute -mt-1.5"
-                src={user.headshot ? user.headshot : UnkownUser}
+                src={user.user.headshot ? user.user.headshot : UnkownUser}
                 alt=""
               />
             </div>
@@ -64,7 +119,7 @@ const ProfileModal = ({
             </h1>
             {/* Basic Info */}
             <h2 className="text-2xl font-bold font-Urbanist">
-              {user.first_name + " " + user.last_name}
+              {user.user.first_name + " " + user.user.last_name}
             </h2>
             <p className="text-gray-600 font-Urbanist font-[500]">
               {Invessubtitle}
@@ -77,13 +132,13 @@ const ProfileModal = ({
               <div className="flex items-center gap-2">
                 <Phone className="size-5 text-PurpleColor" />
                 <span className="font-Urbanist font-semibold text-[16px] text-Paracolor">
-                  {user.phone}
+                  {user.user.phone}
                 </span>
               </div>
               <div className="flex items-center gap-2">
                 <Calendar className="size-5 text-PurpleColor" />
                 <span className="font-Urbanist font-semibold text-[16px] text-Paracolor">
-                  {formatJoinDate(user.created_at)}
+                  {formatJoinDate(user.user.created_at)}
                 </span>
               </div>
               <div className="flex items-center gap-2">
@@ -95,7 +150,7 @@ const ProfileModal = ({
               <div className="flex items-center gap-2">
                 <DollarSign className="size-5 text-PurpleColor" />
                 <span className="font-Urbanist font-semibold text-[16px] text-Paracolor">
-                  {user.preferred_investment_range}
+                  {user.user.preferred_investment_range}
                 </span>
               </div>
             </div>
@@ -113,7 +168,7 @@ const ProfileModal = ({
               </h3>
               <div className="flex gap-2 mt-2 flex-wrap">
                 <span className="bg-[#E3E3E3] text-Paracolor font-semibold font-Inter px-3 py-1 text-[12.5px] rounded-full w-max">
-                  {user.property_interests}
+                  {user.user.property_interests}
                 </span>
                 {/* <span className="bg-[#E3E3E3] text-Paracolor font-semibold font-Inter px-3 py-1 text-[12.5px] rounded-full w-max">
                   Office Space
@@ -121,23 +176,7 @@ const ProfileModal = ({
               </div>
             </div>
             {/* Message Button */}
-            <div className="mt-7 flex gap-2">
-              <button className="font-Inter text-[#fff] font-[500] text-[15px] px-6 py-2 rounded-full border-2 border-PurpleColor bg-PurpleColor hover:opacity-90 transition">
-                Message
-              </button>
-              <button
-                onClick={() => onReject(id)}
-                className="font-Inter cursor-pointer text-[#fff] font-semibold text-[14px] px-6 py-2 sm:text-[12.5px] sm:px-2.5 sm:py-1 lg:px-3.5 rounded-full border-solid border-[2px] border-[#000] bg-[#000]"
-              >
-                Reject
-              </button>
-              <button
-                //   onClick={() => onReject(id)}
-                className="font-Inter cursor-pointer text-[#fff] font-semibold text-[14px] px-6 py-2 sm:text-[12.5px] sm:px-2.5 sm:py-1 lg:px-3.5 rounded-full border-solid border-[2px] border-[#F61418] bg-[#F61418]"
-              >
-                Block
-              </button>
-            </div>
+            <div className="mt-7 flex gap-2">{renderButtons(user)}</div>
           </div>
         </DialogPanel>
       </div>
