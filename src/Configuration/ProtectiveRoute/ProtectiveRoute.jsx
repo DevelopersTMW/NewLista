@@ -16,6 +16,7 @@ function ProtectiveRoute({ component }) {
     } else if (profileComplete !== "true") {
       // Profile incomplete, redirect to account setting
       navigate("/admin/account-setting");
+      setLoading(false);
     } else {
       // All good, allow access
       setLoading(false);
