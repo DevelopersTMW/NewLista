@@ -7,12 +7,18 @@ function ProtectiveRoute({ component }) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    const token = localStorage.getItem("token");
     const profileComplete = localStorage.getItem("ProfileComplete");
 
-    if (profileComplete === "true") {
-      setLoading(false); // Allow access
+    if (!token) {
+      // Token missing, redirect to login
+      navigate("/login");
+    } else if (profileComplete !== "true") {
+      // Profile incomplete, redirect to account setting
+      navigate("/admin/account-setting");
     } else {
-      navigate("/admin/account-setting"); // Redirect to complete profile
+      // All good, allow access
+      setLoading(false);
     }
   }, [navigate]);
 

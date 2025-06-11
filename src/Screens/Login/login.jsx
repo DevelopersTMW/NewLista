@@ -28,13 +28,15 @@ const Login = () => {
         email: Data.Email,
         password: Data.Password,
       });
+
+      console.log(Response.data);
+      localStorage.setItem("token", Response.data.token);
       if (Response.data.profile_complete) {
-        localStorage.setItem("token", Response.data.token);
         navigate("/admin");
         reset();
       } else {
-        localStorage.setItem("token", Response.data.token);
-        navigate("/admin/network");
+        localStorage.setItem("User", JSON.stringify(Response.data.user));
+        navigate("/admin/account-setting");
       }
       console.log(Response);
     } catch (error) {

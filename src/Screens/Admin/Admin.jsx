@@ -10,6 +10,7 @@ import Analytics from "./Analytics/Analytics";
 import AccountSetting from "./AccountSetting/AccountSetting";
 import Inbox from "./Inbox/Inbox";
 import MyNetwork2 from "./MyNetwork/MyNetwork2";
+import ProtectiveRoute from "../../Configuration/ProtectiveRoute/ProtectiveRoute";
 
 const Admin = () => {
   return (
@@ -21,7 +22,7 @@ const Admin = () => {
             <Route path="/network" element={<MyNetwork2 />} />
             <Route path="/myoffers" element={<MyOffers />} />
             <Route path="/analytics" element={<Analytics />} />
-            <Route path="/account-setting" element={<AccountSetting />} />
+            <Route path="/account-setting" element={<ProtectiveRoute component={<AccountSetting />} />} />
             <Route path="/inbox" element={<Inbox />} />
           </Routes>
     }>

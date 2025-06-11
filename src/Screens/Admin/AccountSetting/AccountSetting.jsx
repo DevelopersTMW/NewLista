@@ -68,17 +68,28 @@ const statesArray = [
   { id: 50, name: "Wyoming", code: "WY" },
 ];
 
-const priceOptions = [
-  "$50K",
-  "$100K",
-  "$150K",
-  "$200K",
-  "$250K",
-  "$500K",
-  "$750K",
-  "$1M",
-  "$2M",
-  "$3M",
+const MinPrice = [
+  { label: "Under", value: 0 },
+  { label: "$250K", value: 250 },
+  { label: "$500K", value: 500 },
+  { label: "$1M", value: 1000 },
+  { label: "$2.5M", value: 2500 },
+  { label: "$5M", value: 5000 },
+  { label: "$10M", value: 10000 },
+  { label: "$25M", value: 25000 },
+  { label: "Over", value: 50000 },
+];
+
+const MaxPrice = [
+  { label: "250K", value: 250 },
+  { label: "$500K", value: 500 },
+  { label: "$1M", value: 1000 },
+  { label: "$2.5M", value: 2500 },
+  { label: "$5M", value: 5000 },
+  { label: "$10M", value: 10000 },
+  { label: "$25M", value: 25000 },
+  { label: "$50M", value: 50000 },
+  { label: "$50M", value: 100000 },
 ];
 
 const AccountSetting = () => {
@@ -94,6 +105,7 @@ const AccountSetting = () => {
     setError,
     control,
     setValue,
+    watch,
     reset,
   } = useForm({
     defaultValues: {
@@ -103,8 +115,15 @@ const AccountSetting = () => {
       phone: user.phone,
       StreetAddress: user.location,
       PropertyInterests: {},
+      minPrice: 0,
+      maxPrice: 100000,
+      PropertyRange: 0,
     },
   });
+
+  const minPrice = watch("minPrice");
+  const maxPrice = watch("maxPrice");
+  const PropertyRange = watch("PropertyRange");
 
   //   CHECK IF CITY EXIST OR NOT
   let citiess = cities.map((name, index) => ({
@@ -442,7 +461,7 @@ const AccountSetting = () => {
                   htmlFor="email"
                   className="block mb-3 text-[15px] font-[700] text-PurpleColor"
                 >
-                  Preferred Investment Range
+                  Preferred Investment Range (${PropertyRange})
                 </label>
                 <div className="flex items-center gap-2">
                   <div className="flex items-center gap-2">
@@ -452,54 +471,47 @@ const AccountSetting = () => {
                     >
                       Min
                     </label>
-                    <Select
-                      className={
-                        "bg-[#0c0c0c] border-[#F3EEFF] text-[#e6e6e6] font-[600] font-Urbanist text-[14px] w-20 h-8  rounded-[6px] px-1 outline-none  "
-                      }
-                      name="status"
-                      aria-label="Project status"
-                    >
-                      <option className="text-[#c4c4c4]" value="0">
-                        Under
-                      </option>
-                      <option className="text-[#c4c4c4]" value="25">
-                        $250K
-                      </option>
-                      <option className="text-[#c4c4c4]" value="paused">
-                        $500K
-                      </option>
-                      <option className="text-[#c4c4c4]" value="delayed">
-                        $1M
-                      </option>
-                      <option className="text-[#c4c4c4]" value="canceled">
-                        $2.5M
-                      </option>
-                      <option className="text-[#c4c4c4]" value="canceled">
-                        $5M
-                      </option>
-                      <option className="text-[#c4c4c4]" value="canceled">
-                        $10M
-                      </option>
-                      <option className="text-[#c4c4c4]" value="canceled">
-                        $20M
-                      </option>
-                      <option className="text-[#c4c4c4]" value="canceled">
-                        Over
-                      </option>
-                    </Select>
+                    <Controller
+                      name="minPrice"
+                      control={control}
+                      render={({ field }) => (
+                        <select
+                          {...field}
+                          className="bg-[#0c0c0c] border-[#F3EEFF] text-[#e6e6e6] font-[600] font-Urbanist text-[14px] w-20 h-8  rounded-[6px] px-1 outline-none   "
+                          onChange={(e) => {
+                            const val = Number(e.target.value);
+                            field.onChange(val);
+                          }}
+                        >
+                          {MinPrice.map(({ label, value }) => (
+                            <option key={value} value={value}>
+                              {label}
+                            </option>
+                          ))}
+                        </select>
+                      )}
+                    />
                   </div>
 
-                  <input
-                    {...register("PropertyRange", {
-                      required: "Property Range is required",
-                    })}
-                    id="minmax-range"
-                    type="range"
-                    min="0"
-                    max="10"
-                    className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer"
+                  <Controller
+                    name="PropertyRange"
+                    control={control}
+                    rules={{ required: "Property Range is required" }}
+                    render={({ field }) => (
+                      <input
+                        {...field}
+                        type="range"
+                        min={minPrice || 0}
+                        max={maxPrice || 100000}
+                        className="w-full h-2 bg-gray-200 rounded-lg cursor-pointer"
+                      />
+                    )}
                   />
-
+                  {errors.PropertyRange && (
+                    <p className="text-red-500 text-sm mt-1">
+                      {errors.PropertyRange.message}
+                    </p>
+                  )}
                   <div className="flex gap-2 items-center">
                     <label
                       htmlFor="text"
@@ -507,29 +519,26 @@ const AccountSetting = () => {
                     >
                       Max
                     </label>
-                    <Select
-                      className={
-                        "bg-[#0c0c0c] border-[#F3EEFF] text-[#e6e6e6] font-[600] font-Urbanist text-[14px] w-20 h-8  rounded-[6px] px-1 outline-none   "
-                      }
-                      name="status"
-                      aria-label="Project status"
-                    >
-                      <option className="text-[#c4c4c4]" value="active">
-                        $3Mn
-                      </option>
-                      <option className="text-[#c4c4c4]" value="active">
-                        Active
-                      </option>
-                      <option className="text-[#c4c4c4]" value="paused">
-                        Paused
-                      </option>
-                      <option className="text-[#c4c4c4]" value="delayed">
-                        Delayed
-                      </option>
-                      <option className="text-[#c4c4c4]" value="canceled">
-                        Canceled
-                      </option>
-                    </Select>
+                    <Controller
+                      name="maxPrice"
+                      control={control}
+                      render={({ field }) => (
+                        <select
+                          {...field}
+                          className="bg-[#0c0c0c] border-[#F3EEFF] text-[#e6e6e6] font-[600] font-Urbanist text-[14px] w-20 h-8  rounded-[6px] px-1 outline-none   "
+                          onChange={(e) => {
+                            const val = Number(e.target.value);
+                            field.onChange(val);
+                          }}
+                        >
+                          {MaxPrice.map(({ label, value }) => (
+                            <option key={value} value={value}>
+                              {label}
+                            </option>
+                          ))}
+                        </select>
+                      )}
+                    />
                   </div>
                 </div>
               </div>
@@ -588,9 +597,10 @@ const AccountSetting = () => {
               </div>
               <div>
                 <TextAreas
-                  name={"AboutYou"}
-                  register={register}
-                  label={"About You"}
+                  {...register("Bio", {
+                    required: "Desciption is required",
+                  })}
+                  error={errors.Bio?.message}
                   placeholder={
                     "Tell us about your experience in real estate, your role, and your background..."
                   }
