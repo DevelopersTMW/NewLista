@@ -4,6 +4,11 @@ const SuggestedState = ({ onSelect }) => {
   const statesArray = [
     { id: 1, name: "Alabama", code: "AL" },
     { id: 2, name: "Alaska", code: "AK" },
+    { id: 2, name: "California", code: "AK" },
+    { id: 2, name: "Alaska", code: "AK" },
+    { id: 2, name: "Alaska", code: "AK" },
+    { id: 2, name: "Alaska", code: "AK" },
+    { id: 2, name: "Alaska", code: "AK" },
     // ... all others
   ];
 

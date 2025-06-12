@@ -102,8 +102,6 @@ const AccountSetting = () => {
   const [cities, setCities] = useState([]);
   const [selectedCity, setSelectedCity] = useState("");
 
-  console.log(user);
-
   const {
     register,
     handleSubmit,
@@ -114,8 +112,7 @@ const AccountSetting = () => {
     watch,
     reset,
   } = useForm({
-    defaultValues: user
-      ? {
+    defaultValues: {
           FirstName: user.first_name,
           LastName: user.last_name,
           Email: user.email,
@@ -127,7 +124,7 @@ const AccountSetting = () => {
           PropertyRange: 0,
           PreferredLocation: [],
         }
-      : profileData,
+  
   });
 
   const [selectedStates, setSelectedStates] = useState([]);
@@ -145,7 +142,7 @@ const AccountSetting = () => {
 
   useEffect(() => {
     setValue("PreferredLocation", selectedStates);
-    setSelectedStates(profileData.PreferredLocation);
+    // setSelectedStates(profileData.PreferredLocation);
   }, [selectedStates]);
 
   const minPrice = watch("minPrice");
@@ -183,9 +180,9 @@ const AccountSetting = () => {
     Data.PropertyInterests = cleaned;
     console.log(Data);
     localStorage.setItem("ProfileData", JSON.stringify(Data));
-    localStorage.removeItem("User");
+    // localStorage.removeItem("User");
     localStorage.setItem("ProfileComplete", true);
-    reset(Data);
+    // reset(Data);
   };
 
   const StateSelectionHandler = (value) => {
