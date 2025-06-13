@@ -345,7 +345,7 @@ const PropertyDetails = () => {
                         </p>
                       </span>
                       <p className="font-Urbanist font-[700] text-[20px] sm:text-[21px] text-[#222222]">
-                        Office Building
+                       {SingleProperty}
                       </p>
                     </div>
 
