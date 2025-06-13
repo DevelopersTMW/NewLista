@@ -247,7 +247,7 @@ const AccountSetting = () => {
           investor_status: data.investor_status,
           experience_level: data.experience_level,
           bio: data.bio,
-          headshot: import.meta.env.VITE_IMAGE_KEY + data.headshot,
+          headshot: data.headshot,
           banner: data.banner,
           country: data.country,
           city : data.city,

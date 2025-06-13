@@ -57,7 +57,7 @@ const Register = () => {
       });
       return;
     }
-    
+
     try {
       setLoading(true);
       const Response = await axios.post(
@@ -133,6 +133,12 @@ const Register = () => {
         localStorage.setItem("token", Response.data.token);
         navigate("/admin");
       } else {
+        localStorage.setItem("token", Response.data.token);
+        localStorage.setItem("User", JSON.stringify(Response.data.user));
+        localStorage.setItem(
+          "ProfileComplete",
+          JSON.stringify(Response.data.profile_complete)
+        );
         navigate("/admin/account-setting");
       }
     } catch (error) {
