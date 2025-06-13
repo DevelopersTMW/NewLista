@@ -1,16 +1,26 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import AddPropertyBanner from "../../../../assets/AddPropertyBanner.jpg";
 import AccountSettingImage from "../../../../assets/AccountSettingImage.png";
+import UnkownUser from "/public/Images/ProfileImage.jpg";
 import { Pen } from "lucide-react";
 
-const HeadShootBanner = () => {
+const HeadShootBanner = ({ setValue }) => {
   const [bannerImage, setBannerImage] = useState(null);
   const [profileImage, setProfileImage] = useState(null);
 
+  // Create preview URLs for images
   const bannerPreview = bannerImage ? URL.createObjectURL(bannerImage) : null;
   const profilePreview = profileImage
     ? URL.createObjectURL(profileImage)
     : null;
+
+  useEffect(() => {
+    setValue("banner", bannerImage);
+  }, [bannerImage, setValue]);
+
+  useEffect(() => {
+    setValue("headshot", profileImage);
+  }, [profileImage, setValue]);
 
   return (
     <>
@@ -23,7 +33,9 @@ const HeadShootBanner = () => {
             alt="Banner"
           />
         ) : (
-          <div className="bg-[#123764] h-[34vh] w-full rounded-[10px] object-cover flex justify-center items-center">📷</div>
+          <div className="bg-[#123764] h-[34vh] w-full rounded-[10px] object-cover flex justify-center items-center">
+            📷
+          </div>
         )}
 
         {/* Icon Button for Banner Upload */}
@@ -46,12 +58,12 @@ const HeadShootBanner = () => {
       <div className="ml-4 sm:ml-12 -mt-20 relative">
         <div className="relative w-full sm:w-[19%]">
           <img
-            className="w-[120px] h-[120px] sm:w-[200px] sm:h-[190px] border-solid border-white border-[2px] rounded-[15px] object-cover"
-            src={profilePreview || AccountSettingImage}
+            className="w-[120px] h-[120px] sm:w-[200px] sm:h-[190px] bg-white rounded-[15px] object-cover"
+            src={profilePreview || UnkownUser}
             alt="Profile"
           />
 
-          {/* Profile Upload (still using hidden input over full image) */}
+          {/* Profile Upload (hidden input over full image) */}
           <input
             type="file"
             accept="image/*"

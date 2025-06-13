@@ -8,7 +8,7 @@ import CountrySelector from "../../../Components/RegisterCountrySelector/Country
 import Inputs from "../../../Components/InputFields/Inputs";
 import Selection from "../../../Components/InputFields/Selection";
 import TextAreas from "../../../Components/InputFields/TextAreas";
-import { Controller, useForm } from "react-hook-form";
+import { Controller, useForm, useWatch } from "react-hook-form";
 import Switches from "../../../Components/InputFields/Switch";
 import { useSelector } from "react-redux";
 import CapRatefield from "./Fields/CapRatefield.jsx";
@@ -17,6 +17,10 @@ import ComboboxSelector from "../../../Components/ComboboxSelector/ComboboxSelec
 import axios from "axios";
 import SuggestedState from "../../../Components/RegisterCountrySelector/SuggestedState.jsx";
 import HeadShootBanner from "./Fields/HeadShoot&Banner.jsx";
+import ConfirmationModal from "../../../Components/ConfirmationModal/ConfirmationModal.jsx";
+import { useConfirmation } from "./Fields/Confirmation.jsx";
+import { UserRoundCheck } from "lucide-react";
+import AlertModal from "../../../Components/AlertModal/AlertModal.js";
 
 const statesArray = [
   { id: 1, name: "Alabama", code: "AL" },
@@ -114,8 +118,9 @@ const MaxRange = [
 const AccountSetting = () => {
   const user = JSON.parse(localStorage.getItem("User"));
   const profileData = JSON.parse(localStorage.getItem("ProfileData"));
-
+  const token = localStorage.getItem("token");
   const [AutoSelect, setAutoSelect] = useState(true);
+  const ApiKey = import.meta.env.VITE_API_KEY;
   const [selectedState, setSelectedState] = useState("");
   const [cities, setCities] = useState([]);
   const [selectedCity, setSelectedCity] = useState("");
@@ -131,25 +136,33 @@ const AccountSetting = () => {
     watch,
     reset,
   } = useForm({
-    defaultValues: {
-      FirstName: user.first_name,
-      LastName: user.last_name,
-      Email: user.email,
+    defaultValues:  {
+      first_name: user.first_name,
+      last_name: user.last_name,
+      email: user.email,
       phone: user.phone,
-      StreetAddress: user.location,
-      PropertyInterests: {},
-      PropertyRange: 0,
+      location: user.location,
+      property_interests: [],
+      preferred_investment_range: 0,
       PreferredLocation: [],
       capRateMin: 0,
       capRateMax: 30,
+      banner: null,
+      headshot: null,
+      investor_status: "Non-Active",
     },
   });
+
+  const { isOpen, confirm, handleConfirm, handleCancel } = useConfirmation();
 
   const PreferredRangeMin = watch("minRange");
   const PreferredRangeMax = watch("maxRange");
   const capRateMin = watch("capRateMin");
   const capRateMax = watch("capRateMax");
-  const PropertyRange = watch("PropertyRange");
+  const bannerImage = watch("banner");
+  const profileImage = watch("headshot");
+  const PropertyRange = watch("preferred_investment_range");
+  const investorStatus = useWatch({ control, name: "investor_status" });
 
   // PREFERRED LOCATION
   const [selectedStates, setSelectedStates] = useState([]);
@@ -202,49 +215,92 @@ const AccountSetting = () => {
   };
 
   const CitySelectionHandler = (value) => {
-    console.log("====================================");
-    console.log(value.name);
-    console.log("====================================");
     setValue("city", value.name, { shouldValidate: true });
     trigger("city");
   };
 
+  // Actual form logic
+  const saveData = async (data) => {
+    console.log(data);
+    try {
+      const response = await axios.post(
+        `${ApiKey}/complete-profile`,
+        {
+          first_name: data.first_name,
+          last_name: data.last_name,
+          phone: data.phone,
+          company_name: null,
+          email: data.email,
+          location: data.location,
+          personal_website: data.personal_website,
+          title: data.title,
+          property_interests: data.property_interests,
+          property_interests_custom: null,
+          preferred_investment_range: data.preferred_investment_range,
+          preferred_locations: data.preferred_locations,
+          preferred_investment_type: data.preferred_investment_type,
+          preferred_cap_rate_min: data.capRateMin,
+          preferred_cap_rate_max: data.capRateMax,
+          investor_status: data.investor_status,
+          experience_level: data.experience_level,
+          bio: data.bio,
+          headshot: data.headshot,
+          banner: data.banner,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "multipart/form-data", 
+          },
+        }
+      );
+      localStorage.setItem("User", JSON.stringify(response.data.user));
+      console.log(response.data.user);
+      reset(response.data.user);
 
-  const ProfileComplete = (Data) => {
-    const selected = Object.values(Data.PropertyInterests || {}).filter(
-      Boolean
-    );
-
-    if (selected.length === 0) {
-      // Manually set error for the group
-      setError("PropertyInterests", {
-        type: "manual",
-        message: "Please select at least one property interest.",
+      AlertModal({
+        icon: "success",
+        title: "Thank You",
+        iconColor: "#703BF7",
+        text: "Prfile Complete Successfully",
       });
-      return;
+    } catch (error) {
+      reset(data)
+      console.log(error);
+      const ErrorMessage = error.response.data.message;
+      console.log(ErrorMessage);
+      AlertModal({
+        icon: "error",
+        title: "No Submit",
+        iconColor: "#703BF7",
+        text: ErrorMessage,
+      });
     }
+  };
 
+  const ProfileComplete = async (Data) => {
     // Remove unchecked options
-    const cleaned = Object.entries(Data.PropertyInterests || {})
+    const cleaned = Object.entries(Data.property_interests || {})
       .filter(([, val]) => val)
       .reduce((acc, [key, val]) => {
         acc[key] = val;
         return acc;
       }, {});
 
-    Data.PropertyInterests = cleaned;
-    console.log(Data);
-    localStorage.setItem("ProfileData", JSON.stringify(Data));
-    // localStorage.removeItem("User");
-    localStorage.setItem("ProfileComplete", true);
-    // reset(Data);
+    Data.property_interests = cleaned;
+    const confirmed = await confirm();
+    if (confirmed) {
+      saveData(Data);
+    } else {
+      console.log("❌ Submission cancelled by user");
+    }
   };
 
   return (
     <>
       {/* BANNER START  */}
       <section className=" py-5">
-      <HeadShootBanner/>
+        <HeadShootBanner setValue={setValue} />
       </section>
       {/* BANNER END   */}
 
@@ -260,36 +316,33 @@ const AccountSetting = () => {
               <div className="w-[100%] flex gap-5">
                 <span>
                   <Inputs
-                    register={register("FirstName", {
+                    register={register("first_name", {
                       required: "First name is required",
                     })}
                     labels={"First Name"}
                     placeholder={"Enter your first name"}
-                    error={errors.FirstName?.message}
+                    error={errors.first_name?.message}
                   ></Inputs>
                 </span>
                 <span>
                   <Inputs
-                    register={register("LastName", {
+                    register={register("last_name", {
                       required: "Last Name is required",
                     })}
                     labels={"Last Name"}
                     placeholder={"Enter your Last name"}
-                    error={errors.LastName?.message}
+                    error={errors.last_name?.message}
                   ></Inputs>
                 </span>
               </div>
               <div className="flex gap-6 flex-col">
                 <span>
-                  <Inputs
-                    register={register("Email", {
-                      required: "Email is required",
-                    })}
-                    labels={"Email"}
-                    placeholder={"Enter a valid email (e.g., you@email.com)"}
-                    type={"email"}
-                    error={errors.Email?.message}
-                  ></Inputs>
+                  <div className="block mb-1 font-[700] text-PurpleColor w-full max-[1280px]:text-[14px] max-[1666px]:text-[15px] min-[1666px]:text-[16px] ">
+                    Email
+                  </div>
+                  <div className="bg-[#F3EEFF] text-[#1d1d1d] font-[600] font-Urbanist text-[14px] w-full px-4 rounded-[6px] h-12 flex items-center cursor-not-allowed">
+                    {user.email}
+                  </div>
                 </span>
 
                 {/* Phone Number*/}
@@ -307,12 +360,12 @@ const AccountSetting = () => {
                 />
                 <span>
                   <Inputs
-                    register={register("StreetAddress", {
+                    register={register("location", {
                       required: "StreetAddress is required",
                     })}
                     labels={"Street Address"}
                     placeholder={"Enter street address"}
-                    error={errors.StreetAddress?.message}
+                    error={errors.location?.message}
                   ></Inputs>
                 </span>
               </div>
@@ -390,32 +443,32 @@ const AccountSetting = () => {
               <div className="flex flex-col gap-6">
                 <span>
                   <Inputs
-                    register={register("PersonalWebsite", {
+                    register={register("personal_website", {
                       required: "PersonalWebsite is required",
                     })}
                     labels={"Personal Website"}
                     placeholder={"Enter zip/postal code"}
-                    error={errors.PersonalWebsite?.message}
+                    error={errors.personal_website?.message}
                   ></Inputs>
                 </span>
                 <span>
                   <Inputs
-                    register={register("Title", {
+                    register={register("title", {
                       required: "Property Title is required",
                     })}
-                    labels={"Property Title"}
+                    labels={"User Title"}
                     placeholder={"Select your title"}
-                    error={errors.Title?.message}
+                    error={errors.title?.message}
                   ></Inputs>
                 </span>
                 <Selection
                   labels={"Experience Level"}
                   defaultOption={"Select"}
                   Options={["Beginner", "Intermediate", "Experienced"]}
-                  name="ExperienceLevel"
+                  name="experience_level"
                   register={register}
                   rules={{ required: "Please select an option." }}
-                  error={errors.ExperienceLevel?.message}
+                  error={errors.experience_level?.message}
                 />
               </div>
 
@@ -431,10 +484,16 @@ const AccountSetting = () => {
                     Non-Active
                   </h4>
                   <Controller
-                    name="InvestorStatus"
+                    name="investor_status"
                     control={control}
-                    defaultValue={false}
-                    render={({ field }) => <Switches {...field} />}
+                    render={({ field: { value, onChange } }) => (
+                      <Switches
+                        value={value === "Active"} // convert "Active"/"Non-Active" to boolean
+                        onChange={(checked) =>
+                          onChange(checked ? "Active" : "Non-Active")
+                        }
+                      />
+                    )}
                   />
                   <h4 className="font-Urbanist font-[500] text-[16px] text-[#444444]">
                     Active
@@ -455,37 +514,51 @@ const AccountSetting = () => {
                   Property Interests
                 </label>
                 <Controller
-                  name="PropertyInterests"
+                  name="property_interests"
                   control={control}
+                  defaultValue={[]} // safe default
                   rules={{
                     validate: (value) =>
-                      Object.values(value || {}).some(Boolean) ||
-                      "Select at least one",
+                      Array.isArray(value) && value.length > 0
+                        ? true
+                        : "Select at least one option",
                   }}
-                  render={({
-                    field: { value = {}, onChange },
-                    fieldState: { error },
-                  }) => (
-                    <>
-                      <div className="grid grid-cols-2 gap-1 sm:gap-2">
-                        {PropertyInterest.map((type) => (
-                          <Checkboxs
-                            key={type}
-                            labels={type}
-                            checked={value[type] || false}
-                            onChange={(checked) =>
-                              onChange({ ...value, [type]: checked })
-                            }
-                          />
-                        ))}
-                      </div>
-                      {error && (
-                        <p className="text-red-500 text-sm mt-2">
-                          {error.message}
-                        </p>
-                      )}
-                    </>
-                  )}
+                  render={({ field, fieldState: { error } }) => {
+                    const selected = Array.isArray(field.value)
+                      ? field.value
+                      : [];
+
+                    return (
+                      <>
+                        <div className="grid grid-cols-2 gap-2">
+                          {PropertyInterest.map((type) => {
+                            const isChecked = selected.includes(type);
+
+                            return (
+                              <Checkboxs
+                                key={type}
+                                labels={type}
+                                checked={isChecked}
+                                onChange={(checked) => {
+                                  const updated = checked
+                                    ? [...selected, type]
+                                    : selected.filter((item) => item !== type);
+                                  field.onChange(updated);
+                                }}
+                                error={error?.message}
+                              />
+                            );
+                          })}
+                        </div>
+
+                        {error && (
+                          <p className="text-red-500 text-sm mt-2">
+                            {error.message}
+                          </p>
+                        )}
+                      </>
+                    );
+                  }}
                 />
               </div>
               <div className="w-[90%] ">
@@ -526,7 +599,7 @@ const AccountSetting = () => {
                   </div>
 
                   <Controller
-                    name="PropertyRange"
+                    name="preferred_investment_range"
                     control={control}
                     rules={{
                       validate: (value) =>
@@ -656,23 +729,23 @@ const AccountSetting = () => {
               <div>
                 <Selection
                   labels="Preferred Investment Type "
-                  Options={["Value-Add" , " Stabilized" , "Development"]}
+                  Options={["Value-Add", " Stabilized", "Development"]}
                   defaultOption="Select"
-                  name="PreferredType"
+                  name="preferred_investment_type"
                   register={register}
                   rules={{ required: "Please select an option." }}
-                  error={errors.PreferredType?.message}
+                  error={errors.preferred_investment_type?.message}
                 />
               </div>
 
               <div>
                 <TextAreas
-                  name="Bio"
+                  name="bio"
                   label="About Us"
-                  register={register("Bio", {
+                  register={register("bio", {
                     required: "Description is required",
                   })}
-                  error={errors.Bio?.message}
+                  error={errors.bio?.message}
                   placeholder="Tell us about your experience in real estate, your role, and your background..."
                 />
               </div>
@@ -688,6 +761,18 @@ const AccountSetting = () => {
             </button>
           </div>
         </form>
+        {/* Modal injected here */}
+        <ConfirmationModal
+          isOpen={isOpen}
+          onClose={handleCancel}
+          onConfirm={handleConfirm}
+          message="Do you want to save the details?"
+          confirmLabel="Yes, Save"
+          icon={
+            <UserRoundCheck className="size-20 text-PurpleColor  bg-amber-50 PurpleColor px-3.5 py-3.5 rounded-full" />
+          }
+          style="bg-PurpleColor"
+        />
       </section>
     </>
   );
