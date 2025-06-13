@@ -4,9 +4,11 @@ import AccountSettingImage from "../../../../assets/AccountSettingImage.png";
 import UnkownUser from "/public/Images/ProfileImage.jpg";
 import { Pen } from "lucide-react";
 
-const HeadShootBanner = ({ setValue }) => {
+const HeadShootBanner = ({ setValue , defaultBanner , defaultHeadshot }) => {
   const [bannerImage, setBannerImage] = useState(null);
   const [profileImage, setProfileImage] = useState(null);
+
+  
 
   // Create preview URLs for images
   const bannerPreview = bannerImage ? URL.createObjectURL(bannerImage) : null;
@@ -34,7 +36,11 @@ const HeadShootBanner = ({ setValue }) => {
           />
         ) : (
           <div className="bg-[#123764] h-[34vh] w-full rounded-[10px] object-cover flex justify-center items-center">
-            📷
+           <img
+            className="h-[34vh] rounded-[10px] object-cover w-full"
+            src={import.meta.env.VITE_IMAGE_KEY + defaultBanner }
+            alt="Banner"
+          />
           </div>
         )}
 
@@ -59,7 +65,7 @@ const HeadShootBanner = ({ setValue }) => {
         <div className="relative w-full sm:w-[19%]">
           <img
             className="w-[120px] h-[120px] sm:w-[200px] sm:h-[190px] bg-white rounded-[15px] object-cover"
-            src={profilePreview || UnkownUser}
+            src={profilePreview || import.meta.env.VITE_IMAGE_KEY + defaultHeadshot || UnkownUser}
             alt="Profile"
           />
 

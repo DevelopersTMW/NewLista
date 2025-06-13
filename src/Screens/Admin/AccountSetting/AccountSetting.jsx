@@ -125,6 +125,9 @@ const AccountSetting = () => {
   const [cities, setCities] = useState([]);
   const [selectedCity, setSelectedCity] = useState("");
 
+  const defaultHeadshot = profileData?.headshot || null;
+  const defaultBanner = profileData?.banner || null;
+
   const {
     register,
     handleSubmit,
@@ -136,7 +139,7 @@ const AccountSetting = () => {
     watch,
     reset,
   } = useForm({
-    defaultValues:  {
+    defaultValues: {
       first_name: user.first_name,
       last_name: user.last_name,
       email: user.email,
@@ -231,7 +234,7 @@ const AccountSetting = () => {
           phone: data.phone,
           company_name: null,
           email: data.email,
-          location: data.location,
+          location: data.address,
           personal_website: data.personal_website,
           title: data.title,
           property_interests: data.property_interests,
@@ -244,18 +247,25 @@ const AccountSetting = () => {
           investor_status: data.investor_status,
           experience_level: data.experience_level,
           bio: data.bio,
-          headshot: data.headshot,
+          headshot: import.meta.env.VITE_IMAGE_KEY + data.headshot,
           banner: data.banner,
+          country: data.country,
+          city : data.city,
+          state: data.state,
+          zip: data.zip
         },
         {
           headers: {
             Authorization: `Bearer ${token}`,
-            "Content-Type": "multipart/form-data", 
+            "Content-Type": "multipart/form-data",
           },
         }
       );
       localStorage.setItem("User", JSON.stringify(response.data.user));
-      localStorage.setItem("ProfileComplete", response.data.user.profile_complete );
+      localStorage.setItem(
+        "ProfileComplete",
+        response.data.user.profile_complete
+      );
       console.log(response);
       reset(response.data.user);
 
@@ -266,7 +276,7 @@ const AccountSetting = () => {
         text: "Prfile Complete Successfully",
       });
     } catch (error) {
-      reset(data)
+      reset(data);
       console.log(error);
       const ErrorMessage = error.response.data.message;
       console.log(ErrorMessage);
@@ -296,12 +306,49 @@ const AccountSetting = () => {
       console.log("❌ Submission cancelled by user");
     }
   };
+  const [banner , setbanner] = useState()
+  const [Logo , setLogo] = useState()
+  useEffect(() => {
+    const loadInitialData = async () => {
+      try {
+        const res = await axios.get(`${ApiKey}/auth-user`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
 
+        const data = res.data;
+        setbanner(res.data.banner);
+        setLogo(res.data.headshot);
+
+        reset({
+          ...data,
+          banner: import.meta.env.VITE_IMAGE_KEY + data.banner || null,
+          headshot: import.meta.env.VITE_IMAGE_KEY + data.headshot || null,
+          property_interests: data.property_interests || [],
+          PreferredLocation: data.preferred_locations || [],
+        });
+
+        setSelectedStates(data.preferred_locations || []);
+      } catch (err) {
+        console.error("Failed to fetch user profile:", err);
+      }
+    };
+
+    loadInitialData();
+  }, [banner]);
+
+
+  
+
+  
   return (
     <>
       {/* BANNER START  */}
       <section className=" py-5">
-        <HeadShootBanner setValue={setValue} />
+        <HeadShootBanner
+          defaultHeadshot={Logo}
+          defaultBanner={banner}
+          setValue={setValue} 
+        />
       </section>
       {/* BANNER END   */}
 
@@ -361,12 +408,12 @@ const AccountSetting = () => {
                 />
                 <span>
                   <Inputs
-                    register={register("location", {
+                    register={register("address", {
                       required: "StreetAddress is required",
                     })}
                     labels={"Street Address"}
                     placeholder={"Enter street address"}
-                    error={errors.location?.message}
+                    error={errors.address?.message}
                   ></Inputs>
                 </span>
               </div>
@@ -377,10 +424,10 @@ const AccountSetting = () => {
                     labels="Country"
                     Options={["USA"]}
                     defaultOption="Select"
-                    name="Country"
+                    name="country"
                     register={register}
                     rules={{ required: "Please select an option." }}
-                    error={errors.Country?.message}
+                    error={errors.country?.message}
                   />
                 </span>
                 <span className="flex flex-col justify-center">
@@ -408,12 +455,12 @@ const AccountSetting = () => {
                 </span>
                 <span>
                   <Inputs
-                    register={register("ZipCode", {
+                    register={register("zip", {
                       required: "ZipCode is required",
                     })}
                     labels={"Zip/Postal Code"}
                     placeholder={"Enter zip/postal code"}
-                    error={errors.ZipCode?.message}
+                    error={errors.zip?.message}
                   ></Inputs>
                 </span>
                 <span>

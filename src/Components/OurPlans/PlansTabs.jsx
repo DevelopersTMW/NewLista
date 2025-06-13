@@ -9,7 +9,7 @@ import { X } from "lucide-react";
 
   
 
-const PlansTabs = ({ PlanNum, PlanCard, Name, Desc, ButtonText , benefits }) => {
+const PlansTabs = ({ PlanNum, PlanCard, Name, Desc, ButtonText , benefits ,buttonlink }) => {
   return (
     <>
       <div className="relative w-[100%] bg-white shadow-2xl rounded-3xl max-[350px]:px-6.5 p-8 ring-1 ring-gray-900/10 sm:p-10 2xl:py-12 flex flex-col justify-between">
@@ -62,7 +62,7 @@ const PlansTabs = ({ PlanNum, PlanCard, Name, Desc, ButtonText , benefits }) => 
           ))}
           
         </ul>
-        <Link
+        <Link to={buttonlink}
           className={
             "bg-PurpleColor text-white shadow-xs hover:bg-indigo-400 focus-visible:outline-indigo-500 mt-8 block rounded-md px-3.5 py-2.5 text-center max-[350px]:text-[16px] text-[18px] font-semibold focus-visible:outline-2 focus-visible:outline-offset-2 sm:mt-10"
           }

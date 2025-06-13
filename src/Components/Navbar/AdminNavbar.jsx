@@ -27,7 +27,7 @@ function AdminNavbar() {
             </div>
 
             {/* Desktop Search */}
-            <div className="hidden min-[1170px]:block min-[1170px]:w-[70%]">
+            {/* <div className="hidden min-[1170px]:block min-[1170px]:w-[70%]">
               <div className="flex items-center bg-[#F3EEFF] rounded-[10px] px-4 py-3">
                 <svg
                   className="w-4 h-4 text-[#444444] mr-3"
@@ -49,7 +49,7 @@ function AdminNavbar() {
                   className="w-full bg-transparent outline-none text-[#444444] placeholder:text-[#444444] font-Urbanist font-semibold text-[15px]"
                 />
               </div>
-            </div>
+            </div> */}
           </div>
 
           {/* Bottom Row: Actions */}
@@ -68,7 +68,6 @@ function AdminNavbar() {
               <span className="sr-only">View notifications</span>
               <BellIcon className="max-[380px]:w-5.5 h-7 w-7" aria-hidden="true" />
             </button>
-
             {/* Profile Menu */}
             <Menu as="div" className="relative">
               <MenuButton className="flex rounded-full overflow-hidden">

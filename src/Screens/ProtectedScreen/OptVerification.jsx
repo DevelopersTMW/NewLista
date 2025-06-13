@@ -74,6 +74,7 @@ const OptVerification = () => {
       } else {
         localStorage.setItem("token", response.data.token);
         localStorage.setItem("User", JSON.stringify(response.data.user));
+        localStorage.setItem("ProfileComplete", JSON.stringify(response.data.profile_complete));
         navigate("/admin/account-setting");
       }
       reset();

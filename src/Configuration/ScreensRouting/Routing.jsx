@@ -22,6 +22,11 @@ import AddProperty2 from "../../Screens/AddProperty/AddProperty2";
 import AddProperty3 from "../../Screens/AddProperty/AddProperty3.jsx";
 import ScrollToTop from "../../Components/ScrollToTop/ScrollToTop.jsx";
 import ProtectiveRoute from "../ProtectiveRoute/ProtectiveRoute.jsx";
+import SinglePricing from "../../Screens/Pricing/PremiumYear.jsx";
+import FreeMontlhy from "../../Screens/Pricing/FreeMontly.jsx";
+import PremiumMonthly from "../../Screens/Pricing/PremiumMontlhy.jsx";
+import FreeYear from "../../Screens/Pricing/FreeYear.jsx";
+import PremiumYear from "../../Screens/Pricing/PremiumYear.jsx";
 
 const Routing = () => {
   return (
@@ -39,6 +44,10 @@ const Routing = () => {
           <Route path={"/properties"} element={<ViewProperty />} />
           <Route path={"/properties/:id"} element={<PropertyDetails />} />
           <Route path={"/pricing"} element={<Pricing />} />
+          <Route path={"/premiumyear"} element={<PremiumYear />} />
+          <Route path={"/freemontlhy"} element={<FreeMontlhy />} />
+          <Route path={"/premiummontlhy"} element={<PremiumMonthly />} />
+          <Route path={"/freeyear"} element={<FreeYear />} />
           <Route path={"/contact-us"} element={<ContactUs />} />
           <Route path={"/login"} element={<Login />} />
           <Route path={"/reset-password"} element={<ForgetPassword />} />
@@ -50,7 +59,7 @@ const Routing = () => {
           {/* <Route path={"/commercial"} element={<Commercial />} /> */}
           {/* <Route path={"/industrial"} element={<Industrial />} /> */}
           {/* <Route path={"/lease"} element={<LeaseForm />} /> */}
-          <Route path={"/admin/*"} element={<Admin />} />
+          <Route path={"/admin/*"} element={<ProtectiveRoute component={<Admin />} />} />
         </Routes>
       </BrowserRouter>
     </>

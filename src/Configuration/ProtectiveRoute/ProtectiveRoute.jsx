@@ -9,16 +9,13 @@ function ProtectiveRoute({ component }) {
   useEffect(() => {
     const token = localStorage.getItem("token");
     const profileComplete = localStorage.getItem("ProfileComplete");
-    // else if (profileComplete !== "true") {
-    //       // Profile incomplete, redirect to account setting
-    //       navigate("/admin/account-setting");
-    //       setLoading(false);
-    //     }
+
     if (!token) {
-      // Token missing, redirect to login
       navigate("/login");
+    } else if (profileComplete !== "true") {
+      navigate("/admin/account-setting");
+      setLoading(false);
     } else {
-      // All good, allow access
       setLoading(false);
     }
   }, [navigate]);

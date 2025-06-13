@@ -34,7 +34,7 @@ const Step3 = ({ formData, onBack, onSubmit }) => {
                 Review your listing before publishing
               </p>
             </div>
-            <div className="flex gap-3">
+            {/* <div className="flex gap-3">
               <button className="bg-transparent border-[#6C757D] cursor-pointer max-[400px]:text-[13px] text-[14px] md:text-[15px] lg:text-[16px] border-solid border-[2px] font-[600] pl-2.5 pr-2.5 min-[400px]:pl-3 min-[400px]:pr-4 py-2 text-[#6C757D] font-Urbanist rounded-[6px] flex gap-1 items-center">
                 <Phone className="size-4 md:size-4.5 lg:size-5" /> Direct
                 Contact
@@ -43,7 +43,7 @@ const Step3 = ({ formData, onBack, onSubmit }) => {
                 <DollarSign className="size-4 md:size-4.5 lg:size-5" /> Make an
                 Offer
               </button>
-            </div>
+            </div> */}
           </div>
 
           {/* Image Preview */}
@@ -144,13 +144,13 @@ const Step3 = ({ formData, onBack, onSubmit }) => {
           <button
             type="button"
             onClick={onBack}
-            className="bg-transparent border-[#6C757D] text-[#6C757D] border-2 font-[600] px-5 py-2 rounded-[6px]"
+            className="bg-transparent border-[#6C757D] text-[#6C757D] border-2 font-[600] px-5 py-2 cursor-pointer rounded-[6px]"
           >
             Back to Photo & Media
           </button>
           <button
             type="submit"
-            className="bg-PurpleColor text-white font-[600] px-5 py-2 rounded-[6px]"
+            className="bg-PurpleColor text-white font-[600] px-5 py-2 rounded-[6px] cursor-pointer"
           >
             Preview Listing
           </button>

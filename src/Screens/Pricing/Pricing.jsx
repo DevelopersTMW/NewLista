@@ -158,6 +158,7 @@ const Pricing = () => {
                     Desc={""}
                     benefits={free}
                     ButtonText={"Get started for free"}
+                    buttonlink={"/freemontlhy"}
                   />
                   <PlansTabs
                     PlanCard={"New Investor Pro Pricing (Save $61)"}
@@ -166,6 +167,7 @@ const Pricing = () => {
                     Desc={""}
                     benefits={premium}
                     ButtonText={"Subscribe Now"}
+                    buttonlink={"/premiummontlhy"}
                   />
                 </>
               )}
@@ -178,6 +180,7 @@ const Pricing = () => {
                     Desc={""}
                     benefits={free}
                     ButtonText={"Get started for free"}
+                    buttonlink={"/freeyear"}
                   />
                   <PlansTabs
                     PlanCard={" New Investor Pro Pricing (Save $61)"}
@@ -186,6 +189,7 @@ const Pricing = () => {
                     Desc={""}
                     benefits={premium}
                     ButtonText={"Subscribe Now"}
+                    buttonlink={"/premiumyear"}
                   />
                 </>
               )}

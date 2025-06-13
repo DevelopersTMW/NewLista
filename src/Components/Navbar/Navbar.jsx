@@ -94,11 +94,11 @@ function Navbar() {
           </div>
           <div>
             <Link
-              to={"/login"}
+              to={token ? "/admin" : "/login"}
               className="text-sm/6 font-semibold text-gray-900"
             >
               <button className="bg-transparent hover-btn-yellow hover-btn hover:border-black border-[1px] border-solid text-textColor border-textColor px-5 py-2 rounded-md cursor-pointer">
-                <span>Log in</span>
+                <span>{token ? "Dashboard" : "Log In"}</span>
               </button>
             </Link>
           </div>
@@ -179,11 +179,11 @@ function Navbar() {
                   </div>
                   <div>
                     <Link
-                      to={"/login"}
+                      to={token ? "/admin" : "/login"}
                       className="text-sm/6 font-[500] text-gray-900"
                     >
                       <button className="bg-transparent border-[1px] border-solid text-white border-white px-5 py-2 rounded-md font-Inter">
-                        Log in
+                        {token ? "Dashboard" : "Log In"}
                       </button>
                     </Link>
                   </div>

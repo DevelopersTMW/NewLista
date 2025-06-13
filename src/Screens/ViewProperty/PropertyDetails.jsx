@@ -345,7 +345,7 @@ const PropertyDetails = () => {
                         </p>
                       </span>
                       <p className="font-Urbanist font-[700] text-[20px] sm:text-[21px] text-[#222222]">
-                       {SingleProperty}
+                       {SingleProperty.property_type}
                       </p>
                     </div>
 
@@ -375,7 +375,7 @@ const PropertyDetails = () => {
 
                   <p className="font-Urbanist font-[600] text-[14px] sm:text-[16px] text-[#222222]">
                     💰 Net Operating Income (NOI):{" "}
-                    <span className="font-bold">$10,000</span>
+                    <span className="font-bold">{SingleProperty.noi}</span>
                   </p>
 
                   <p className="font-Urbanist font-[600] text-[14px] sm:text-[16px] text-[#222222]">
@@ -383,7 +383,7 @@ const PropertyDetails = () => {
                   </p>
 
                   <p className="font-Urbanist font-[600] text-[14px] sm:text-[16px] text-[#222222]">
-                    💳 Owner Financing: <span className="font-bold">No</span>
+                    💳 Owner Financing: <span className="font-bold">{SingleProperty.owner_financing}</span>
                   </p>
                 </div>
 

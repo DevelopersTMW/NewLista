@@ -12,6 +12,7 @@ import UnkownUser from "/public/Images/UnknowUser.png";
 // COMPONENTS
 import TruncatedText from "../../TruncatedText/TruncatedText";
 import ConfirmationModal from "../../ConfirmationModal/ConfirmationModal";
+import { Link } from "react-router-dom";
 
 const AddToNetwork = ({
   id,
@@ -139,9 +140,13 @@ const AddToNetwork = ({
     }
     if (type === "myNetwork") {
       return (
-        <button className="font-Inter text-[#fff] font-semibold text-[15px] px-7 py-1.5 rounded-full border-solid border-[2px] border-[#43B274] bg-[#43B274] cursor-pointer">
+        <Link to={"/admin/inbox"}>
+        <button  className="font-Inter text-[#fff] font-semibold text-[15px] px-7 py-1.5 rounded-full border-solid border-[2px] border-[#43B274] bg-[#43B274] cursor-pointer">
           Message
         </button>
+        </Link>
+        
+        
       );
     }
     if (type === "pending") {
@@ -178,7 +183,8 @@ const AddToNetwork = ({
               className="w-[68px] h-[70px] object-cover rounded-full"
               src={
                 InvesImage
-                  ? `${import.meta.env.VITE_IMAGE_KEY}${InvesImage}`
+                  ? `${import.meta.env.VITE_IMAGE_KEY
+                  }${InvesImage}`
                   : UnkownUser
               }
               alt="Investor Profile"

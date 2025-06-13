@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 const PropertiesCards2 = ({ Img, Heading, desc, Status, Price, Features , id  , images}) => {
   return (
     <>
-      <div className="w-[100%] bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700 relative">
+      <div className="w-[100%] bg-white border border-gray-200 rounded-lg shadow-sm relative">
           <img className="rounded-t-lg h-[200px] min-[350px]:h-[230px] object-cover w-[100%]" src={import.meta.env.VITE_IMAGE_KEY + images} alt="" />
         <div className="py-3 pb-4 px-4 flex flex-col gap-2">
           <div className="absolute top-8 end-8">
