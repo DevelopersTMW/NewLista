@@ -303,18 +303,21 @@ const MyNetwork2 = () => {
                 <Spinner style={"w-14 h-20 text-PurpleColor"} />
               ) : (
                 (() => {
-                  const filtered = AddNetwork.filter((user) =>
-                    `${user.first_name} ${user.last_name} ${user.location} ${user.preferred_investment_type}`
-                      .toLowerCase()
-                      .includes(searchTerm.toLowerCase())
+                  const filtered = AddNetwork.filter(
+                    (user) =>
+                      user.connection_status !== "accepted" &&
+                      `${user.first_name} ${user.last_name} ${user.location} ${user.preferred_investment_type}`
+                        .toLowerCase()
+                        .includes(searchTerm.toLowerCase())
                   );
+
                   return filtered.length > 0 ? (
                     filtered.map((user) => (
                       <AddToNetwork
                         key={user.id}
                         id={user.id}
                         InvesImage={user.headshot}
-                        InvesUserName={user.first_name + " " + user.last_name}
+                        InvesUserName={`${user.first_name} ${user.last_name}`}
                         InvesDesc={user.title}
                         location={user.address}
                         propertyTypes={user.preferred_investment_type}
@@ -385,7 +388,11 @@ const MyNetwork2 = () => {
                         onReject={handleReject}
                         onViewProfile={() => {
                           setSelectedUser(user);
-                          setSelectedUser({ user: user, type: "pending" , PendingRequest: PendingRequest });
+                          setSelectedUser({
+                            user: user,
+                            type: "pending",
+                            PendingRequest: PendingRequest,
+                          });
                           setShowModal(true);
                         }}
                         PendingRequest={PendingRequest}
@@ -403,7 +410,6 @@ const MyNetwork2 = () => {
           </section>
         )}
       </div>
-
 
       {selectedUser && (
         <ProfileModal
