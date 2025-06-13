@@ -23,7 +23,7 @@ const HeadShootBanner = () => {
             alt="Banner"
           />
         ) : (
-          <div className="bg-[#cecece] h-[34vh] w-full rounded-[10px] object-cover flex justify-center items-center">📷</div>
+          <div className="bg-[#123764] h-[34vh] w-full rounded-[10px] object-cover flex justify-center items-center">📷</div>
         )}
 
         {/* Icon Button for Banner Upload */}
