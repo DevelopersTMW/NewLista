@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 
 import DefaultForm from "../../../Components/PropertyForm/DefaultForm/DefaultForm.jsx";
 import RentailForm from "../../../Components/PropertyForm/RentailForm/RentailForm.jsx";
@@ -14,6 +14,8 @@ import ListingVisibilitySwitches from "./PropertyDetailSections/ListingVisibilit
 import TextAreas from "../../../Components/InputFields/TextAreas.jsx";
 import PropertyRadios from "./PropertyDetailSections/PropertyRadio.jsx";
 import PropertytypeSelection from "./PropertyDetailSections/PropertytypeSelection.jsx";
+import FormattedNumberInput from "../../../Components/InputFields/NumberInputs.jsx";
+import Inputs from "../../../Components/InputFields/Inputs.jsx";
 
 const Step1 = ({ onNext, defaultValues }) => {
   const {
@@ -22,6 +24,7 @@ const Step1 = ({ onNext, defaultValues }) => {
     formState: { errors },
     watch,
     control,
+    setValue,
     reset,
   } = useForm({
     defaultValues,
@@ -60,9 +63,10 @@ const Step1 = ({ onNext, defaultValues }) => {
 
   const SubmitPropertyForm = (value) => {
     console.log("Validated Form Data:", value);
-    if(value){
-    onNext(value);
-    } return
+    if (value) {
+      onNext(value);
+    }
+    return;
   };
 
   return (
@@ -72,6 +76,7 @@ const Step1 = ({ onNext, defaultValues }) => {
           <PropertyRadios register={register}></PropertyRadios>
           <div className="border border-[#ececec] rounded-2xl mx-3 md:mx-0 px-3 md:px-5 py-8">
             <PropertytypeSelection
+              watch={watch}
               PropertyRadios={PropertyRadio}
               register={register}
               errors={errors}

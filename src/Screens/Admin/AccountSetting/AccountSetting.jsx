@@ -11,10 +11,12 @@ import TextAreas from "../../../Components/InputFields/TextAreas";
 import { Controller, useForm } from "react-hook-form";
 import Switches from "../../../Components/InputFields/Switch";
 import { useSelector } from "react-redux";
+import CapRatefield from "./Fields/CapRatefield.jsx";
 
 import ComboboxSelector from "../../../Components/ComboboxSelector/ComboboxSelector.jsx";
 import axios from "axios";
 import SuggestedState from "../../../Components/RegisterCountrySelector/SuggestedState.jsx";
+import HeadShootBanner from "./Fields/HeadShoot&Banner.jsx";
 
 const statesArray = [
   { id: 1, name: "Alabama", code: "AL" },
@@ -69,7 +71,23 @@ const statesArray = [
   { id: 50, name: "Wyoming", code: "WY" },
 ];
 
-const MinPrice = [
+const PropertyInterest = [
+  "Apartment",
+  "MixedUseProperty",
+  "Retail",
+  "OfficeBuilding",
+  "Hospitality",
+  "Land",
+  "Others",
+  "Shopping/StripCenter",
+  "IndustrialBuilding",
+  "Healthcare",
+  "StorageFacility",
+  "Automotive",
+  "InvestmentHomes",
+];
+
+const MinRange = [
   { label: "Under", value: 0 },
   { label: "$250K", value: 250 },
   { label: "$500K", value: 500 },
@@ -81,7 +99,7 @@ const MinPrice = [
   { label: "Over", value: 50000 },
 ];
 
-const MaxPrice = [
+const MaxRange = [
   { label: "250K", value: 250 },
   { label: "$500K", value: 500 },
   { label: "$1M", value: 1000 },
@@ -105,55 +123,92 @@ const AccountSetting = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isSubmitted },
     setError,
     control,
     setValue,
+    trigger,
     watch,
     reset,
   } = useForm({
     defaultValues: {
-          FirstName: user.first_name,
-          LastName: user.last_name,
-          Email: user.email,
-          phone: user.phone,
-          StreetAddress: user.location,
-          PropertyInterests: {},
-          minPrice: 0,
-          maxPrice: 100000,
-          PropertyRange: 0,
-          PreferredLocation: [],
-        }
-  
+      FirstName: user.first_name,
+      LastName: user.last_name,
+      Email: user.email,
+      phone: user.phone,
+      StreetAddress: user.location,
+      PropertyInterests: {},
+      PropertyRange: 0,
+      PreferredLocation: [],
+      capRateMin: 0,
+      capRateMax: 30,
+    },
   });
 
-  const [selectedStates, setSelectedStates] = useState([]);
+  const PreferredRangeMin = watch("minRange");
+  const PreferredRangeMax = watch("maxRange");
+  const capRateMin = watch("capRateMin");
+  const capRateMax = watch("capRateMax");
+  const PropertyRange = watch("PropertyRange");
 
+  // PREFERRED LOCATION
+  const [selectedStates, setSelectedStates] = useState([]);
   const handleSelectState = (state) => {
     if (!state?.name) return;
     if (!selectedStates.includes(state.name)) {
       setSelectedStates((prev) => [...prev, state.name]);
     }
   };
-
   const handleRemoveState = (name) => {
     setSelectedStates((prev) => prev.filter((stateName) => stateName !== name));
   };
-
   useEffect(() => {
     setValue("PreferredLocation", selectedStates);
-    // setSelectedStates(profileData.PreferredLocation);
+    trigger("PreferredLocation");
   }, [selectedStates]);
-
-  const minPrice = watch("minPrice");
-  const maxPrice = watch("maxPrice");
-  const PropertyRange = watch("PropertyRange");
 
   //   CHECK IF CITY EXIST OR NOT
   let citiess = cities.map((name, index) => ({
     id: index + 1,
     name,
   }));
+
+  const StateSelectionHandler = (value) => {
+    setValue("state", value.name, { shouldValidate: true });
+    trigger("state");
+
+    let state = value.name;
+    setSelectedState(state);
+    setSelectedCity("");
+    setCities([]);
+
+    try {
+      if (state) {
+        const stateShortNames = value.code;
+
+        axios
+          .get(`/states/${stateShortNames}.json`)
+          .then((res) => {
+            setCities(res.data);
+          })
+          .catch((error) => {
+            console.error("Failed to load cities:", error);
+            setCities([]);
+          });
+      }
+    } catch (error) {
+      console.error("Failed to load cities:", error);
+    }
+  };
+
+  const CitySelectionHandler = (value) => {
+    console.log("====================================");
+    console.log(value.name);
+    console.log("====================================");
+    setValue("city", value.name, { shouldValidate: true });
+    trigger("city");
+  };
+
 
   const ProfileComplete = (Data) => {
     const selected = Object.values(Data.PropertyInterests || {}).filter(
@@ -185,74 +240,11 @@ const AccountSetting = () => {
     // reset(Data);
   };
 
-  const StateSelectionHandler = (value) => {
-    setValue("State", value.name);
-    let state = value.name;
-    setSelectedState(state);
-    setSelectedCity("");
-    setCities([]);
-
-    try {
-      if (state) {
-        const stateShortNames = value.code;
-
-        axios
-          .get(`/states/${stateShortNames}.json`)
-          .then((res) => {
-            setCities(res.data);
-          })
-          .catch((error) => {
-            console.error("Failed to load cities:", error);
-            setCities([]);
-          });
-      }
-    } catch (error) {
-      console.error("Failed to load cities:", error);
-    }
-  };
-
-  const CitySelectionHandler = (value) => {
-    setValue("City", value.name);
-  };
-
-  const [profileImage, setProfileImage] = useState(null);
-
-  // Dummy image as fallback
-  const defaultImage = AccountSettingImage;
   return (
     <>
       {/* BANNER START  */}
       <section className=" py-5">
-        <div>
-          <img
-            className="h-[30vh] rounded-[10px] object-cover w-[100%]"
-            src={AddPropertyBanner}
-            alt=""
-          />
-        </div>
-        <div className="ml-4 sm:ml-12 -mt-28 relative">
-          <div className="relative w-[100%]">
-            <img
-              className="border-solid w-[100%] sm:w-[19%] border-white border-[2px] rounded-[15px] object-cover"
-              src={
-                profileImage ? URL.createObjectURL(profileImage) : defaultImage
-              }
-              alt="Profile Preview"
-            />
-
-            {/* Upload Button */}
-            <input
-              type="file"
-              accept="image/*"
-              onChange={(e) => {
-                if (e.target.files && e.target.files[0]) {
-                  setProfileImage(e.target.files[0]);
-                }
-              }}
-              className="absolute top-2 left-0 opacity-0 bg-white p-1 rounded text-sm cursor-pointer"
-            />
-          </div>
-        </div>
+      <HeadShootBanner/>
       </section>
       {/* BANNER END   */}
 
@@ -342,14 +334,23 @@ const AccountSetting = () => {
                     State
                   </label>
                   <ComboboxSelector
-                    style={
-                      "flex items-center bg-[#F3EEFF]  text-[#4b4b4b] font-[600] font-Urbanist text-[14px] w-[100%] h-12 px-4 rounded-[6px] outline-none appearance-none cursor-pointer focus:outline-none "
-                    }
+                    style={`flex items-center bg-[#F3EEFF] text-[#4b4b4b] font-[600] font-Urbanist text-[14px] w-full h-12 px-4 rounded-[6px] outline-none appearance-none cursor-pointer focus:outline-none ${
+                      errors.state ? "border border-red-500" : ""
+                    }`}
                     icon={"top-3.5 right-3.5"}
                     options={statesArray}
                     onSelect={StateSelectionHandler}
                     placeholder={"Select state or province"}
-                  ></ComboboxSelector>
+                  />
+                  {errors.state && (
+                    <p className="text-red-500 text-sm mt-1">
+                      State or province is required.
+                    </p>
+                  )}
+                  <input
+                    type="hidden"
+                    {...register("state", { required: true })}
+                  />
                 </span>
                 <span>
                   <Inputs
@@ -366,15 +367,24 @@ const AccountSetting = () => {
                     City
                   </label>
                   <ComboboxSelector
-                    style={
-                      "flex items-center bg-[#F3EEFF]  text-[#4b4b4b] font-[600] font-Urbanist text-[14px] w-[100%] h-12 px-4 rounded-[6px] outline-none appearance-none cursor-pointer focus:outline-none "
-                    }
+                    style={`flex items-center bg-[#F3EEFF] text-[#4b4b4b] font-[600] font-Urbanist text-[14px] w-full h-12 px-4 rounded-[6px] outline-none appearance-none cursor-pointer focus:outline-none ${
+                      errors.city ? "border border-red-500" : ""
+                    }`}
                     icon={"top-3.5 right-3.5"}
                     options={citiess}
                     onSelect={CitySelectionHandler}
                     placeholder={"Select Your City"}
                     disabled={citiess.length > 0 ? false : true}
                   ></ComboboxSelector>
+                  {errors.city && (
+                    <p className="text-red-500 text-sm mt-1">
+                      City is required.
+                    </p>
+                  )}
+                  <input
+                    type="hidden"
+                    {...register("city", { required: true })}
+                  />
                 </span>
               </div>
               <div className="flex flex-col gap-6">
@@ -435,7 +445,7 @@ const AccountSetting = () => {
 
               {/* Message */}
             </div>
-            <div className="sm:w-[50%] flex flex-col gap-9  ">
+            <div className="sm:w-[50%] flex flex-col gap-6  ">
               <div>
                 {/* CHECK BOXS  */}
                 <label
@@ -444,61 +454,39 @@ const AccountSetting = () => {
                 >
                   Property Interests
                 </label>
-                <div className="flex gap-1 sm:gap-14">
-                  <span className="flex flex-col gap-2.5 justify-center">
-                    {[
-                      "Apartment",
-                      "MixedUseProperty",
-                      "Retail",
-                      "OfficeBuilding",
-                      "Hospitality",
-                      "Land",
-                      "Others",
-                    ].map((item) => (
-                      <Controller
-                        key={item}
-                        name={`PropertyInterests.${item}`}
-                        control={control}
-                        render={({ field }) => (
+                <Controller
+                  name="PropertyInterests"
+                  control={control}
+                  rules={{
+                    validate: (value) =>
+                      Object.values(value || {}).some(Boolean) ||
+                      "Select at least one",
+                  }}
+                  render={({
+                    field: { value = {}, onChange },
+                    fieldState: { error },
+                  }) => (
+                    <>
+                      <div className="grid grid-cols-2 gap-1 sm:gap-2">
+                        {PropertyInterest.map((type) => (
                           <Checkboxs
-                            labels={item}
-                            checked={field.value || false}
-                            onChange={(val) => field.onChange(val)}
+                            key={type}
+                            labels={type}
+                            checked={value[type] || false}
+                            onChange={(checked) =>
+                              onChange({ ...value, [type]: checked })
+                            }
                           />
-                        )}
-                      />
-                    ))}
-                  </span>
-
-                  <span className="flex flex-col gap-2.5">
-                    {[
-                      "Shopping/StripCenter",
-                      "IndustrialBuilding",
-                      "Healthcare",
-                      "StorageFacility",
-                      "Automotive",
-                      "InvestmentHomes",
-                    ].map((item) => (
-                      <Controller
-                        key={item}
-                        name={`PropertyInterests.${item}`}
-                        control={control}
-                        render={({ field }) => (
-                          <Checkboxs
-                            labels={item}
-                            checked={field.value || false}
-                            onChange={(val) => field.onChange(val)}
-                          />
-                        )}
-                      />
-                    ))}
-                  </span>
-                </div>
-                {errors.PropertyInterests && (
-                  <p className="text-red-500 mt-3 text-sm">
-                    {errors.PropertyInterests.message}
-                  </p>
-                )}
+                        ))}
+                      </div>
+                      {error && (
+                        <p className="text-red-500 text-sm mt-2">
+                          {error.message}
+                        </p>
+                      )}
+                    </>
+                  )}
+                />
               </div>
               <div className="w-[90%] ">
                 <label
@@ -516,7 +504,7 @@ const AccountSetting = () => {
                       Min
                     </label>
                     <Controller
-                      name="minPrice"
+                      name="minRange"
                       control={control}
                       render={({ field }) => (
                         <select
@@ -527,7 +515,7 @@ const AccountSetting = () => {
                             field.onChange(val);
                           }}
                         >
-                          {MinPrice.map(({ label, value }) => (
+                          {MinRange.map(({ label, value }) => (
                             <option key={value} value={value}>
                               {label}
                             </option>
@@ -540,22 +528,21 @@ const AccountSetting = () => {
                   <Controller
                     name="PropertyRange"
                     control={control}
-                    rules={{ required: "Property Range is required" }}
+                    rules={{
+                      validate: (value) =>
+                        value > 0 || "Property Range must be greater than zero",
+                    }}
                     render={({ field }) => (
                       <input
                         {...field}
                         type="range"
-                        min={minPrice || 0}
-                        max={maxPrice || 100000}
+                        min={PreferredRangeMin || 0}
+                        max={PreferredRangeMin || 100000}
                         className="w-full h-2 bg-gray-200 rounded-lg cursor-pointer"
                       />
                     )}
                   />
-                  {errors.PropertyRange && (
-                    <p className="text-red-500 text-sm mt-1">
-                      {errors.PropertyRange.message}
-                    </p>
-                  )}
+
                   <div className="flex gap-2 items-center">
                     <label
                       htmlFor="text"
@@ -564,7 +551,7 @@ const AccountSetting = () => {
                       Max
                     </label>
                     <Controller
-                      name="maxPrice"
+                      name="maxRange"
                       control={control}
                       render={({ field }) => (
                         <select
@@ -575,7 +562,7 @@ const AccountSetting = () => {
                             field.onChange(val);
                           }}
                         >
-                          {MaxPrice.map(({ label, value }) => (
+                          {MaxRange.map(({ label, value }) => (
                             <option key={value} value={value}>
                               {label}
                             </option>
@@ -585,7 +572,13 @@ const AccountSetting = () => {
                     />
                   </div>
                 </div>
+                {errors.PropertyRange && (
+                  <p className="text-red-500 text-sm mt-1">
+                    {errors.PropertyRange.message}
+                  </p>
+                )}
               </div>
+
               <div>
                 <label
                   htmlFor="email"
@@ -613,9 +606,18 @@ const AccountSetting = () => {
                       </svg>
                     </div>
                     <div className="w-[80%]">
-                      <SuggestedState onSelect={handleSelectState} />
+                      <SuggestedState
+                        errors={errors}
+                        register={register}
+                        onSelect={handleSelectState}
+                      />
                     </div>
                   </div>
+                  {isSubmitted && errors.PreferredLocation && (
+                    <p className="text-red-500 font-[500] text-[14px] pt-1 font-Urbanist tracking-wide">
+                      {errors.PreferredLocation.message}
+                    </p>
+                  )}
                 </div>
               </div>
               <div className="flex gap-2 flex-wrap">
@@ -634,6 +636,35 @@ const AccountSetting = () => {
                   </span>
                 ))}
               </div>
+
+              <div className="w-[90%] ">
+                <label
+                  htmlFor="email"
+                  className="block mb-3 text-[15px] font-[700] text-PurpleColor"
+                >
+                  Preferred Cap Rate %
+                </label>
+                <CapRatefield
+                  capRateMin={capRateMin}
+                  capRateMax={capRateMax}
+                  control={control}
+                  errors={errors}
+                  trigger={trigger}
+                ></CapRatefield>
+              </div>
+
+              <div>
+                <Selection
+                  labels="Preferred Investment Type "
+                  Options={["Value-Add" , " Stabilized" , "Development"]}
+                  defaultOption="Select"
+                  name="PreferredType"
+                  register={register}
+                  rules={{ required: "Please select an option." }}
+                  error={errors.PreferredType?.message}
+                />
+              </div>
+
               <div>
                 <TextAreas
                   name="Bio"

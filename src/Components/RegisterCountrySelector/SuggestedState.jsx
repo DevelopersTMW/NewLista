@@ -1,14 +1,10 @@
 import React, { useState } from "react";
 
-const SuggestedState = ({ onSelect }) => {
+const SuggestedState = ({ onSelect, register , errors }) => {
   const statesArray = [
     { id: 1, name: "Alabama", code: "AL" },
     { id: 2, name: "Alaska", code: "AK" },
-    { id: 2, name: "California", code: "AK" },
-    { id: 2, name: "Alaska", code: "AK" },
-    { id: 2, name: "Alaska", code: "AK" },
-    { id: 2, name: "Alaska", code: "AK" },
-    { id: 2, name: "Alaska", code: "AK" },
+    { id: 2, name: "California", code: "CL" },
     // ... all others
   ];
 
@@ -27,6 +23,8 @@ const SuggestedState = ({ onSelect }) => {
 
   const handleSelect = (state) => {
     setInputValue(state.name);
+    setInputValue("");
+
     setSuggestions([]);
     if (onSelect) onSelect(state);
   };
@@ -55,6 +53,10 @@ const SuggestedState = ({ onSelect }) => {
   return (
     <div className="relative w-full">
       <input
+        {...register("PreferredLocation", {
+          validate: (value) =>
+            value.length > 0 || "Please select at least one ",
+        })}
         type="text"
         value={inputValue}
         onChange={handleChange}
