@@ -42,10 +42,10 @@ const Step2 = ({ onNext, onBack, defaultValues }) => {
               error={errors.fileInput}
             ></AddPhotoSection>
           </div>
-          <div className="border-y-[1px] border-[#BBBBBB] border-solid my-10 py-9">
+          <div className="border-y-[1px] border-[#BBBBBB] border-solid mt-10 py-9">
             <Features errors={errors} control={control}></Features>
           </div>
-          <div>
+          {/* <div>
             <div>
               <h1 className="font-Urbanist font-[500] mb-2 text-[#242424] text-[17px]">
                 Social Media Sharing
@@ -65,7 +65,7 @@ const Step2 = ({ onNext, onBack, defaultValues }) => {
                 </button>
               ))}
             </div>
-          </div>
+          </div> */}
         </div>
         <div className="flex gap-2 justify-between px-1.5 py-7 mx-3 sm:mx-0">
           <button

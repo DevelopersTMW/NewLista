@@ -42,14 +42,15 @@ const PropertyForm = () => {
       return;
     }
 
+
+
+
     console.log("Submitted Data:", formData);
     try {
       const Response = await axios.post(
         `${ApiKey}/add-update-property`,
 
         {
-          user_id: 10,
-
           property_name: formData.PropertyTitle,
 
           listing_type: formData.propertyType,
@@ -80,13 +81,17 @@ const PropertyForm = () => {
 
           images: formData.fileInput,
 
-          featured_listing: formData.FeaturedListing,
+          featured_listing: formData.FeaturedListing ? 1 : 0,
 
           off_market_listing: formData.OfftheMarketListing,
+          owner_financing: formData.OwnerFinancing ? 1 : 0 ,
+          nio:  formData.Noi,
+          cap_rate: formData.cap_rate,
         },
         {
           headers: {
             Authorization: `Bearer ${token}`,
+              "Content-Type": "multipart/form-data", 
           },
         }
       );

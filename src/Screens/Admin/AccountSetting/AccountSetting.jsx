@@ -255,6 +255,7 @@ const AccountSetting = () => {
         }
       );
       localStorage.setItem("User", JSON.stringify(response.data.user));
+      localStorage.setItem("ProfileComplete", response.data.user.profile_complete );
       console.log(response);
       reset(response.data.user);
 

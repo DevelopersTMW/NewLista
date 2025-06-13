@@ -31,12 +31,12 @@ const Login = () => {
 
       console.log(Response.data);
       localStorage.setItem("token", Response.data.token);
+      localStorage.setItem("User", JSON.stringify(Response.data.user));
       if (Response.data.profile_complete) {
-        localStorage.setItem("User", JSON.stringify(Response.data.user));
+        localStorage.setItem("ProfileComplete", JSON.stringify(Response.data.profile_complete));
         navigate("/admin");
         reset();
       } else {
-        localStorage.setItem("User", JSON.stringify(Response.data.user));
         navigate("/admin/account-setting");
       }
       console.log(Response);
@@ -86,8 +86,10 @@ const Login = () => {
           },
         }
       );
+      localStorage.setItem("token", Response.data.token);
+      localStorage.setItem("User", JSON.stringify(Response.data.user));
       if (Response.data.profile_complete) {
-        localStorage.setItem("token", Response.data.token);
+        localStorage.setItem("ProfileComplete", JSON.stringify(Response.data.profile_complete));
         navigate("/admin");
       } else {
         navigate("/admin/account-setting");

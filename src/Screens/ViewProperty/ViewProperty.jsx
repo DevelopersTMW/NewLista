@@ -60,6 +60,8 @@ const ViewProperty = () => {
       try {
         const GetPropertyData = await axios.get(`${ApiKey}/properties`);
         const Response = GetPropertyData.data.data;
+        console.log(Response);
+        
         setProperties(Response);
       } catch (error) {
         console.log(error);
@@ -172,7 +174,7 @@ const ViewProperty = () => {
                   >
                     {
                       <PropertiesCards2
-                        Img={PropertiesImage3}
+                        Img={items.images[0]}
                         Heading={items.property_name}
                         desc={items.description}
                         Status={items.listing_type}

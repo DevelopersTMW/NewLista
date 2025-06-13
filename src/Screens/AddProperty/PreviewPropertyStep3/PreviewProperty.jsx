@@ -16,7 +16,6 @@ const Step3 = ({ formData, onBack, onSubmit }) => {
   });
 
   const handleFinalSubmit = (data) => {
-    // Append to formData and call parent submit
     const finalData = { ...formData, ...data };
     onSubmit(finalData);
   };
@@ -65,9 +64,30 @@ const Step3 = ({ formData, onBack, onSubmit }) => {
               <div className="w-full overflow-hidden relative h-[400px] bg-[#f5f5f5] mt-7 rounded-lg">
                 <img
                   className="object-cover w-full h-full"
-                  src={formData.fileInput[0]}
+                  src={URL.createObjectURL(formData.fileInput[0])}
                   alt=""
                 />
+              </div>
+            )}
+          </div>
+
+          <div>
+            {formData.fileInput?.length > 1 && (
+              <div className="flex flex-wrap gap-4 mt-4">
+                {Array.from(formData.fileInput)
+                  .slice(1) // skip the first one
+                  .map((file, index) => (
+                    <div
+                      key={index}
+                      className="w-40 h-36 overflow-hidden rounded-lg bg-gray-100"
+                    >
+                      <img
+                        src={URL.createObjectURL(file)}
+                        alt={`preview-${index + 1}`}
+                        className="object-cover w-full h-full"
+                      />
+                    </div>
+                  ))}
               </div>
             )}
           </div>

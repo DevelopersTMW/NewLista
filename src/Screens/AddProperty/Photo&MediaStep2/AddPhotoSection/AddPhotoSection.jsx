@@ -5,42 +5,15 @@ const AddPhotoSection = ({ register, setValue, error }) => {
   const [images, setImages] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  const handleImageUpload = async (files) => {
-    setLoading(true);
-    const uploadedUrls = [];
+  console.log(images);
 
-    for (const file of files) {
-      const data = new FormData();
-      data.append("file", file);
-      data.append("upload_preset", "RealEstate");
-      data.append("cloud_name", "newlista");
-
-      try {
-        const res = await fetch(`https://api.cloudinary.com/v1_1/newlista/upload`, {
-          method: "POST",
-          body: data,
-        });
-
-        const UploadedImageUrl = await res.json();
-        const imageUrl = UploadedImageUrl?.url;
-        if (imageUrl) {
-          uploadedUrls.push(imageUrl);
-        }
-      } catch (err) {
-        console.error("Upload failed:", err);
-      }
-    }
-
-    const updatedImages = [...images, ...uploadedUrls];
-    setImages(updatedImages);
-    setValue("fileInput", updatedImages, { shouldValidate: true });
-    setLoading(false);
-  };
 
   const handleChange = (e) => {
-    const files = Array.from(e.target.files);
-    if (files.length === 0) return;
-    handleImageUpload(files);
+    const newFiles = Array.from(e.target.files);
+    const allFiles = [...images, ...newFiles];
+
+    setImages(allFiles);
+    setValue("fileInput", allFiles, { shouldValidate: true });
   };
 
   return (
@@ -78,7 +51,8 @@ const AddPhotoSection = ({ register, setValue, error }) => {
                 {...register("fileInput", {
                   required: "At least one image is required.",
                   validate: (val) =>
-                    Array.isArray(val) && val.length > 0 || "At least one image is required.",
+                    (Array.isArray(val) && val.length > 0) ||
+                    "At least one image is required.",
                 })}
               />
             </div>
@@ -90,7 +64,7 @@ const AddPhotoSection = ({ register, setValue, error }) => {
           </p>
         )}
       </div>
-
+      
       {images.length > 0 && (
         <div className="pt-5">
           <h1 className="font-Urbanist font-[500] mb-2 text-[#242424] text-[17px]">
@@ -100,8 +74,8 @@ const AddPhotoSection = ({ register, setValue, error }) => {
             {images.map((url, index) => (
               <img
                 key={index}
-                className="object-cover w-40 h-32 rounded-2xl"
-                src={url}
+                className="object-cover w-40 h-36 rounded-2xl"
+                src={URL.createObjectURL(url)}
                 alt={`Uploaded ${index}`}
               />
             ))}
