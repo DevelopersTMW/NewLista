@@ -255,7 +255,7 @@ const AccountSetting = () => {
         }
       );
       localStorage.setItem("User", JSON.stringify(response.data.user));
-      console.log(response.data.user);
+      console.log(response);
       reset(response.data.user);
 
       AlertModal({

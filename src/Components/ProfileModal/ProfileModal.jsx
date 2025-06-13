@@ -174,7 +174,7 @@ const ProfileModal = ({
               <div className="absolute left-6 bottom-[-40px] w-[105px] h-[105px] bg-gray-300 rounded-full border-4 border-PurpleColor shadow-md overflow-hidden">
                 <img
                   className="rounded-full w-full h-[120%] object-cover absolute -mt-1.5"
-                  src={user.user.headshot ? user.user.headshot : UnkownUser}
+                  src={user.user.headshot ? import.meta.env.VITE_IMAGE_KEY + user.user.headshot : UnkownUser}
                   alt=""
                 />
               </div>
@@ -216,7 +216,7 @@ const ProfileModal = ({
                 <div className="flex items-center gap-2">
                   <MapPin className="size-5 text-PurpleColor" />
                   <span className="font-Urbanist font-semibold text-[16px] text-Paracolor">
-                    {user.location}
+                    {user.user.address}
                   </span>
                 </div>
                 <div className="flex items-center gap-2">
@@ -232,7 +232,7 @@ const ProfileModal = ({
                   About Us
                 </h3>
                 <p className="text-Paracolor font-Urbanist font-[500] text-[15px] mt-1">
-                  {user.bio}
+                  {user.user.bio}
                 </p>
               </div>
               {/* Property Interests */}

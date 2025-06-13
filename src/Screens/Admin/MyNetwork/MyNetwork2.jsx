@@ -316,7 +316,7 @@ const MyNetwork2 = () => {
                         InvesImage={user.headshot}
                         InvesUserName={user.first_name + " " + user.last_name}
                         InvesDesc={user.title}
-                        location={user.location}
+                        location={user.address}
                         propertyTypes={user.preferred_investment_type}
                         memberSince={getJoinYear(user.created_at)}
                         email={user.email}

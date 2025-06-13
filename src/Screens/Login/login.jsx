@@ -32,6 +32,7 @@ const Login = () => {
       console.log(Response.data);
       localStorage.setItem("token", Response.data.token);
       if (Response.data.profile_complete) {
+        localStorage.setItem("User", JSON.stringify(Response.data.user));
         navigate("/admin");
         reset();
       } else {

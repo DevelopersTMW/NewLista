@@ -38,6 +38,9 @@ const AddToNetwork = ({
     onConfirm: () => {},
   });
 
+  console.log("https://newlista.secureserverinternal.com/public/storage/" + InvesImage);
+  
+
   // SEND CONNECTION REQUEST
   const openConfirmation = (actionType) => {
     let data = {};
@@ -172,9 +175,13 @@ const AddToNetwork = ({
         >
           <span>
             <img
-              className="w-[68px] h-[70px] object-cove rounded-full"
-              src={InvesImage ? InvesImage : UnkownUser}
-              alt=""
+              className="w-[68px] h-[70px] object-cover rounded-full"
+              src={
+                InvesImage
+                  ? `${import.meta.env.VITE_IMAGE_KEY}${InvesImage}`
+                  : UnkownUser
+              }
+              alt="Investor Profile"
             />
           </span>
           <span>
