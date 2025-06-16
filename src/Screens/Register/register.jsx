@@ -2,8 +2,6 @@ import React, { useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Controller, useForm } from "react-hook-form";
 import axios from "axios";
-import { setUser } from "../../Reducers/UserCredientails/userSlice";
-// import {user}  from '../../Reducers/UserCredientails/userSlice'
 // COMPONENTS
 import CountrySelector from "../../Components/RegisterCountrySelector/CountrySelection";
 import Inputs from "../../Components/InputFields/Inputs";

@@ -21,7 +21,7 @@ const AdminSidebar = ({ screen }) => {
 
   return (
     <>
-      <div className="bg-[#F9F7FF] flex flex-col min-[890px]:flex-row gap-5 min-h-screen py-6 min-[890px]:py-8">
+      <div className="bg-[#F9F7FF] flex flex-col min-[890px]:flex-row gap-10 min-h-screen py-6 min-[890px]:py-8 justify-end ">
         {/* MOBILE SCREEN BUTTON */}
         <button
           type="button"
@@ -45,9 +45,9 @@ const AdminSidebar = ({ screen }) => {
         {/* SIDE BAR MENU  */}
         <aside
           id="logo-sidebar"
-          className={`max-h-screen overflow-y-auto  fixed top-0 left-0 z-40 w-[90%] min-[890px]:top-8  sm:w-[50%] md:w-[43%] lg:w-[35%] xl:w-[32%] lg:min-h-screen flex justify-center lg:justify-start flex-col transition-transform bg-white  min-[890px]:rounded-r-[20px]
-             h-full min-[890px]:translate-x-0
-            ${isMobileDrawerOpen ? "translate-x-0" : "-translate-x-full"} min-[890px]:static`}
+          className={` overflow-y-auto  fixed top-0 left-0 z-40 w-[90%] min-[890px]:top-8  sm:w-[50%] md:w-[43%] lg:w-[35%] xl:w-[24%] lg:min-h-scren flex justify-center lg:justify-start flex-col transition-transform bg-white  min-[890px]:rounded-r-[20px]
+             h- min-[890px]:translate-x-0
+            ${isMobileDrawerOpen ? "translate-x-0" : "-translate-x-full"} min-[890px]:fixed `}
           aria-label="Sidebar"
         >
           {/* CLOSE BUTTON - ONLY ON MOBILE */}
@@ -284,7 +284,7 @@ const AdminSidebar = ({ screen }) => {
         </aside>
 
         {/* ADMIN SCREEN  */}
-        <div className="px-4 flex flex-col gap-2 sm:ml- w-[100%]">
+        <div className="px-4 flex flex-col gap-2 sm:ml- w-[74%]">
           <div>
             <AdminNavbar></AdminNavbar>
           </div>

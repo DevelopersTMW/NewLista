@@ -31,7 +31,6 @@ import CardContentSection from "./HomeSections/CardContentSection";
 import Carousel from "../../Components/Carousel/Carousel";
 import CardCarousel from "../../Components/Carousel/Carousel";
 import { useDispatch, useSelector } from "react-redux";
-import { setUser } from "../../Reducers/UserCredientails/userSlice";
 
 // BACKGORUND
 const HeroBackground = {

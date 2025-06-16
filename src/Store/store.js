@@ -1,9 +1,11 @@
-// src/store/store.js
+// store.js
 import { configureStore } from "@reduxjs/toolkit";
-import userReducer from "../Reducers/UserCredientails/userSlice"; // ✅ correct path
+import authReducer from "../Reducers/authSlice/authSlice.js";
 
-export const store = configureStore({
+const store = configureStore({
   reducer: {
-    user: userReducer,
+    auth: authReducer,
   },
 });
+
+export default store;

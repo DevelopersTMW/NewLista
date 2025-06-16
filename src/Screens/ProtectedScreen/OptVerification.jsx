@@ -8,7 +8,6 @@ import axios from "axios";
 import Spinner from "../../Components/Spinner/Spinner";
 import { Controller, useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
-import { setUser } from "../../Reducers/UserCredientails/userSlice";
 
 const OptVerification = () => {
   const ApiKey = import.meta.env.VITE_API_KEY;
@@ -65,7 +64,7 @@ const OptVerification = () => {
         otp: data.otp,
         email: storedEmail,
       });
-      dispatch(setUser(response.data.user));
+      // dispatch(setUser(response.data.user));
       console.log(response.data.user);
       localStorage.removeItem("UserEmail");
       if (response.data.profile_complete) {

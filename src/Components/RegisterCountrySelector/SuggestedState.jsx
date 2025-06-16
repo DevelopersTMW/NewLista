@@ -5,7 +5,6 @@ const SuggestedState = ({ onSelect, register , errors }) => {
     { id: 1, name: "Alabama", code: "AL" },
     { id: 2, name: "Alaska", code: "AK" },
     { id: 2, name: "California", code: "CL" },
-    // ... all others
   ];
 
   const [inputValue, setInputValue] = useState("");
@@ -14,7 +13,6 @@ const SuggestedState = ({ onSelect, register , errors }) => {
   const handleChange = (e) => {
     const value = e.target.value;
     setInputValue(value);
-
     const filtered = statesArray.filter((state) =>
       state.name.toLowerCase().startsWith(value.toLowerCase())
     );
@@ -24,7 +22,6 @@ const SuggestedState = ({ onSelect, register , errors }) => {
   const handleSelect = (state) => {
     setInputValue(state.name);
     setInputValue("");
-
     setSuggestions([]);
     if (onSelect) onSelect(state);
   };
@@ -53,7 +50,7 @@ const SuggestedState = ({ onSelect, register , errors }) => {
   return (
     <div className="relative w-full">
       <input
-        {...register("PreferredLocation", {
+        {...register("preferred_locations", {
           validate: (value) =>
             value.length > 0 || "Please select at least one ",
         })}

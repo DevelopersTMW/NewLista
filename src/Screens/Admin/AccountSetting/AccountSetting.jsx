@@ -1,26 +1,25 @@
-import React, { useEffect, useState } from "react";
-import AddPropertyBanner from "../../../assets/AddPropertyBanner.jpg";
-import AccountSettingImage from "../../../assets/AccountSettingImage.png";
-import CrossImage from "../../../assets/CrossImage.png";
-import { Select, Switch } from "@headlessui/react";
-import Checkboxs from "../../../Components/InputFields/Checkboxs";
-import CountrySelector from "../../../Components/RegisterCountrySelector/CountrySelection";
-import Inputs from "../../../Components/InputFields/Inputs";
-import Selection from "../../../Components/InputFields/Selection";
-import TextAreas from "../../../Components/InputFields/TextAreas";
-import { Controller, useForm, useWatch } from "react-hook-form";
-import Switches from "../../../Components/InputFields/Switch";
-import { useSelector } from "react-redux";
-import CapRatefield from "./Fields/CapRatefield.jsx";
-
-import ComboboxSelector from "../../../Components/ComboboxSelector/ComboboxSelector.jsx";
 import axios from "axios";
-import SuggestedState from "../../../Components/RegisterCountrySelector/SuggestedState.jsx";
+import { useEffect, useState } from "react";
+import { Search, UserRoundCheck } from "lucide-react";
+import { Controller, useForm, useWatch } from "react-hook-form";
+
+// COMPONENETS
+import CapRatefield from "./Fields/CapRatefield.jsx";
+import Inputs from "../../../Components/InputFields/Inputs";
 import HeadShootBanner from "./Fields/HeadShoot&Banner.jsx";
-import ConfirmationModal from "../../../Components/ConfirmationModal/ConfirmationModal.jsx";
 import { useConfirmation } from "./Fields/Confirmation.jsx";
-import { UserRoundCheck } from "lucide-react";
+import Switches from "../../../Components/InputFields/Switch";
+import Checkboxs from "../../../Components/InputFields/Checkboxs";
+import TextAreas from "../../../Components/InputFields/TextAreas";
+import Selection from "../../../Components/InputFields/Selection";
 import AlertModal from "../../../Components/AlertModal/AlertModal.js";
+import ComboboxSelector from "../../../Components/ComboboxSelector/ComboboxSelector.jsx";
+import CountrySelector from "../../../Components/RegisterCountrySelector/CountrySelection";
+import SuggestedState from "../../../Components/RegisterCountrySelector/SuggestedState.jsx";
+import ConfirmationModal from "../../../Components/ConfirmationModal/ConfirmationModal.jsx";
+
+// IMAGES
+import CrossImage from "../../../assets/CrossImage.png";
 
 const statesArray = [
   { id: 1, name: "Alabama", code: "AL" },
@@ -51,44 +50,49 @@ const statesArray = [
   { id: 26, name: "Montana", code: "MT" },
   { id: 27, name: "Nebraska", code: "NE" },
   { id: 28, name: "Nevada", code: "NV" },
-  { id: 29, name: "NewHampshire", code: "NH" },
-  { id: 30, name: "NewJersey", code: "NJ" },
-  { id: 31, name: "NewMexico", code: "NM" },
-  { id: 32, name: "NewYork", code: "NY" },
-  { id: 33, name: "NorthCarolina", code: "NC" },
-  { id: 34, name: "NorthDakota", code: "ND" },
+  { id: 29, name: "New Hampshire", code: "NH" },
+  { id: 30, name: "New Jersey", code: "NJ" },
+  { id: 31, name: "New Mexico", code: "NM" },
+  { id: 32, name: "New York", code: "NY" },
+  { id: 33, name: "North Carolina", code: "NC" },
+  { id: 34, name: "North Dakota", code: "ND" },
   { id: 35, name: "Ohio", code: "OH" },
   { id: 36, name: "Oklahoma", code: "OK" },
   { id: 37, name: "Oregon", code: "OR" },
   { id: 38, name: "Pennsylvania", code: "PA" },
-  { id: 39, name: "RhodeIsland", code: "RA" },
-  { id: 40, name: "SouthCarolina", code: "SC" },
-  { id: 41, name: "SouthDakota", code: "SD" },
+  { id: 39, name: "Rhode Island", code: "RI" },
+  { id: 40, name: "South Carolina", code: "SC" },
+  { id: 41, name: "South Dakota", code: "SD" },
   { id: 42, name: "Tennessee", code: "TN" },
   { id: 43, name: "Texas", code: "TX" },
   { id: 44, name: "Utah", code: "UT" },
   { id: 45, name: "Vermont", code: "VT" },
   { id: 46, name: "Virginia", code: "VA" },
-  { id: 47, name: "Washington", code: "WA" },
-  { id: 48, name: "WestVirginia", code: "WV" },
-  { id: 49, name: "Wisconsin", code: "WI" },
-  { id: 50, name: "Wyoming", code: "WY" },
+  { id: 47, name: "Washington", code: "WA" }, // U.S. State
+  { id: 48, name: "Washington D.C.", code: "DC" }, // Federal District
+  { id: 49, name: "West Virginia", code: "WV" },
+  { id: 50, name: "Wisconsin", code: "WI" },
+  { id: 51, name: "Wyoming", code: "WY" },
+  { id: 52, name: "Puerto Rico", code: "PR" },
+  { id: 53, name: "U.S. Virgin Islands", code: "VI" },
+  { id: 54, name: "Guam", code: "GU" },
+  { id: 55, name: "American Samoa", code: "AS" },
+  { id: 56, name: "Northern Mariana Islands", code: "MP" },
 ];
 
 const PropertyInterest = [
-  "Apartment",
-  "MixedUseProperty",
-  "Retail",
-  "OfficeBuilding",
-  "Hospitality",
-  "Land",
-  "Others",
-  "Shopping/StripCenter",
-  "IndustrialBuilding",
-  "Healthcare",
-  "StorageFacility",
-  "Automotive",
-  "InvestmentHomes",
+  { label: "Apartment", name: "Apartment" },
+  { label: "Mixed Use Property", name: "MixedUseProperty" },
+  { label: "Retail", name: "Retail" },
+  { label: "Office Building", name: "OfficeBuilding" },
+  { label: "Hospitality", name: "Hospitality" },
+  { label: "Land", name: "Land" },
+  { label: "Shopping / Strip Center", name: "ShoppingStripCenter" },
+  { label: "Industrial Building", name: "IndustrialBuilding" },
+  { label: "Healthcare", name: "Healthcare" },
+  { label: "Storage Facility", name: "StorageFacility" },
+  { label: "Automotive", name: "Automotive" },
+  { label: "Other", name: "Other" },
 ];
 
 const MinRange = [
@@ -115,18 +119,27 @@ const MaxRange = [
   { label: "$50M", value: 100000 },
 ];
 
+const InvestmentRange = [
+  "Under $250K",
+  "$250K – $500K",
+  "$500K – $1M",
+  "$1M – $2.5M",
+  "$2.5M – $5M",
+  "$5M – $10M",
+  "$10M – $25M",
+  "$25M – $50M",
+  "Over $50M",
+];
+
+
 const AccountSetting = () => {
   const user = JSON.parse(localStorage.getItem("User"));
   const profileData = JSON.parse(localStorage.getItem("ProfileData"));
   const token = localStorage.getItem("token");
-  const [AutoSelect, setAutoSelect] = useState(true);
   const ApiKey = import.meta.env.VITE_API_KEY;
   const [selectedState, setSelectedState] = useState("");
   const [cities, setCities] = useState([]);
   const [selectedCity, setSelectedCity] = useState("");
-
-  const defaultHeadshot = profileData?.headshot || null;
-  const defaultBanner = profileData?.banner || null;
 
   const {
     register,
@@ -147,13 +160,14 @@ const AccountSetting = () => {
       location: user.location,
       property_interests: [],
       preferred_investment_range: 0,
-      PreferredLocation: [],
-      capRateMin: 0,
-      capRateMax: 30,
+      preferred_locations: null,
+      // capRateMin: 0,
+      // capRateMax: 30,
       banner: null,
       headshot: null,
       investor_status: "Non-Active",
     },
+    mode: "onTouched",
   });
 
   const { isOpen, confirm, handleConfirm, handleCancel } = useConfirmation();
@@ -179,8 +193,8 @@ const AccountSetting = () => {
     setSelectedStates((prev) => prev.filter((stateName) => stateName !== name));
   };
   useEffect(() => {
-    setValue("PreferredLocation", selectedStates);
-    trigger("PreferredLocation");
+    setValue("preferred_locations", selectedStates);
+    trigger("preferred_locations");
   }, [selectedStates]);
 
   //   CHECK IF CITY EXIST OR NOT
@@ -222,92 +236,79 @@ const AccountSetting = () => {
     trigger("city");
   };
 
-  // Actual form logic
-  const saveData = async (data) => {
+  // COMPLETE PROFILE AND SAVE DATA IN API
+  const ProfileComplete = async (data) => {
     console.log(data);
-    try {
-      const response = await axios.post(
-        `${ApiKey}/complete-profile`,
-        {
-          first_name: data.first_name,
-          last_name: data.last_name,
-          phone: data.phone,
-          company_name: null,
-          email: data.email,
-          location: data.address,
-          personal_website: data.personal_website,
-          title: data.title,
-          property_interests: data.property_interests,
-          property_interests_custom: null,
-          preferred_investment_range: data.preferred_investment_range,
-          preferred_locations: data.preferred_locations,
-          preferred_investment_type: data.preferred_investment_type,
-          preferred_cap_rate_min: data.capRateMin,
-          preferred_cap_rate_max: data.capRateMax,
-          investor_status: data.investor_status,
-          experience_level: data.experience_level,
-          bio: data.bio,
-          headshot: data.headshot,
-          banner: data.banner,
-          country: data.country,
-          city : data.city,
-          state: data.state,
-          zip: data.zip
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
-      localStorage.setItem("User", JSON.stringify(response.data.user));
-      localStorage.setItem(
-        "ProfileComplete",
-        response.data.user.profile_complete
-      );
-      console.log(response);
-      reset(response.data.user);
-
-      AlertModal({
-        icon: "success",
-        title: "Thank You",
-        iconColor: "#703BF7",
-        text: "Prfile Complete Successfully",
-      });
-    } catch (error) {
-      reset(data);
-      console.log(error);
-      const ErrorMessage = error.response.data.message;
-      console.log(ErrorMessage);
-      AlertModal({
-        icon: "error",
-        title: "No Submit",
-        iconColor: "#703BF7",
-        text: ErrorMessage,
-      });
-    }
-  };
-
-  const ProfileComplete = async (Data) => {
-    // Remove unchecked options
-    const cleaned = Object.entries(Data.property_interests || {})
-      .filter(([, val]) => val)
-      .reduce((acc, [key, val]) => {
-        acc[key] = val;
-        return acc;
-      }, {});
-
-    Data.property_interests = cleaned;
+    
     const confirmed = await confirm();
     if (confirmed) {
-      saveData(Data);
-    } else {
-      console.log("❌ Submission cancelled by user");
+      try {
+        const response = await axios.post(
+          `${ApiKey}/complete-profile`,
+          {
+            first_name: data.first_name,
+            last_name: data.last_name,
+            phone: data.phone,
+            company_name: null,
+            email: data.email,
+            location: data.address,
+            personal_website: data.personal_website,
+            title: data.title,
+            property_interests: data.property_interests,
+            property_interests_custom: null,
+            preferred_investment_range: data.preferred_investment_range,
+            preferred_locations: data.preferred_locations,
+            preferred_investment_type: data.preferred_investment_type,
+            preferred_cap_rate_min: data.capRateMin,
+            preferred_cap_rate_max: data.capRateMax,
+            investor_status: data.investor_status,
+            experience_level: data.experience_level,
+            bio: data.bio,
+            headshot: data.headshot,
+            banner: data.banner,
+            country: data.country,
+            city: data.city,
+            state: data.state,
+            zip: data.zip,
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        );
+        localStorage.setItem("User", JSON.stringify(response.data.user));
+        localStorage.setItem(
+          "ProfileComplete",
+          response.data.user.profile_complete
+        );
+        console.log(response);
+        reset(response.data.user);
+
+        AlertModal({
+          icon: "success",
+          title: "Thank You",
+          iconColor: "#703BF7",
+          text: "Prfile Complete Successfully",
+        });
+      } catch (error) {
+        reset(data);
+        console.log(error);
+        const ErrorMessage = error.response.data.message;
+        console.log(ErrorMessage);
+        AlertModal({
+          icon: "error",
+          title: "No Submit",
+          iconColor: "#703BF7",
+          text: ErrorMessage,
+        });
+      }
     }
   };
-  const [banner , setbanner] = useState()
-  const [Logo , setLogo] = useState()
+
+  const [banner, setbanner] = useState();
+  const [Logo, setLogo] = useState();
   useEffect(() => {
     const loadInitialData = async () => {
       try {
@@ -316,6 +317,8 @@ const AccountSetting = () => {
         });
 
         const data = res.data;
+        console.log(data);
+
         setbanner(res.data.banner);
         setLogo(res.data.headshot);
 
@@ -324,7 +327,12 @@ const AccountSetting = () => {
           banner: import.meta.env.VITE_IMAGE_KEY + data.banner || null,
           headshot: import.meta.env.VITE_IMAGE_KEY + data.headshot || null,
           property_interests: data.property_interests || [],
-          PreferredLocation: data.preferred_locations || [],
+          preferred_locations: data.preferred_locations || null,
+          preferred_cap_rate_min: data.preferred_cap_rate_min,
+          preferred_cap_rate_max: data.preferred_cap_rate_max,
+          capRateMin: data.preferred_cap_rate_min,
+          capRateMax: data.preferred_cap_rate_max,
+          state: data.state,
         });
 
         setSelectedStates(data.preferred_locations || []);
@@ -334,12 +342,8 @@ const AccountSetting = () => {
     };
 
     loadInitialData();
-  }, [banner]);
+  }, []);
 
-
-  
-
-  
   return (
     <>
       {/* BANNER START  */}
@@ -347,7 +351,7 @@ const AccountSetting = () => {
         <HeadShootBanner
           defaultHeadshot={Logo}
           defaultBanner={banner}
-          setValue={setValue} 
+          setValue={setValue}
         />
       </section>
       {/* BANNER END   */}
@@ -495,7 +499,7 @@ const AccountSetting = () => {
                       required: "PersonalWebsite is required",
                     })}
                     labels={"Personal Website"}
-                    placeholder={"Enter zip/postal code"}
+                    placeholder={"Enter your website URL (optional)"}
                     error={errors.personal_website?.message}
                   ></Inputs>
                 </span>
@@ -536,7 +540,7 @@ const AccountSetting = () => {
                     control={control}
                     render={({ field: { value, onChange } }) => (
                       <Switches
-                        value={value === "Active"} // convert "Active"/"Non-Active" to boolean
+                        value={value === "Active"}
                         onChange={(checked) =>
                           onChange(checked ? "Active" : "Non-Active")
                         }
@@ -564,7 +568,7 @@ const AccountSetting = () => {
                 <Controller
                   name="property_interests"
                   control={control}
-                  defaultValue={[]} // safe default
+                  defaultValue={[]}
                   rules={{
                     validate: (value) =>
                       Array.isArray(value) && value.length > 0
@@ -580,17 +584,19 @@ const AccountSetting = () => {
                       <>
                         <div className="grid grid-cols-2 gap-2">
                           {PropertyInterest.map((type) => {
-                            const isChecked = selected.includes(type);
+                            const isChecked = selected.includes(type.name);
 
                             return (
                               <Checkboxs
-                                key={type}
-                                labels={type}
+                                key={type.name}
+                                labels={type.label}
                                 checked={isChecked}
                                 onChange={(checked) => {
                                   const updated = checked
-                                    ? [...selected, type]
-                                    : selected.filter((item) => item !== type);
+                                    ? [...selected, type.name]
+                                    : selected.filter(
+                                        (item) => item !== type.name
+                                      );
                                   field.onChange(updated);
                                 }}
                                 error={error?.message}
@@ -610,13 +616,18 @@ const AccountSetting = () => {
                 />
               </div>
               <div className="w-[90%] ">
-                <label
-                  htmlFor="email"
-                  className="block mb-3 text-[15px] font-[700] text-PurpleColor"
-                >
-                  Preferred Investment Range (${PropertyRange})
-                </label>
-                <div className="flex items-center gap-2">
+                <div>
+                  <Selection
+                  labels={"Preferred Investment Range"}
+                  defaultOption={"Select"}
+                  Options={InvestmentRange}
+                  name="preferred_investment_range"
+                  register={register}
+                  rules={{ required: "Please select an option." }}
+                  error={errors.preferred_investment_range?.message}
+                />
+                </div>
+                {/* <div className="flex items-center gap-2">
                   <div className="flex items-center gap-2">
                     <label
                       htmlFor="text"
@@ -692,12 +703,7 @@ const AccountSetting = () => {
                       )}
                     />
                   </div>
-                </div>
-                {errors.PropertyRange && (
-                  <p className="text-red-500 text-sm mt-1">
-                    {errors.PropertyRange.message}
-                  </p>
-                )}
+                </div> */}
               </div>
 
               <div>
@@ -710,21 +716,7 @@ const AccountSetting = () => {
                 <div className="relative w-[100%]">
                   <div className="bg-[#F3EEFF] flex w-[90%] gap-3 items-center rounded-[6px] ">
                     <div className=" inset-y-0 start-0 flex items-center ps-4 pointer-events-none">
-                      <svg
-                        className="w-4 h-4 text-[#444444] "
-                        aria-hidden="true"
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 20 20"
-                      >
-                        <path
-                          stroke="currentColor"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth="2"
-                          d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
-                        />
-                      </svg>
+                      <Search />
                     </div>
                     <div className="w-[80%]">
                       <SuggestedState
@@ -734,9 +726,9 @@ const AccountSetting = () => {
                       />
                     </div>
                   </div>
-                  {isSubmitted && errors.PreferredLocation && (
+                  {isSubmitted && errors.preferred_locations && (
                     <p className="text-red-500 font-[500] text-[14px] pt-1 font-Urbanist tracking-wide">
-                      {errors.PreferredLocation.message}
+                      {errors.preferred_locations.message}
                     </p>
                   )}
                 </div>
@@ -775,14 +767,59 @@ const AccountSetting = () => {
               </div>
 
               <div>
-                <Selection
-                  labels="Preferred Investment Type "
-                  Options={["Value-Add", " Stabilized", "Development"]}
-                  defaultOption="Select"
+                <label
+                  htmlFor="email"
+                  className="block mb-3 text-[15px] font-[700] text-PurpleColor"
+                >
+                  Preferred Investment type
+                </label>
+                <Controller
                   name="preferred_investment_type"
-                  register={register}
-                  rules={{ required: "Please select an option." }}
-                  error={errors.preferred_investment_type?.message}
+                  control={control}
+                  defaultValue={[]}
+                  rules={{
+                    validate: (value) =>
+                      Array.isArray(value) && value.length > 0
+                        ? true
+                        : "Select at least one option",
+                  }}
+                  render={({ field, fieldState: { error } }) => {
+                    const selected = Array.isArray(field.value)
+                      ? field.value
+                      : [];
+
+                    const options = ["Value-Add", "Stabilized", "Development"];
+
+                    return (
+                      <>
+                        <div className="grid grid-cols-3 gap-2">
+                          {options.map((type) => {
+                            const isChecked = selected.includes(type);
+
+                            return (
+                              <Checkboxs
+                                key={type}
+                                labels={type} // keep as your component expects
+                                checked={isChecked}
+                                onChange={(checked) => {
+                                  const updated = checked
+                                    ? [...selected, type]
+                                    : selected.filter((item) => item !== type);
+                                  field.onChange(updated);
+                                }}
+                              />
+                            );
+                          })}
+                        </div>
+
+                        {error && (
+                          <p className="text-red-500 text-sm mt-2">
+                            {error.message}
+                          </p>
+                        )}
+                      </>
+                    );
+                  }}
                 />
               </div>
 
@@ -809,7 +846,8 @@ const AccountSetting = () => {
             </button>
           </div>
         </form>
-        {/* Modal injected here */}
+
+        {/* MODAL */}
         <ConfirmationModal
           isOpen={isOpen}
           onClose={handleCancel}

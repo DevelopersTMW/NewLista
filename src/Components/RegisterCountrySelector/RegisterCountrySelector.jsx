@@ -2,10 +2,7 @@ import IntlTelInput from "intl-tel-input/react";
 import React, { useState, useEffect, useRef } from "react";
 
 const countries = [
-  { code: "+91", label: "India", flag: "https://flagcdn.com/w40/in.png" },
   { code: "+1", label: "USA", flag: "https://flagcdn.com/w40/us.png" },
-  { code: "+44", label: "UK", flag: "https://flagcdn.com/w40/gb.png" },
-  { code: "+61", label: "Australia", flag: "https://flagcdn.com/w40/au.png" },
 ];
 
 const CountrySelector = ({ phone, setPhone, countryCode, setCountryCode }) => {

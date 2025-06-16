@@ -20,9 +20,9 @@ const CountrySelector = ({setPhone , phone , error}) => {
         country={"us"}
         value={phone}
         onChange={handlePhoneChange}
-        onlyCountries={["us", "in", "gb", "ca" , "pk"]}
-        preferredCountries={["us"]}
-        enableSearch={true}
+        onlyCountries={["us"]}
+        // preferredCountries={["us"]}
+        enableSearch={false}
         disableDropdown={false}
         disableCountryCode={false}
         placeholder="Enter Your Phone Number"

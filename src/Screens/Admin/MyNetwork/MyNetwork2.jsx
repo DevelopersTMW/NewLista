@@ -14,6 +14,7 @@ import AddToNetwork from "../../../Components/Cards/AddToNetwork/AddToNetwork";
 import ProfileModal from "../../../Components/ProfileModal/ProfileModal";
 import Spinner from "../../../Components/Spinner/Spinner";
 import SearchFilters from "./SearchFilters";
+import ProfileSection from "./NetworkSections/ProfileSection/ProfileSection";
 
 const BackgroundImages = {
   backgroundImage: `url(${MyNetwork})`,
@@ -21,8 +22,8 @@ const BackgroundImages = {
 };
 
 const TabNames = [
-  { name: "My Network", TabLink: "myNetwork" },
   { name: "Discover", TabLink: "addToNetwork" },
+  { name: "My Network", TabLink: "myNetwork" },
   { name: `My Request`, TabLink: "pending" },
 ];
 
@@ -30,7 +31,6 @@ const MyNetwork2 = () => {
   // KEYS
   const ApiKey = import.meta.env.VITE_API_KEY;
   const tokens = localStorage.getItem("token");
-  // const tokens = "51|Sebgg4VbS0sXkSkYKoaumnk1BDj6KR8lOMKZKYz737ee0329";
   const [loading, setloading] = useState(false);
 
   // FILTER
@@ -45,7 +45,7 @@ const MyNetwork2 = () => {
 
   const [showMobileFilter, setShowMobileFilter] = useState(false);
   const [showModal, setShowModal] = useState(false);
-  const [activeTab, setActiveTab] = useState("myNetwork");
+  const [activeTab, setActiveTab] = useState("addToNetwork");
 
   // GET SEARCH VALUE
   const handleSearchChange = ({
@@ -172,44 +172,7 @@ const MyNetwork2 = () => {
       {/* BANNER END   */}
 
       {/* PROFILE SECTION START */}
-      <section className="flex flex-col items-center gap-0 sm:gap-7 sm:flex-row ">
-        <div className=" z-10 relative py-3 ml-3 sm:py-5 sm:w-[20%]">
-          <img
-            className="border-solid  border-PurpleColor w-[90%] h-[100%] border-[3px]  rounded-full"
-            src={AccountSettingImage}
-            alt=""
-          />
-        </div>
-
-        <div className="flex items-center gap-2 flex-col sm:items-start sm:gap-2">
-          <h4 className="font-Inter font-bold text-[35px] sm:text-[43px]">
-            {/* {user.first_name + " " + user.last_name} */ "John"}
-          </h4>
-          <h6 className="font-Inter text-[18px] font-[500] text-center sm:text-start">
-            Director Manager | Arme Properties
-          </h6>
-          <ul className="flex flex-wrap items-center justify-center gap-4 sm:justify-start sm:items-start sm:gap-5 ">
-            <li className="flex gap-2 justify-center items-center">
-              <img className="w-4 h-4 " src={InvestorIcon1} alt="" />
-              <p className="font-Inter text-[14px] text-Paracolor font-[600]">
-                New York
-              </p>
-            </li>
-            <li className="flex gap-2 justify-center items-center">
-              <img className="w-4 h-4 " src={MessageIcon2} alt="" />
-              <p className="font-Inter text-[14px] text-Paracolor font-[600]">
-                johndoe@gmail.com
-              </p>
-            </li>
-            <li className="flex gap-2 -mt-2 sm:mt-0 justify-center items-center">
-              <img className="w-4 h-4" src={CallIcon} alt="" />
-              <p className="font-Inter text-[14px] text-Paracolor font-[600]">
-                (224) 523 321
-              </p>
-            </li>
-          </ul>
-        </div>
-      </section>
+      <ProfileSection></ProfileSection>
       {/* PROFILE SECTION END */}
 
       {/* SECTION 1 START  */}
