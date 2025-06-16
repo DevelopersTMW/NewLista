@@ -1,13 +1,29 @@
-import { ChevronDownIcon, ChevronUpDownIcon } from "@heroicons/react/20/solid";
-import { ChevronDown } from "lucide-react";
 import React, { useState, useRef, useEffect } from "react";
+import { ChevronDown } from "lucide-react";
 
-const ComboboxSelection = ({ options = [], onSelect, placeholder , disabled, style , icon }) => {
+const ComboboxSelection = ({
+  options = [],
+  onSelect,
+  placeholder,
+  disabled,
+  style,
+  icon,
+  value, // ✅ new prop for current selected value
+}) => {
   const [isOpen, setIsOpen] = useState(false);
   const [query, setQuery] = useState("");
   const [selected, setSelected] = useState(null);
   const dropdownRef = useRef();
 
+  console.log(value);
+
+  // ✅ Sync selected value with external `value` prop
+  useEffect(() => {
+    const found = options.find((opt) => opt.name === value);
+    if (found) {
+      setSelected(found);
+    }
+  }, [value, options]);
 
   const filteredOptions = options.filter((opt) =>
     opt.name.toLowerCase().includes(query.toLowerCase())
@@ -31,51 +47,47 @@ const ComboboxSelection = ({ options = [], onSelect, placeholder , disabled, sty
   };
 
   return (
-    <>
-        <div ref={dropdownRef} className="relative">
-          <div
-            onClick={() => !disabled && setIsOpen(!isOpen)}
-            className={`overline-none text-[13px] font-Inter text-Paracolor font-[500] -mt-0.5  focus:outline-none cursor-pointer ${style}` }
-          >
-            {selected ? selected.name : placeholder}
-            <ChevronDown 
-              className={`group pointer-events-none absolute top-1 right-0.5 size-[16px] font-[900]  text-black ${icon}  `}
-              aria-hidden="true"
+    <div ref={dropdownRef} className="relative">
+      <div
+        onClick={() => !disabled && setIsOpen(!isOpen)}
+        className={`overline-none text-[13px] font-Inter text-Paracolor font-[500] -mt-0.5 focus:outline-none cursor-pointer ${style}`}
+      >
+        {selected ? selected.name : placeholder}
+        <ChevronDown
+          className={`group pointer-events-none absolute top-1 right-0.5 size-[16px] font-[900]  text-black ${icon}`}
+          aria-hidden="true"
+        />
+      </div>
+
+      {isOpen && (
+        <div className="absolute z-10 py-1 mt-1 w-full sm:w-[160px] rounded-md shadow-lg bg-[#f8f8f8] border border-gray-200 max-h-100 overflow-y-auto">
+          <div className="p-2">
+            <input
+              type="text"
+              placeholder="Search..."
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              className="w-full px-3 py-1.5 border border-gray-300 rounded focus:ring-none outline-none focus:outline-none"
             />
           </div>
-
-          {isOpen && (
-            <div className="absolute z-10 py-1 mt-1 w-full sm:w-[160px] rounded-md shadow-lg bg-[#f8f8f8] border border-gray-200 max-h-100 overflow-y-auto ">
-              <div className="p-2">
-                <input
-                  type="text"
-                  placeholder="Search..."
-                  value={query}
-                  onChange={(e) => setQuery(e.target.value)}
-                  className="w-full px-3 py-1.5 border border-gray-300 rounded  focus:ring-none  outline-none focus:outline-none"
-                />
+          {filteredOptions.length > 0 ? (
+            filteredOptions.map((option, index) => (
+              <div
+                key={index}
+                onClick={() => handleSelect(option)}
+                className={`px-2.5 text-[13px] font-Inter text-Paracolor font-[400] py-0.5 cursor-pointer hover:text-white hover:bg-PurpleColor ${
+                  selected?.value === index ? "bg-blue-50 font-semibold" : ""
+                }`}
+              >
+                {option.name}
               </div>
-              {filteredOptions.length > 0 ? (
-                filteredOptions.map((option , index) => (
-                  <div
-                    key={index}
-                    onClick={() => handleSelect(option)}
-                    className={`px-2.5 overline-none text-[13px] font-Inter text-Paracolor font-[400]   focus:outline-none cursor-pointer py-0.5 hover:text-white hover:bg-PurpleColor ${
-                      selected?.value === index
-                        ? "bg-blue-50 font-semibold"
-                        : ""
-                    }`}
-                  >
-                    {option.name}
-                  </div>
-                ))
-              ) : (
-                <div className="px-4 py-2 font-Inter text-Paracolor">No results found</div>
-              )}
-            </div>
+            ))
+          ) : (
+            <div className="px-4 py-2 font-Inter text-Paracolor">No results found</div>
           )}
         </div>
-    </>
+      )}
+    </div>
   );
 };
 

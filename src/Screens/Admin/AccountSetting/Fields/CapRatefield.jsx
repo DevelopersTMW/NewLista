@@ -6,18 +6,19 @@ export default function CapRate({ control, errors, trigger }) {
   const max = 30;
 
   return (
-
-    
     <div className="w-full max-w-md mx-auto text-white font-Urbanist">
       <div className="flex items-center justify-center gap-2 mb-6">
         {/* Min Input */}
         <div className="flex gap-2 items-center">
-          <label className="text-[#616362] font-Inter text-[15px] font-[700]">Min</label>
+          <label className="text-[#616362] font-Inter text-[15px] font-[700]">
+            Min
+          </label>
           <Controller
             name="capRateMin"
             control={control}
             rules={{
               required: "Min is required",
+              min: { value: 0, message: "Min must be ≥ 0" },
               validate: (value, formValues) =>
                 value < formValues.capRateMax || "Min must be less than Max",
             }}
@@ -25,11 +26,13 @@ export default function CapRate({ control, errors, trigger }) {
               <input
                 {...field}
                 type="number"
+                min={0}
                 className={`bg-[#F3EEFF] border ${
                   errors.capRateMin ? "border-red-500" : "border-[#F3EEFF]"
                 } text-Paracolor font-[600] text-[14px] w-20 h-8 rounded-[6px] px-1 outline-none`}
                 onChange={(e) => {
-                  const val = Math.min(Number(e.target.value), max);
+                  let val = Number(e.target.value);
+                  val = Math.max(0, Math.min(val, max)); // 👈 Ensure between 0 and max
                   field.onChange(val);
                   trigger(["capRateMin", "capRateMax"]);
                 }}
@@ -66,7 +69,10 @@ export default function CapRate({ control, errors, trigger }) {
                       max={max}
                       value={minField.value}
                       onChange={(e) => {
-                        const val = Math.min(Number(e.target.value), maxField.value - 1);
+                        const val = Math.min(
+                          Number(e.target.value),
+                          maxField.value - 1
+                        );
                         minField.onChange(val);
                         trigger(["capRateMin", "capRateMax"]);
                       }}
@@ -78,7 +84,10 @@ export default function CapRate({ control, errors, trigger }) {
                       max={max}
                       value={maxField.value}
                       onChange={(e) => {
-                        const val = Math.max(Number(e.target.value), minField.value + 1);
+                        const val = Math.max(
+                          Number(e.target.value),
+                          minField.value + 1
+                        );
                         maxField.onChange(val);
                         trigger(["capRateMin", "capRateMax"]);
                       }}
@@ -93,7 +102,9 @@ export default function CapRate({ control, errors, trigger }) {
 
         {/* Max Input */}
         <div className="flex gap-2 items-center">
-          <label className="text-[#616362] font-Inter text-[15px] font-[700]">Max</label>
+          <label className="text-[#616362] font-Inter text-[15px] font-[700]">
+            Max
+          </label>
           <Controller
             name="capRateMax"
             control={control}

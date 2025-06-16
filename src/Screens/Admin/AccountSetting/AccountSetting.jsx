@@ -131,7 +131,6 @@ const InvestmentRange = [
   "Over $50M",
 ];
 
-
 const AccountSetting = () => {
   const user = JSON.parse(localStorage.getItem("User"));
   const profileData = JSON.parse(localStorage.getItem("ProfileData"));
@@ -161,8 +160,6 @@ const AccountSetting = () => {
       property_interests: [],
       preferred_investment_range: 0,
       preferred_locations: null,
-      // capRateMin: 0,
-      // capRateMax: 30,
       banner: null,
       headshot: null,
       investor_status: "Non-Active",
@@ -180,6 +177,7 @@ const AccountSetting = () => {
   const profileImage = watch("headshot");
   const PropertyRange = watch("preferred_investment_range");
   const investorStatus = useWatch({ control, name: "investor_status" });
+  const DefaultSelection = useWatch({ control, name: "state" });
 
   // PREFERRED LOCATION
   const [selectedStates, setSelectedStates] = useState([]);
@@ -197,39 +195,58 @@ const AccountSetting = () => {
     trigger("preferred_locations");
   }, [selectedStates]);
 
-  //   CHECK IF CITY EXIST OR NOT
-  let citiess = cities.map((name, index) => ({
+  useEffect(() => {
+    if (DefaultSelection?.code) {
+      axios
+        .get(`/states/${DefaultSelection.code}.json`)
+        .then((res) => setCities(res.data))
+        .catch(() => setCities([]));
+    }
+  }, [DefaultSelection]);
+
+  // Build cities option list
+  const citiess = cities.map((name, index) => ({
     id: index + 1,
     name,
   }));
+
+  // City value from react-hook-form
 
   const StateSelectionHandler = (value) => {
     setValue("state", value.name, { shouldValidate: true });
     trigger("state");
 
+    // reset cities
     let state = value.name;
     setSelectedState(state);
     setSelectedCity("");
     setCities([]);
 
-    try {
-      if (state) {
-        const stateShortNames = value.code;
-
-        axios
-          .get(`/states/${stateShortNames}.json`)
-          .then((res) => {
-            setCities(res.data);
-          })
-          .catch((error) => {
-            console.error("Failed to load cities:", error);
-            setCities([]);
-          });
-      }
-    } catch (error) {
-      console.error("Failed to load cities:", error);
+    if (state) {
+      const stateShortNames = value.code;
+      axios
+        .get(`/states/${stateShortNames}.json`)
+        .then((res) => setCities(res.data))
+        .catch((error) => {
+          console.error("Failed to load cities:", error);
+          setCities([]);
+        });
     }
   };
+
+  const [Newss, setNew] = useState([]);
+  const selectedCitys = useWatch({ control, name: "city" });
+
+  // setNew(selectedCitys);
+
+  if (Newss) {
+    // const NewCities = selectedCitys.map((name, index) => ({
+    //     id: index + 1,
+    //     name,
+    //   }));
+
+    console.log(selectedCitys);
+  }
 
   const CitySelectionHandler = (value) => {
     setValue("city", value.name, { shouldValidate: true });
@@ -239,7 +256,7 @@ const AccountSetting = () => {
   // COMPLETE PROFILE AND SAVE DATA IN API
   const ProfileComplete = async (data) => {
     console.log(data);
-    
+
     const confirmed = await confirm();
     if (confirmed) {
       try {
@@ -332,7 +349,6 @@ const AccountSetting = () => {
           preferred_cap_rate_max: data.preferred_cap_rate_max,
           capRateMin: data.preferred_cap_rate_min,
           capRateMax: data.preferred_cap_rate_max,
-          state: data.state,
         });
 
         setSelectedStates(data.preferred_locations || []);
@@ -413,7 +429,7 @@ const AccountSetting = () => {
                 <span>
                   <Inputs
                     register={register("address", {
-                      required: "StreetAddress is required",
+                      required: "Street Address is required",
                     })}
                     labels={"Street Address"}
                     placeholder={"Enter street address"}
@@ -446,6 +462,7 @@ const AccountSetting = () => {
                     options={statesArray}
                     onSelect={StateSelectionHandler}
                     placeholder={"Select state or province"}
+                    value={DefaultSelection}
                   />
                   {errors.state && (
                     <p className="text-red-500 text-sm mt-1">
@@ -479,28 +496,26 @@ const AccountSetting = () => {
                     options={citiess}
                     onSelect={CitySelectionHandler}
                     placeholder={"Select Your City"}
-                    disabled={citiess.length > 0 ? false : true}
-                  ></ComboboxSelector>
+                    value={selectedCitys}
+                    disabled={citiess.length === 0}
+                  />
+
                   {errors.city && (
                     <p className="text-red-500 text-sm mt-1">
                       City is required.
                     </p>
                   )}
-                  <input
-                    type="hidden"
-                    {...register("city", { required: true })}
-                  />
                 </span>
               </div>
               <div className="flex flex-col gap-6">
                 <span>
                   <Inputs
                     register={register("personal_website", {
-                      required: "PersonalWebsite is required",
+                      required: false,
                     })}
                     labels={"Personal Website"}
                     placeholder={"Enter your website URL (optional)"}
-                    error={errors.personal_website?.message}
+                    // error={errors.pers/onal_website?.message}
                   ></Inputs>
                 </span>
                 <span>
@@ -618,14 +633,14 @@ const AccountSetting = () => {
               <div className="w-[90%] ">
                 <div>
                   <Selection
-                  labels={"Preferred Investment Range"}
-                  defaultOption={"Select"}
-                  Options={InvestmentRange}
-                  name="preferred_investment_range"
-                  register={register}
-                  rules={{ required: "Please select an option." }}
-                  error={errors.preferred_investment_range?.message}
-                />
+                    labels={"Preferred Investment Range"}
+                    defaultOption={"Select"}
+                    Options={InvestmentRange}
+                    name="preferred_investment_range"
+                    register={register}
+                    rules={{ required: "Please select an option." }}
+                    error={errors.preferred_investment_range?.message}
+                  />
                 </div>
                 {/* <div className="flex items-center gap-2">
                   <div className="flex items-center gap-2">

@@ -242,7 +242,9 @@ const ProfileModal = ({
                 </h3>
                 <div className="flex gap-2 mt-2 flex-wrap">
                   <span className="bg-[#E3E3E3] text-Paracolor font-semibold font-Inter px-3 py-1 text-[12.5px] rounded-full w-max">
-                    {user.user.property_interests}
+                    {user.user.property_interests.map((items)=>{
+                      items
+                    })}
                   </span>
                   {/* <span className="bg-[#E3E3E3] text-Paracolor font-semibold font-Inter px-3 py-1 text-[12.5px] rounded-full w-max">
                   Office Space

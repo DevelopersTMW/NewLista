@@ -20,8 +20,7 @@ function AdminNavbar() {
   const [showSearch, setShowSearch] = useState(false);
 
   const navigate = useNavigate();
-  const { user , error } = useSelector((state) => state.auth);
-
+  const { user, error } = useSelector((state) => state.auth);
 
   const { isOpen, confirm, handleConfirm, handleCancel } = useConfirmation();
 
@@ -161,8 +160,8 @@ function AdminNavbar() {
         isOpen={isOpen}
         onClose={handleCancel}
         onConfirm={handleConfirm}
-        message="Do you want to save the details?"
-        confirmLabel="Yes, Save"
+        message="Do you want to Logout?"
+        confirmLabel="Yes, Logout"
         icon={
           <UserRoundCheck className="size-20 text-PurpleColor  bg-amber-50 PurpleColor px-3.5 py-3.5 rounded-full" />
         }
