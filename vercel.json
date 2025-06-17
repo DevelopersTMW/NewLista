@@ -8,7 +8,7 @@
           "value": "new-lista-developerstmws-projects.vercel.app"
         }
       ],
-      "destination": "https://staging.newlista.com/:1",
+      "destination": "https://staging.newlista.com",
       "permanent": true
     }
   ]
