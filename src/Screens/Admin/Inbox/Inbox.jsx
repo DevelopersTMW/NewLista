@@ -22,7 +22,6 @@ function Inbox() {
   }, []);
 
   useEffect(() => {
-    // Fetch other users from API
     const fetchUsers = async () => {
       try {
         const response = await axios.get(`${ApiKey}/users`, {

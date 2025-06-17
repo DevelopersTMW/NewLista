@@ -4,7 +4,7 @@ export default function UserList({ users, onSelect }) {
 
   return (
     <div className={`w-full sm:w-[60%] md:w-[70%] lg:w-[35%] xl:w-[25%]`}>
-      <div className="pt-7 pb-29 sm:py-10 h-full overflow-y-auto bg-white rounded-[20px]">
+      <div className="pt-7 pb-29 sm:py-10 h-[75vh] overflow-y-auto bg-white rounded-[20px]">
         <h1 id={"connection"} className="font-Urbanist px-6 pb-2 sm:pb-4 text-[#222222] text-[25px] sm:text-[26px] font-[700]">
           Connections
         </h1>

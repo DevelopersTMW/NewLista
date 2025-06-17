@@ -267,7 +267,7 @@ const AdminSidebar = ({ screen }) => {
                   </svg>
 
                   <h1 className="font-Urbanist font-[500] sm:mt-1 text-[16px] 2xl:text-[18px]">
-                    Account Settings
+                    Profile Settings
                   </h1>
                 </Link>
               </li>
