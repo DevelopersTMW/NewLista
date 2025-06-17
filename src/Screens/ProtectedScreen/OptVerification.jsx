@@ -1,25 +1,19 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-// IMAGES
-import Image from "../../assets/OptVerificationImage.jpg";
-import ListingRightArrow from "../../assets/ListingRightSideArrow.png";
-import OtpInput from "../../Components/OtpSender/OtpSender";
-import axios from "axios";
-import Spinner from "../../Components/Spinner/Spinner";
 import { Controller, useForm } from "react-hook-form";
-import { useDispatch } from "react-redux";
+import axios from "axios";
+import Image from "../../assets/OptVerificationImage.jpg";
+import OtpInput from "../../Components/OtpSender/OtpSender";
+import Spinner from "../../Components/Spinner/Spinner";
 
 const OptVerification = () => {
   const ApiKey = import.meta.env.VITE_API_KEY;
   const [Loading, setLoading] = useState(false);
-  const [ErrorMessage, setErrorMessage] = useState("");
-  const [otpValue, setOtpValue] = useState("");
-  const [loading, setloading] = useState(false);
-  const [OtpSendMess, setOtpSendMess] = useState("");
+  const [generalError, setGeneralError] = useState("");
+  const [otpSendMsg, setOtpSendMsg] = useState("");
   const storedEmail = localStorage.getItem("UserEmail");
-  const ForgetEmail = localStorage.getItem("ForgetUser");
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+
   const {
     handleSubmit,
     formState: { errors },
@@ -28,66 +22,68 @@ const OptVerification = () => {
     reset,
   } = useForm();
 
-  const ResendCode = async (e) => {
-    e.preventDefault();
-    setloading(true);
-    setErrorMessage("");
-    try {
-      const Response = await axios.post(
-        "https://newlista.secureserverinternal.com/api/forgot-password",
-        {
-          email: email,
-        }
-      );
-      console.log(Response.data);
-      localStorage.setItem("email", email);
-      setOtpSendMess("Otp Send SuccessFully");
-      setloading(false);
-    } catch (error) {
-      setloading(false);
-      const ErrorMessa = error.response.data.message;
-      setErrorMessage(ErrorMessa);
-    }
-  };
-  
-
-  const VerifyOtp = async (data) => {
-    console.log("====================================");
-    console.log(data.otp);
-    console.log("====================================");
+  const resendOtp = async () => {
     if (!storedEmail) {
-      setErrorMessage("Email not found. Please try again from the start.");
+      setGeneralError("Email not found. Please try again.");
       return;
     }
+
     setLoading(true);
-    setErrorMessage("");
+    setGeneralError("");
+    setOtpSendMsg("");
+
     try {
-      const response = await axios.post(`${ApiKey}/verify-otp`, {
-        otp: data.otp,
+      const res = await axios.post(`${ApiKey}/forgot-password`, {
         email: storedEmail,
       });
-      // dispatch(setUser(response.data.user));
-      console.log(response.data.user);
+      console.log('====================================');
+      console.log(res);
+      console.log('====================================');
+
+      setOtpSendMsg("OTP sent successfully");
+    } catch (err) {
+      setGeneralError(
+        err?.response?.data?.message || "Failed to resend OTP. Please try again."
+      );
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const verifyOtp = async (data) => {
+    if (!storedEmail) {
+      setGeneralError("Email not found. Please start from the beginning.");
+      return;
+    }
+
+    setLoading(true);
+    setGeneralError("");
+
+    try {
+      const res = await axios.post(`${ApiKey}/verify-otp`, {
+        email: storedEmail,
+        otp: data.otp,
+      });
+
       localStorage.removeItem("UserEmail");
-      if (response.data.profile_complete) {
+
+      if (res.data.profile_complete) {
         navigate("/admin");
-        reset();
       } else {
-        localStorage.setItem("token", response.data.token);
-        localStorage.setItem("User", JSON.stringify(response.data.user));
-        localStorage.setItem("ProfileComplete", JSON.stringify(response.data.profile_complete));
+        localStorage.setItem("token", res.data.token);
+        localStorage.setItem("User", JSON.stringify(res.data.user));
+        localStorage.setItem("ProfileComplete", JSON.stringify(res.data.profile_complete));
         navigate("/admin/account-setting");
       }
+
       reset();
-    } catch (error) {
-      setLoading(false);
-      const msg =
-        error?.response?.data?.message ||
-        "An error occurred. Please try again.";
+    } catch (err) {
+      const msg = err?.response?.data?.message || "Something went wrong.";
+
       if (msg.toLowerCase().includes("otp")) {
         setError("otp", { type: "manual", message: msg });
       } else {
-        setErrorMessage(msg);
+        setGeneralError(msg);
       }
     } finally {
       setLoading(false);
@@ -95,90 +91,85 @@ const OptVerification = () => {
   };
 
   return (
-    <>
-      <div className="min-h-screen md:flex ">
-        {/* IMAGE SECTION  */}
-        <div className="md:w-[40%] min-[900px]:!w-[48%] lg:!w-[43%] xl:!w-[42%] 2xl:!w-[48%]">
-          <img
-            className="w-[100%] object-cover h-[20vh] sm:h-[30vh] md:h-full"
-            src={Image}
-            alt=""
-          />
-        </div>
-
-        {/* LOGIN FOR SECTION  */}
-        <div className="flex flex-col justify-center gap-7 py-20 max-[380px]:px-6 px-8 sm:px-16 md:py-20 md:w-[50%] lg:w-[55%] lg:px-20 lg:py-20 xl:py-24 xl:px-28  2xl:px-32">
-          {/* Heading Info  */}
-          <div>
-            <h1 className="font-Poppins font-[700] text-[32px] max-[380px]:text-[28px] sm:text-[35px] md:text-[38px] lg:text-[44px] 2xl:text-[48px]">
-              Verify code
-            </h1>
-            <p className="font-Urbanist text-Paracolor font-[600] max-[380px]:text-[12px] text-[13px] sm:text-[13.5px] lg:text-[15px] 2xl:text-[17px] lg:pl-2">
-              An authentication code has been sent to your email.
-            </p>
-          </div>
-
-          <form
-            onSubmit={handleSubmit(VerifyOtp)}
-            className="flex flex-col gap-4"
-          >
-            {/* Name  */}
-            <div>
-              {OtpSendMess && (
-                <p className="font-Poppins mb-2 font-[500] border-green-500 text-green-500  text-[13px]">
-                  {OtpSendMess}
-                </p>
-              )}
-              <Controller
-                name="otp"
-                control={control}
-                rules={{
-                  required: "OTP is required",
-                  minLength: {
-                    value: 6,
-                    message: "OTP must be 6 digits",
-                  },
-                }}
-                render={({ field }) => (
-                  <OtpInput
-                    length={6}
-                    value={field.value || ""}
-                    onChange={field.onChange}
-                    error={errors.otp}
-                  />
-                )}
-              />
-              {errors.otp && (
-                <p className="text-red-500 font-[500] text-[13.5px] pt-1  font-Urbanist tracking-wide">
-                  {errors.otp.message}
-                </p>
-              )}
-              {ErrorMessage && (
-                <p className="font-Poppins mt-2 font-[500] border-red-500 text-red-600  text-[13px]">
-                  {ErrorMessage}
-                </p>
-              )}
-              <p className="font-Urbanist text-Paracolor mt-3 font-[700] text-[12.5px] min-[410px]:text-[14px]">
-                Didn’t receive a code?{" "}
-                <Link className="text-[#FF8682]">Resend</Link>
-              </p>
-            </div>
-            {/* Sign Up Button */}
-            <div className="mt-1">
-              <button
-                type="submit"
-                disabled={Loading}
-                className={`bg-PurpleColor w-[100%] 2xl:w-[80%] h-11 cursor-pointer mt-3 text-white font-Urbanist rounded-[6px] font-[700] ${
-                  Loading ? "opacity-50 cursor-not-allowed" : ""
-                }`}
-              >
-                {Loading ? "Verifying..." : "Verify"}
-              </button>
-            </div>
-          </form>
-        </div>
+    <div className="min-h-screen md:flex">
+      {/* IMAGE SECTION */}
+      <div className="md:w-[40%] min-[900px]:w-[48%] lg:w-[43%] xl:w-[42%] 2xl:w-[48%]">
+        <img
+          src={Image}
+          alt="OTP Verification"
+          className="w-full object-cover h-[20vh] sm:h-[30vh] md:h-full"
+        />
       </div>
-    </>
+
+      {/* OTP VERIFICATION SECTION */}
+      <div className="flex flex-col justify-center gap-7 px-8 sm:px-16 lg:px-20 xl:px-28 2xl:px-32 py-20 md:w-[50%] lg:w-[55%]">
+        <div>
+          <h1 className="font-Poppins font-bold text-[32px] sm:text-[38px] lg:text-[44px] 2xl:text-[48px]">
+            Verify code
+          </h1>
+          <p className="font-Urbanist text-Paracolor font-semibold text-[13px] sm:text-[14px] lg:text-[15px]">
+            An authentication code has been sent to your email.
+          </p>
+        </div>
+
+        <form onSubmit={handleSubmit(verifyOtp)} className="flex flex-col gap-4">
+         
+
+          <Controller
+            name="otp"
+            control={control}
+            rules={{
+              required: "OTP is required",
+              minLength: {
+                value: 6,
+                message: "OTP must be 6 digits",
+              },
+            }}
+            render={({ field }) => (
+              <OtpInput
+                length={6}
+                value={field.value || ""}
+                onChange={field.onChange}
+                error={errors.otp}
+              />
+            )}
+          />
+           {otpSendMsg && (
+            <p className="text-green-600 text-[13px] font-Poppins">{otpSendMsg}</p>
+          )}
+          {errors.otp && (
+            <p className="text-red-600 text-[13.5px] font-Urbanist pt-1">
+              {errors.otp.message}
+            </p>
+          )}
+          {generalError && (
+            <p className="text-red-600 font-Poppins text-[13px]">{generalError}</p>
+          )}
+
+          <p className="font-Urbanist text-[13px]">
+            Didn’t receive a code?{" "}
+            <button
+              type="button"
+              onClick={resendOtp}
+              disabled={Loading}
+              className="text-[#FF8682] font-bold hover:underline cursor-pointer"
+            >
+              Resend
+            </button>
+          </p>
+
+          <button
+            type="submit"
+            disabled={Loading}
+            className={`bg-PurpleColor h-11 w-full 2xl:w-[80%] text-white rounded-[6px] font-Urbanist font-bold mt-3 ${
+              Loading ? "opacity-50 cursor-not-allowed" : ""
+            }`}
+          >
+            {Loading ? "Verifying..." : "Verify"}
+          </button>
+        </form>
+      </div>
+    </div>
   );
 };
 

@@ -53,7 +53,7 @@ export default function PrivateChat({ currentUser, chatUser , setChatUser }) {
         <div className="flex gap-3 items-center">
           <div
             onClick={() => setChatUser(null)}
-            className="bg-[#F5F5F5] px-3 rounded-[5px] py-2"
+            className="bg-[#F5F5F5] px-3 rounded-[5px] py-2 cursor-pointer"
           >
             <img className="z-10 relative" src={RightSideImage1_2} alt="" />
           </div>

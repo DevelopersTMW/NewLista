@@ -28,7 +28,7 @@ const free = [
     checked: false,
   },
   {
-    label: "Send & Receive Messages",
+    label: "Send and receive messages directly through your private dashboard",
     checked: false,
   },
   {
@@ -36,7 +36,7 @@ const free = [
     checked: false,
   },
   {
-    label: "Make Direct Offers on Properties",
+    label: "Make Direct Property Offers and Receive Instant Notifications",
     checked: false,
   },
   {
@@ -66,7 +66,7 @@ const premium = [
     checked: true,
   },
   {
-    label: "Send & Receive Messages",
+    label: "Send and receive messages directly through your private dashboard",
     checked: true,
   },
   {
@@ -74,7 +74,7 @@ const premium = [
     checked: true,
   },
   {
-    label: "Make Direct Offers on Properties",
+    label: "Make Direct Property Offers and Receive Instant Notifications",
     checked: true,
   },
   {
