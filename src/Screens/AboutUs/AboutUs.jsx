@@ -21,7 +21,7 @@ const AboutBgImage = {
   backgroundImage: `url(${BgImage})`,
   backgroundSize: "cover",
   backgroundRepeat: "no-repeat",
-  backgroundColor: "rgb(0 0 0 / 79%)",
+  backgroundColor: "#0009",
   backgroundBlendMode: "color",
   backgroundPosition: "bottom",
 };

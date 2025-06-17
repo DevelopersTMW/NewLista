@@ -34,6 +34,7 @@ import axios from "axios";
 import Spinner from "../../Components/Spinner/Spinner";
 import { MapPin } from "lucide-react";
 import EmptyCards from "../../Components/EmptyCard/EmptyCard";
+import TruncatedText from "../../Components/TruncatedText/TruncatedText";
 
 const features = [
   "Ample Parking",
@@ -58,19 +59,16 @@ const PropertyDetails = () => {
         );
         const Response = GetSingleProperty.data.data;
         setSingleProperty(Response);
-        console.log("====================================");
         console.log(Response);
-        console.log("====================================");
-
         const GetPropertyData = await axios.get(`${ApiKey}/properties`);
         const Responses = GetPropertyData.data.data;
-        const filtered = Responses.filter(
-          (item) =>
-            item.property_type === Response.property_type &&
-            item.id !== params.id
-        );
+        // const filtered = Responses.filter(
+        //   (item) =>
+        //     item.property_type === Response.property_type &&
+        //     item.id !== params.id
+        // );
 
-        setProperties(filtered);
+        setProperties(Responses);
       } catch (error) {
         setErrorMessage(error.message);
       } finally {
@@ -174,12 +172,12 @@ const PropertyDetails = () => {
                         {Array.from(SingleProperty.images)
                           .slice(1) // skip the first one
                           .map((file, index) => (
-                              <img
-                               key={index}
-                                src={import.meta.env.VITE_IMAGE_KEY +  (file)}
-                                alt={`preview-${index + 1}`}
-                                className="object-cover w-full rounded-[8px]"
-                              />
+                            <img
+                              key={index}
+                              src={import.meta.env.VITE_IMAGE_KEY + file}
+                              alt={`preview-${index + 1}`}
+                              className="object-cover w-full rounded-[8px]"
+                            />
                           ))}
                       </div>
                     )}
@@ -345,7 +343,7 @@ const PropertyDetails = () => {
                         </p>
                       </span>
                       <p className="font-Urbanist font-[700] text-[20px] sm:text-[21px] text-[#222222]">
-                       {SingleProperty.property_type}
+                        {SingleProperty.property_type}
                       </p>
                     </div>
 
@@ -383,7 +381,10 @@ const PropertyDetails = () => {
                   </p>
 
                   <p className="font-Urbanist font-[600] text-[14px] sm:text-[16px] text-[#222222]">
-                    💳 Owner Financing: <span className="font-bold">{SingleProperty.owner_financing}</span>
+                    💳 Owner Financing:{" "}
+                    <span className="font-bold">
+                      {SingleProperty.owner_financing}
+                    </span>
                   </p>
                 </div>
 
@@ -407,16 +408,21 @@ const PropertyDetails = () => {
               </div>
               <div className="w-[100%] grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 mt-5 gap-5 sm:mt-5 lg:mt-10 place-items-center sm:place-items-start">
                 {Properties &&
-                  Properties.slice(0, 4).map((items) => (
-                    <div
-                      key={items.id}
-                      className="max-[400px]:w-[270px] w-[300px] sm:w-[275px] md:w-[300px] xl:w-[275px]"
-                    >
-                      {
+                  Properties.slice(0, 4).map((items) =>
+                    Number(items.id) !== Number(params.id) ? (
+                      <div
+                        key={items.id}
+                        className="max-[400px]:w-[270px] w-[300px] sm:w-[275px] md:w-[300px] xl:w-[275px]"
+                      >
                         <PropertiesCards2
                           Img={PropertiesImage3}
                           Heading={items.property_name}
-                          desc={items.description}
+                          desc={
+                            <TruncatedText
+                              text={items.description}
+                              maxLength={90}
+                            />
+                          }
                           Status={items.listing_type}
                           Price={
                             items.listing_type === "For Sale"
@@ -425,10 +431,10 @@ const PropertyDetails = () => {
                           }
                           id={items.id}
                           images={items.images[0]}
-                        ></PropertiesCards2>
-                      }
-                    </div>
-                  ))}
+                        />
+                      </div>
+                    ) : null
+                  )}
               </div>
             </section>
           </>

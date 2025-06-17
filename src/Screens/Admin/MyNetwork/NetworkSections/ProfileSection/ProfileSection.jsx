@@ -3,7 +3,7 @@ import CallIcon from "../../../../../assets/CallIcon.png";
 import MessageIcon2 from "../../../../../assets/MessageIcon2.png";
 import InvestorIcon1 from "../../../../../assets/InvestorIcon1.png";
 import DummyLogo from "../../../../../../public/Images/UnknowUser.png";
-
+import fade from "../../../../../assets/fade.png";
 // REDUX
 import { useSelector } from "react-redux";
 import Spinner from "../../../../../Components/Spinner/Spinner";
@@ -11,12 +11,35 @@ import Spinner from "../../../../../Components/Spinner/Spinner";
 const ProfileSection = () => {
   const { user } = useSelector((state) => state.auth);
 
-  if (!user) return <div className="flex justify-center h-[30vh] items-center">
-    <Spinner style={"w-12 h-16 text-PurpleColor z-50"} />
-  </div>;
+  if (!user)
+    return (
+      <div className="flex justify-center h-[65vh] items-center">
+        <Spinner style={"w-12 h-16 text-PurpleColor z-50"} />
+      </div>
+    );
+
+  const BackgroundImages = {
+    backgroundImage: `url(${
+      user?.banner
+        ? import.meta.env.VITE_IMAGE_KEY + user.banner
+        : "DummyLogo"
+    })`,
+    backgroundPosition: "5%",
+  };
 
   return (
     <>
+      <section className=" py-5">
+        <div
+          style={BackgroundImages}
+          className="relative flex items-center justify-center overflow-hidden rounded-[10px] bg-gray-900"
+        >
+          <img className="absolute -top-[40%]  w-[100%]" src={fade} alt="" />
+          <h1 className="font-Inter font-bold text-[35px]  sm:text-[43px] text-white  text-center py-16.5 relative ">
+            My Networks
+          </h1>
+        </div>
+      </section>
       <section className="flex flex-col items-center gap-0 sm:gap-3 sm:flex-row ">
         <div className=" z-10 relative py-3 ml-3 sm:py-5 sm:w-[20%]">
           <img

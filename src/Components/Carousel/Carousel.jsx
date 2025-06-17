@@ -7,6 +7,7 @@ import Testimonials1 from "../../assets/Testimonials1.png";
 import InvestorCards from "../Cards/InvestorCards/InvestorCards";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
+import { Info } from "lucide-react";
 
 const investors = [
   {
@@ -49,6 +50,7 @@ const InvestorCarousel = () => {
   const handleConnectClick = () => {
     if (!token) {
       Swal.fire({
+        icon: "info",
         title: "Join To View Investors",
         timer: 3000,
         showConfirmButton: false,
@@ -56,22 +58,33 @@ const InvestorCarousel = () => {
         allowOutsideClick: false,
         allowEscapeKey: false,
         timerProgressBar: true,
+        background: "#000",
+        color: "white",
+        customClass: {
+          title: "text-white font-Urbanist font-semibold text-[25px]",
+          htmlContainer: "text-white text-[14px] font-Urbanist",
+        },
       }).then(() => {
         navigate("/pricing");
         setShowModal(false);
       });
-      // Your modal logic or redirect here
-      // Example:
       alert("Please login to connect");
     } else {
       Swal.fire({
+        icon: "info",
         title: "Join To View Investors",
         timer: 3000,
         showConfirmButton: false,
         showCancelButton: false,
         allowOutsideClick: false,
         allowEscapeKey: false,
+        background: "#000",
         timerProgressBar: true,
+        color: "white",
+        customClass: {
+          title: "text-white font-Urbanist font-semibold text-[25px]",
+          htmlContainer: "text-white text-[14px] font-Urbanist",
+        },
       }).then(() => {
         navigate("/admin/network");
         setShowModal(false);
@@ -83,6 +96,7 @@ const InvestorCarousel = () => {
   const handleMessageClick = () => {
     if (!token) {
       Swal.fire({
+        icon: "info",
         title: "Join To View Investors",
         timer: 3000,
         showConfirmButton: false,
@@ -90,6 +104,12 @@ const InvestorCarousel = () => {
         allowOutsideClick: false,
         allowEscapeKey: false,
         timerProgressBar: true,
+        background: "#000",
+        color: "white",
+        customClass: {
+          title: "text-white font-Urbanist font-semibold text-[25px]",
+          htmlContainer: "text-white text-[14px] font-Urbanist",
+        },
       }).then(() => {
         navigate("/pricing");
         setShowModal(false);
@@ -99,6 +119,7 @@ const InvestorCarousel = () => {
       alert("Please login to connect");
     } else {
       Swal.fire({
+        icon: "info",
         title: "Join To View Investors",
         timer: 3000,
         showConfirmButton: false,
@@ -106,6 +127,12 @@ const InvestorCarousel = () => {
         allowOutsideClick: false,
         allowEscapeKey: false,
         timerProgressBar: true,
+        background: "#000",
+        color: "white",
+        customClass: {
+          title: "text-white font-Urbanist font-semibold text-[25px]",
+          htmlContainer: "text-white text-[14px] font-Urbanist",
+        },
       }).then(() => {
         navigate("/admin/network");
         setShowModal(false);
@@ -128,19 +155,19 @@ const InvestorCarousel = () => {
         preventClicksPropagation={false}
         breakpoints={{
           0: {
-            slidesPerView: 1, 
+            slidesPerView: 1,
             spaceBetween: 20,
           },
           640: {
-            slidesPerView: 2, 
+            slidesPerView: 2,
             spaceBetween: 20,
           },
           950: {
-            slidesPerView: 3, 
+            slidesPerView: 3,
             spaceBetween: 80,
           },
           1024: {
-            slidesPerView: 4, 
+            slidesPerView: 4,
             spaceBetween: 200,
           },
         }}

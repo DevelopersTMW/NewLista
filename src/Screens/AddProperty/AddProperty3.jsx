@@ -41,10 +41,6 @@ const PropertyForm = () => {
       console.error("Form submission failed: no data.");
       return;
     }
-
-
-
-
     console.log("Submitted Data:", formData);
     try {
       const Response = await axios.post(
@@ -83,7 +79,7 @@ const PropertyForm = () => {
 
           featured_listing: formData.FeaturedListing ? 1 : 0,
 
-          off_market_listing: formData.OfftheMarketListing,
+          off_market_listing: formData.OfftheMarketListing ? 1 : 0,
           owner_financing: formData.OwnerFinancing ? 1 : 0 ,
           nio:  formData.Noi,
           cap_rate: formData.cap_rate,

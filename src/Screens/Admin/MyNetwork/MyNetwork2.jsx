@@ -19,10 +19,7 @@ import AddtoNetworkSec from "./NetworkSections/AddtoNetworkSec/AddtoNetworkSec";
 import OurNetwork from "./NetworkSections/OurNetwork/OurNetwork";
 import OurRequest from "./NetworkSections/OurRequest/OurRequest";
 
-const BackgroundImages = {
-  backgroundImage: `url(${MyNetwork})`,
-  backgroundPosition: "5%",
-};
+
 
 const TabNames = [
   { name: "Discover", TabLink: "addToNetwork" },
@@ -160,20 +157,6 @@ const MyNetwork2 = () => {
 
   return (
     <>
-      {/* BANNER START  */}
-      <section className=" py-5">
-        <div
-          style={BackgroundImages}
-          className="relative flex items-center justify-center overflow-hidden rounded-[10px]"
-        >
-          <img className="absolute -top-[40%]  w-[100%]" src={fade} alt="" />
-          <h1 className="font-Inter font-bold text-[35px]  sm:text-[43px] text-white  text-center py-16 relative ">
-            My Networks
-          </h1>
-        </div>
-      </section>
-      {/* BANNER END   */}
-
       {/* PROFILE SECTION START */}
       <ProfileSection></ProfileSection>
       {/* PROFILE SECTION END */}

@@ -3,27 +3,44 @@ import PropertyIcon from "../../../assets/PropertyIcon.png";
 import PropertyIcon2 from "../../../assets/PropertyIcon2.png";
 import { Link } from "react-router-dom";
 
-const PropertiesCards2 = ({ Img, Heading, desc, Status, Price, Features , id  , images}) => {
+const PropertiesCards2 = ({
+  Img,
+  Heading,
+  desc,
+  Status,
+  Price,
+  Features,
+  id,
+  images,
+}) => {
   return (
     <>
       <div className="w-[100%] bg-white border border-gray-200 rounded-lg shadow-sm relative">
-          <img className="rounded-t-lg h-[200px] min-[350px]:h-[230px] object-cover w-[100%]" src={import.meta.env.VITE_IMAGE_KEY + images} alt="" />
-        <div className="py-3 pb-4 px-4 flex flex-col gap-2">
+        <img
+          className="rounded-t-lg h-[200px] min-[350px]:h-[230px] object-cover w-[100%]"
+          src={import.meta.env.VITE_IMAGE_KEY + images}
+          alt=""
+        />
+        <div className="py-3 pb-4 px-4 flex flex-col gap-2 justify-between h-[40vh]">
           <div className="absolute top-8 end-8">
             {"Active" === Status ? (
               <span className="bg-[#28A745] text-white font-Inter px-4 py-1.5 text-[14px] rounded-full">
                 Active
               </span>
             ) : "Sold" === Status ? (
-              <span className="bg-[#DC3545] text-white font-Inter px-4 py-1.5 text-[14px] rounded-full">Sold</span>
+              <span className="bg-[#DC3545] text-white font-Inter px-4 py-1.5 text-[14px] rounded-full">
+                Sold
+              </span>
             ) : (
-              <span className="bg-[#FFC107] text-white font-Inter px-4 py-1.5 text-[14px] rounded-full">{Status}</span>
+              <span className="bg-[#FFC107] text-white font-Inter px-4 py-1.5 text-[14px] rounded-full">
+                {Status}
+              </span>
             )}
           </div>
           <div>
-              <h1 className="mb-2 text-[21px] font-[600] font-Inter tracking-tight leading-[24px] mt-3 text-gray-900 ">
-                {Heading}
-              </h1>
+            <h1 className="mb-2 text-[21px] font-[600] font-Inter tracking-tight leading-[24px] mt-3 text-gray-900 ">
+              {Heading}
+            </h1>
             <p className="mb-2 font-Inter text-[13px] font-normal text-gray-700">
               {desc}
             </p>
@@ -44,14 +61,16 @@ const PropertiesCards2 = ({ Img, Heading, desc, Status, Price, Features , id  , 
               <h1 className="font-Inter text-[16px] font-bold">${Price}</h1>
             </div>
             <div>
-              <Link to={`/properties/${id}`} className="inline-flex font-Inter text-[12.5px] items-center px-5 py-2.5 rounded-full text-sm font-medium text-center hover-btn-purple hover-btn">
+              <Link
+                to={`/properties/${id}`}
+                className="inline-flex font-Inter text-[12.5px] items-center px-5 py-2.5 rounded-full text-sm font-medium text-center hover-btn-purple hover-btn"
+              >
                 <span> View Property</span>
               </Link>
             </div>
           </div>
         </div>
       </div>
-      
     </>
   );
 };

@@ -683,36 +683,6 @@ const Home = () => {
             {/* CARD SECTION  */}
             <div className="w-[98%] sm:-ml-3 md:w-[84%] flex gap-10">
               <CardCarousel />
-              {/* <InvestorCards
-                InvesImage={Testimonials1}
-                InvesUserName={"John Doe"}
-                InvesDesc={"Real Estate Investor"}
-              ></InvestorCards>
-              <InvestorCards
-                InvesImage={Testimonials1}
-                InvesUserName={"John Doe"}
-                InvesDesc={"Real Estate Investor"}
-              ></InvestorCards>
-              <InvestorCards
-                InvesImage={Testimonials1}
-                InvesUserName={"John Doe"}
-                InvesDesc={"Real Estate Investor"}
-              ></InvestorCards>
-              <InvestorCards
-                InvesImage={Testimonials1}
-                InvesUserName={"John Doe"}
-                InvesDesc={"Real Estate Investor"}
-              ></InvestorCards>
-              <InvestorCards
-                InvesImage={Testimonials1}
-                InvesUserName={"John Doe"}
-                InvesDesc={"Real Estate Investor"}
-              ></InvestorCards>
-              <InvestorCards
-                InvesImage={Testimonials1}
-                InvesUserName={"John Doe"}
-                InvesDesc={" Estate Investor"}
-              ></InvestorCards> */}
             </div>
           </section>
 

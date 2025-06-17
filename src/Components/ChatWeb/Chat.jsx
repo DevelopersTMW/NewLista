@@ -1,19 +1,20 @@
 import { useEffect, useState, useRef } from "react";
 import { getDatabase, ref, onChildAdded, push, set } from "firebase/database";
 import db from "../../Configuration/Firebase/FirebaseConfig";
-import { Pen } from "lucide-react";
+import { CircleMinus, EllipsisVertical, Info, Pen } from "lucide-react";
 
 import RightSideImage1_2 from "../../assets/RightSideImage1.2.png";
 import DeleteIcon from "../../assets/DeleteIcon.png";
 import PrintIcon from "../../assets/PrintIcon.png";
 import StarIcon from "../../assets/StarIcon.png";
 import { Link } from "react-router-dom";
+import { Menu } from "@headlessui/react";
 
 function getChatId(userId1, userId2) {
   return userId1 < userId2 ? `${userId1}_${userId2}` : `${userId2}_${userId1}`;
 }
 
-export default function PrivateChat({ currentUser, chatUser , setChatUser }) {
+export default function PrivateChat({ currentUser, chatUser, setChatUser }) {
   const [messages, setMessages] = useState([]);
   const [text, setText] = useState("");
   const chatId = getChatId(currentUser.id, chatUser.id);
@@ -46,6 +47,8 @@ export default function PrivateChat({ currentUser, chatUser , setChatUser }) {
     setText("");
   };
 
+  console.log(chatUser);
+
   return (
     <div className="sm:w-[75%] sm:relative absolute w-full min-h-screen sm:min-h-min top-0 left-0 bg-white flex flex-col rounded-[10px] sm:border border-[#B9B9B9] justify-between">
       {/* Header */}
@@ -57,20 +60,48 @@ export default function PrivateChat({ currentUser, chatUser , setChatUser }) {
           >
             <img className="z-10 relative" src={RightSideImage1_2} alt="" />
           </div>
-          <h1 className="font-Urbanist font-[600] text-[#000] text-[17px]">
-            {chatUser.first_name + " " + chatUser.last_name}
-          </h1>
+          <img
+            className="h-11 w-11 rounded-full object-cover"
+            src={import.meta.env.VITE_IMAGE_KEY + chatUser.headshot}
+            alt=""
+          />
+          <div className="flex flex-col gap-0">
+            <h1 className="font-Urbanist font-[600] text-[#000] text-[18px]">
+              {chatUser.first_name + " " + chatUser.last_name}
+            </h1>
+            <h5 className="font-Urbanist font-[600] text-[#000] text-[13.5px]  -mt-1 ">
+              {chatUser.title}
+            </h5>
+          </div>
         </div>
-        <div className="bg-[#FAFBFD] flex justify-evenly rounded-[9px] border-[#979797] border-solid border-[1px]">
-          <div className="border-[#979797] px-4 py-2 border-r-[1px] border-solid">
-            <img className="w-3.5 h-3.5" src={PrintIcon} alt="" />
-          </div>
-          <div className="border-[#979797] px-4 py-2 border-r-[1px] border-solid">
-            <img className="w-3.5 h-3.5" src={StarIcon} alt="" />
-          </div>
-          <div className="px-4 py-2">
-            <img className="w-3.5 h-3.5" src={DeleteIcon} alt="" />
-          </div>
+        <div className="flex items-center">
+          <Menu as="div" className="relative inline-block text-left">
+            <Menu.Button className="flex items-center rounded-full focus:outline-none">
+              <span className="sr-only">Open options</span>
+              <EllipsisVertical className="size-5.5 cursor-pointer" />
+            </Menu.Button>
+
+            <Menu.Items className="absolute right-0 mt-2 w-48 origin-top-right bg-[#f7f7f7]  border-gray-200 divide-y divide-gray-100 rounded-md shadow-lg focus:outline-none z-20">
+              <div className="py-1">
+                <Menu.Item>
+                  <button
+                    className={`hover:bg-gray-200 flex gap-2 w-full text-left px-4 py-2 text-sm text-gray-700 cursor-pointer font-Urbanist font-[600] border-b-[1px] border-[#c9c9c9]`}
+                  >
+                    <Info className="size-[17px]" />
+                    Contact Info
+                  </button>
+                </Menu.Item>
+                <Menu.Item>
+                  <button
+                    className={`hover:bg-gray-200 flex gap-2 w-full text-left px-4 py-2 text-sm text-gray-700 cursor-pointer font-Urbanist font-[600]`}
+                  >
+                    <CircleMinus className="size-[17px]" />
+                    Clear Chat
+                  </button>
+                </Menu.Item>
+              </div>
+            </Menu.Items>
+          </Menu>
         </div>
       </div>
 
