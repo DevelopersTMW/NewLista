@@ -7,12 +7,13 @@ import RightSideImage1_2 from "../../assets/RightSideImage1.2.png";
 import DeleteIcon from "../../assets/DeleteIcon.png";
 import PrintIcon from "../../assets/PrintIcon.png";
 import StarIcon from "../../assets/StarIcon.png";
+import { Link } from "react-router-dom";
 
 function getChatId(userId1, userId2) {
   return userId1 < userId2 ? `${userId1}_${userId2}` : `${userId2}_${userId1}`;
 }
 
-export default function PrivateChat({ currentUser, chatUser }) {
+export default function PrivateChat({ currentUser, chatUser , setChatUser }) {
   const [messages, setMessages] = useState([]);
   const [text, setText] = useState("");
   const chatId = getChatId(currentUser.id, chatUser.id);
@@ -51,7 +52,7 @@ export default function PrivateChat({ currentUser, chatUser }) {
       <div className="flex justify-between border-b border-[#B9B9B9] py-5 px-5">
         <div className="flex gap-3 items-center">
           <div
-            onClick={() => setSelectedUserIndex(null)}
+            onClick={() => setChatUser(null)}
             className="bg-[#F5F5F5] px-3 rounded-[5px] py-2"
           >
             <img className="z-10 relative" src={RightSideImage1_2} alt="" />

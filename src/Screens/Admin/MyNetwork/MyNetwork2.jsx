@@ -15,6 +15,9 @@ import ProfileModal from "../../../Components/ProfileModal/ProfileModal";
 import Spinner from "../../../Components/Spinner/Spinner";
 import SearchFilters from "./SearchFilters";
 import ProfileSection from "./NetworkSections/ProfileSection/ProfileSection";
+import AddtoNetworkSec from "./NetworkSections/AddtoNetworkSec/AddtoNetworkSec";
+import OurNetwork from "./NetworkSections/OurNetwork/OurNetwork";
+import OurRequest from "./NetworkSections/OurRequest/OurRequest";
 
 const BackgroundImages = {
   backgroundImage: `url(${MyNetwork})`,
@@ -208,174 +211,104 @@ const MyNetwork2 = () => {
 
         {/* Tabs Content */}
         {activeTab === "myNetwork" && (
-          <section className="flex flex-col gap-7 sm:gap-10 items-center sm:items-start">
-            <h1 className="text-[26px] mt-5 font-Urbanist text-[#f5f5f5] bg-PurpleColor w-max px-5 rounded-[7px] sm:text-[30px] font-[700]">
-              My Network
-            </h1>
-            <div className="flex flex-wrap gap-4 justify-center sm:justify-start">
-              {loading ? (
-                <Spinner style={"w-14 h-20 text-PurpleColor"} />
-              ) : (
-                (() => {
-                  const filtered = MyNetwork.filter((user) =>
-                    `${user.first_name} ${user.last_name} ${user.location} ${user.preferred_investment_type}`
-                      .toLowerCase()
-                      .includes(searchTerm.toLowerCase())
-                  );
-                  return filtered.length > 0 ? (
-                    filtered.map((user) => (
-                      <AddToNetwork
-                        key={user.id}
-                        id={user.id}
-                        InvesImage={user.headshot}
-                        InvesUserName={user.first_name + " " + user.last_name}
-                        InvesDesc={user.title}
-                        location={user.location}
-                        propertyTypes={user.preferred_investment_type}
-                        memberSince={getJoinYear(user.created_at)}
-                        email={user.email}
-                        phone={user.phone}
-                        showModal={showModal}
-                        setShowModal={setShowModal}
-                        onReject={handleReject}
-                        onViewProfile={() => {
-                          setSelectedUser({ user: user, type: "myNetwork" });
-                          setShowModal(true);
-                        }}
-                        type={"myNetwork"}
-                      />
-                    ))
-                  ) : (
-                    <div className="text-black font-Inter font-semibold">
-                      No Connections Found
-                    </div>
-                  );
-                })()
-              )}
-            </div>
-          </section>
+          // <section className="flex flex-col gap-7 sm:gap-10 items-center sm:items-start">
+          //   <h1 className="text-[26px] mt-5 font-Urbanist text-[#f5f5f5] bg-PurpleColor w-max px-5 rounded-[7px] sm:text-[30px] font-[700]">
+          //     My Network
+          //   </h1>
+          //   <div className="flex flex-wrap gap-4 justify-center sm:justify-start">
+          //     {loading ? (
+          //       <Spinner style={"w-14 h-20 text-PurpleColor"} />
+          //     ) : (
+          //       (() => {
+          //         const filtered = MyNetwork.filter((user) =>
+          //           `${user.first_name} ${user.last_name} ${user.location} ${user.preferred_investment_type}`
+          //             .toLowerCase()
+          //             .includes(searchTerm.toLowerCase())
+          //         );
+          //         return filtered.length > 0 ? (
+          //           filtered.map((user) => (
+          //             <AddToNetwork
+          //               key={user.id}
+          //               id={user.id}
+          //               InvesImage={user.headshot}
+          //               InvesUserName={user.first_name + " " + user.last_name}
+          //               InvesDesc={user.title}
+          //               location={user.location}
+          //               propertyTypes={user.preferred_investment_type}
+          //               memberSince={getJoinYear(user.created_at)}
+          //               email={user.email}
+          //               phone={user.phone}
+          //               showModal={showModal}
+          //               setShowModal={setShowModal}
+          //               onReject={handleReject}
+          //               onViewProfile={() => {
+          //                 setSelectedUser({ user: user, type: "myNetwork" });
+          //                 setShowModal(true);
+          //               }}
+          //               type={"myNetwork"}
+          //             />
+          //           ))
+          //         ) : (
+          //           <div className="text-black font-Inter font-semibold">
+          //             No Connections Found
+          //           </div>
+          //         );
+          //       })()
+          //     )}
+          //   </div>
+          // </section>
+          <OurNetwork
+            loading={loading}
+            AddNetwork={AddNetwork}
+            searchTerm={searchTerm}
+            getJoinYear={getJoinYear}
+            showModal={showModal}
+            setShowModal={setShowModal}
+            handleReject={handleReject}
+            MyNetwork={MyNetwork}
+            selectedUser={selectedUser}
+            setSelectedUser={setSelectedUser}
+            type={type}
+          />
         )}
 
         {activeTab === "addToNetwork" && (
-          <section className="flex flex-col gap-7 sm:gap-10 items-center sm:items-start">
-            <h1 className="text-[26px] mt-5 font-Urbanist text-[#f5f5f5] bg-PurpleColor w-max px-5 rounded-[7px] sm:text-[30px] font-[700]">
-              Add To Network
-            </h1>
-            <div className="flex flex-wrap gap-4 justify-center sm:justify-start">
-              {loading ? (
-                <Spinner style={"w-14 h-20 text-PurpleColor"} />
-              ) : (
-                (() => {
-                  const filtered = AddNetwork.filter(
-                    (user) =>
-                      user.connection_status !== "accepted" &&
-                      `${user.first_name} ${user.last_name} ${user.location} ${user.preferred_investment_type}`
-                        .toLowerCase()
-                        .includes(searchTerm.toLowerCase())
-                  );
-
-                  return filtered.length > 0 ? (
-                    filtered.map((user) => (
-                      <AddToNetwork
-                        key={user.id}
-                        id={user.id}
-                        InvesImage={user.headshot}
-                        InvesUserName={`${user.first_name} ${user.last_name}`}
-                        InvesDesc={user.title}
-                        location={user.address}
-                        propertyTypes={user.preferred_investment_type}
-                        memberSince={getJoinYear(user.created_at)}
-                        email={user.email}
-                        phone={user.phone}
-                        showModal={showModal}
-                        setShowModal={setShowModal}
-                        onReject={handleReject}
-                        button={user.connection_status}
-                        onViewProfile={() => {
-                          setSelectedUser({
-                            user: user,
-                            type: "addToNetwork",
-                            button: user.connection_status,
-                          });
-                          setShowModal(true);
-                        }}
-                        AddtoNetwork={AddtoNetwork}
-                        type={"addToNetwork"}
-                      />
-                    ))
-                  ) : (
-                    <div className="text-black font-Inter font-semibold">
-                      No Users Found
-                    </div>
-                  );
-                })()
-              )}
-            </div>
-          </section>
+          <AddtoNetworkSec
+            loading={loading}
+            AddNetwork={AddNetwork}
+            searchTerm={searchTerm}
+            getJoinYear={getJoinYear}
+            showModal={showModal}
+            setShowModal={setShowModal}
+            handleReject={handleReject}
+            AddtoNetwork={AddtoNetwork}
+            selectedUser={selectedUser}
+            setSelectedUser={setSelectedUser}
+            type={type}
+          />
         )}
 
         {activeTab === "pending" && (
-          <section className="flex flex-col gap-7 sm:gap-10 items-center sm:items-start">
-            <h1 className="text-[26px] mt-5 font-Urbanist text-[#f5f5f5] bg-PurpleColor w-max px-5 rounded-[7px] sm:text-[30px] font-[700]">
-              My Requests
-            </h1>
-            <div className="flex flex-wrap gap-4 justify-center sm:justify-start">
-              {loading ? (
-                <Spinner style={"w-14 h-20 text-PurpleColor"} />
-              ) : (
-                (() => {
-                  const filtered = PendinNetwork.filter((user) =>
-                    `${user.from_user.first_name} ${user.from_user.last_name}`
-                      .toLowerCase()
-                      .includes(searchTerm.toLowerCase())
-                  );
-                  return filtered.length > 0 ? (
-                    filtered.map((user) => (
-                      <AddToNetwork
-                        key={user.id}
-                        id={user.id}
-                        InvesImage={user.from_user.headshot}
-                        InvesUserName={
-                          user.from_user.first_name +
-                          " " +
-                          user.from_user.last_name
-                        }
-                        InvesDesc={user.from_user.title}
-                        location={user.from_user.location}
-                        propertyTypes={user.from_user.preferred_investment_type}
-                        memberSince={getJoinYear(user.created_at)}
-                        email={user.from_user.email}
-                        phone={user.from_user.phone}
-                        showModal={showModal}
-                        setShowModal={setShowModal}
-                        onReject={handleReject}
-                        onViewProfile={() => {
-                          setSelectedUser(user);
-                          setSelectedUser({
-                            user: user,
-                            type: "pending",
-                            PendingRequest: PendingRequest,
-                          });
-                          setShowModal(true);
-                        }}
-                        PendingRequest={PendingRequest}
-                        type={"pending"}
-                      />
-                    ))
-                  ) : (
-                    <div className="text-black font-Inter font-semibold">
-                      No Requests Found
-                    </div>
-                  );
-                })()
-              )}
-            </div>
-          </section>
+          <OurRequest
+            loading={loading}
+            PendinNetwork={PendinNetwork}
+            PendingRequest={PendingRequest}
+            searchTerm={searchTerm}
+            getJoinYear={getJoinYear}
+            showModal={showModal}
+            setShowModal={setShowModal}
+            handleReject={handleReject}
+            AddtoNetwork={AddtoNetwork}
+            selectedUser={selectedUser}
+            setSelectedUser={setSelectedUser}
+            type={type}
+          ></OurRequest>
         )}
       </div>
 
-      {selectedUser && (
-        <ProfileModal
+      
+      {type === "pending" && (
+        <PendingUserModal
           user={selectedUser}
           id={selectedUser.id}
           onReject={handleReject}

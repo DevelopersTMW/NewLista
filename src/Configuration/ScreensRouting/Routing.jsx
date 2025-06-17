@@ -27,6 +27,7 @@ import FreeMontlhy from "../../Screens/Pricing/FreeMontly.jsx";
 import PremiumMonthly from "../../Screens/Pricing/PremiumMontlhy.jsx";
 import FreeYear from "../../Screens/Pricing/FreeYear.jsx";
 import PremiumYear from "../../Screens/Pricing/PremiumYear.jsx";
+import ForgetPassOtp from "../../Screens/ProtectedScreen/ForgetPassOpt.jsx";
 
 const Routing = () => {
   return (
@@ -52,6 +53,7 @@ const Routing = () => {
           <Route path={"/login"} element={<Login />} />
           <Route path={"/reset-password"} element={<ForgetPassword />} />
           <Route path={"/verify-otp"} element={<OptVerification />} />
+          <Route path={"/forget-otp"} element={<ForgetPassOtp />} />
           <Route path={"/set-new-password"} element={<SetNewPassword />} />
           <Route path={"/register"} element={<Register />} />
           {/* <Route path={"/plans"} element={<OurPlans />} /> */}

@@ -15,9 +15,6 @@ const ComboboxSelection = ({
   const [selected, setSelected] = useState(null);
   const dropdownRef = useRef();
 
-  console.log(value);
-
-  // ✅ Sync selected value with external `value` prop
   useEffect(() => {
     const found = options.find((opt) => opt.name === value);
     if (found) {

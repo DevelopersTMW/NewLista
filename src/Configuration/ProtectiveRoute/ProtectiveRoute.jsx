@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import Spinner from "../../Components/Spinner/Spinner";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchUser } from "../../Reducers/authSlice/authSlice";
+import AlertModal from "../../Components/AlertModal/AlertModal";
 
 function ProtectiveRoute({ component }) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const location = useLocation();
 
   const token = localStorage.getItem("token");
   const profileComplete = localStorage.getItem("ProfileComplete");
@@ -29,7 +31,15 @@ function ProtectiveRoute({ component }) {
       if (!token) {
         navigate("/login"); // fallback if fetch failed
       } else if (profileComplete !== "true") {
-        navigate("/admin/account-setting");
+        if (location.pathname !== "/admin/account-setting") {
+          navigate("/admin/account-setting");
+          AlertModal({
+            icon: "error",
+            title: "Access Denied",
+            iconColor: "#703BF7",
+            text: "Please complete your profile to access this feature.",
+          });
+        }
       }
       setLocalLoading(false);
     }
@@ -45,7 +55,7 @@ function ProtectiveRoute({ component }) {
           zIndex: "1000",
         }}
       >
-        <Spinner />
+        <Spinner style={"w-14 h-20 text-PurpleColor z-50"} />
       </div>
     );
   }

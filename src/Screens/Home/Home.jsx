@@ -524,7 +524,7 @@ const Home = () => {
                     className="sm:w-[48.5%] md:w-[47%] lg:w-[31.5%]"
                   >
                     <PropertiesCards
-                      Img={PropertiesImage1}
+                      Img={items.images[0]}
                       Heading={
                         <TruncatedText
                           text={items.property_name}

@@ -12,7 +12,7 @@ import {
 import UnkownUser from "../../../public/Images/UnknowUser.png";
 import ConfirmationModal from "../ConfirmationModal/ConfirmationModal";
 
-const ProfileModal = ({
+const PendingUserModal = ({
   isOpen,
   onClose,
   InvesImage,
@@ -177,18 +177,18 @@ const ProfileModal = ({
                 <img
                   className="rounded-full w-full h-[120%] object-cover absolute -mt-1.5"
                   src={
-                    user.user.headshot
-                      ? import.meta.env.VITE_IMAGE_KEY + user.user.headshot
+                    user.user.from_user.headshot
+                      ? import.meta.env.VITE_IMAGE_KEY + user.user.from_user.headshot
                       : UnkownUser
                   }
                   alt=""
                 />
               </div>
-              {user.user.banner ? (
+              {user.user.from_user.banner ? (
                 <div className="overflow-hidden h-36">
                   <img
                     className="object-cover"
-                    src={import.meta.env.VITE_IMAGE_KEY + user.user.banner}
+                    src={import.meta.env.VITE_IMAGE_KEY + user.user.from_user.banner}
                     alt=""
                   />
                 </div>
@@ -207,35 +207,35 @@ const ProfileModal = ({
               </h1>
               {/* Basic Info */}
               <h2 className="text-2xl font-bold font-Urbanist">
-                {user.user.first_name + " " + user.user.last_name}
+                {user.user.from_user.first_name + " " + user.user.from_user.last_name}
               </h2>
-               <p className="text-gray-600 font-Urbanist font-[500]">
-                {user.user.title}
+              <p className="text-gray-600 font-Urbanist font-[500]">
+                {user.user.from_user.title}
               </p>
               {/* Info Grid */}
               <div className="mt-4 space-y-2 text-sm text-gray-600">
                 <div className="flex items-center gap-2">
                   <Phone className="size-5 text-PurpleColor" />
                   <span className="font-Urbanist font-semibold text-[16px] text-Paracolor">
-                    {user.user.phone}
+                    {user.user.from_user.phone}
                   </span>
                 </div>
                 <div className="flex items-center gap-2">
                   <Calendar className="size-5 text-PurpleColor" />
                   <span className="font-Urbanist font-semibold text-[16px] text-Paracolor">
-                    {formatJoinDate(user.user.created_at)}
+                    {formatJoinDate(user.user.from_user.created_at)}
                   </span>
                 </div>
                 <div className="flex items-center gap-2">
                   <MapPin className="size-5 text-PurpleColor" />
                   <span className="font-Urbanist font-semibold text-[16px] text-Paracolor">
-                    {user.user.address}
+                    {user.user.from_user.address}
                   </span>
                 </div>
                 <div className="flex items-center gap-2">
                   <DollarSign className="size-5 text-PurpleColor" />
                   <span className="font-Urbanist font-semibold text-[16px] text-Paracolor">
-                    {user.user.preferred_investment_range}
+                    {user.user.from_user.preferred_investment_range}
                   </span>
                 </div>
               </div>
@@ -245,7 +245,7 @@ const ProfileModal = ({
                   About Us
                 </h3>
                 <p className="text-Paracolor font-Urbanist font-[500] text-[15px] mt-1">
-                  {user.user.bio}
+                  {user.user.from_user.bio}
                 </p>
               </div>
               {/* Property Interests */}
@@ -254,7 +254,7 @@ const ProfileModal = ({
                   Property Interests
                 </h3>
                 <div className="flex gap-1.5 mt-2 flex-wrap">
-                  {user.user.property_interests.map((items) => {
+                  {user.user.from_user.property_interests.map((items) => {
                     return (
                       <span className="bg-[#E3E3E3] text-Paracolor font-semibold font-Inter px-3 py-1 text-[12.5px] rounded-full w-max">
                         {items}
@@ -287,4 +287,4 @@ const ProfileModal = ({
   );
 };
 
-export default ProfileModal;
+export default PendingUserModal;

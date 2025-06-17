@@ -1,166 +1,162 @@
 import { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
+import axios from "axios";
 import { Link } from "react-router-dom";
+
 // COMPONENTS
 import Inputs from "../../Components/InputFields/Inputs";
-// IMAGES
-import Image from "../../assets/SetNewPassword.jpg";
-import PasswordChangeSuccesFully from "../../Components/PasswordChangeSuccesFully/PasswordChangeSuccesFully";
-import axios from "axios";
 import Spinner from "../../Components/Spinner/Spinner";
+import PasswordChangeSuccesFully from "../../Components/PasswordChangeSuccesFully/PasswordChangeSuccesFully";
+
+// IMAGE
+import Image from "../../assets/SetNewPassword.jpg";
 
 const SetNewPassword = () => {
-  const [NewPassword, setNewPassword] = useState("");
-  const [ReEnterNewPassword, setReEnterNewPassword] = useState("");
-  const [ErrorMessage, setErrorMessage] = useState("");
-  const [loading, setloading] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
-  const email = localStorage.getItem("email");
+  const email = localStorage.getItem("ForgetUser");
 
-  //   SET NEW PASSWORD
-  const SetNewPassword = async (e) => {
-    e.preventDefault();
-    setloading(true);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    setError,
+    clearErrors,
+    reset,
+  } = useForm();
+
+  const SetNewPassword = async (data) => {
+    setLoading(true);
+    clearErrors(); // clear old errors
+
+    // Front-end validations
+    if (data.NewPassword.length < 8 || data.ReEnterNewPassword.length < 8) {
+      setError("NewPassword", {
+        message: "Password must be at least 8 characters long",
+      });
+      setLoading(false);
+      return;
+    }
+
+    if (!/[!@#$%^&*()<>,."]/.test(data.NewPassword)) {
+      setError("NewPassword", {
+        message: "Password must contain a special character",
+      });
+      setLoading(false);
+      return;
+    }
+
+    if (!/[A-Z]/.test(data.NewPassword)) {
+      setError("NewPassword", {
+        message: "Password must include at least one capital letter",
+      });
+      setLoading(false);
+      return;
+    }
+
+    if (data.NewPassword !== data.ReEnterNewPassword) {
+      setError("ReEnterNewPassword", {
+        message: "Passwords do not match",
+      });
+      setLoading(false);
+      return;
+    }
+
+    // API Call
     try {
-      if (NewPassword.length < 8 || ReEnterNewPassword.length < 8) {
-        setErrorMessage("");
-        setErrorMessage("Password must be 8 characters Long");
-        setloading(false);
-        return;
-      }
-      if (!/[!@#$%^&*()<>,."]/.test(NewPassword)) {
-        setErrorMessage("");
-        setErrorMessage("Password must contain any special character");
-        setloading(false);
-        return;
-      }
-      if (!/[A-Z]/.test(NewPassword)) {
-        setErrorMessage("");
-        setErrorMessage("Password must contain any capital letter");
-        setloading(false);
-        return;
-      }
-      if (NewPassword !== ReEnterNewPassword) {
-        setErrorMessage("");
-        setErrorMessage("Password must be Same");
-        setloading(false);
-        return;
-      }
-
-      const Response = await axios.post(
+      const response = await axios.post(
         "https://newlista.secureserverinternal.com/api/reset-password",
         {
-          email: email,
-          password: NewPassword,
+          email,
+          password: data.NewPassword,
         }
       );
-      setShowSuccess(true);
-      localStorage.setItem("passwordResetSuccess", "true");
-      if (Response.data.message === "Password reset successful") {
-        localStorage.removeItem("email");
+
+      if (response.data.message === "Password reset successful") {
+        localStorage.setItem("passwordResetSuccess", "true");
+        localStorage.removeItem("ForgetUser");
+        setShowSuccess(true);
+        reset(); // clear form fields
       }
-      setErrorMessage("");
-      setNewPassword("");
-      setReEnterNewPassword("");
-      setloading(false);
     } catch (error) {
-      setloading(false);
-      const ErrorMess = error.response.data.message;
-      setErrorMessage(ErrorMess);
+      const errorMsg =
+        error?.response?.data?.message || "Something went wrong. Try again.";
+      setError("NewPassword", { message: errorMsg });
+    } finally {
+      setLoading(false);
     }
   };
 
   useEffect(() => {
     const isSuccess = localStorage.getItem("passwordResetSuccess") === "true";
-
-    if (isSuccess) {
-      setShowSuccess(true);
-    }
+    if (isSuccess) setShowSuccess(true);
   }, []);
 
   return (
     <>
       {!showSuccess ? (
-        <div className="flex ">
-          {/* IMAGE SECTION  */}
-
-          <div className="w-[44%] min-h-screen ">
-            <img className="h-[100%] object-cover" src={Image} alt="" />
+        <div className="flex">
+          {/* IMAGE SECTION */}
+          <div className="w-[44%] min-h-screen">
+            <img className="h-full object-cover" src={Image} alt="Reset Password" />
           </div>
 
-          {/* LOGIN FOR SECTION  */}
-
-          <div className="w-[58%] px-36 flex flex-col justify-center gap-7 ">
-            <div>
-              <div className="flex flex-col ">
-                <h1 className="font-Poppins font-[700] text-[40px]">
-                  Set a password
-                </h1>
-
-                <p className="font-Urbanist text-Paracolor font-[600] text-[14px]">
-                  Your previous password has been reseted. Please set a new
-                  password for your account.
-                </p>
-              </div>
+          {/* FORM SECTION */}
+          <div className="w-[58%] px-36 flex flex-col justify-center gap-7">
+            <div className="flex flex-col">
+              <h1 className="font-Poppins font-bold text-[40px]">Set a password</h1>
+              <p className="font-Urbanist text-Paracolor font-semibold text-[14px]">
+                Your previous password has been reset. Please set a new password.
+              </p>
             </div>
 
             <form
-              onSubmit={(e) => {
-                SetNewPassword(e);
-              }}
+              onSubmit={handleSubmit(SetNewPassword)}
               className="flex flex-col gap-5"
             >
-              <div>
-                <Inputs
-                  name={"NewPassword"}
-                  value={NewPassword}
-                  onChange={(e) => {
-                    setNewPassword(e.target.value);
-                  }}
-                  labels={"Create New Password"}
-                  placeholder={"Enter New Password"}
-                  type={"password"}
-                  error={ErrorMessage}
-                ></Inputs>
-              </div>
+             <span>
+               <Inputs
+                name="NewPassword"
+                register={register("NewPassword", {
+                  required: "New password is required",
+                })}
+                labels="Create New Password"
+                placeholder="Enter new password"
+                type="password"
+                error={errors.NewPassword?.message}
+              />
+             </span>
 
-              <div>
+              <span>
                 <Inputs
-                  name={"ReEnterNewPassword"}
-                  value={ReEnterNewPassword}
-                  onChange={(e) => {
-                    setReEnterNewPassword(e.target.value);
-                  }}
-                  labels={"Re Enter New Password"}
-                  placeholder={"Re Enter New Password"}
-                  type={"password"}
-                  error={ErrorMessage}
-                ></Inputs>
-                {ErrorMessage && (
-                  <p className="font-Poppins mt-2 font-[500] border-red-500 text-red-600  text-[13px]">
-                    {ErrorMessage}
-                  </p>
+                name="ReEnterNewPassword"
+                register={register("ReEnterNewPassword", {
+                  required: "Please re-enter your password",
+                })}
+                labels="Re-enter New Password"
+                placeholder="Re-enter new password"
+                type="password"
+                error={errors.ReEnterNewPassword?.message}
+              />
+              </span>
+
+              <button
+                type="submit"
+                className="bg-PurpleColor font-bold text-white h-11 w-full rounded-[6px] font-Urbanist"
+              >
+                {loading ? (
+                  <div className="flex justify-center">
+                    <Spinner />
+                  </div>
+                ) : (
+                  "Save new password"
                 )}
-              </div>
-
-              <div className="mt-1">
-                <button
-                  type="submit"
-                  className="bg-PurpleColor cursor-pointer font-[700] w-[100%] h-11 text-white font-Urbanist rounded-[6px]"
-                >
-                  {loading ? (
-                    <div className="flex justify-center">
-                      <Spinner />
-                    </div>
-                  ) : (
-                    "Save new password"
-                  )}
-                </button>
-              </div>
+              </button>
             </form>
           </div>
         </div>
       ) : (
-        <div className={`transition-opacity duration-700 ease-in-out`}>
+        <div className="transition-opacity duration-700 ease-in-out">
           <PasswordChangeSuccesFully />
         </div>
       )}

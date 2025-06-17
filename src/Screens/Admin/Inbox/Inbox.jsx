@@ -45,7 +45,7 @@ function Inbox() {
     <div className="flex flex-col sm:flex-row w-full mt-3 sm:gap-5 lg:gap-10 text-black">
       <UserList users={otherUsers} onSelect={setChatUser} />
       {chatUser && (
-        <PrivateChat currentUser={currentUser} chatUser={chatUser} />
+        <PrivateChat setChatUser={setChatUser} currentUser={currentUser} chatUser={chatUser} />
       )}
     </div>
   );

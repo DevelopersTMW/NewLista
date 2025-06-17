@@ -40,9 +40,9 @@ function AdminNavbar() {
             {/* Top Row: Welcome + Search */}
             <div className="flex items-center ml-10 min-[890px]:ml-0 sm:gap-0 md:w-full">
               {/* Welcome Message */}
-              <div className="min-[1170px]:w-[40%]">
+              <div className="min-[1170px]:w-[50%]">
                 <h1 className="text-[#111111] font-Urbanist text-[17px] min-[350px]:text-[20px] font-medium">
-                  Welcome, {user?.first_name + " " + user?.last_name || "Guest"}
+                  Welcome, { user ? user?.first_name + " " + user?.last_name || "Guest" : "loading.."}
                   !
                 </h1>
               </div>

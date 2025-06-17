@@ -4,6 +4,7 @@ import { Search, UserRoundCheck } from "lucide-react";
 import { Controller, useForm, useWatch } from "react-hook-form";
 
 // COMPONENETS
+import { setUser } from "../../../Reducers/authSlice/authSlice.js";
 import CapRatefield from "./Fields/CapRatefield.jsx";
 import Inputs from "../../../Components/InputFields/Inputs";
 import HeadShootBanner from "./Fields/HeadShoot&Banner.jsx";
@@ -20,6 +21,8 @@ import ConfirmationModal from "../../../Components/ConfirmationModal/Confirmatio
 
 // IMAGES
 import CrossImage from "../../../assets/CrossImage.png";
+import { useDispatch, useSelector } from "react-redux";
+import Spinner from "../../../Components/Spinner/Spinner.jsx";
 
 const statesArray = [
   { id: 1, name: "Alabama", code: "AL" },
@@ -132,14 +135,20 @@ const InvestmentRange = [
 ];
 
 const AccountSetting = () => {
-  const user = JSON.parse(localStorage.getItem("User"));
-  const profileData = JSON.parse(localStorage.getItem("ProfileData"));
-  const token = localStorage.getItem("token");
+  // GET
   const ApiKey = import.meta.env.VITE_API_KEY;
+  const token = localStorage.getItem("token");
+  const { user } = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
+  if (!user) return <Spinner style={"w-14 h-20 text-PurpleColor z-50"} />;
+
+  // STATES
+  const [loading, setloading] = useState(false);
   const [selectedState, setSelectedState] = useState("");
   const [cities, setCities] = useState([]);
   const [selectedCity, setSelectedCity] = useState("");
-
+  // REACT HOOK FOR
+  const { isOpen, confirm, handleConfirm, handleCancel } = useConfirmation();
   const {
     register,
     handleSubmit,
@@ -156,7 +165,7 @@ const AccountSetting = () => {
       last_name: user.last_name,
       email: user.email,
       phone: user.phone,
-      location: user.location,
+      address: user.address,
       property_interests: [],
       preferred_investment_range: 0,
       preferred_locations: null,
@@ -166,17 +175,8 @@ const AccountSetting = () => {
     },
     mode: "onTouched",
   });
-
-  const { isOpen, confirm, handleConfirm, handleCancel } = useConfirmation();
-
-  const PreferredRangeMin = watch("minRange");
-  const PreferredRangeMax = watch("maxRange");
   const capRateMin = watch("capRateMin");
   const capRateMax = watch("capRateMax");
-  const bannerImage = watch("banner");
-  const profileImage = watch("headshot");
-  const PropertyRange = watch("preferred_investment_range");
-  const investorStatus = useWatch({ control, name: "investor_status" });
   const DefaultSelection = useWatch({ control, name: "state" });
 
   // PREFERRED LOCATION
@@ -195,22 +195,11 @@ const AccountSetting = () => {
     trigger("preferred_locations");
   }, [selectedStates]);
 
-  useEffect(() => {
-    if (DefaultSelection?.code) {
-      axios
-        .get(`/states/${DefaultSelection.code}.json`)
-        .then((res) => setCities(res.data))
-        .catch(() => setCities([]));
-    }
-  }, [DefaultSelection]);
-
   // Build cities option list
   const citiess = cities.map((name, index) => ({
     id: index + 1,
     name,
   }));
-
-  // City value from react-hook-form
 
   const StateSelectionHandler = (value) => {
     setValue("state", value.name, { shouldValidate: true });
@@ -234,94 +223,11 @@ const AccountSetting = () => {
     }
   };
 
-  const [Newss, setNew] = useState([]);
   const selectedCitys = useWatch({ control, name: "city" });
-
-  // setNew(selectedCitys);
-
-  if (Newss) {
-    // const NewCities = selectedCitys.map((name, index) => ({
-    //     id: index + 1,
-    //     name,
-    //   }));
-
-    console.log(selectedCitys);
-  }
 
   const CitySelectionHandler = (value) => {
     setValue("city", value.name, { shouldValidate: true });
     trigger("city");
-  };
-
-  // COMPLETE PROFILE AND SAVE DATA IN API
-  const ProfileComplete = async (data) => {
-    console.log(data);
-
-    const confirmed = await confirm();
-    if (confirmed) {
-      try {
-        const response = await axios.post(
-          `${ApiKey}/complete-profile`,
-          {
-            first_name: data.first_name,
-            last_name: data.last_name,
-            phone: data.phone,
-            company_name: null,
-            email: data.email,
-            location: data.address,
-            personal_website: data.personal_website,
-            title: data.title,
-            property_interests: data.property_interests,
-            property_interests_custom: null,
-            preferred_investment_range: data.preferred_investment_range,
-            preferred_locations: data.preferred_locations,
-            preferred_investment_type: data.preferred_investment_type,
-            preferred_cap_rate_min: data.capRateMin,
-            preferred_cap_rate_max: data.capRateMax,
-            investor_status: data.investor_status,
-            experience_level: data.experience_level,
-            bio: data.bio,
-            headshot: data.headshot,
-            banner: data.banner,
-            country: data.country,
-            city: data.city,
-            state: data.state,
-            zip: data.zip,
-          },
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-              "Content-Type": "multipart/form-data",
-            },
-          }
-        );
-        localStorage.setItem("User", JSON.stringify(response.data.user));
-        localStorage.setItem(
-          "ProfileComplete",
-          response.data.user.profile_complete
-        );
-        console.log(response);
-        reset(response.data.user);
-
-        AlertModal({
-          icon: "success",
-          title: "Thank You",
-          iconColor: "#703BF7",
-          text: "Prfile Complete Successfully",
-        });
-      } catch (error) {
-        reset(data);
-        console.log(error);
-        const ErrorMessage = error.response.data.message;
-        console.log(ErrorMessage);
-        AlertModal({
-          icon: "error",
-          title: "No Submit",
-          iconColor: "#703BF7",
-          text: ErrorMessage,
-        });
-      }
-    }
   };
 
   const [banner, setbanner] = useState();
@@ -356,9 +262,125 @@ const AccountSetting = () => {
         console.error("Failed to fetch user profile:", err);
       }
     };
-
     loadInitialData();
   }, []);
+
+  const loadInitialData = async () => {
+    try {
+      const res = await axios.get(`${ApiKey}/user`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+
+      const data = res.data;
+      console.log(data);
+
+      setbanner(res.data.banner);
+      setLogo(res.data.headshot);
+
+      reset({
+        ...data,
+        banner: import.meta.env.VITE_IMAGE_KEY + data.banner || null,
+        headshot: import.meta.env.VITE_IMAGE_KEY + data.headshot || null,
+        property_interests: data.property_interests || [],
+        preferred_locations: data.preferred_locations || null,
+        preferred_cap_rate_min: data.preferred_cap_rate_min,
+        preferred_cap_rate_max: data.preferred_cap_rate_max,
+        capRateMin: data.preferred_cap_rate_min,
+        capRateMax: data.preferred_cap_rate_max,
+      });
+
+      setSelectedStates(data.preferred_locations || []);
+    } catch (err) {
+      console.error("Failed to fetch user profile:", err);
+    }
+  };
+
+  // COMPLETE PROFILE AND SAVE DATA IN API
+  const ProfileComplete = async (data) => {
+    console.log(data);
+
+    const confirmed = await confirm();
+    if (confirmed) {
+      try {
+        setloading(true);
+        const response = await axios.post(
+          `${ApiKey}/complete-profile`,
+          {
+            first_name: data.first_name,
+            last_name: data.last_name,
+            phone: data.phone,
+            company_name: null,
+            email: data.email,
+            address: data.address,
+            personal_website: data.personal_website,
+            title: data.title,
+            property_interests: data.property_interests,
+            property_interests_custom: null,
+            preferred_investment_range: data.preferred_investment_range,
+            preferred_locations: data.preferred_locations,
+            preferred_investment_type: data.preferred_investment_type,
+            preferred_cap_rate_min: data.capRateMin,
+            preferred_cap_rate_max: data.capRateMax,
+            investor_status: data.investor_status,
+            experience_level: data.experience_level,
+            bio: data.bio,
+            headshot: data.headshot,
+            banner: data.banner,
+            country: data.country,
+            city: data.city,
+            state: data.state,
+            zip: data.zip,
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        );
+        localStorage.setItem("User", JSON.stringify(response.data.user));
+        localStorage.setItem(
+          "ProfileComplete",
+          response.data.user.profile_complete
+        );
+        console.log(response.data.user);
+        reset(response.data.user);
+        if (response.status === 200) {
+          dispatch(setUser(response.data.user));
+        }
+        loadInitialData();
+
+        AlertModal({
+          icon: "success",
+          title: "Thank You",
+          iconColor: "#703BF7",
+          text: "Profile Complete Successfully",
+        });
+      } catch (error) {
+        setloading(false);
+        console.log(error);
+        const ErrorMessage = error.response.data.message;
+        console.log(ErrorMessage);
+        AlertModal({
+          icon: "error",
+          title: "No Submit",
+          iconColor: "#703BF7",
+          text: ErrorMessage,
+        });
+      } finally {
+        setloading(false);
+      }
+    }
+  };
+
+  console.log(Logo);
+
+  if (loading)
+    return (
+      <div className="flex justify-center items-center !h-[75vh]">
+        <Spinner style={"w-14 h-20 text-PurpleColor z-50"} />
+      </div>
+    );
 
   return (
     <>
@@ -515,7 +537,6 @@ const AccountSetting = () => {
                     })}
                     labels={"Personal Website"}
                     placeholder={"Enter your website URL (optional)"}
-                    // error={errors.pers/onal_website?.message}
                   ></Inputs>
                 </span>
                 <span>
@@ -528,17 +549,18 @@ const AccountSetting = () => {
                     error={errors.title?.message}
                   ></Inputs>
                 </span>
-                <Selection
-                  labels={"Experience Level"}
-                  defaultOption={"Select"}
-                  Options={["Beginner", "Intermediate", "Experienced"]}
-                  name="experience_level"
-                  register={register}
-                  rules={{ required: "Please select an option." }}
-                  error={errors.experience_level?.message}
-                />
+                <span>
+                  <Selection
+                    labels={"Experience Level"}
+                    defaultOption={"Select"}
+                    Options={["Beginner", "Intermediate", "Experienced"]}
+                    name="experience_level"
+                    register={register}
+                    rules={{ required: "Please select an option." }}
+                    error={errors.experience_level?.message}
+                  />
+                </span>
               </div>
-
               <div>
                 <label
                   htmlFor="email"
@@ -614,7 +636,6 @@ const AccountSetting = () => {
                                       );
                                   field.onChange(updated);
                                 }}
-                                error={error?.message}
                               />
                             );
                           })}
@@ -855,9 +876,9 @@ const AccountSetting = () => {
           <div className="mt-1 w-[50%] sm:w-[46%] px-2">
             <button
               type="submit"
-              className="bg-PurpleColor font-[700] w-[100%] h-11 text-white font-Urbanist rounded-[6px]"
+              className="bg-PurpleColor font-[700] w-[100%] h-11 text-white font-Urbanist rounded-[6px] hover-btn  hover-btn-purple"
             >
-              Save Details
+              <span>Save Details</span>
             </button>
           </div>
         </form>

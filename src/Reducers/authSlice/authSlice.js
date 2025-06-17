@@ -4,7 +4,7 @@ import axios from "axios";
 export const fetchUser = createAsyncThunk(
   "auth/fetchUser",
   async ({ token, apiKey }) => {
-    const response = await axios.get(`${apiKey}/auth-user`, {
+    const response = await axios.get(`${apiKey}/user`, {
       headers: { Authorization: `Bearer ${token}` },
     });
     return response.data;
@@ -21,6 +21,9 @@ const authSlice = createSlice({
   reducers: {
     logout(state) {
       state.user = null;
+    },
+    setUser(state, action) {
+      state.user = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -39,5 +42,5 @@ const authSlice = createSlice({
   },
 });
 
-export const { logout } = authSlice.actions;
+export const { logout , setUser  } = authSlice.actions;
 export default authSlice.reducer;

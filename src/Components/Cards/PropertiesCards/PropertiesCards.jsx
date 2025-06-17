@@ -9,7 +9,7 @@ const PropertiesCards = ({ Img, Heading, desc, Status , type, Price , id}) => {
     <>
       <div className="w-[100%] bg-white border border-gray-200 rounded-lg shadow-sm relative">
         <Link>
-          <img className="rounded-t-lg h-[270px] object-cover w-[100%]" src={Img} alt="" />
+          <img className="rounded-t-lg h-[270px] object-cover w-[100%]" src={import.meta.env.VITE_IMAGE_KEY + Img} alt="" />
         </Link>
         <div className="p-5 flex flex-col gap-2 justify-center">
           <div>

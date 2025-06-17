@@ -10,29 +10,33 @@ import Image from "../../assets/ForgetPasswordImage.jpg";
 import ListingRightArrow from "../../assets/ListingRightSideArrow.png";
 import axios from "axios";
 import Spinner from "../../Components/Spinner/Spinner";
+import { useForm } from "react-hook-form";
 
 const ForgetPassword = () => {
   const [loading, setloading] = useState(false);
   const [ErrorMessage, setErrorMessage] = useState("");
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const [EmailID, setEmailID] = useState("");
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
 
-  const ForgetPass = async (e) => {
-    e.preventDefault();
+  const ForgetPass = async (data) => {
     setloading(true);
     try {
       const Response = await axios.post(
         "https://newlista.secureserverinternal.com/api/forgot-password",
         {
-          email: EmailID,
+          email: data.EmailID,
         }
       );
       console.log(Response.data);
-      localStorage.setItem("email", EmailID);
+      localStorage.setItem("ForgetUser", data.EmailID);
       setloading(false);
       setEmailID("");
-      navigate('/verify-otp')
-      // localStorage.setItem("type", Response.data.user.role);
+      navigate("/forget-otp");
     } catch (error) {
       setloading(false);
       const ErrorMessa = error.response.data.message;
@@ -71,29 +75,21 @@ const ForgetPassword = () => {
           </div>
 
           <form
-            onSubmit={(e) => {
-              ForgetPass(e);
-            }}
+            onSubmit={handleSubmit(ForgetPass)}
             className="flex flex-col gap-8"
           >
             <div>
               <Inputs
                 name={"EmailID"}
-                value={EmailID}
-                onChange={(e) => {
-                  setEmailID(e.target.value);
-                }}
+                register={register("EmailID", {
+                  required: "Email is required",
+                })}
                 labels={"Register Email"}
                 placeholder={"Enter your registered email"}
                 type={"email"}
-                error={ErrorMessage}
                 require={"true"}
+                error={errors.EmailID?.message}
               ></Inputs>
-              {ErrorMessage && (
-                <p className="font-Poppins mt-2 font-[500] border-red-500 text-red-600 ml-1 text-[13px]">
-                  {ErrorMessage}
-                </p>
-              )}
             </div>
 
             <div>

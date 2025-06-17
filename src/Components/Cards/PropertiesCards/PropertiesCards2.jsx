@@ -21,10 +21,10 @@ const PropertiesCards2 = ({ Img, Heading, desc, Status, Price, Features , id  , 
             )}
           </div>
           <div>
-              <h1 className="mb-2 text-[21px] font-[600] font-Inter tracking-tight leading-[24px] mt-3 text-gray-900 dark:text-white">
+              <h1 className="mb-2 text-[21px] font-[600] font-Inter tracking-tight leading-[24px] mt-3 text-gray-900 ">
                 {Heading}
               </h1>
-            <p className="mb-2 font-Inter text-[13px] font-normal text-gray-700 dark:text-gray-400">
+            <p className="mb-2 font-Inter text-[13px] font-normal text-gray-700">
               {desc}
             </p>
           </div>

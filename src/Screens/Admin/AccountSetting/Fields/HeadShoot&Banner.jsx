@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import UnkownUser from "/public/Images/ProfileImage.jpg";
 import { Camera, Pen } from "lucide-react";
+import Spinner from "../../../../Components/Spinner/Spinner";
 
 const HeadShootBanner = ({ setValue, defaultBanner, defaultHeadshot }) => {
   const [bannerImage, setBannerImage] = useState(null);
@@ -65,16 +66,23 @@ const HeadShootBanner = ({ setValue, defaultBanner, defaultHeadshot }) => {
       {/* Profile Section */}
       <div className="ml-4 sm:ml-12 -mt-20 relative">
         <div className="relative w-full sm:w-[21%]">
-          <img
-            className="w-[120px] h-[120px] sm:w-[200px] xl:w-full sm:h-[200px] bg-white object-cover rounded-full"
-            src={
-              profilePreview ||
-              (defaultHeadshot
-                ? import.meta.env.VITE_IMAGE_KEY + defaultHeadshot
-                : UnkownUser)
-            }
-            alt="Profile"
-          />
+          {defaultHeadshot === undefined ? (
+            <div className="w-[120px] h-[120px] sm:w-[200px] sm:h-[200px] flex items-center justify-center rounded-full bg-gray-100">
+              <span className="text-sm text-gray-500">Loading...</span>
+            </div>
+          ) : (
+            <img
+              className="w-[120px] h-[120px] sm:w-[200px] xl:w-full sm:h-[200px] bg-white object-cover rounded-full"
+              src={
+                profilePreview ||
+                (defaultHeadshot
+                  ? import.meta.env.VITE_IMAGE_KEY + defaultHeadshot
+                  : UnkownUser)
+              }
+              alt="Profile"
+            />
+          )}
+
           <label className="absolute bottom-4.5 right-1.5 z-10 bg-black p-2 rounded-full shadow cursor-pointer hover:bg-gray-100 text-white transition hover-btn hover-btn-black">
             <span>
               <Camera className="size-4.5 " />

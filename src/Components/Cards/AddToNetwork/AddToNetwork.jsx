@@ -39,8 +39,10 @@ const AddToNetwork = ({
     onConfirm: () => {},
   });
 
-  console.log("https://newlista.secureserverinternal.com/public/storage/" + InvesImage);
+
+  console.log(propertyTypes);
   
+
 
   // SEND CONNECTION REQUEST
   const openConfirmation = (actionType) => {
@@ -201,7 +203,7 @@ const AddToNetwork = ({
           {/* FEATURES  */}
           <ul className="flex justify-start items-start flex-col gap-3">
             {renderInfoItem(InvestorIcon1, location, 20)}
-            {renderInfoItem(InvestorIcon2, propertyTypes, 10)}
+            {renderInfoItem(InvestorIcon2, propertyTypes?.join(" - "), 20)}
             {renderInfoItem(InvestorIcon3, `Member since ${memberSince}`)}
             {renderInfoItem(MessageIcon2, email, 20)}
             {renderInfoItem(CallIcon, phone, 15)}

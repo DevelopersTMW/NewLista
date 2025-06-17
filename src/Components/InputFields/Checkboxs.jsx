@@ -7,11 +7,11 @@ function Checkboxs({ labels, value, onChange, checked, error }) {
         <Checkbox
           checked={checked}
           onChange={onChange}
-          className="group block size-3.5 border w-[20px] h-[16.5px] rounded-[2px] bg-white data-checked:bg-PurpleColor"
+          className="group block size-3.5 border w-[20px] h-[17px] rounded-[2px] bg-white data-checked:bg-PurpleColor"
         >
           <svg
             className="stroke-white opacity-0 group-data-checked:opacity-100"
-            viewBox="-1 -1 16 16"
+            viewBox="-2 -0.5 18 18"
             fill="none"
           >
             <path

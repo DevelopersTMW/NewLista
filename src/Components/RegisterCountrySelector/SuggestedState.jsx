@@ -69,12 +69,13 @@ const SuggestedState = ({ onSelect, register, errors }) => {
     const filtered = statesArray.filter((state) =>
       state.name.toLowerCase().startsWith(value.toLowerCase())
     );
+    setInputValue('')
     setSuggestions(filtered);
   };
 
   const handleFocus = () => {
     if (!inputValue.trim()) {
-      setSuggestions(statesArray); // Show all suggestions on focus if input is empty
+      setSuggestions(statesArray); 
     }
   };
 

@@ -9,15 +9,14 @@ import Spinner from "../../Components/Spinner/Spinner";
 import { Controller, useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 
-const OptVerification = () => {
+const ForgetPassOtp = () => {
   const ApiKey = import.meta.env.VITE_API_KEY;
   const [Loading, setLoading] = useState(false);
   const [ErrorMessage, setErrorMessage] = useState("");
   const [otpValue, setOtpValue] = useState("");
   const [loading, setloading] = useState(false);
   const [OtpSendMess, setOtpSendMess] = useState("");
-  const storedEmail = localStorage.getItem("UserEmail");
-  const ForgetEmail = localStorage.getItem("ForgetUser");
+  const storedEmail = localStorage.getItem("ForgetUser");
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const {
@@ -28,19 +27,18 @@ const OptVerification = () => {
     reset,
   } = useForm();
 
-  const ResendCode = async (e) => {
-    e.preventDefault();
+  const ResendCode = async () => {
     setloading(true);
     setErrorMessage("");
     try {
       const Response = await axios.post(
         "https://newlista.secureserverinternal.com/api/forgot-password",
         {
-          email: email,
+          email: storedEmail,
         }
       );
       console.log(Response.data);
-      localStorage.setItem("email", email);
+      localStorage.setItem("email", storedEmail);
       setOtpSendMess("Otp Send SuccessFully");
       setloading(false);
     } catch (error) {
@@ -49,12 +47,8 @@ const OptVerification = () => {
       setErrorMessage(ErrorMessa);
     }
   };
-  
 
   const VerifyOtp = async (data) => {
-    console.log("====================================");
-    console.log(data.otp);
-    console.log("====================================");
     if (!storedEmail) {
       setErrorMessage("Email not found. Please try again from the start.");
       return;
@@ -62,22 +56,27 @@ const OptVerification = () => {
     setLoading(true);
     setErrorMessage("");
     try {
-      const response = await axios.post(`${ApiKey}/verify-otp`, {
+      const response = await axios.post(`${ApiKey}/verify-reset-otp`, {
         otp: data.otp,
         email: storedEmail,
       });
       // dispatch(setUser(response.data.user));
       console.log(response.data.user);
       localStorage.removeItem("UserEmail");
-      if (response.data.profile_complete) {
-        navigate("/admin");
-        reset();
-      } else {
-        localStorage.setItem("token", response.data.token);
-        localStorage.setItem("User", JSON.stringify(response.data.user));
-        localStorage.setItem("ProfileComplete", JSON.stringify(response.data.profile_complete));
-        navigate("/admin/account-setting");
-      }
+
+      navigate("/set-new-password")
+    //   if (response.data.profile_complete) {
+    //     navigate("/admin");
+    //     reset();
+    //   } else {
+    //     localStorage.setItem("token", response.data.token);
+    //     localStorage.setItem("User", JSON.stringify(response.data.user));
+    //     localStorage.setItem(
+    //       "ProfileComplete",
+    //       JSON.stringify(response.data.profile_complete)
+    //     );
+    //     navigate("/admin/account-setting");
+    //   }
       reset();
     } catch (error) {
       setLoading(false);
@@ -110,6 +109,12 @@ const OptVerification = () => {
         <div className="flex flex-col justify-center gap-7 py-20 max-[380px]:px-6 px-8 sm:px-16 md:py-20 md:w-[50%] lg:w-[55%] lg:px-20 lg:py-20 xl:py-24 xl:px-28  2xl:px-32">
           {/* Heading Info  */}
           <div>
+            <p className="font-Urbanist  text-Paracolor font-[700] text-[15px] 2xl:text-[16px]">
+              <Link to={"/login"} className="flex items-center gap-1.5">
+                <img className="h-3 w-2" src={ListingRightArrow} alt="" /> Back
+                to login
+              </Link>
+            </p>
             <h1 className="font-Poppins font-[700] text-[32px] max-[380px]:text-[28px] sm:text-[35px] md:text-[38px] lg:text-[44px] 2xl:text-[48px]">
               Verify code
             </h1>
@@ -124,11 +129,7 @@ const OptVerification = () => {
           >
             {/* Name  */}
             <div>
-              {OtpSendMess && (
-                <p className="font-Poppins mb-2 font-[500] border-green-500 text-green-500  text-[13px]">
-                  {OtpSendMess}
-                </p>
-              )}
+              
               <Controller
                 name="otp"
                 control={control}
@@ -145,20 +146,27 @@ const OptVerification = () => {
                     value={field.value || ""}
                     onChange={field.onChange}
                     error={errors.otp}
+                    
                   />
                 )}
               />
+              {OtpSendMess && (
+                <p className="font-Poppins mb-2 font-[500] border-green-500 text-green-500  text-[13px]">
+                  {OtpSendMess}
+                </p>
+              )}
               {errors.otp && (
                 <p className="text-red-500 font-[500] text-[13.5px] pt-1  font-Urbanist tracking-wide">
                   {errors.otp.message}
                 </p>
               )}
+              
               {ErrorMessage && (
                 <p className="font-Poppins mt-2 font-[500] border-red-500 text-red-600  text-[13px]">
                   {ErrorMessage}
                 </p>
               )}
-              <p className="font-Urbanist text-Paracolor mt-3 font-[700] text-[12.5px] min-[410px]:text-[14px]">
+              <p onClick={ResendCode} className="font-Urbanist text-Paracolor mt-3 font-[700] text-[12.5px] min-[410px]:text-[14px]">
                 Didn’t receive a code?{" "}
                 <Link className="text-[#FF8682]">Resend</Link>
               </p>
@@ -182,4 +190,4 @@ const OptVerification = () => {
   );
 };
 
-export default OptVerification;
+export default ForgetPassOtp;
