@@ -9,7 +9,7 @@ function Inbox() {
   const ApiKey = import.meta.env.VITE_API_KEY;
   const [chatUser, setChatUser] = useState(null);
 
-  const tokens = localStorage.getItem('token')
+  const tokens = localStorage.getItem("token");
 
   useEffect(() => {
     // Fetch current user from localStorage
@@ -44,8 +44,18 @@ function Inbox() {
   return (
     <div className="flex flex-col sm:flex-row w-full mt-3 sm:gap-5 lg:gap-10 text-black">
       <UserList users={otherUsers} onSelect={setChatUser} />
-      {chatUser && (
-        <PrivateChat setChatUser={setChatUser} currentUser={currentUser} chatUser={chatUser} />
+      {!chatUser ? (
+        <div className="w-full sm:w-[75%] flex items-center justify-center text-center">
+          <p className="text-[18px] font-Urbanist text-gray-500 font-semibold">
+            Select a user to start chatting.
+          </p>
+        </div>
+      ) : (
+        <PrivateChat
+          currentUser={currentUser}
+          chatUser={chatUser}
+          setChatUser={setChatUser}
+        />
       )}
     </div>
   );
