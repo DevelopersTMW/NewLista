@@ -76,6 +76,7 @@ const Step1 = ({ onNext, defaultValues }) => {
           <PropertyRadios register={register}></PropertyRadios>
           <div className="border border-[#ececec] rounded-2xl mx-3 md:mx-0 px-3 md:px-5 py-8">
             <PropertytypeSelection
+            setValue={setValue}
               watch={watch}
               PropertyRadios={PropertyRadio}
               register={register}
@@ -92,7 +93,7 @@ const Step1 = ({ onNext, defaultValues }) => {
                   "Describe the property, its features, location advantages, and any unique selling points."
                 }
                 register={register("description", {
-                  required: "Sales Price is required",
+                  required: "Description is required",
                 })}
                 error={errors.description?.message}
               ></TextAreas>

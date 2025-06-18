@@ -40,10 +40,6 @@ const AddToNetwork = ({
   });
 
 
-  console.log(propertyTypes);
-  
-
-
   // SEND CONNECTION REQUEST
   const openConfirmation = (actionType) => {
     let data = {};

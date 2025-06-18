@@ -19,7 +19,7 @@ const RentailForm = ({ propertyTypeName, register }) => {
               labels={"Monthly Rental*"}
               type={"text"}
               placeholder={"Ex: 10000"}
-              name={"MonthlyRental"}
+              name={"custom_fields.MonthlyRental"}
               register={register}
             ></Inputs>
           </span>
@@ -28,7 +28,7 @@ const RentailForm = ({ propertyTypeName, register }) => {
               labels={"Building Size"}
               defaultOption={"Select Size"}
               Options={["Sq Ft" , "Sq M"]}
-              name={"BuildingSize"}
+              name={"custom_fields.BuildingSize"}
               register={register}
             ></Selection>
           </span>
@@ -37,7 +37,7 @@ const RentailForm = ({ propertyTypeName, register }) => {
               labels={"‎"}
               type={"text"}
               placeholder={"Ex: 10000"}
-              name={"BuildingSizeNumber"}
+              name={"custom_fields.BuildingSizeNumber"}
               register={register}
             ></Inputs>
           </span>
@@ -46,7 +46,7 @@ const RentailForm = ({ propertyTypeName, register }) => {
               labels={"Building Levels"}
               type={"text"}
               placeholder={"Ex:1"}
-              name={"BuildingLevels"}
+              name={"custom_fields.BuildingLevels"}
               register={register}
             ></Inputs>
           </span>
@@ -55,7 +55,7 @@ const RentailForm = ({ propertyTypeName, register }) => {
               labels={"Year Built"}
               type={"number"}
               placeholder={"2020"}
-              name={"YearBuilt"}
+              name={"custom_fields.YearBuilt"}
               register={register}
             ></Inputs>
           </span>
@@ -64,7 +64,7 @@ const RentailForm = ({ propertyTypeName, register }) => {
               labels={"Land Scape Size"}
               defaultOption={"Select Size"}
               Options={["Sq Ft" , "Sq M"]}
-              name={"LandScape"}
+              name={"custom_fields.LandScape"}
               register={register}
             ></Selection>
           </span>
@@ -73,7 +73,7 @@ const RentailForm = ({ propertyTypeName, register }) => {
               labels={"‎ "}
               type={"number"}
               placeholder={"Ex:1"}
-              name={"LandScapeNumber"}
+              name={"custom_fields.LandScapeNumber"}
               register={register}
             ></Inputs>
           </span>
@@ -82,7 +82,7 @@ const RentailForm = ({ propertyTypeName, register }) => {
               labels={"‎ "}
               defaultOption={"Select"}
               Options={["Acres" , "Hectacres"]}
-              name={"LandScapeAcres"}
+              name={"custom_fields.LandScapeAcres"}
               register={register}
             ></Selection>
           </span>
@@ -91,7 +91,7 @@ const RentailForm = ({ propertyTypeName, register }) => {
               labels={"‎ "}
               type={"number"}
               placeholder={"Ex:1"}
-              name={"LandScapeNumber2"}
+              name={"custom_fields.LandScapeNumber2"}
               register={register}
             ></Inputs>
           </span>
@@ -100,7 +100,7 @@ const RentailForm = ({ propertyTypeName, register }) => {
               labels={"Outdoor Signage Available"}
               defaultOption={"Select"}
               Options={["Yes" , "No"]}
-              name={"Outdoor-Signage"}
+              name={"custom_fields.Outdoor-Signage"}
               register={register}
             ></Selection>
           </span>
@@ -109,7 +109,7 @@ const RentailForm = ({ propertyTypeName, register }) => {
               labels={"Parking Spaces"}
               type={"number"}
               placeholder={"Ex:1"}
-              name={"Parking-Space"}
+              name={"custom_fields.Parking-Space"}
               register={register}
             ></Inputs>
           </span>
@@ -118,7 +118,7 @@ const RentailForm = ({ propertyTypeName, register }) => {
               labels={"Number of Units"}
               type={"number"}
               placeholder={"Ex:1"}
-              name={"NumberOfUnits"}
+              name={"custom_fields.NumberOfUnits"}
               register={register}
             ></Inputs>
           </span>
@@ -127,7 +127,7 @@ const RentailForm = ({ propertyTypeName, register }) => {
               labels={"Building Class"}
               defaultOption={"Select Class"}
               Options={["A" , "B" , "C" , "D"]}
-              name={"BuildingClass"}
+              name={"custom_fields.BuildingClass"}
               register={register}
             ></Selection>
           </span>
@@ -136,7 +136,7 @@ const RentailForm = ({ propertyTypeName, register }) => {
               labels={"Percentage Leased (%)"}
               type={"number"}
               placeholder={"Ex:75"}
-              name={"Percentage-Lease"}
+              name={"custom_fields.Percentage-Lease"}
               register={register}
             ></Inputs>
           </span>

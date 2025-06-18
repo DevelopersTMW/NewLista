@@ -50,7 +50,7 @@ export default function PrivateChat({ currentUser, chatUser, setChatUser }) {
   console.log(chatUser);
 
   return (
-    <div className="sm:w-[75%] sm:relative absolute w-full min-h-screen sm:min-h-min top-0 left-0 bg-white flex flex-col rounded-[10px] sm:border border-[#B9B9B9] justify-between">
+    <div className="sm:w-[75%] sm:relative h-[77vh] absolute w-full  top-0 left-0 bg-white flex flex-col rounded-[10px] sm:border border-[#B9B9B9] justify-between">
       {/* Header */}
       <div className="flex justify-between border-b border-[#B9B9B9] py-5 px-5">
         <div className="flex gap-3 items-center">
@@ -106,7 +106,7 @@ export default function PrivateChat({ currentUser, chatUser, setChatUser }) {
       </div>
 
       {/* Chat Messages */}
-      <div className="p-6 flex flex-col gap-3">
+      <div className="p-6 flex flex-col gap-3 ">
         {messages.map((msg, index) => {
           const isOwn = msg.from === currentUser.id;
           return (
@@ -114,7 +114,7 @@ export default function PrivateChat({ currentUser, chatUser, setChatUser }) {
               key={index}
               className={`flex ${
                 isOwn ? "justify-end" : "justify-start"
-              } gap-2 relative`}
+              } gap-2 relative `}
             >
               {!isOwn && (
                 <img
@@ -130,7 +130,7 @@ export default function PrivateChat({ currentUser, chatUser, setChatUser }) {
                     : "bg-gray-100 text-gray-900 rounded-t-xl rounded-r-xl"
                 }`}
               >
-                <span className="text-sm font-[500] font-Urbanist text-[13.5px]">
+                <span className="text-sm font-[500] font-Urbanist text-[13.5px] ">
                   {msg.text}
                 </span>
                 {/* <span className="text-sm mr-6 text-end font-Urbanist font-semibold mt-1">

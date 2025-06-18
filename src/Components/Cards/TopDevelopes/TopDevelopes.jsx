@@ -10,7 +10,7 @@ const TopDevelopes = ({ Img, MiniHeading, Heading, desc, Price , id }) => {
           src={import.meta.env.VITE_IMAGE_KEY + Img}
           alt=""
         />
-        <div className="pt-4 pb- flex flex-col gap-2 px-7 py-7">
+        <div className="pt-4 pb- flex flex-col gap-3 px-5 py-7">
           <div>
             <h1 className=" text-[25px] font-[700] font-Inter tracking-tight leading-[24px] mt-3 text-gray-900 dark:text-white sm:text-[23px]">
               {Heading}

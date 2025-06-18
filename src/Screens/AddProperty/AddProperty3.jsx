@@ -6,6 +6,7 @@ import Step2 from "./Photo&MediaStep2/Photo&Media.jsx";
 import Step1 from "./PropertyDetailStep1/PropertyDetail.jsx";
 import Step3 from "./PreviewPropertyStep3/PreviewProperty.jsx";
 import MiniFooter from "../../Components/Footer/MiniFooter.jsx";
+import Spinner from "../../Components/Spinner/Spinner.jsx";
 
 // IMAGES
 import AddPropertyBanner from "../../assets/AddPropertyBanner1.1.jpg";
@@ -16,6 +17,7 @@ import { useNavigate } from "react-router-dom";
 const PropertyForm = () => {
   const stepRef = useRef(null);
 
+  const [loading, setloading] = useState(false);
   const [currentStep, setCurrentStep] = useState(0);
   const [formData, setFormData] = useState({});
   const ApiKey = import.meta.env.VITE_API_KEY;
@@ -42,6 +44,7 @@ const PropertyForm = () => {
       return;
     }
     console.log("Submitted Data:", formData);
+    setloading(true);
     try {
       const Response = await axios.post(
         `${ApiKey}/add-update-property`,
@@ -79,15 +82,18 @@ const PropertyForm = () => {
 
           featured_listing: formData.FeaturedListing ? 1 : 0,
 
-          off_market_listing: formData.OfftheMarketListing ? 1 : 0,
-          owner_financing: formData.OwnerFinancing ? 1 : 0 ,
-          nio:  formData.Noi,
-          cap_rate: formData.cap_rate,
+          off_market_listing: formData.OffTheMarketListing ? 1 : 0,
+          owner_financing: formData.OwnerFinancing ? 1 : 0,
+          noi: formData.Noi,
+          cap_rate: formData.CapRate,
+          show_phone : formData.ShowNumber ? 1 : 0,
+          show_email : formData.ShowEmail ? 1 : 0,
+          custom_fields: formData.custom_fields
         },
         {
           headers: {
             Authorization: `Bearer ${token}`,
-              "Content-Type": "multipart/form-data", 
+            "Content-Type": "multipart/form-data",
           },
         }
       );
@@ -100,7 +106,10 @@ const PropertyForm = () => {
       navigate("/properties");
       console.log(Response);
     } catch (error) {
+      setloading(false);
       console.log(error);
+    } finally {
+      setloading(false);
     }
   };
 
@@ -170,7 +179,12 @@ const PropertyForm = () => {
           </div>
 
           {/* Current Step Form */}
-          <div>{steps[currentStep]}</div>
+          {loading ? (
+            <div className="h-[100vh] flex justify-center items-center">
+              <Spinner style={"w-14 h-20 text-PurpleColor z-50"} />
+            </div> ) : <div>{steps[currentStep]}</div>
+          }
+          
         </div>
       </section>
 

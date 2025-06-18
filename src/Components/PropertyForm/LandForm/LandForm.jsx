@@ -22,7 +22,7 @@ const LandForm = ({ propertyTypeName, register }) => {
               labels={"Currency"}
               defaultOption={null}
               Options={currencies}
-              name={"Currency"}
+              name={"custom_fields.Currency"}
               register={register}
             ></Selection>
           </span>
@@ -31,7 +31,7 @@ const LandForm = ({ propertyTypeName, register }) => {
               labels={"Monthly Rental*"}
               type={"text"}
               placeholder={"Ex: 10000"}
-              name={"Monthly-Rental"}
+              name={"custom_fields.Monthly-Rental"}
               register={register}
             ></Inputs>
           </span>
@@ -40,7 +40,7 @@ const LandForm = ({ propertyTypeName, register }) => {
               labels={"Building Size"}
               defaultOption={"Select"}
                Options={["Sq Ft" , "Sq M"]}
-              name={"BuildingSize"}
+              name={"custom_fields.BuildingSize"}
               register={register}
             ></Selection>
           </span>
@@ -49,7 +49,7 @@ const LandForm = ({ propertyTypeName, register }) => {
               labels={"‎"}
               type={"text"}
               placeholder={"Ex: 10000"}
-              name={"BuildingSizeNumber"}
+              name={"custom_fields.BuildingSizeNumber"}
               register={register}
             ></Inputs>
           </span>
@@ -58,7 +58,7 @@ const LandForm = ({ propertyTypeName, register }) => {
               labels={"Fenced"}
               defaultOption={"Select"}
               Options={["Yes" , "No"]}
-              name={"Fenced"}
+              name={"custom_fields.Fenced"}
               register={register}
             ></Selection>
           </span>
@@ -67,7 +67,7 @@ const LandForm = ({ propertyTypeName, register }) => {
               labels={"Year Built"}
               type={"number"}
               placeholder={"2020"}
-              name={"YearBuild"}
+              name={"custom_fields.YearBuilt"}
               register={register}
             ></Inputs>
           </span>
@@ -76,7 +76,7 @@ const LandForm = ({ propertyTypeName, register }) => {
               labels={"Land Scape"}
               defaultOption={"Select"}
                Options={["Sq Ft" , "Sq M"]}
-              name={"LandScape"}
+              name={"custom_fields.LandScape"}
               register={register}
             ></Selection>
           </span>
@@ -85,7 +85,7 @@ const LandForm = ({ propertyTypeName, register }) => {
               labels={"‎"}
               type={"number"}
               placeholder={"Ex:1"}
-              name={"LandScapeNumber"}
+              name={"custom_fields.LandScapeNumber"}
               register={register}
             ></Inputs>
           </span>
@@ -94,7 +94,7 @@ const LandForm = ({ propertyTypeName, register }) => {
               labels={"‎"}
               type={"number"}
               placeholder={"Ex:10"}
-              name={"LandScapeNumber2"}
+              name={"custom_fields.LandScapeNumber2"}
               register={register}
             ></Inputs>
           </span>
@@ -103,7 +103,7 @@ const LandForm = ({ propertyTypeName, register }) => {
               labels={"‎"}
               defaultOption={"Select"}
               Options={["Acres" , "Hectacres"]}
-              name={"LandScapeAcres"}
+              name={"custom_fields.LandScapeAcres"}
               register={register}
             ></Selection>
           </span>

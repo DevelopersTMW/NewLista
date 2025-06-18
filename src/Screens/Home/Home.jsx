@@ -524,6 +524,8 @@ const Home = () => {
                     className="sm:w-[48.5%] md:w-[47%] lg:w-[31.5%]"
                   >
                     <PropertiesCards
+                    PropertyType={items.property_type}
+                    Area={Math.round(items.building_size)}
                       Img={items.images[0]}
                       Heading={
                         <TruncatedText
@@ -564,7 +566,7 @@ const Home = () => {
                 "Access exclusive off-market deals not available to the public. To view full property details, you must be a subscriber."
               }
               ButtonName={"View All Off-Market Properties"}
-              ButtonLink={"/properties"}
+              ButtonLink={"/login"}
             />
             {/* PROPERTY CARD SECTION  */}
             <div className="flex gap-7 sm:gap-3 sm:-ml-4 md:gap-5  md:w-[84%] blur-[12px]">

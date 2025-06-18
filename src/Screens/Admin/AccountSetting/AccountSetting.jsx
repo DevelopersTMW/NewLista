@@ -235,12 +235,11 @@ const AccountSetting = () => {
   useEffect(() => {
     const loadInitialData = async () => {
       try {
-        const res = await axios.get(`${ApiKey}/auth-user`, {
+        const res = await axios.get(`${ApiKey}/user`, {
           headers: { Authorization: `Bearer ${token}` },
         });
 
         const data = res.data;
-        console.log(data);
 
         setbanner(res.data.banner);
         setLogo(res.data.headshot);
@@ -272,8 +271,6 @@ const AccountSetting = () => {
       });
 
       const data = res.data;
-      console.log(data);
-
       setbanner(res.data.banner);
       setLogo(res.data.headshot);
 
@@ -297,7 +294,15 @@ const AccountSetting = () => {
 
   // COMPLETE PROFILE AND SAVE DATA IN API
   const ProfileComplete = async (data) => {
-    console.log(data);
+    function formatUSPhone(phone) {
+      const cleaned = phone.replace(/\D/g, "");
+      const match = cleaned.match(/^1?(\d{3})(\d{3})(\d{4})$/);
+      if (match) {
+        return `+1 (${match[1]}) ${match[2]}-${match[3]}`;
+      }
+      return phone;
+    }
+    const formatted = formatUSPhone(data.phone);
 
     const confirmed = await confirm();
     if (confirmed) {
@@ -308,7 +313,7 @@ const AccountSetting = () => {
           {
             first_name: data.first_name,
             last_name: data.last_name,
-            phone: data.phone,
+            phone: formatted,
             company_name: null,
             email: data.email,
             address: data.address,
@@ -343,7 +348,6 @@ const AccountSetting = () => {
           "ProfileComplete",
           response.data.user.profile_complete
         );
-        console.log(response.data.user);
         reset(response.data.user);
         if (response.status === 200) {
           dispatch(setUser(response.data.user));
@@ -358,9 +362,7 @@ const AccountSetting = () => {
         });
       } catch (error) {
         setloading(false);
-        console.log(error);
         const ErrorMessage = error.response.data.message;
-        console.log(ErrorMessage);
         AlertModal({
           icon: "error",
           title: "No Submit",
@@ -372,8 +374,6 @@ const AccountSetting = () => {
       }
     }
   };
-
-  console.log(Logo);
 
   if (loading)
     return (

@@ -3,8 +3,20 @@ import { Link } from "react-router-dom";
 // IMAGES
 import PropertyIcon from "../../../assets/PropertyIcon.png";
 import PropertyIcon2 from "../../../assets/PropertyIcon2.png";
+import PropertyIcon3 from "../../../assets/PropertyIcon.png";
+import { Cuboid, Pickaxe } from "lucide-react";
 
-const PropertiesCards = ({ Img, Heading, desc, Status, type, Price, id }) => {
+const PropertiesCards = ({
+  Img,
+  Heading,
+  desc,
+  Status,
+  type,
+  Price,
+  id,
+  PropertyType,
+  Area,
+}) => {
   return (
     <>
       <div className="w-[100%] bg-white border border-gray-200 rounded-lg shadow-sm relative">
@@ -15,7 +27,7 @@ const PropertiesCards = ({ Img, Heading, desc, Status, type, Price, id }) => {
             alt=""
           />
         </Link>
-        <div className="p-5 flex flex-col gap-2 justify-between h-[53vh]">
+        <div className="p-5 flex flex-col gap-2 justify-between h-[57vh]">
           <div className="flex flex-col gap-2">
             <div>
               {"For Sale" === type ? (
@@ -53,18 +65,22 @@ const PropertiesCards = ({ Img, Heading, desc, Status, type, Price, id }) => {
                 {desc}
               </p>
             </div>
-            <div className="flex gap-1">
+            <div className="flex flex-wrap gap-3">
               <span className="bg-[#E3E3E3] text-Paracolor font-semibold font-Inter px-3 py-1 text-[13px] flex rounded-full w-max gap-1">
-                <img className="w-[18px] h-4.5" src={PropertyIcon} alt="" />{" "}
-                10,000 SF
+                <Pickaxe size={17} />
+                {Area} Sq
               </span>
               <span className="bg-[#E3E3E3] text-Paracolor font-semibold font-Inter px-3 py-1 text-[13px] flex rounded-full w-max gap-1">
-                <img className="w-[18px] h-4.5" src={PropertyIcon2} alt="" /> 15
-                Units
+                <img className="w-[18px] h-4.5" src={PropertyIcon} alt="" />{" "}
+                {Area} Sq
+              </span>
+              <span className="bg-[#E3E3E3] text-Paracolor font-semibold font-Inter px-3 py-1 text-[13px] flex rounded-full w-max gap-1">
+                <img className="w-[18px] h-4.5" src={PropertyIcon2} alt="" />{" "}
+                {PropertyType}
               </span>
             </div>
           </div>
-          <div className="flex justify-between items-center mt-5 flex-wrap gap-3">
+          <div className="flex items-cente flex-col flex-wrap gap-3">
             <div>
               <h5 className="font-Inter text-[16px] font-[500]">Price</h5>
               <h1 className="font-Inter text-[18px] font-bold">${Price}</h1>

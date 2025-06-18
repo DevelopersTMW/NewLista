@@ -27,7 +27,7 @@ const propertyTypes = [
   "Other",
 ];
 
-const PropertytypeSelection = ({ PropertyRadios, register, errors, watch }) => {
+const PropertytypeSelection = ({ PropertyRadios, register, errors, watch , setValue }) => {
   const salePrice = watch("salePrice");
   const noi = watch("Noi");
 
@@ -39,6 +39,8 @@ const PropertytypeSelection = ({ PropertyRadios, register, errors, watch }) => {
 
     return (income * 100) / price;
   }, [salePrice, noi]);
+
+  setValue("CapRate" , capRate )
 
   return (
     <div className="flex flex-col gap-6 pb-10">
@@ -86,7 +88,6 @@ const PropertytypeSelection = ({ PropertyRadios, register, errors, watch }) => {
           PropertyRadios === "Both (For Sale & For Lease)") && (
           <span className="grid grid-cols-2 gap-5">
             <span className="">
-              
               <Inputs
                 labels={"Sale Price"}
                 type={"number"}
@@ -117,8 +118,15 @@ const PropertytypeSelection = ({ PropertyRadios, register, errors, watch }) => {
             <label className="block mb-1 font-[700] text-PurpleColor w-full max-[1280px]:text-[14px] max-[1666px]:text-[15px] min-[1666px]:text-[16px]">
               Cap. Rate (%)
             </label>
-            <div className="bg-[#F3EEFF] text-[#1d1d1d] font-[600] font-Urbanist text-[14px] w-full px-4 rounded-[6px] outline-none h-12 flex items-center">
-              {capRate !== null && `${capRate.toFixed(2)}%`}
+
+            <div
+              className={`bg-[#F3EEFF] text-[#1d1d1d] font-[600] font-Urbanist text-[14px] w-full px-4 rounded-[6px] outline-none h-12 flex items-center border ${
+                capRate === null && errors.capRate
+                  ? "border-red-600"
+                  : "border-[#F3EEFF]"
+              }`}
+            >
+              {capRate !== null ? `${capRate.toFixed(2)}%` : ""}
             </div>
           </span>
         )}

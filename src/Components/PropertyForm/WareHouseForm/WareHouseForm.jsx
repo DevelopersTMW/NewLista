@@ -52,6 +52,8 @@ const WareHouseForm = ({ propertyTypeName, register , control }) => {
                 labels={"Select"}
                 Options={currencies}
                 defaultOption={"Select"}
+                register={register}
+                name={"custom_fields.Currency"}
               ></Selection>
             </span>
             <span className="w-[100%]">
@@ -59,7 +61,7 @@ const WareHouseForm = ({ propertyTypeName, register , control }) => {
                 labels={"Monthly Rental*"}
                 type={"text"}
                 placeholder={"Ex: 10000"}
-                name={"MonthlyRental"}
+                name={"custom_fields.MonthlyRental"}
                 register={register}
               ></Inputs>
             </span>
@@ -68,7 +70,7 @@ const WareHouseForm = ({ propertyTypeName, register , control }) => {
                 labels={"Building Size"}
                 defaultOption={"Select"}
                 Options={["Sq Ft", "Sq M"]}
-                name={"BuildingSize"}
+                name={"custom_fields.BuildingSize"}
                 register={register}
               ></Selection>
             </span>
@@ -77,7 +79,7 @@ const WareHouseForm = ({ propertyTypeName, register , control }) => {
                 labels={"‎"}
                 type={"text"}
                 placeholder={"Ex: 10000"}
-                name={"BuildingSizeNumber"}
+                name={"custom_fields.BuildingSizeNumber"}
                 register={register}
               ></Inputs>
             </span>
@@ -86,7 +88,7 @@ const WareHouseForm = ({ propertyTypeName, register , control }) => {
                 labels={"Ceiling Height (FT/M)"}
                 type={"number"}
                 placeholder={"Ex:1"}
-                name={"CeilingHeight"}
+                name={"custom_fields.CeilingHeight"}
                 register={register}
               ></Inputs>
             </span>
@@ -95,7 +97,7 @@ const WareHouseForm = ({ propertyTypeName, register , control }) => {
                 labels={"Year Built"}
                 type={"number"}
                 placeholder={"2020"}
-                name={"YearBuilt"}
+                name={"custom_fields.YearBuilt"}
                 register={register}
               ></Inputs>
             </span>
@@ -104,7 +106,7 @@ const WareHouseForm = ({ propertyTypeName, register , control }) => {
                 labels={"Land Scape"}
                 defaultOption={"Select"}
                 Options={["Sq Ft", "Sq M"]}
-                name={"LandScape"}
+                name={"custom_fields.LandScape"}
                 register={register}
               ></Selection>
             </span>
@@ -113,7 +115,7 @@ const WareHouseForm = ({ propertyTypeName, register , control }) => {
                 labels={"‎"}
                 type={"number"}
                 placeholder={"Ex:1"}
-                name={"LandScapeNumber"}
+                name={"custom_fields.LandScapeNumber"}
                 register={register}
               ></Inputs>
             </span>
@@ -122,7 +124,7 @@ const WareHouseForm = ({ propertyTypeName, register , control }) => {
                 labels={"‎"}
                 defaultOption={"Select"}
                 Options={["Acres", "Hectacres"]}
-                name={"LandScapeAcres"}
+                name={"custom_fields.LandScapeAcres"}
                 register={register}
               ></Selection>
             </span>
@@ -131,7 +133,7 @@ const WareHouseForm = ({ propertyTypeName, register , control }) => {
                 labels={"‎"}
                 type={"number"}
                 placeholder={"Ex:10"}
-                name={"LandScapeNumber2"}
+                name={"custom_fields.LandScapeNumber2"}
                 register={register}
               ></Inputs>
             </span>
@@ -140,7 +142,7 @@ const WareHouseForm = ({ propertyTypeName, register , control }) => {
                 labels={"Overhead Doors"}
                 type={"number"}
                 placeholder={"Ex:1"}
-                name={"OverheadDoors"}
+                name={"custom_fields.OverheadDoors"}
                 register={register}
               ></Inputs>
             </span>
@@ -149,7 +151,7 @@ const WareHouseForm = ({ propertyTypeName, register , control }) => {
                 labels={"Parking Space"}
                 type={"number"}
                 placeholder={"Ex:1"}
-                name={"ParkingSpace"}
+                name={"custom_fields.ParkingSpace"}
                 register={register}
               ></Inputs>
             </span>
@@ -158,7 +160,7 @@ const WareHouseForm = ({ propertyTypeName, register , control }) => {
                 labels={"Number of Docks"}
                 type={"number"}
                 placeholder={"Ex:1"}
-                name={"NumberOfDocks"}
+                name={"custom_fields.NumberOfDocks"}
                 register={register}
               ></Inputs>
             </span>
@@ -167,7 +169,7 @@ const WareHouseForm = ({ propertyTypeName, register , control }) => {
                 labels={"Building Class"}
                 defaultOption={"Select"}
                 Options={["A", "B", "C", "D"]}
-                name={"BuildingClass"}
+                name={"custom_fields.BuildingClass"}
                 register={register}
               ></Selection>
             </span>
@@ -176,7 +178,7 @@ const WareHouseForm = ({ propertyTypeName, register , control }) => {
                 labels={"Ground Level Docks"}
                 type={"number"}
                 placeholder={"Ex:75"}
-                name={"Ground-Level-Docks "}
+                name={"custom_fields.Ground-Level-Docks "}
                 register={register}
               ></Inputs>
             </span>
@@ -185,7 +187,7 @@ const WareHouseForm = ({ propertyTypeName, register , control }) => {
                 labels={"High Level Docks"}
                 type={"number"}
                 placeholder={"Ex:1"}
-                name={"High-Level-Docks"}
+                name={"custom_fields.High-Level-Docks"}
                 register={register}
               ></Inputs>
             </span>
@@ -200,97 +202,97 @@ const WareHouseForm = ({ propertyTypeName, register , control }) => {
           </span>
           <div className="flex flex-wrap gap-1.5 sm:gap-3 md:gap-5">
             <Controller
-              name="Phase 3"
+              name="custom_fields.Phase3"
               control={control}
               defaultValue={false}
               render={({ field }) => (
                 <Checkboxs
                   {...field}
-                  name="Phase 3"
+                  name="custom_fields.Phase3"
                   labels="Phase 3"
                 />
               )}
             />
              <Controller
-              name="220V"
+              name="custom_fields.220V"
               control={control}
               defaultValue={false}
               render={({ field }) => (
                 <Checkboxs
                   {...field}
-                  name="220V"
+                  name="custom_fields.220V"
                   labels="220V"
                 />
               )}
             />
             <Controller
-              name="230V"
+              name="custom_fields.230V"
               control={control}
               defaultValue={false}
               render={({ field }) => (
                 <Checkboxs
                   {...field}
-                  name="230V"
+                  name="custom_fields.230V"
                   labels="230V"
                 />
               )}
             />
             <Controller
-              name="240V"
+              name="custom_fields.240V"
               control={control}
               defaultValue={false}
               render={({ field }) => (
                 <Checkboxs
                   {...field}
-                  name="240V"
+                  name="custom_fields.240V"
                   labels="240V"
                 />
               )}
             />
             <Controller
-              name="380V"
+              name="custom_fields.380V"
               control={control}
               defaultValue={false}
               render={({ field }) => (
                 <Checkboxs
                   {...field}
-                  name="380V"
+                  name="custom_fields.380V"
                   labels="380V"
                 />
               )}
             />
             <Controller
-              name="480V"
+              name="custom_fields.480V"
               control={control}
               defaultValue={false}
               render={({ field }) => (
                 <Checkboxs
                   {...field}
-                  name="480V"
+                  name="custom_fields.480V"
                   labels="480V"
                 />
               )}
             />
             <Controller
-              name="110 / 120V "
+              name="custom_fields.110/120V "
               control={control}
               defaultValue={false}
               render={({ field }) => (
                 <Checkboxs
                   {...field}
-                  name="110 / 120V "
+                  name="custom_fields.110/120V"
                   labels="110 / 120V "
                 />
               )}
             />
             <Controller
-              name="100 / 127V"
+              name="custom_fields.100/127V"
               control={control}
               defaultValue={false}
               render={({ field }) => (
                 <Checkboxs
                   {...field}
-                  name="100 / 127V"
+                  name="custom_fields.100/127V"
                   labels="100 / 127V"
                 />
               )}

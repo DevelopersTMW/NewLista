@@ -40,7 +40,7 @@ const ListingVisibilitySwitches = ({ register, controls }) => {
         <div className="flex  items-center gap-3">
           <div className=" max-[400px]:w-[13%]">
             <Controller
-              name="Off-the-MarketListing"
+              name="OffTheMarketListing"
               control={controls}
               defaultValue={false}
               render={({ field }) => <Switches {...field} />}

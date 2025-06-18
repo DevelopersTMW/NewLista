@@ -152,7 +152,7 @@ const Step3 = ({ formData, onBack, onSubmit }) => {
             type="submit"
             className="bg-PurpleColor text-white font-[600] px-5 py-2 rounded-[6px] cursor-pointer"
           >
-            Preview Listing
+            Publish Listing
           </button>
         </div>
       </form>

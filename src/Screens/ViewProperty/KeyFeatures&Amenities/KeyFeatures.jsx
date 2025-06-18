@@ -1,0 +1,137 @@
+import { Zap } from "lucide-react";
+import React from "react";
+
+const defaultConfig = {
+  fields: [
+    { label: "Currency", key: "Currency" },
+    { label: "Monthly Rental", key: "MonthlyRental" },
+    { label: "Building Levels", key: "BuildingLevels" },
+    { label: "Tenancy", key: "Tenancy" },
+    { label: "Parking Space", key: "ParkingSpace" },
+    { label: "CAM", key: "CAM" },
+    { label: "Number Of Units", key: "NumberOfUnits" },
+    { label: "Building Class", key: "BuildingClass" },
+    { label: "Percentage Leased", key: "PercentageLeased" },
+  ],
+};
+
+const fieldConfig = {
+  "Vacant Land": {
+    fields: [
+      { label: "Currency", key: "Currency" },
+      { label: "Monthly Rental", key: "MonthlyRental" },
+      { label: "Fenced", key: "Fenced" },
+      {
+        label: "LandScape",
+        key: "LandScapeCombined",
+        combine: (fields) =>
+          `${fields.LandScapeNumber || ""} ${fields.LandScape || ""}`.trim(),
+      },
+      {
+        label: "LandScape Acres",
+        key: "LandScapeAcresCombined",
+        combine: (fields) =>
+          `${fields.LandScapeNumber2 || ""} ${
+            fields.LandScapeAcres || ""
+          }`.trim(),
+      },
+    ],
+  },
+  Warehouse: {
+    fields: [
+      { label: "Currency", key: "Currency" },
+      { label: "Monthly Rental", key: "MonthlyRental" },
+      { label: "Ceiling Height", key: "CeilingHeight" },
+      {
+        label: "LandScape",
+        key: "LandScapeCombined",
+        combine: (fields) =>
+          `${fields.LandScapeNumber || ""} ${fields.LandScape || ""}`.trim(),
+      },
+      {
+        label: "LandScape Acres",
+        key: "LandScapeAcresCombined",
+        combine: (fields) =>
+          `${fields.LandScapeNumber2 || ""} ${
+            fields.LandScapeAcres || ""
+          }`.trim(),
+      },
+      { label: "Over Head Doors", key: "OverheadDoors" },
+      { label: "Parking Space", key: "ParkingSpace" },
+      { label: "Number Of Docks", key: "NumberOfDocks" },
+      { label: "Building Class", key: "BuildingClass" },
+      { label: "Ground-Level-Docks", key: "GroundLevelDocks" },
+      { label: "High-Level-Docks", key: "HighLevelDocks" },
+    ],
+  },
+  "Retail Center": {
+    fields: [
+      { label: "Monthly Rental", key: "MonthlyRental" },
+      { label: "Building Levels", key: "BuildingLevels" },
+      { label: "Number Of Units", key: "NumberOfUnits" },
+      {
+        label: "LandScape",
+        key: "LandScapeCombined",
+        combine: (fields) =>
+          `${fields.LandScapeNumber || ""} ${fields.LandScape || ""}`.trim(),
+      },
+      {
+        label: "LandScape Acres",
+        key: "LandScapeAcresCombined",
+        combine: (fields) =>
+          `${fields.LandScapeNumber2 || ""} ${
+            fields.LandScapeAcres || ""
+          }`.trim(),
+      },
+      { label: "Building Class", key: "BuildingClass" },
+      { label: "Percentage Lease", key: "Percentage-Lease" },
+      { label: "Parking Space", key: "Parking-Space" },
+      { label: "Outdoor Signage", key: "Outdoor-Signage" },
+    ],
+  },
+};
+
+const KeyFeatures = ({ SingleProperty }) => {
+  const property_type = SingleProperty?.property_type;
+  const custom_fields = SingleProperty?.custom_fields || {};
+  // Select the config: use specific if available, otherwise default
+  const config = fieldConfig[property_type] || defaultConfig;
+
+  // Build field list with actual values
+  const computedFields = config.fields
+    .map(({ key, label, combine }) => {
+      const value = combine ? combine(custom_fields) : custom_fields[key];
+      return { key, label, value };
+    })
+    .filter(
+      ({ value }) =>
+        value !== undefined &&
+        value !== null &&
+        value !== "" &&
+        value !== "None"
+    );
+
+  // ✅ If no valid fields, return nothing (hide section)
+  if (computedFields.length === 0) return <span className="font-Urbanist font-semibold">Not Found!</span>;
+
+  // ✅ Render only fields with values
+  return (
+    <div className="flex flex-wrap sm:grid-cols-2 md:grid-cols-2 gap-4 sm:gap-5">
+      {computedFields.map(({ key, label, value }, index) => (
+        <div
+          key={`${key}-${index}`}
+          className={`bg-[#F1F1F1] rounded-lg px-4 py-3 flex items-center text-start gap-2 ${
+            index % 5 === 4 ? "w-full" : "w-[47.5%]"
+          }`}
+        >
+          <Zap size={16} className="fill-black" />
+          <span className="font-semibold text-[#000000]">
+            {label} : {value}
+          </span>
+        </div>
+      ))}
+    </div>
+  );
+};
+
+export default KeyFeatures;

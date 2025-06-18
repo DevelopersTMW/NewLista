@@ -46,7 +46,7 @@ const DefaultForm = ({ propertyTypeName, register }) => {
               labels={"Currency"}
               Options={currencies}
               defaultOption={"Select"}
-              name={"Currency"}
+              name={"custom_fields.Currency"}
               register={register}
             ></Selection>
           </span>
@@ -55,7 +55,7 @@ const DefaultForm = ({ propertyTypeName, register }) => {
               labels={"Monthly Rental*"}
               type={"text"}
               placeholder={"Ex: 10000"}
-              name={"MonthlyRental"}
+              name={"custom_fields.MonthlyRental"}
               register={register}
             ></Inputs>
           </span>
@@ -64,16 +64,16 @@ const DefaultForm = ({ propertyTypeName, register }) => {
               labels={"Building Size"}
               defaultOption={"Select"}
               Options={["Sq Ft", "Sq M"]}
-              name={"BuildingSize"}
+              name={"custom_fields.BuildingSize"}
               register={register}
             ></Selection>
           </span>
           <span className="">
             <Inputs
-              labels={"SPACE"}
+              labels={"‎"}
               type={"text"}
               placeholder={"Ex: 10000"}
-              name={"BuildingSizeNumber"}
+              name={"custom_fields.BuildingSizeNumber"}
               register={register}
             ></Inputs>
           </span>
@@ -82,7 +82,7 @@ const DefaultForm = ({ propertyTypeName, register }) => {
               labels={"Building Levels"}
               type={"text"}
               placeholder={"Ex:1"}
-              name={"Building Levels"}
+              name={"custom_fields.BuildingLevels"}
               register={register}
             ></Inputs>
           </span>
@@ -91,7 +91,7 @@ const DefaultForm = ({ propertyTypeName, register }) => {
               labels={"Year Built"}
               type={"number"}
               placeholder={"2020"}
-              name={"YearBuilt"}
+              name={"custom_fields.YearBuilt"}
               register={register}
             ></Inputs>
           </span>
@@ -100,7 +100,7 @@ const DefaultForm = ({ propertyTypeName, register }) => {
               labels={"Tenancy"}
               defaultOption={"Select"}
               Options={["Multiple", "Single"]}
-              name={"Tenancy"}
+              name={"custom_fields.Tenancy"}
               register={register}
             ></Selection>
           </span>
@@ -109,7 +109,7 @@ const DefaultForm = ({ propertyTypeName, register }) => {
               labels={"Parking Spaces"}
               type={"number"}
               placeholder={"Ex:1"}
-              name={"ParkingSpace"}
+              name={"custom_fields.ParkingSpace"}
               register={register}
             ></Inputs>
           </span>
@@ -118,7 +118,7 @@ const DefaultForm = ({ propertyTypeName, register }) => {
               labels={"CAM (Common Area Maint..) Cost"}
               type={"number"}
               placeholder={"Ex: $1.00"}
-              name={"CAM"}
+              name={"custom_fields.CAM"}
               register={register}
             ></Inputs>
           </span>
@@ -127,7 +127,7 @@ const DefaultForm = ({ propertyTypeName, register }) => {
               labels={"Number of Units"}
               type={"number"}
               placeholder={"Ex:1"}
-              name={"NumberOfUnits"}
+              name={"custom_fields.NumberOfUnits"}
               register={register}
             ></Inputs>
           </span>
@@ -136,7 +136,7 @@ const DefaultForm = ({ propertyTypeName, register }) => {
               labels={"Building Class"}
               defaultOption={"Select"}
               Options={["A", "B", "C", "D"]}
-              name={"BuildingClass"}
+              name={"custom_fields.BuildingClass"}
               register={register}
             ></Selection>
           </span>
@@ -145,7 +145,7 @@ const DefaultForm = ({ propertyTypeName, register }) => {
               labels={"Percentage Leased (%)"}
               type={"number"}
               placeholder={"Ex: 75"}
-              name={"PercentageLeased"}
+              name={"custom_fields.PercentageLeased"}
               register={register}
             ></Inputs>
           </span>

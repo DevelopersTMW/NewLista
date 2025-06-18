@@ -35,6 +35,7 @@ import Spinner from "../../Components/Spinner/Spinner";
 import { MapPin } from "lucide-react";
 import EmptyCards from "../../Components/EmptyCard/EmptyCard";
 import TruncatedText from "../../Components/TruncatedText/TruncatedText";
+import KeyFeatures from "./KeyFeatures&Amenities/KeyFeatures";
 
 const features = [
   "Ample Parking",
@@ -43,6 +44,30 @@ const features = [
   "Green & Open Spaces",
   "High-Speed Internet Connectivity",
 ];
+
+const visibleFieldsByType = {
+  Default: [
+    "Currency",
+    "MonthlyRental",
+    "BuildingLevels",
+    "Tenancy",
+    "ParkingSpace",
+    "CAM",
+    "NumberOfUnits",
+    "BuildingClass",
+    "PercentageLeased",
+  ],
+  Land: [
+    "Currency",
+    "Monthly-Rental",
+    "Fenced",
+    "LandScape",
+    "LandScapeNumber",
+    "LandScapeAcres",
+    "LandScapeNumber2",
+  ],
+  // Add other property types as needed
+};
 
 const PropertyDetails = () => {
   const ApiKey = import.meta.env.VITE_API_KEY;
@@ -77,6 +102,10 @@ const PropertyDetails = () => {
     }
     GetSingleProperty();
   }, [params.id]);
+
+  console.log(SingleProperty);
+
+  const currentFields = visibleFieldsByType["Default"] || [];
 
   return (
     <>
@@ -190,38 +219,7 @@ const PropertyDetails = () => {
                       Key Features & Amenities
                     </h2>
 
-                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-1 gap-4 sm:gap-5">
-                      {features.map((feature, index) => (
-                        <Disclosure key={index}>
-                          {({ open }) => (
-                            <div className="bg-[#F1F1F1] rounded-lg px-4 py-3">
-                              <Disclosure.Button className="flex w-full justify-between items-center font-Urbanist text-[13px] md:text-base font-semibold text-[#000000]">
-                                <span className="flex items-center text-start gap-2">
-                                  <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    viewBox="0 0 24 24"
-                                    fill="currentColor"
-                                    className="w-5 h-5"
-                                  >
-                                    <path
-                                      fillRule="evenodd"
-                                      d="M14.615 1.595a.75.75 0 0 1 .359.852L12.982 9.75h7.268a.75.75 0 0 1 .548 1.262l-10.5 11.25a.75.75 0 0 1-1.272-.71l1.992-7.302H3.75a.75.75 0 0 1-.548-1.262l10.5-11.25a.75.75 0 0 1 .913-.143Z"
-                                      clipRule="evenodd"
-                                    />
-                                  </svg>
-                                  {feature}
-                                </span>
-                              </Disclosure.Button>
-
-                              <Disclosure.Panel className="mt-2 text-[12px] text-[#272727] font-Urbanist font-medium">
-                                This amenity ensures convenience, comfort, and
-                                efficiency for your business operations.
-                              </Disclosure.Panel>
-                            </div>
-                          )}
-                        </Disclosure>
-                      ))}
-                    </div>
+                    <KeyFeatures SingleProperty={SingleProperty}></KeyFeatures>
                   </div>
                 </div>
               </div>
@@ -267,19 +265,25 @@ const PropertyDetails = () => {
                           src={SocialIcons7}
                           alt=""
                         />{" "}
-                        {SingleProperty.user.state}
+                        {SingleProperty.user.city +
+                          " " +
+                          SingleProperty.user.state}
                       </p>
                     </span>
                   </span>
 
                   <span>
-                    <p className="font-Urbanist text-[16px] sm:text-[17px] font-semibold">
-                      Phone Number: {SingleProperty.user.phone}
-                    </p>
+                    {SingleProperty.show_phone && (
+                      <p className="font-Urbanist  text-[16px] sm:text-[17px] font-semibold">
+                        Phone: {SingleProperty.user.phone}
+                      </p>
+                    )}
 
-                    <p className="font-Urbanist  text-[16px] sm:text-[17px] font-semibold">
-                      Email: {SingleProperty.user.email}
-                    </p>
+                    {SingleProperty.show_email && (
+                      <p className="font-Urbanist  text-[16px] sm:text-[17px] font-semibold">
+                        Email: {SingleProperty.user.email}
+                      </p>
+                    )}
                   </span>
 
                   <span>
@@ -312,26 +316,27 @@ const PropertyDetails = () => {
                     </p>
                   </div>
 
-                  <div className="grid xl:flex grid-cols-1 sm:grid-cols-2 md:grid-cols-3 min-[850px]:!grid-cols-1 lg:!grid-cols-2 2xl:!grid-cols-3 gap-6 sm:gap-0 lg:gap-4 pt-4 xl:justify-between ">
+                  <div className="grid xl:flex grid-cols-1 sm:grid-cols-2 md:grid-cols-3 min-[850px]:!grid-cols-1 lg:!grid-cols-2 2xl:!grid-cols-3 gap-6 sm:gap-0 lg:gap-4 pt-4  ">
                     {/* Year Built */}
-                    <div className="flex flex-col gap-1 border-b sm:border-b-0 lg:mr-5 lg:border-r border-[#BBBBBB] pb-4 lg:pb-0 xl:w-[25%] ">
-                      <span className="flex gap-2 items-center">
-                        <img
-                          className="w-[20px] h-5"
-                          src={PropertyIcon}
-                          alt=""
-                        />
-                        <p className="font-Urbanist font-[500] text-[15px] text-[#222222]">
-                          Year Built
+                    {SingleProperty.custom_fields && (
+                      <div className="flex flex-col gap-1 border-b sm:border-b-0 lg:mr-5 lg:border-r border-[#BBBBBB] pb-4 lg:pb-0 xl:w-[25%] ">
+                        <span className="flex gap-2 items-center">
+                          <img
+                            className="w-[20px] h-5"
+                            src={PropertyIcon}
+                            alt=""
+                          />
+                          <p className="font-Urbanist font-[500] text-[15px] text-[#222222]">
+                            Year Built
+                          </p>
+                        </span>
+                        <p className="font-Urbanist font-[700] text-[23px] sm:text-[25px] text-[#222222]">
+                          {SingleProperty.custom_fields.YearBuilt || "Guest"}
                         </p>
-                      </span>
-                      <p className="font-Urbanist font-[700] text-[23px] sm:text-[25px] text-[#222222]">
-                        2008
-                      </p>
-                    </div>
+                      </div>
+                    )}
 
-                    {/* Property Type */}
-                    <div className="flex flex-col gap-1 border-b sm:border-b-0 lg:border-r border-[#BBBBBB] pb-4 lg:pb-0 xl:w-[33%]">
+                    <div className="flex flex-col gap-1 border-b sm:border-b-0 pb-4 lg:border-r border-[#BBBBBB] lg:pb-0 xl:w-[30%] justify-start">
                       <span className="flex gap-2 items-center">
                         <img
                           className="w-[20px] h-5"
@@ -347,22 +352,29 @@ const PropertyDetails = () => {
                       </p>
                     </div>
 
-                    {/* Area */}
-                    <div className="flex flex-col gap-1 ">
-                      <span className="flex gap-2 items-center">
-                        <img
-                          className="w-[20px] h-5"
-                          src={PropertyIcon}
-                          alt=""
-                        />
-                        <p className="font-Urbanist font-[500] text-[15px] text-[#222222]">
-                          Area
+                    {/* BuildingSize */}
+                    {SingleProperty.building_size && (
+                      <div className="flex flex-col gap-1 pl-4  xl:w-[30%]">
+                        <span className="flex gap-2 items-center">
+                          <img
+                            className="w-[20px] h-5"
+                            src={PropertyIcon}
+                            alt=""
+                          />
+                          <p className="font-Urbanist font-[500] text-[15px] text-[#222222]">
+                            Area
+                          </p>
+                        </span>
+
+                        <p className="font-Urbanist font-[700] text-[20px] sm:text-[21px] text-[#222222]">
+                          {Math.round(SingleProperty.building_size)}
+                          {SingleProperty.custom_fields?.BuildingSize &&
+                          SingleProperty.custom_fields?.BuildingSizeNumber
+                            ? ` ${SingleProperty.custom_fields.BuildingSizeNumber} ${SingleProperty.custom_fields.BuildingSize}`
+                            : ""}
                         </p>
-                      </span>
-                      <p className="font-Urbanist font-[700] text-[20px] sm:text-[21px] text-[#222222]">
-                        2,500 Square Feet
-                      </p>
-                    </div>
+                      </div>
+                    )}
                   </div>
                 </div>
 
@@ -371,26 +383,63 @@ const PropertyDetails = () => {
                     Property Overview
                   </h1>
 
-                  <p className="font-Urbanist font-[600] text-[14px] sm:text-[16px] text-[#222222]">
-                    💰 Net Operating Income (NOI):{" "}
-                    <span className="font-bold">{SingleProperty.noi}</span>
-                  </p>
+                  {(SingleProperty.listing_type === "For Sale" ||
+                    SingleProperty.listing_type ===
+                      "Both (For Sale & For Lease)") && (
+                    <>
+                      <p className="font-Urbanist font-[600] text-[14px] sm:text-[16px] text-[#222222]">
+                        💰 Net Operating Income (NOI) :{" "}
+                        <span className="font-bold">
+                          {SingleProperty.noi || "None"}
+                        </span>
+                      </p>
+
+                      <p className="font-Urbanist font-[600] text-[14px] sm:text-[16px] text-[#222222]">
+                        📈 Cap Rate :{" "}
+                        <span className="font-bold">
+                          {Math.round(SingleProperty.cap_rate) || "0"}%
+                        </span>
+                      </p>
+                    </>
+                  )}
+
+                  {(SingleProperty.listing_type === "For Lease" ||
+                    SingleProperty.listing_type ===
+                      "Both (For Sale & For Lease)") && (
+                    <>
+                      <p className="font-Urbanist font-[600] text-[14px] sm:text-[16px] text-[#222222]">
+                        ✔ Lease Type :{" "}
+                        <span className="font-bold">
+                          {SingleProperty.lease_type || "0"}
+                        </span>
+                      </p>
+                      <p className="font-Urbanist font-[600] text-[14px] sm:text-[16px] text-[#222222]">
+                        〽 Lease Rate & Unit :{" "}
+                        <span className="font-bold">
+                          {Math.round(SingleProperty.lease_rate) +
+                            " " +
+                            SingleProperty.lease_rate_unit || "None"}
+                        </span>
+                      </p>
+                    </>
+                  )}
 
                   <p className="font-Urbanist font-[600] text-[14px] sm:text-[16px] text-[#222222]">
-                    📈 Cap Rate:<span className="font-bold">6%</span>
-                  </p>
-
-                  <p className="font-Urbanist font-[600] text-[14px] sm:text-[16px] text-[#222222]">
-                    💳 Owner Financing:{" "}
+                    💳 Owner Financing :{" "}
                     <span className="font-bold">
-                      {SingleProperty.owner_financing}
+                      {SingleProperty.owner_financing === true ? "Yes" : "No"}
                     </span>
                   </p>
                 </div>
 
                 <div className="flex justify-center items-center">
                   <iframe
-                    src={`https://www.google.com/maps?q=404${SingleProperty.address}&output=embed`}
+                    src={`https://www.google.com/maps?q=404${
+                      SingleProperty.address +
+                      SingleProperty.city +
+                      SingleProperty.state +
+                      SingleProperty.zip
+                    }&output=embed`}
                     className="w-full h-[220px] sm:h-[300px] md:h-[250px] lg:h-[300px] rounded-[8px]"
                     allowFullScreen=""
                     loading="lazy"

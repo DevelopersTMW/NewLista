@@ -15,7 +15,7 @@ const PropertiesCards2 = ({
 }) => {
   return (
     <>
-      <div className="w-[100%] bg-white border border-gray-200 rounded-lg shadow-sm relative">
+      <div className="w-[100%] bg-white border border-gray-200 rounded-lg shadow-sm relative ">
         <img
           className="rounded-t-lg h-[200px] min-[350px]:h-[230px] object-cover w-[100%]"
           src={import.meta.env.VITE_IMAGE_KEY + images}
@@ -41,7 +41,7 @@ const PropertiesCards2 = ({
             <h1 className="mb-2 text-[21px] font-[600] font-Inter tracking-tight leading-[24px] mt-3 text-gray-900 ">
               {Heading}
             </h1>
-            <p className="mb-2 font-Inter text-[13px] font-normal text-gray-700">
+            <p className="mb-2 font-Inter text-[13px] font-normal text-gray-700 flex break-all">
               {desc}
             </p>
           </div>
