@@ -15,9 +15,14 @@ import { useSelector } from "react-redux";
 
 // IMAGES
 import DummyLogo from "../../../public/Images/UnknowUser.png";
+import axios from "axios";
+import Spinner from "../Spinner/Spinner";
 
 function AdminNavbar() {
   const [showSearch, setShowSearch] = useState(false);
+  const ApiKey = import.meta.env.VITE_API_KEY;
+  const [loading, setloading] = useState(false);
+  const token = localStorage.getItem("token");
 
   const navigate = useNavigate();
   const { user, error } = useSelector((state) => state.auth);
@@ -27,8 +32,24 @@ function AdminNavbar() {
   const handleConfirmation = async () => {
     const confirmed = await confirm();
     if (confirmed) {
+      setloading(true);
       localStorage.removeItem("token");
       navigate("/login");
+
+      try {
+        const response = await axios.post(`${ApiKey}/logout`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "content-type": "application/json",
+          },
+        });
+        console.log(response);
+      } catch (error) {
+        console.error(error);
+        setloading(false);
+      } finally {
+        setloading(false);
+      }
     }
   };
 
@@ -42,7 +63,10 @@ function AdminNavbar() {
               {/* Welcome Message */}
               <div className="min-[1170px]:w-[50%]">
                 <h1 className="text-[#111111] font-Urbanist text-[17px] min-[350px]:text-[20px] font-medium">
-                  Welcome, { user ? user?.first_name + " " + user?.last_name || "Guest" : "loading.."}
+                  Welcome,{" "}
+                  {user
+                    ? user?.first_name + " " + user?.last_name || "Guest"
+                    : "loading.."}
                   !
                 </h1>
               </div>
@@ -96,18 +120,22 @@ function AdminNavbar() {
               <Menu as="div" className="relative">
                 <MenuButton className="flex rounded-full overflow-hidden">
                   <span className="sr-only">Open user menu</span>
-                  <img
-                    className="max-[380px]:w-10 max-[380px]:h-10 w-12.5 h-12.5 sm:h-10 sm:w-10 object-cover rounded-full cursor-pointer"
-                    src={
-                      user?.headshot
-                        ? import.meta.env.VITE_IMAGE_KEY + user.headshot
-                        : DummyLogo
-                    }
-                    onError={(e) => {
-                      e.target.onerror = null; // prevent loop
-                      e.target.src = DummyLogo;
-                    }}
-                  />
+                  {loading ? (
+                    <Spinner style={"w-5 h-12 text-PurpleColor z-50"} />
+                  ) : (
+                    <img
+                      className="max-[380px]:w-10 max-[380px]:h-10 w-12.5 h-12.5 sm:h-10 sm:w-10 object-cover rounded-full cursor-pointer"
+                      src={
+                        user?.headshot
+                          ? import.meta.env.VITE_IMAGE_KEY + user.headshot
+                          : DummyLogo
+                      }
+                      onError={(e) => {
+                        e.target.onerror = null; // prevent loop
+                        e.target.src = DummyLogo;
+                      }}
+                    />
+                  )}
                 </MenuButton>
                 <MenuItems className="absolute right-0 mt-2 border-none w-48 text-[18px] font-[500] bg-[#fcfcfc] rounded-md shadow-lg font-Urbanist py-1 z-20">
                   <MenuItem>

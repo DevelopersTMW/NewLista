@@ -3,12 +3,12 @@ import React from "react";
 export default function UserList({ users, onSelect }) {
 
   return (
-    <div className={`w-full sm:w-[60%] md:w-[70%] lg:w-[35%] xl:w-[25%]`}>
-      <div className="pt-7 pb-29 sm:py-10 h-[75vh] overflow-y-auto bg-white rounded-[20px]">
+    <div className={`w-full sm:w-[60%] md:w-[70%] lg:w-[35%] xl:w-[25%] overflow-auto no-scrollbar`}>
+      <div className="pt-7 pb-29 sm:py-10  overflow-y-auto bg-white rounded-[20px] ">
         <h1 id={"connection"} className="font-Urbanist px-6 pb-2 sm:pb-4 text-[#222222] text-[25px] sm:text-[26px] font-[700]">
           Connections
         </h1>
-        <div className="flex flex-col">
+        <div className="flex flex-col overflow-auto no-scrollbar h-[55vh]">
           {users.map((items, index) => (
             <button
               key={index}

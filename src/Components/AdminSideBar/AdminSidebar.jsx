@@ -272,7 +272,7 @@ const AdminSidebar = ({ screen }) => {
                 </Link>
               </li>
               <li>
-                <Link className="flex items-center p-2 px-7 text-gray-900 rounded-r-lg group gap-4">
+                <Link to={"/admin/customer-support"} className="flex items-center p-2 px-7 text-gray-900 rounded-r-lg group gap-4">
                   <img className="h-4.5 w-5 2xl:w-6 2xl:h-6" src={Dashboardicon1_8} alt="" />
                   <h1 className="font-Urbanist font-[500] sm:mt-1 text-[16px] 2xl:text-[18px]">
                     Help/Support

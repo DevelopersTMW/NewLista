@@ -11,6 +11,7 @@ import AccountSetting from "./AccountSetting/AccountSetting";
 import Inbox from "./Inbox/Inbox";
 import MyNetwork2 from "./MyNetwork/MyNetwork2";
 import ProtectiveRoute from "../../Configuration/ProtectiveRoute/ProtectiveRoute";
+import HelpSupport from "./HelpSupport/HelpSupport";
 
 const Admin = () => {
   return (
@@ -24,6 +25,7 @@ const Admin = () => {
             <Route path="/analytics" element={<Analytics />} />
             <Route path="/account-setting" element={<ProtectiveRoute component={<AccountSetting />} />} />
             <Route path="/inbox" element={<Inbox />} />
+            <Route path="/customer-support" element={<HelpSupport />} />
           </Routes>
     }>
     </AdminSidebar>
