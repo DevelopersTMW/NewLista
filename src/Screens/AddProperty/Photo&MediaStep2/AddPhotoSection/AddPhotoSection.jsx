@@ -1,17 +1,17 @@
 import { Upload } from "lucide-react";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
-const AddPhotoSection = ({ register, setValue, error }) => {
+const AddPhotoSection = ({ register, setValue, error, DefaultImage }) => {
   const [images, setImages] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  console.log(images);
+  console.log(DefaultImage);
 
+  console.log(images);
 
   const handleChange = (e) => {
     const newFiles = Array.from(e.target.files);
-    const allFiles = [...images, ...newFiles];
-
+    const allFiles = [...images,  ...newFiles];
     setImages(allFiles);
     setValue("fileInput", allFiles, { shouldValidate: true });
   };
@@ -64,18 +64,28 @@ const AddPhotoSection = ({ register, setValue, error }) => {
           </p>
         )}
       </div>
-      
-      {images.length > 0 && (
+      {(DefaultImage.length > 0 || images.length > 0) && (
         <div className="pt-5">
           <h1 className="font-Urbanist font-[500] mb-2 text-[#242424] text-[17px]">
             Selected Images*
           </h1>
           <div className="flex flex-wrap gap-4">
-            {images.map((url, index) => (
+            {/* Existing images from edit mode */}
+            {DefaultImage.map((url, index) => (
               <img
-                key={index}
+                key={`existing-${index}`}
                 className="object-cover w-40 h-36 rounded-2xl"
-                src={URL.createObjectURL(url)}
+                src={import.meta.env.VITE_IMAGE_KEY + url}
+                alt={`Uploaded ${index}`}
+              />
+            ))}
+
+            {/* Newly selected images */}
+            {images.map((file, index) => (
+              <img
+                key={`new-${index}`}
+                className="object-cover w-40 h-36 rounded-2xl"
+                src={URL.createObjectURL(file)}
                 alt={`Uploaded ${index}`}
               />
             ))}

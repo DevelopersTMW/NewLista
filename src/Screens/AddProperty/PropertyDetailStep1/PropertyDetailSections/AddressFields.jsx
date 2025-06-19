@@ -42,7 +42,7 @@ const AddressFields = ({ register , errors }) => {
           <span className="w-[100%] sm:w-[100%]">
             <Inputs
               labels={"Zip / Postal Code"}
-              type={"number"}
+              type={"text"}
               placeholder={"Enter Zip /Postal Codes"}
               register={register("ZipPostalCode", {
                 required: "Zip/PostalCode is required",

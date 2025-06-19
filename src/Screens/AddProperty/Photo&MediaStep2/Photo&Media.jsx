@@ -2,6 +2,7 @@ import { useForm } from "react-hook-form";
 import { Facebook, Instagram, Linkedin, Twitter } from "lucide-react";
 import AddPhotoSection from "./AddPhotoSection/AddPhotoSection.jsx";
 import Features from "./Features/Features.jsx";
+import { useEffect, useState } from "react";
 
 const socialPlatforms = [
   { name: "Facebook", icon: Facebook },
@@ -11,22 +12,33 @@ const socialPlatforms = [
 ];
 
 const Step2 = ({ onNext, onBack, defaultValues }) => {
+
+  const [images , setimages] = useState({})
   const {
     register,
     handleSubmit,
     formState: { errors },
     setValue,
+    reset,
     control,
   } = useForm({
     defaultValues,
   });
 
   const FormSubmit = async (Data) => {
-    console.log(Data);
+    console.log('New' , Data);
     if (Data) {
       onNext(Data);
     }
   };
+
+  useEffect(() => {
+    if (defaultValues && Object.keys(defaultValues).length > 0) {
+      console.log("Step2", defaultValues);
+      setimages(defaultValues.fileInput)
+      reset(defaultValues);
+    }
+  }, [defaultValues, reset]);
 
   return (
     <>
@@ -34,10 +46,8 @@ const Step2 = ({ onNext, onBack, defaultValues }) => {
         <div className="border border-[#ececec] rounded-2xl px-4.5 sm:px-10 py-8 mx-3.5 sm:mx-0">
           <div className="relative">
             <AddPhotoSection
+              DefaultImage={images}
               setValue={setValue}
-              //  register={register("fileInput", {
-              //   required: "atleast One Image is required",
-              // })}
               register={register}
               error={errors.fileInput}
             ></AddPhotoSection>

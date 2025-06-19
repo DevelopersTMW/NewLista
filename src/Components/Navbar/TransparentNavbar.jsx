@@ -84,11 +84,11 @@ function TransparentNavbar() {
           </div> */}
           <div>
             <Link
-              to={"/create-property"}
+              to={token ? "/create-property" : "/register"}
               className="text-sm/6 font-semibold text-gray-900"
             >
               <button className="hover-btn-yellow hover-btn text-black px-5 py-2 rounded-md font-Inter cursor-pointer">
-                <span>Add a Property</span>
+                <span>{token ? "Add a Property" : "Register"}</span>
               </button>
             </Link>
           </div>
@@ -169,11 +169,11 @@ function TransparentNavbar() {
                 <Link className="-mx-2  rounded-lg px-3 py-2.5 text-base/7 font-semibold text-[#e9e9e9]   gap-4 flex flex-col">
                   <div>
                     <Link
-                      to={"/create-property"}
+                      to={token ? "/create-property" : "/register"}
                       className="text-sm/7 font-[500] text-gray-900"
                     >
                       <button className="bg-YellowColor px-5 py-2 text-[15px]  rounded-md font-Inter">
-                        Add a Property
+                         {token ? "Add a Property" : "Register"}
                       </button>
                     </Link>
                   </div>

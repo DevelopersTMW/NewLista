@@ -4,6 +4,7 @@ import Selection from "../../InputFields/Selection";
 import Checkboxs from "../../InputFields/Checkboxs";
 import { Textarea } from "@headlessui/react";
 import UnitDetailsForm from "../../UnitDetailsForm/UnitDetailsForm";
+import NumberInputs from "../../InputFields/NumberInputs";
 
 
 const currencies = [
@@ -27,13 +28,13 @@ const LandForm = ({ propertyTypeName, register }) => {
             ></Selection>
           </span>
           <span className="w-[100%]">
-            <Inputs
+            <NumberInputs
               labels={"Monthly Rental*"}
               type={"text"}
               placeholder={"Ex: 10000"}
-              name={"custom_fields.Monthly-Rental"}
+              name={"custom_fields.MonthlyRental"}
               register={register}
-            ></Inputs>
+            ></NumberInputs>
           </span>
           <span className="w-[100%]">
             <Selection
@@ -45,13 +46,13 @@ const LandForm = ({ propertyTypeName, register }) => {
             ></Selection>
           </span>
           <span className="w-[100%]">
-            <Inputs
+            <NumberInputs
               labels={"‎"}
               type={"text"}
               placeholder={"Ex: 10000"}
               name={"custom_fields.BuildingSizeNumber"}
               register={register}
-            ></Inputs>
+            ></NumberInputs>
           </span>
           <span className="w-[100%]">
             <Selection
@@ -63,13 +64,13 @@ const LandForm = ({ propertyTypeName, register }) => {
             ></Selection>
           </span>
           <span className="w-[100%]">
-            <Inputs
+            <NumberInputs
               labels={"Year Built"}
               type={"number"}
               placeholder={"2020"}
               name={"custom_fields.YearBuilt"}
               register={register}
-            ></Inputs>
+            ></NumberInputs>
           </span>
           <span className="w-[100%]">
             <Selection
@@ -81,22 +82,22 @@ const LandForm = ({ propertyTypeName, register }) => {
             ></Selection>
           </span>
           <span className="w-[100%]">
-            <Inputs
+            <NumberInputs
               labels={"‎"}
               type={"number"}
               placeholder={"Ex:1"}
               name={"custom_fields.LandScapeNumber"}
               register={register}
-            ></Inputs>
+            ></NumberInputs>
           </span>
           <span className="w-[100%]">
-            <Inputs
+            <NumberInputs
               labels={"‎"}
               type={"number"}
               placeholder={"Ex:10"}
               name={"custom_fields.LandScapeNumber2"}
               register={register}
-            ></Inputs>
+            ></NumberInputs>
           </span>
           <span className="w-[100%]">
             <Selection

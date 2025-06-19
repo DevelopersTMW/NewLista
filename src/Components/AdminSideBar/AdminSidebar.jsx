@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-// COMPONETS 
+// COMPONETS
 import AdminNavbar from "../Navbar/AdminNavbar";
 // IMAGES
 import BlackLogo from "../../assets/BlackLogo.png";
@@ -9,19 +9,18 @@ import Dashboardicon1_3 from "../../assets/AdminIcon1.3.png";
 import Dashboardicon1_8 from "../../assets/AdminIcon1.8.png";
 import Dashboardicon1_11 from "../../assets/AdminIcon1.1.1.png";
 import Dashboardicon1_31 from "../../assets/Dashboardicon1.3.1.png";
-
+import { CreditCard, Headset } from "lucide-react";
 
 const AdminSidebar = ({ screen }) => {
-
   const location = useLocation();
   const [isMobileDrawerOpen, setIsMobileDrawerOpen] = useState(false);
 
-  const toggleDrawer = () => setIsMobileDrawerOpen(prev => !prev);
+  const toggleDrawer = () => setIsMobileDrawerOpen((prev) => !prev);
   const closeDrawer = () => setIsMobileDrawerOpen(false);
 
   return (
     <>
-      <div className="bg-[#F9F7FF] flex flex-col min-[890px]:flex-row gap-10 min-h-screen py-6 min-[890px]:py-8 justify-end ">
+      <div className="bg-[#F9F7FF] flex flex-col min-[890px]:flex-row gap-10 min-h-screen py-6 min-[890px]:py-6.5 justify-end ">
         {/* MOBILE SCREEN BUTTON */}
         <button
           type="button"
@@ -45,9 +44,11 @@ const AdminSidebar = ({ screen }) => {
         {/* SIDE BAR MENU  */}
         <aside
           id="logo-sidebar"
-          className={` overflow-y-auto  fixed top-0 left-0 z-40 w-[90%] min-[890px]:top-8  sm:w-[50%] md:w-[43%] lg:w-[35%] xl:w-[24%] lg:min-h-scren flex justify-center lg:justify-start flex-col transition-transform bg-white  min-[890px]:rounded-r-[20px]
-             h- min-[890px]:translate-x-0
-            ${isMobileDrawerOpen ? "translate-x-0" : "-translate-x-full"} min-[890px]:fixed `}
+          className={` overflow-y-auto  fixed top-0 left-0 z-40 w-[90%] min-[890px]:top-6.5  sm:w-[50%] md:w-[43%] lg:w-[35%] xl:w-[24%] flex justify-center lg:justify-start flex-col transition-transform bg-white  min-[890px]:rounded-r-[20px]
+              min-[890px]:translate-x-0
+            ${
+              isMobileDrawerOpen ? "translate-x-0" : "-translate-x-full"
+            } min-[890px]:fixed `}
           aria-label="Sidebar"
         >
           {/* CLOSE BUTTON - ONLY ON MOBILE */}
@@ -57,11 +58,7 @@ const AdminSidebar = ({ screen }) => {
             className="absolute top-10 right-10 inline-flex items-center p-2  text-gray-500 rounded-lg  focus:outline-none focus:ring-2 focus:ring-gray-200 min-[890px]:hidden"
           >
             <span className="sr-only">Close sidebar</span>
-            <svg
-              className="w-7 h-7"
-              fill="currentColor"
-              viewBox="0 0 20 20"
-            >
+            <svg className="w-7 h-7" fill="currentColor" viewBox="0 0 20 20">
               <path
                 fillRule="evenodd"
                 d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
@@ -69,10 +66,10 @@ const AdminSidebar = ({ screen }) => {
               />
             </svg>
           </button>
-          <div className="h-full py-10 md:py-10 lg:py-10 overflow-y-auto bg-white rounded-r-[20px]">
+          <div className="h-full py-10 md:py-10 lg:pt-9  overflow-y-auto bg-white rounded-r-[20px]">
             <Link
               to={"/"}
-              className="flex items-center px-7 pt-10 pb-8 min-[890px]:py-0 min-[890px]:justify-center min-[890px]:ps-2.5 min-[890px]:mb-10"
+              className="flex items-center px-7 pt-10 pb-6 min-[890px]:py-0 min-[890px]:justify-center min-[890px]:ps-2.5 min-[890px]:mb-8"
             >
               <img
                 src={BlackLogo}
@@ -80,19 +77,32 @@ const AdminSidebar = ({ screen }) => {
                 alt="NewLista Logo"
               />
             </Link>
-            <ul className="space-y-1.5 font-medium">
+            <ul className="space-y-1 font-medium">
               <li>
                 <Link
                   to={"/admin"}
-                  onClick={()=>{setIsMobileDrawerOpen(false)}}
-                  className={`flex items-center p-2 px-7 rounded-r-lg group gap-4 text-[#666666]  ${location.pathname === "/admin"
-                    ? "bg-PurpleColor text-white"
-                    : "text-[#666666]"
-                    }`}
+                  onClick={() => {
+                    setIsMobileDrawerOpen(false);
+                  }}
+                  className={`flex items-center p-2 px-7 rounded-r-lg group gap-4 text-[#666666]  ${
+                    location.pathname === "/admin"
+                      ? "bg-PurpleColor text-white"
+                      : "text-[#666666]"
+                  }`}
                 >
-                  {location.pathname === "/admin"
-                    ? <img className="h-5 w-5 sm:h-4.5 sm:w-5 2xl:w-6 2xl:h-6" src={Dashboardicon1_1} alt="" />
-                    : <img className="h-5 w-5 sm:h-4.5 sm:w-5 2xl:w-6 2xl:h-6" src={Dashboardicon1_11} alt="" />}
+                  {location.pathname === "/admin" ? (
+                    <img
+                      className="h-5 w-5 sm:h-4.5 sm:w-5 2xl:w-6 2xl:h-6"
+                      src={Dashboardicon1_1}
+                      alt=""
+                    />
+                  ) : (
+                    <img
+                      className="h-5 w-5 sm:h-4.5 sm:w-5 2xl:w-6 2xl:h-6"
+                      src={Dashboardicon1_11}
+                      alt=""
+                    />
+                  )}
                   <h1 className="font-Urbanist font-[500] sm:mt-1 text-[16px] 2xl:text-[19px]">
                     Dashboard
                   </h1>
@@ -101,11 +111,14 @@ const AdminSidebar = ({ screen }) => {
               <li>
                 <Link
                   to={"/admin/listing"}
-                  onClick={()=>{setIsMobileDrawerOpen(false)}}
-                  className={`flex items-center p-2 px-7 text-gray-900 rounded-r-lg group gap-4  ${location.pathname === "/admin/listing"
-                    ? "bg-PurpleColor text-white"
-                    : "text-[#666666]"
-                    }`}
+                  onClick={() => {
+                    setIsMobileDrawerOpen(false);
+                  }}
+                  className={`flex items-center p-2 px-7 text-gray-900 rounded-r-lg group gap-4  ${
+                    location.pathname === "/admin/listing"
+                      ? "bg-PurpleColor text-white"
+                      : "text-[#666666]"
+                  }`}
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -113,7 +126,7 @@ const AdminSidebar = ({ screen }) => {
                     viewBox="0 0 24 24"
                     strokeWidth="1.5"
                     stroke="currentColor"
-                   className="size-5.5 sm:size-6"
+                    className="size-5.5 sm:size-6"
                   >
                     <path
                       strokeLinecap="round"
@@ -130,15 +143,28 @@ const AdminSidebar = ({ screen }) => {
               <li>
                 <Link
                   to={"/admin/network"}
-                  onClick={()=>{setIsMobileDrawerOpen(false)}}
-                  className={`flex items-center p-2 px-7 text-gray-900 rounded-r-lg group gap-4  ${location.pathname === "/admin/network"
-                    ? "bg-PurpleColor text-white"
-                    : "text-[#666666]"
-                    }`}
+                  onClick={() => {
+                    setIsMobileDrawerOpen(false);
+                  }}
+                  className={`flex items-center p-2 px-7 text-gray-900 rounded-r-lg group gap-4  ${
+                    location.pathname === "/admin/network"
+                      ? "bg-PurpleColor text-white"
+                      : "text-[#666666]"
+                  }`}
                 >
-                  {location.pathname === "/admin/network"
-                    ? <img className="h-5 w-5 sm:h-4.5 sm:w-5 2xl:w-6 2xl:h-6" src={Dashboardicon1_31} alt="" />
-                    : <img className="h-5 w-5 sm:h-4.5 sm:w-5 2xl:w-6 2xl:h-6" src={Dashboardicon1_3} alt="" />}
+                  {location.pathname === "/admin/network" ? (
+                    <img
+                      className="h-5 w-5 sm:h-4.5 sm:w-5 2xl:w-6 2xl:h-6"
+                      src={Dashboardicon1_31}
+                      alt=""
+                    />
+                  ) : (
+                    <img
+                      className="h-5 w-5 sm:h-4.5 sm:w-5 2xl:w-6 2xl:h-6"
+                      src={Dashboardicon1_3}
+                      alt=""
+                    />
+                  )}
 
                   <h1 className="font-Urbanist font-[500] sm:mt-1 text-[16px] 2xl:text-[18px]">
                     My Network
@@ -148,11 +174,14 @@ const AdminSidebar = ({ screen }) => {
               <li>
                 <Link
                   to={"/admin/inbox"}
-                  onClick={()=>{setIsMobileDrawerOpen(false)}}
-                  className={`flex items-center p-2 px-7 text-gray-900 rounded-r-lg group gap-4  ${location.pathname === "/admin/inbox"
-                    ? "bg-PurpleColor text-white"
-                    : "text-[#666666]"
-                    }`}
+                  onClick={() => {
+                    setIsMobileDrawerOpen(false);
+                  }}
+                  className={`flex items-center p-2 px-7 text-gray-900 rounded-r-lg group gap-4  ${
+                    location.pathname === "/admin/inbox"
+                      ? "bg-PurpleColor text-white"
+                      : "text-[#666666]"
+                  }`}
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -177,11 +206,14 @@ const AdminSidebar = ({ screen }) => {
               <li>
                 <Link
                   to={"/admin/myoffers"}
-                  onClick={()=>{setIsMobileDrawerOpen(false)}}
-                  className={`flex items-center p-2 px-7 text-gray-900 rounded-r-lg group gap-4  ${location.pathname === "/admin/myoffers"
-                    ? "bg-PurpleColor text-white"
-                    : "text-[#666666]"
-                    }`}
+                  onClick={() => {
+                    setIsMobileDrawerOpen(false);
+                  }}
+                  className={`flex items-center p-2 px-7 text-gray-900 rounded-r-lg group gap-4  ${
+                    location.pathname === "/admin/myoffers"
+                      ? "bg-PurpleColor text-white"
+                      : "text-[#666666]"
+                  }`}
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -189,7 +221,7 @@ const AdminSidebar = ({ screen }) => {
                     viewBox="0 0 24 24"
                     strokeWidth="1.5"
                     stroke="currentColor"
-                   className="size-5.5 sm:size-6"
+                    className="size-5.5 sm:size-6"
                   >
                     <path
                       strokeLinecap="round"
@@ -211,11 +243,14 @@ const AdminSidebar = ({ screen }) => {
               <li>
                 <Link
                   to={"/admin/analytics"}
-                  onClick={()=>{setIsMobileDrawerOpen(false)}}
-                  className={`flex items-center p-2 px-7 text-gray-900 rounded-r-lg group gap-4  ${location.pathname === "/admin/analytics"
-                    ? "bg-PurpleColor text-white"
-                    : "text-[#666666]"
-                    }`}
+                  onClick={() => {
+                    setIsMobileDrawerOpen(false);
+                  }}
+                  className={`flex items-center p-2 px-7 text-gray-900 rounded-r-lg group gap-4  ${
+                    location.pathname === "/admin/analytics"
+                      ? "bg-PurpleColor text-white"
+                      : "text-[#666666]"
+                  }`}
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -240,11 +275,14 @@ const AdminSidebar = ({ screen }) => {
               <li>
                 <Link
                   to={"/admin/account-setting"}
-                  onClick={()=>{setIsMobileDrawerOpen(false)}}
-                  className={`flex items-center p-2 px-7 text-gray-900 rounded-r-lg  group gap-4  ${location.pathname === "/admin/account-setting"
-                    ? "bg-PurpleColor text-white"
-                    : ""
-                    }`}
+                  onClick={() => {
+                    setIsMobileDrawerOpen(false);
+                  }}
+                  className={`flex items-center p-2 px-7 text-gray-900 rounded-r-lg  group gap-4  ${
+                    location.pathname === "/admin/account-setting"
+                      ? "bg-PurpleColor text-white"
+                      : ""
+                  }`}
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -272,8 +310,36 @@ const AdminSidebar = ({ screen }) => {
                 </Link>
               </li>
               <li>
-                <Link to={"/admin/customer-support"} className="flex items-center p-2 px-7 text-gray-900 rounded-r-lg group gap-4">
-                  <img className="h-4.5 w-5 2xl:w-6 2xl:h-6" src={Dashboardicon1_8} alt="" />
+                <Link
+                  to={"/admin/subscription"}
+                  onClick={() => {
+                    setIsMobileDrawerOpen(false);
+                  }}
+                  className={`flex items-center p-2 px-7 text-gray-900 rounded-r-lg  group gap-4 pl-7.5  ${
+                    location.pathname === "/admin/subscription"
+                      ? "bg-PurpleColor text-white"
+                      : ""
+                  }`}
+                >
+                  <CreditCard size={20} className="l" />
+                  <h1 className="font-Urbanist font-[500] sm:mt-1 text-[16px] 2xl:text-[18px]">
+                    Subscription Settings
+                  </h1>
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to={"/admin/customer-support"}
+                  onClick={() => {
+                    setIsMobileDrawerOpen(false);
+                  }}
+                  className={`flex items-center p-2 px-7 text-gray-900 rounded-r-lg  group gap-4 pl-7.5  ${
+                    location.pathname === "/admin/customer-support"
+                      ? "bg-PurpleColor text-white"
+                      : ""
+                  }`}
+                >
+                  <Headset  size={20} className="l" />
                   <h1 className="font-Urbanist font-[500] sm:mt-1 text-[16px] 2xl:text-[18px]">
                     Help/Support
                   </h1>

@@ -8,7 +8,8 @@ import Shape from "../../assets/Shape.png";
 import Shape2 from "../../assets/Shape2.png";
 import PricingSec2_1 from "../../assets/PricingSec2.1.png";
 import HomeSec5_2 from "../../assets/HomeSec5.2.png";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import AlertModal from "../../Components/AlertModal/AlertModal";
 
 const free = [
   {
@@ -89,6 +90,22 @@ const premium = [
 
 const Pricing = () => {
   const [activeTab, setActiveTab] = useState("monthly");
+  const token = localStorage.getItem("token");
+  const navigate = useNavigate()
+
+  const alert = () => {
+    if (token) {
+      AlertModal({
+        icon: "error",
+        title: "Working In Progess",
+        iconColor: "#703BF7",
+        text: "This page is currently being updated. Please check back soon!",
+      });
+    }else{
+      navigate('/login')
+    }
+  };
+
   return (
     <>
       <Navbar></Navbar>
@@ -158,7 +175,7 @@ const Pricing = () => {
                     Desc={""}
                     benefits={free}
                     ButtonText={"Get started for free"}
-                    buttonlink={"/freemontlhy"}
+                    buttonlink={alert}
                   />
                   <PlansTabs
                     PlanCard={"New Investor Pro Pricing (Save $61)"}
@@ -167,7 +184,7 @@ const Pricing = () => {
                     Desc={""}
                     benefits={premium}
                     ButtonText={"Subscribe Now"}
-                    buttonlink={"/premiummontlhy"}
+                    buttonlink={alert}
                   />
                 </>
               )}
@@ -180,7 +197,7 @@ const Pricing = () => {
                     Desc={""}
                     benefits={free}
                     ButtonText={"Get started for free"}
-                    buttonlink={"/freeyear"}
+                    buttonlink={alert}
                   />
                   <PlansTabs
                     PlanCard={" New Investor Pro Pricing (Save $61)"}
@@ -189,7 +206,7 @@ const Pricing = () => {
                     Desc={""}
                     benefits={premium}
                     ButtonText={"Subscribe Now"}
-                    buttonlink={"/premiumyear"}
+                    buttonlink={alert}
                   />
                 </>
               )}

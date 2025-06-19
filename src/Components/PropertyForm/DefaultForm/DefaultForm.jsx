@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Inputs from "../../InputFields/Inputs";
 import Selection from "../../InputFields/Selection";
+import NumberInputs from "../../InputFields/NumberInputs";
 const currencies = [
   "USD",
   "EUR",
@@ -51,13 +52,13 @@ const DefaultForm = ({ propertyTypeName, register }) => {
             ></Selection>
           </span>
           <span className="">
-            <Inputs
+            <NumberInputs
               labels={"Monthly Rental*"}
-              type={"text"}
+              type={"number"}
               placeholder={"Ex: 10000"}
               name={"custom_fields.MonthlyRental"}
               register={register}
-            ></Inputs>
+            ></NumberInputs>
           </span>
           <span className="">
             <Selection
@@ -69,31 +70,31 @@ const DefaultForm = ({ propertyTypeName, register }) => {
             ></Selection>
           </span>
           <span className="">
-            <Inputs
+            <NumberInputs
               labels={"‎"}
               type={"text"}
               placeholder={"Ex: 10000"}
               name={"custom_fields.BuildingSizeNumber"}
               register={register}
-            ></Inputs>
+            ></NumberInputs>
           </span>
           <span className="">
-            <Inputs
+            <NumberInputs
               labels={"Building Levels"}
               type={"text"}
               placeholder={"Ex:1"}
               name={"custom_fields.BuildingLevels"}
               register={register}
-            ></Inputs>
+            ></NumberInputs>
           </span>
           <span className="">
-            <Inputs
+            <NumberInputs
               labels={"Year Built"}
               type={"number"}
               placeholder={"2020"}
               name={"custom_fields.YearBuilt"}
               register={register}
-            ></Inputs>
+            ></NumberInputs>
           </span>
           <span className="">
             <Selection
@@ -105,31 +106,31 @@ const DefaultForm = ({ propertyTypeName, register }) => {
             ></Selection>
           </span>
           <span className="">
-            <Inputs
+            <NumberInputs
               labels={"Parking Spaces"}
               type={"number"}
               placeholder={"Ex:1"}
               name={"custom_fields.ParkingSpace"}
               register={register}
-            ></Inputs>
+            ></NumberInputs>
           </span>
           <span className="">
-            <Inputs
+            <NumberInputs
               labels={"CAM (Common Area Maint..) Cost"}
               type={"number"}
               placeholder={"Ex: $1.00"}
               name={"custom_fields.CAM"}
               register={register}
-            ></Inputs>
+            ></NumberInputs>
           </span>
           <span className="">
-            <Inputs
+            <NumberInputs
               labels={"Number of Units"}
               type={"number"}
               placeholder={"Ex:1"}
               name={"custom_fields.NumberOfUnits"}
               register={register}
-            ></Inputs>
+            ></NumberInputs>
           </span>
           <span className="">
             <Selection
@@ -141,13 +142,13 @@ const DefaultForm = ({ propertyTypeName, register }) => {
             ></Selection>
           </span>
           <span className="">
-            <Inputs
+            <NumberInputs
               labels={"Percentage Leased (%)"}
               type={"number"}
               placeholder={"Ex: 75"}
               name={"custom_fields.PercentageLeased"}
               register={register}
-            ></Inputs>
+            ></NumberInputs>
           </span>
         </div>
       </div>

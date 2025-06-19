@@ -5,6 +5,7 @@ import Checkboxs from "../../InputFields/Checkboxs";
 import { Textarea } from "@headlessui/react";
 import UnitDetailsForm from "../../UnitDetailsForm/UnitDetailsForm";
 import { Controller } from "react-hook-form";
+import NumberInputs from "../../InputFields/NumberInputs";
 
 const currencies = [
   "USD",
@@ -57,13 +58,13 @@ const WareHouseForm = ({ propertyTypeName, register , control }) => {
               ></Selection>
             </span>
             <span className="w-[100%]">
-              <Inputs
+              <NumberInputs
                 labels={"Monthly Rental*"}
                 type={"text"}
                 placeholder={"Ex: 10000"}
                 name={"custom_fields.MonthlyRental"}
                 register={register}
-              ></Inputs>
+              ></NumberInputs>
             </span>
             <span className="w-[100%]">
               <Selection
@@ -75,31 +76,31 @@ const WareHouseForm = ({ propertyTypeName, register , control }) => {
               ></Selection>
             </span>
             <span className="w-[100%]">
-              <Inputs
+              <NumberInputs
                 labels={"‎"}
                 type={"text"}
                 placeholder={"Ex: 10000"}
                 name={"custom_fields.BuildingSizeNumber"}
                 register={register}
-              ></Inputs>
+              ></NumberInputs>
             </span>
             <span className="w-[100%]">
-              <Inputs
+              <NumberInputs
                 labels={"Ceiling Height (FT/M)"}
                 type={"number"}
                 placeholder={"Ex:1"}
                 name={"custom_fields.CeilingHeight"}
                 register={register}
-              ></Inputs>
+              ></NumberInputs>
             </span>
             <span className="w-[100%]">
-              <Inputs
+              <NumberInputs
                 labels={"Year Built"}
                 type={"number"}
                 placeholder={"2020"}
                 name={"custom_fields.YearBuilt"}
                 register={register}
-              ></Inputs>
+              ></NumberInputs>
             </span>
             <span className="w-[100%]">
               <Selection
@@ -111,13 +112,13 @@ const WareHouseForm = ({ propertyTypeName, register , control }) => {
               ></Selection>
             </span>
             <span className="w-[100%]">
-              <Inputs
+              <NumberInputs
                 labels={"‎"}
                 type={"number"}
                 placeholder={"Ex:1"}
                 name={"custom_fields.LandScapeNumber"}
                 register={register}
-              ></Inputs>
+              ></NumberInputs>
             </span>
             <span className="w-[100%]">
               <Selection
@@ -129,40 +130,40 @@ const WareHouseForm = ({ propertyTypeName, register , control }) => {
               ></Selection>
             </span>
             <span className="w-[100%]">
-              <Inputs
+              <NumberInputs
                 labels={"‎"}
                 type={"number"}
                 placeholder={"Ex:10"}
                 name={"custom_fields.LandScapeNumber2"}
                 register={register}
-              ></Inputs>
+              ></NumberInputs>
             </span>
             <span className="w-[100%]">
-              <Inputs
+              <NumberInputs
                 labels={"Overhead Doors"}
                 type={"number"}
                 placeholder={"Ex:1"}
                 name={"custom_fields.OverheadDoors"}
                 register={register}
-              ></Inputs>
+              ></NumberInputs>
             </span>
             <span className="w-[100%]">
-              <Inputs
+              <NumberInputs
                 labels={"Parking Space"}
                 type={"number"}
                 placeholder={"Ex:1"}
                 name={"custom_fields.ParkingSpace"}
                 register={register}
-              ></Inputs>
+              ></NumberInputs>
             </span>
             <span className="w-[100%]">
-              <Inputs
+              <NumberInputs
                 labels={"Number of Docks"}
                 type={"number"}
                 placeholder={"Ex:1"}
                 name={"custom_fields.NumberOfDocks"}
                 register={register}
-              ></Inputs>
+              ></NumberInputs>
             </span>
             <span className="w-[100%]">
               <Selection
@@ -174,22 +175,22 @@ const WareHouseForm = ({ propertyTypeName, register , control }) => {
               ></Selection>
             </span>
             <span className="w-[100%]">
-              <Inputs
+              <NumberInputs
                 labels={"Ground Level Docks"}
                 type={"number"}
                 placeholder={"Ex:75"}
-                name={"custom_fields.Ground-Level-Docks "}
+                name={"custom_fields.GroundLevelDocks "}
                 register={register}
-              ></Inputs>
+              ></NumberInputs>
             </span>
             <span className="w-[100%]">
-              <Inputs
+              <NumberInputs
                 labels={"High Level Docks"}
                 type={"number"}
                 placeholder={"Ex:1"}
-                name={"custom_fields.High-Level-Docks"}
+                name={"custom_fields.HighLevelDocks"}
                 register={register}
-              ></Inputs>
+              ></NumberInputs>
             </span>
         </div>
       </div>

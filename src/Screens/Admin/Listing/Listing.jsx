@@ -9,11 +9,12 @@ import SortIcon from "../../../assets/SortIcon1.1.png";
 
 import RightSideArrow from "../../../assets/ListingRightSideArrow.png";
 import LeftSideArrow from "../../../assets/ListingLeftSideArrow.png";
-import ListingImage1_1 from "../../../assets/listing1.1.png"
-import ListingImage1_2 from "../../../assets/listing1.2.png"
-import ListingImage1_3 from "../../../assets/listing1.3.png"
-import ListingImage1_4 from "../../../assets/listing1.4.png"
+import ListingImage1_1 from "../../../assets/listing1.1.png";
+import ListingImage1_2 from "../../../assets/listing1.2.png";
+import ListingImage1_3 from "../../../assets/listing1.3.png";
+import ListingImage1_4 from "../../../assets/listing1.4.png";
 import { Link } from "react-router-dom";
+import ListingTable from "./ListingSection/ListingTable/ListingTable.jsx";
 
 const ListItem = [
   {
@@ -61,7 +62,6 @@ const ListItem = [
 ];
 
 const Listing = () => {
-
   const [showMobileFilter, setShowMobileFilter] = useState(false);
 
   const [isFilterOpen, setIsFilterOpen] = useState(false);
@@ -75,17 +75,15 @@ const Listing = () => {
           <h1 className="font-Urbanist text-[#222222] text-[30px] font-[700]">
             My Listings
           </h1>
-          <Link to={'/create-property'}>
+          <Link to={"/create-property"}>
             <button className="text-[13.5px] px-3 sm:px-5 md:text-[15px] font-Inter hover-btn hover-btn-black  bg-[#1E1E1E] text-white py-2.5 sm:py-3 max-[350px]:text-[12.5px] rounded-[7px]">
               <span>Add New Property</span>
             </button>
           </Link>
-
         </div>
       </section>
 
-      {/* TABLE SECTION */}
-      <section className=" bg-white rounded-[20px] w-[100%] px-4 sm:px-0 py-5">
+      <section className=" bg-white rounded-t-[20px] w-[100%] px-4 sm:px-0 pt-5">
         {/* UPPER TAB  */}
         <div className="flex sm:gap-5 sm:px-7 bg-white">
           {/* SEARCH  */}
@@ -100,9 +98,9 @@ const Listing = () => {
               >
                 <path
                   stroke="currentColor"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
                   d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
                 />
               </svg>
@@ -229,10 +227,15 @@ const Listing = () => {
               onClick={() => setIsFilterOpen(true)}
               className="bg-[#1E1E1E] text-white py-2.5 pl-3.5 pr-9.5 lg:pl-5 lg:pr-10 rounded-[10px] flex items-center gap-2"
             >
-              <img className="w-5 h-5 lg:w-7 lg:h-7" src={FilterIcon} alt="Filter" />
-              <span className="font-Urbanist font-medium text-[15px] lg:text-[18px]">Filter</span>
+              <img
+                className="w-5 h-5 lg:w-7 lg:h-7"
+                src={FilterIcon}
+                alt="Filter"
+              />
+              <span className="font-Urbanist font-medium text-[15px] lg:text-[18px]">
+                Filter
+              </span>
             </button>
-
           </div>
           {/* Fullscreen filter drawer (visible when isFilterOpen === true) */}
           {isFilterOpen && (
@@ -264,21 +267,30 @@ const Listing = () => {
               <div className="flex flex-col gap-4">
                 <button className="bg-[#1E1E1E] text-white py-2.5 px-4 rounded-[7px] flex items-center gap-2 w-full">
                   <img className="w-5 h-5" src={FilterIcon} alt="Sort" />
-                  <span className="font-Urbanist font-medium text-[14px]">Sort by</span>
+                  <span className="font-Urbanist font-medium text-[14px]">
+                    Sort by
+                  </span>
                 </button>
 
-                {[["Recently Added", "Paused"], ["Name", "Paused"], ["Location", "Paused"]].map(
-                  (options, idx) => (
-                    <select
-                      key={idx}
-                      className="w-full h-12 text-[#444444] font-semibold font-Urbanist text-[14px] rounded-[6px] border border-[#F3EEFF] outline-none"
-                    >
-                      {options.map((opt) => (
-                        <option className="text-[12.5px] font-Urbanist font-[600]" key={opt}>{opt}</option>
-                      ))}
-                    </select>
-                  )
-                )}
+                {[
+                  ["Recently Added", "Paused"],
+                  ["Name", "Paused"],
+                  ["Location", "Paused"],
+                ].map((options, idx) => (
+                  <select
+                    key={idx}
+                    className="w-full h-12 text-[#444444] font-semibold font-Urbanist text-[14px] rounded-[6px] border border-[#F3EEFF] outline-none"
+                  >
+                    {options.map((opt) => (
+                      <option
+                        className="text-[12.5px] font-Urbanist font-[600]"
+                        key={opt}
+                      >
+                        {opt}
+                      </option>
+                    ))}
+                  </select>
+                ))}
 
                 <button className="flex items-center gap-2 justify-end mt-2">
                   <span className="font-Urbanist font-medium text-[15px] text-[#E31D1C]">
@@ -290,82 +302,12 @@ const Listing = () => {
             </div>
           )}
         </div>
-
-        {/* LOWER TAB  */}
-        <div className="mt-7  sm:mt-10 sm:px-4 md:px-7 bg-white w-[98%] rounded-[13px]  xl:w-full overflow-x-auto">
-          <table className="min-w-[880px] w-full text-sm text-left rtl:text-right text-gray-500 bg-[#fcfcfc]">
-            <thead className="text-[13.5px] tracking-[1.5px] sm:tracking-normal sm:text-[14px] md:text-[15px] text-white font-Urbanist uppercase bg-[#1E1E1E]">
-              <tr>
-                <th className="px-6 py-4.5 rounded-tl-2xl">Property Name & Address</th>
-                <th className="px-6 py-4.5">Type</th>
-                <th className="px-6 py-4.5">Price</th>
-                <th className="px-6 py-4.5">Status</th>
-                <th className="px-6 py-4.5">Date Listed</th>
-                <th className="px-6 py-4.5 rounded-tr-3xl">Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {ListItem.map((items, index) => (
-                <tr
-                  key={index}
-                  className="bg-white border-b border-gray-200 hover:bg-gray-50font-Urbanist"
-                >
-                  <th
-                    scope="row"
-                    className="w-[30%] text-[14px]  px-4 py-6 font-medium text-gray-900 whitespace-nowra sm:text-[14px] md:text-[16px]"
-                  >
-                    {items.name}
-                  </th>
-                  <td className="w-[15%] text-center px-3.5 py-6 text-[#222222] font-[550] text-[16px]">
-                    {items.type}
-                  </td>
-                  <td className="w-[15%] text-center px-3.5 py-6 text-[#222222] font-[550] text-[16px]">
-                    {items.price}
-                  </td>
-                  <td className=" px-3.5 py-6 text-[#222222] font-[550] text-[16px] flex gap-1 items-center mt-3 ml-2 sm:ml-0 sm:mt-2.5">
-                    <div
-                      className={`h-2 w-2 rounded-full ${items.status === "Active"
-                          ? "bg-[#02E327]"
-                          : items.status === "Sold"
-                            ? "bg-[#E31D1C]"
-                            : "bg-[#4379EE]"
-                        }`}
-                    ></div>
-                    {items.status}
-                  </td>
-                  <td className="w-[35%] sm:w-[20%] px-3.5 py-6 text-[#222222] font-[550] text-[16px]">
-                    {items.datelisted}
-                  </td>
-                  <td className="px-4 py-6 text-[#222222] font-[550] text-[16px] flex gap-3 justify-center">
-                    <img className="w-5.5 h-5.5" src={EditIcon} alt="Edit" />
-                    <img className="w-6 h-6" src={DownloadIcon} alt="Download" />
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-
       </section>
 
-      {/* ARROW SECTION  */}
-      <section className="mt-3 flex justify-between items-center px-5">
-        <div>
-          <h1 className="font-Urbanist font-semibold text-[16px] sm:text-[17px]">
-            Page 1 of 13
-          </h1>
-        </div>
-        <div>
-          <div className="border-[1px] border-solid border-[#222222] flex rounded-[7px] ">
-            <span className="border-r-[1px] border-solid border-[#BBBBBB] px-3.5 py-2">
-              <img className="w-2.5 h-3" src={RightSideArrow} alt="" />
-            </span>
-            <span className="px-3 py-2">
-              <img className="w-2.5 h-3" src={LeftSideArrow} alt="" />
-            </span>
-          </div>
-        </div>
-      </section>
+      {/* TABLE SECTION */}
+      <ListingTable></ListingTable>
+
+     
 
       {/* HEADING SECTION  */}
       <section className="pt-6 pb-4 sm:py-6 px-2 sm:px-0 ">

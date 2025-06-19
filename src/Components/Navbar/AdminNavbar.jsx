@@ -8,10 +8,12 @@ import {
 import { BellIcon } from "@heroicons/react/24/outline";
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
-import ConfirmationModal from "../ConfirmationModal/ConfirmationModal";
-import { useConfirmation } from "../../Screens/Admin/AccountSetting/Fields/Confirmation";
 import { UserRoundCheck } from "lucide-react";
 import { useSelector } from "react-redux";
+
+// COMPONENTS
+import ConfirmationModal from "../ConfirmationModal/ConfirmationModal";
+import { useConfirmation } from "../../Screens/Admin/AccountSetting/Fields/Confirmation";
 
 // IMAGES
 import DummyLogo from "../../../public/Images/UnknowUser.png";
@@ -33,16 +35,21 @@ function AdminNavbar() {
     const confirmed = await confirm();
     if (confirmed) {
       setloading(true);
-      localStorage.removeItem("token");
-      navigate("/login");
 
       try {
-        const response = await axios.post(`${ApiKey}/logout`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "content-type": "application/json",
-          },
-        });
+        const response = await axios.post(
+          `${ApiKey}/logout`,
+          {}, 
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+              Accept: "application/json",
+              "Content-Type": "application/json",
+            },
+          }
+        );
+        localStorage.removeItem("token");
+        navigate("/login");
         console.log(response);
       } catch (error) {
         console.error(error);

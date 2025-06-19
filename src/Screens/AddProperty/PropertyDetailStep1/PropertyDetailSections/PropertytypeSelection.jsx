@@ -27,20 +27,26 @@ const propertyTypes = [
   "Other",
 ];
 
-const PropertytypeSelection = ({ PropertyRadios, register, errors, watch , setValue }) => {
+const PropertytypeSelection = ({
+  PropertyRadios,
+  register,
+  errors,
+  watch,
+  setValue,
+}) => {
   const salePrice = watch("salePrice");
   const noi = watch("Noi");
 
   const capRate = useMemo(() => {
-    const price = parseFloat(salePrice);
-    const income = parseFloat(noi);
+    const price = parseFloat((salePrice || "").toString().replace(/,/g, ""));
+    const income = parseFloat((noi || "").toString().replace(/,/g, ""));
 
     if (!price || !income || price === 0) return null;
 
     return (income * 100) / price;
   }, [salePrice, noi]);
 
-  setValue("CapRate" , capRate )
+  setValue("CapRate", capRate);
 
   return (
     <div className="flex flex-col gap-6 pb-10">
@@ -88,24 +94,30 @@ const PropertytypeSelection = ({ PropertyRadios, register, errors, watch , setVa
           PropertyRadios === "Both (For Sale & For Lease)") && (
           <span className="grid grid-cols-2 gap-5">
             <span className="">
-              <Inputs
+              <NumberInputs
                 labels={"Sale Price"}
                 type={"number"}
+                name="salePrice"
                 placeholder={"Enter Price"}
                 register={register("salePrice", {
                   required: "Sales Price is required",
                 })}
+                setValue={setValue}
+                watch={watch}
                 error={errors.salePrice?.message}
               />
             </span>
             <span className="">
-              <Inputs
+              <NumberInputs
+                name="Noi"
                 labels={"NOI (Net Operating Income)"}
                 type={"number"}
                 placeholder={"Enter Price"}
                 register={register("Noi", {
                   required: "Net Operating Income is required",
                 })}
+                setValue={setValue}
+                watch={watch}
                 error={errors.Noi?.message}
               />
             </span>
@@ -135,13 +147,16 @@ const PropertytypeSelection = ({ PropertyRadios, register, errors, watch , setVa
           PropertyRadios === "Both (For Sale & For Lease)") && (
           <span className="flex gap-4">
             <span className="w-[100%]">
-              <Inputs
+              <NumberInputs
                 labels={"Lease Rate"}
                 type={"number"}
+                name={"leaseRate"}
                 placeholder={"Enter Price"}
                 register={register("leaseRate", {
                   required: "Lease Rate is required",
                 })}
+                setValue={setValue}
+                watch={watch}
                 error={errors.leaseRate?.message}
               />
             </span>
@@ -166,13 +181,16 @@ const PropertytypeSelection = ({ PropertyRadios, register, errors, watch , setVa
         )}
 
         <span className="">
-          <Inputs
+          <NumberInputs
             labels={"Building Size (sq ft)"}
             type={"number"}
+            name={"BuildingSize_sqft"}
             placeholder={"Total Building Square Footage"}
             register={register("BuildingSize_sqft", {
               required: "Building Size is required",
             })}
+            setValue={setValue}
+            watch={watch}
             error={errors.BuildingSize_sqft?.message}
           />
         </span>

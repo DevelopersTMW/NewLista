@@ -2,18 +2,27 @@ import { Building, DollarSign, Image, Phone } from "lucide-react";
 import Checkboxs from "../../../Components/InputFields/Checkboxs";
 import PropertyDetail from "./PropertyDetail/PropertyDetail";
 import { Controller, useForm } from "react-hook-form";
+import { useEffect } from "react";
 
 const Step3 = ({ formData, onBack, onSubmit }) => {
   const {
     control,
+    reset,
     handleSubmit,
     formState: { errors },
   } = useForm({
     defaultValues: {
       confirmInfo: false,
       authorizedToList: false,
-    },
+    }, 
   });
+  useEffect(() => {
+  if (formData) {
+    reset(); 
+  }
+}, [formData, reset]);
+
+console.log(formData);
 
   const handleFinalSubmit = (data) => {
     const finalData = { ...formData, ...data };
@@ -64,7 +73,7 @@ const Step3 = ({ formData, onBack, onSubmit }) => {
               <div className="w-full overflow-hidden relative h-[400px] bg-[#f5f5f5] mt-7 rounded-lg">
                 <img
                   className="object-cover w-full h-full"
-                  src={URL.createObjectURL(formData.fileInput[0])}
+                  src={ URL.createObjectURL(formData.fileInput[0])}
                   alt=""
                 />
               </div>

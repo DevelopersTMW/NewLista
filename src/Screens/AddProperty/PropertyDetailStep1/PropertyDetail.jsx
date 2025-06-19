@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 
 import DefaultForm from "../../../Components/PropertyForm/DefaultForm/DefaultForm.jsx";
@@ -16,6 +16,7 @@ import PropertyRadios from "./PropertyDetailSections/PropertyRadio.jsx";
 import PropertytypeSelection from "./PropertyDetailSections/PropertytypeSelection.jsx";
 import FormattedNumberInput from "../../../Components/InputFields/NumberInputs.jsx";
 import Inputs from "../../../Components/InputFields/Inputs.jsx";
+import NumberInputs from "../../../Components/InputFields/NumberInputs.jsx";
 
 const Step1 = ({ onNext, defaultValues }) => {
   const {
@@ -29,6 +30,13 @@ const Step1 = ({ onNext, defaultValues }) => {
   } = useForm({
     defaultValues,
   });
+
+  useEffect(() => {
+    if (defaultValues && Object.keys(defaultValues).length > 0) {
+      console.log("Step1", defaultValues);
+      reset(defaultValues);
+    }
+  }, [defaultValues, reset]);
 
   // CHECK RADIO VALUE
   const PropertyRadio = watch("propertyType");
@@ -76,7 +84,7 @@ const Step1 = ({ onNext, defaultValues }) => {
           <PropertyRadios register={register}></PropertyRadios>
           <div className="border border-[#ececec] rounded-2xl mx-3 md:mx-0 px-3 md:px-5 py-8">
             <PropertytypeSelection
-            setValue={setValue}
+              setValue={setValue}
               watch={watch}
               PropertyRadios={PropertyRadio}
               register={register}

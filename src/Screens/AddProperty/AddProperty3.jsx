@@ -12,7 +12,7 @@ import Spinner from "../../Components/Spinner/Spinner.jsx";
 import AddPropertyBanner from "../../assets/AddPropertyBanner1.1.jpg";
 import axios from "axios";
 import AlertModal from "../../Components/AlertModal/AlertModal.js";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const PropertyForm = () => {
   const stepRef = useRef(null);
@@ -22,6 +22,10 @@ const PropertyForm = () => {
   const [formData, setFormData] = useState({});
   const ApiKey = import.meta.env.VITE_API_KEY;
   const token = localStorage.getItem("token");
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const editId = queryParams.get("editId");
+
   const navigate = useNavigate();
 
   if (stepRef.current) {
@@ -30,6 +34,8 @@ const PropertyForm = () => {
       block: "start",
     });
   }
+
+  console.log(formData);
 
   const nextStep = (data) => {
     setFormData((prev) => ({ ...prev, ...data }));
@@ -50,6 +56,7 @@ const PropertyForm = () => {
         `${ApiKey}/add-update-property`,
 
         {
+          property_id: editId,
           property_name: formData.PropertyTitle,
 
           listing_type: formData.propertyType,
@@ -86,9 +93,9 @@ const PropertyForm = () => {
           owner_financing: formData.OwnerFinancing ? 1 : 0,
           noi: formData.Noi,
           cap_rate: formData.CapRate,
-          show_phone : formData.ShowNumber ? 1 : 0,
-          show_email : formData.ShowEmail ? 1 : 0,
-          custom_fields: formData.custom_fields
+          show_phone: formData.ShowNumber ? 1 : 0,
+          show_email: formData.ShowEmail ? 1 : 0,
+          custom_fields: formData.custom_fields,
         },
         {
           headers: {
@@ -97,6 +104,7 @@ const PropertyForm = () => {
           },
         }
       );
+
       AlertModal({
         icon: "success",
         title: "Thank You",
@@ -113,13 +121,62 @@ const PropertyForm = () => {
     }
   };
 
+  useEffect(() => {
+    if (editId) {
+      fetchPropertyData(editId);
+    }
+  }, [editId]);
+
+  const fetchPropertyData = async (id) => {
+    try {
+      setloading(true);
+
+      const response = await axios.get(`${ApiKey}/view-property/${id}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      const data = response.data?.data;
+
+      if (data) {
+        setFormData({
+          PropertyTitle: data.property_name,
+          propertyType: data.listing_type,
+          propertyName: data.property_type,
+          ListingStatus: data.listing_status,
+          leaseRate: data.lease_rate || "",
+          persf: data.lease_rate_unit || "",
+          leaseType: data.lease_type || "",
+          BuildingSize_sqft: data.building_size || "",
+          salePrice: data.sale_price || "",
+          PropertyAddress: data.address || "",
+          City: data.city || "",
+          StateProvince: data.state || "",
+          ZipPostalCode: data.zip || "",
+          description: data.description || "",
+          fileInput: data.images || [],
+          FeaturedListing: data.featured_listing === true,
+          OffTheMarketListing: data.off_market_listing === true,
+          OwnerFinancing: data.owner_financing === true,
+          ShowNumber: data.show_phone === true,
+          ShowEmail: data.show_email === true,
+          Noi: data.noi || "",
+          CapRate: data.cap_rate || "",
+          custom_fields: data.custom_fields || {},
+        });
+      }
+    } catch (error) {
+      console.error("Failed to fetch property:", error);
+    } finally {
+      setloading(false);
+    }
+  };
+
   const steps = [
     <Step1 onNext={nextStep} defaultValues={formData} />,
     <Step2 onNext={nextStep} onBack={prevStep} defaultValues={formData} />,
     <Step3
       onBack={prevStep}
       onSubmit={handleFinalSubmit}
-      formData={formData}
+      formData={loading ? "loading..." : formData}
     />,
   ];
 
@@ -182,9 +239,10 @@ const PropertyForm = () => {
           {loading ? (
             <div className="h-[100vh] flex justify-center items-center">
               <Spinner style={"w-14 h-20 text-PurpleColor z-50"} />
-            </div> ) : <div>{steps[currentStep]}</div>
-          }
-          
+            </div>
+          ) : (
+            <div>{steps[currentStep]}</div>
+          )}
         </div>
       </section>
 

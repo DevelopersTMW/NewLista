@@ -62,7 +62,8 @@ const PlansTabs = ({ PlanNum, PlanCard, Name, Desc, ButtonText , benefits ,butto
           ))}
           
         </ul>
-        <Link to={buttonlink}
+        <Link 
+        onClick={buttonlink}
           className={
             "bg-PurpleColor text-white shadow-xs hover:bg-indigo-400 focus-visible:outline-indigo-500 mt-8 block rounded-md px-3.5 py-2.5 text-center max-[350px]:text-[16px] text-[18px] font-semibold focus-visible:outline-2 focus-visible:outline-offset-2 sm:mt-10"
           }

@@ -1,4 +1,5 @@
 import Inputs from "../../InputFields/Inputs";
+import NumberInputs from "../../InputFields/NumberInputs";
 import Selection from "../../InputFields/Selection";
 
 const currencies = [
@@ -15,13 +16,13 @@ const RentailForm = ({ propertyTypeName, register }) => {
             <Selection labels={"Currency"} defaultOption={"Select Your Currency"} Options={currencies}></Selection>
           </span>
           <span className="w-[100%]">
-            <Inputs
+            <NumberInputs
               labels={"Monthly Rental*"}
               type={"text"}
               placeholder={"Ex: 10000"}
               name={"custom_fields.MonthlyRental"}
               register={register}
-            ></Inputs>
+            ></NumberInputs>
           </span>
           <span className="w-[100%]">
             <Selection
@@ -33,31 +34,31 @@ const RentailForm = ({ propertyTypeName, register }) => {
             ></Selection>
           </span>
           <span className="w-[100%]">
-            <Inputs
+            <NumberInputs
               labels={"‎"}
               type={"text"}
               placeholder={"Ex: 10000"}
               name={"custom_fields.BuildingSizeNumber"}
               register={register}
-            ></Inputs>
+            ></NumberInputs>
           </span>
           <span className="w-[100%]">
-            <Inputs
+            <NumberInputs
               labels={"Building Levels"}
               type={"text"}
               placeholder={"Ex:1"}
               name={"custom_fields.BuildingLevels"}
               register={register}
-            ></Inputs>
+            ></NumberInputs>
           </span>
           <span className="w-[100%]">
-            <Inputs
+            <NumberInputs
               labels={"Year Built"}
               type={"number"}
               placeholder={"2020"}
               name={"custom_fields.YearBuilt"}
               register={register}
-            ></Inputs>
+            ></NumberInputs>
           </span>
           <span className="w-[100%]">
             <Selection
@@ -69,13 +70,13 @@ const RentailForm = ({ propertyTypeName, register }) => {
             ></Selection>
           </span>
           <span className="w-[100%]">
-            <Inputs
+            <NumberInputs
               labels={"‎ "}
               type={"number"}
               placeholder={"Ex:1"}
               name={"custom_fields.LandScapeNumber"}
               register={register}
-            ></Inputs>
+            ></NumberInputs>
           </span>
           <span className="w-[100%]">
             <Selection
@@ -87,13 +88,13 @@ const RentailForm = ({ propertyTypeName, register }) => {
             ></Selection>
           </span>
           <span className="w-[100%]">
-            <Inputs
+            <NumberInputs
               labels={"‎ "}
               type={"number"}
               placeholder={"Ex:1"}
               name={"custom_fields.LandScapeNumber2"}
               register={register}
-            ></Inputs>
+            ></NumberInputs>
           </span>
           <span className="w-[100%]">
             <Selection
@@ -105,22 +106,22 @@ const RentailForm = ({ propertyTypeName, register }) => {
             ></Selection>
           </span>
           <span className="w-[100%]">
-            <Inputs
+            <NumberInputs
               labels={"Parking Spaces"}
               type={"number"}
               placeholder={"Ex:1"}
-              name={"custom_fields.Parking-Space"}
+              name={"custom_fields.ParkingSpace"}
               register={register}
-            ></Inputs>
+            ></NumberInputs>
           </span>
           <span className="w-[100%]">
-            <Inputs
+            <NumberInputs
               labels={"Number of Units"}
               type={"number"}
               placeholder={"Ex:1"}
               name={"custom_fields.NumberOfUnits"}
               register={register}
-            ></Inputs>
+            ></NumberInputs>
           </span>
           <span className="w-[100%]">
             <Selection
@@ -132,13 +133,13 @@ const RentailForm = ({ propertyTypeName, register }) => {
             ></Selection>
           </span>
           <span className="w-[100%]">
-            <Inputs
+            <NumberInputs
               labels={"Percentage Leased (%)"}
               type={"number"}
               placeholder={"Ex:75"}
-              name={"custom_fields.Percentage-Lease"}
+              name={"custom_fields.PercentageLease"}
               register={register}
-            ></Inputs>
+            ></NumberInputs>
           </span>
         </div>
     </div>
