@@ -68,7 +68,6 @@ const InvestorCarousel = () => {
         navigate("/pricing");
         setShowModal(false);
       });
-      alert("Please login to connect");
     } else {
       Swal.fire({
         icon: "info",
@@ -114,9 +113,6 @@ const InvestorCarousel = () => {
         navigate("/pricing");
         setShowModal(false);
       });
-      // Your modal logic or redirect here
-      // Example:
-      alert("Please login to connect");
     } else {
       Swal.fire({
         icon: "info",

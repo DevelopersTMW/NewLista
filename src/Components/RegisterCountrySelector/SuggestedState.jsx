@@ -65,17 +65,16 @@ const SuggestedState = ({ onSelect, register, errors }) => {
 
   const handleChange = (e) => {
     const value = e.target.value;
-    setInputValue(value);
+    setInputValue(value); // ✅ Keep user's input
     const filtered = statesArray.filter((state) =>
       state.name.toLowerCase().startsWith(value.toLowerCase())
     );
-    setInputValue('')
-    setSuggestions(filtered);
+    setSuggestions(filtered); // ✅ Update suggestions based on input
   };
 
   const handleFocus = () => {
     if (!inputValue.trim()) {
-      setSuggestions(statesArray); 
+      setSuggestions(statesArray);
     }
   };
 
@@ -119,7 +118,7 @@ const SuggestedState = ({ onSelect, register, errors }) => {
         className="w-full p-2 rounded bg-[#F3EEFF] text-sm py-3.5 font-Urbanist font-[600] outline-none focus:outline-none"
       />
       {suggestions.length > 0 && (
-        <ul className="absolute z-10 w-[50%] bg-white mt-1 rounded shadow max-h-40 overflow-auto">
+        <ul className="absolute z-50 w-[50%] bg-white mt-1 rounded shadow max-h-40 overflow-auto">
           {suggestions.map((state) => (
             <li
               key={state.code}

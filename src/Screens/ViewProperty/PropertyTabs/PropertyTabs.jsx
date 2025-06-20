@@ -1,6 +1,7 @@
 import React, { useState, useEffect, Fragment } from "react";
 import { Tab, TabGroup, TabList } from "@headlessui/react";
 import classNames from "classnames";
+import { Grip } from "lucide-react";
 import ViewPropertyIcon1 from "../../../assets/ViewPropertyIcon1.png";
 import ViewPropertyIcon2 from "../../../assets/ViewPropertyIcon2.png";
 import ViewPropertyIcon3 from "../../../assets/ViewPropertyIcon3.png";
@@ -10,17 +11,6 @@ import ViewPropertyIcon6 from "../../../assets/ViewPropertyIcon6.png";
 import ViewPropertyIcon7 from "../../../assets/ViewPropertyIcon7.png";
 import ViewPropertyIcon8 from "../../../assets/ViewPropertyIcon8.png";
 import ViewPropertyIcon9 from "../../../assets/ViewPropertyIcon9.png";
-import {
-  Building2,
-  Church,
-  Ellipsis,
-  EllipsisVertical,
-  Grip,
-  Hotel,
-  RectangleEllipsis,
-  RollerCoaster,
-  Warehouse,
-} from "lucide-react";
 
 const propertyType = [
   { name: "All Properties", icon: ViewPropertyIcon1 },
@@ -49,12 +39,8 @@ const propertyType = [
   { name: "Other", icon: ViewPropertyIcon2 },
 ];
 
-// Dummy icon as a colored square (replace with your actual icons)
-const DummyIcon = () => <div className="w-6 h-6 bg-Paracolor rounded"></div>;
-
-function ResponsiveTabs() {
+function ResponsiveTabs({ onTabSelect }) {
   const [showMoreTabs, setShowMoreTabs] = useState(false);
-
   const [visibleTabs, setVisibleTabs] = useState(2);
   const [selectedIndex, setSelectedIndex] = useState(0);
 
@@ -84,72 +70,84 @@ function ResponsiveTabs() {
   const mainTabs = tabItems.slice(0, visibleTabs);
   const moreTabs = tabItems.slice(visibleTabs);
 
+  // Notify parent when selectedIndex changes
+  useEffect(() => {
+    if (onTabSelect) {
+      const selectedTab = tabItems[selectedIndex]?.label;
+      if (selectedTab) {
+        onTabSelect(selectedTab);
+      }
+    }
+  }, [selectedIndex]);
+
   return (
     <div className="relative">
-      {/* <TabGroup selectedIndex={selectedIndex} onChange={setSelectedIndex}> */}
-      <TabList className="flex items-end justify-center gap-7 sm:gap-8 md: flex-wrap">
-        {mainTabs.map((item, idx) => (
-          <Tab as={Fragment} key={idx}>
-            {({ selected }) => (
-              <span
-                className={classNames(
-                  "flex flex-col items-center pb-3.5 cursor-pointer focus:outline-none",
-                  selected
-                    ? "border-b-2  font-semibold"
-                    : "border-b-2 border-transparent "
-                )}
-              >
-                <img className="w-[25px]" src={item.icon} alt="" />
-                <span className="text-[13.5px] mt-1 font-Urbanist font-[600]">
-                  {item.label}
+      <TabGroup selectedIndex={selectedIndex} onChange={setSelectedIndex}>
+        <TabList className="flex items-end justify-center gap-7 sm:gap-8 flex-wrap">
+          {mainTabs.map((item, idx) => (
+            <Tab as={Fragment} key={idx}>
+              {({ selected }) => (
+                <span
+                  className={classNames(
+                    "flex flex-col items-center pb-3.5 cursor-pointer focus:outline-none",
+                    selected
+                      ? "border-b-2 font-semibold"
+                      : "border-b-2 border-transparent"
+                  )}
+                >
+                  <img className="w-[25px]" src={item.icon} alt="" />
+                  <span className="text-[13.5px] mt-1 font-Urbanist font-[600]">
+                    {item.label}
+                  </span>
                 </span>
-              </span>
-            )}
-          </Tab>
-        ))}
-        {moreTabs.length > 0 && (
-          <div className="relative">
-            <span
-              className="flex items-center pb-8 text-gray-600 hover:text-Paracolor cursor-pointer"
-              onClick={() => setShowMoreTabs(!showMoreTabs)}
-            >
-              <Grip />
-            </span>
+              )}
+            </Tab>
+          ))}
 
-            {showMoreTabs && (
-              <div className="absolute top-full left-1/2 -translate-x-1/2 bg-white border border-gray-200 rounded-md shadow-lg mt-1 w-48 max-h-64 overflow-auto z-20">
-                <TabList className="flex flex-col py-4">
-                  {moreTabs.map((item, idx) => (
-                    <Tab key={visibleTabs + idx} as={Fragment}>
-                      {({ selected }) => (
-                        <div
-                          className="flex items-center px-4 py-2 border-b-[1px] border-[#e9e9e9] hover:bg-[#ececec] hover:text-white"
-                          onClick={() => setShowMoreTabs(false)} // Close dropdown on selection
-                        >
-                          <span>
-                            <img className="w-[24px]" src={item.icon} alt="" />
-                          </span>
-                          <span
-                            className={classNames(
-                              "block font-Urbanist text-[17px] font-[600] px-4 py-2 cursor-pointer rounded-md leading-[19px]",
-                              selected
-                                ? "bg-Paracolor text-white"
-                                : "text-gray-800"
-                            )}
+          {moreTabs.length > 0 && (
+            <div className="relative">
+              <span
+                className="flex items-center pb-8 text-gray-600 hover:text-Paracolor cursor-pointer"
+                onClick={() => setShowMoreTabs(!showMoreTabs)}
+              >
+                <Grip />
+              </span>
+
+              {showMoreTabs && (
+                <div className="absolute top-full left-1/2 -translate-x-1/2 bg-white border border-gray-200 rounded-md shadow-lg mt-1 w-48 max-h-64 overflow-auto z-20">
+                  <TabList className="flex flex-col py-4">
+                    {moreTabs.map((item, idx) => (
+                      <Tab key={visibleTabs + idx} as={Fragment}>
+                        {({ selected }) => (
+                          <div
+                            className="flex items-center px-4 py-2 border-b-[1px] border-[#e9e9e9] hover:bg-[#ececec] hover:text-white"
+                            onClick={() => {
+                              setSelectedIndex(visibleTabs + idx);
+                              setShowMoreTabs(false);
+                            }}
                           >
-                            {item.label}
-                          </span>
-                        </div>
-                      )}
-                    </Tab>
-                  ))}
-                </TabList>
-              </div>
-            )}
-          </div>
-        )}
-      </TabList>
-      {/* </TabGroup> */}
+                            <img className="w-[24px]" src={item.icon} alt="" />
+                            <span
+                              className={classNames(
+                                "block font-Urbanist text-[17px] font-[600] px-4 py-2 cursor-pointer rounded-md leading-[19px]",
+                                selected
+                                  ? "bg-Paracolor text-white"
+                                  : "text-gray-800"
+                              )}
+                            >
+                              {item.label}
+                            </span>
+                          </div>
+                        )}
+                      </Tab>
+                    ))}
+                  </TabList>
+                </div>
+              )}
+            </div>
+          )}
+        </TabList>
+      </TabGroup>
     </div>
   );
 }

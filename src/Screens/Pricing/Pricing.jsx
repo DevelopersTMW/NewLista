@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 // Components
 import Navbar from "../../Components/Navbar/Navbar";
 import Footer from "../../Components/Footer/Footer";
@@ -10,8 +10,12 @@ import PricingSec2_1 from "../../assets/PricingSec2.1.png";
 import HomeSec5_2 from "../../assets/HomeSec5.2.png";
 import { Link, useNavigate } from "react-router-dom";
 import AlertModal from "../../Components/AlertModal/AlertModal";
+import Spinner from "../../Components/Spinner/Spinner";
+import axios from "axios";
+import { CheckIcon } from "@heroicons/react/20/solid";
+import { X } from "lucide-react";
 
-const free = [
+const freebenefits = [
   {
     label: "View Featured Listings",
     checked: true,
@@ -49,7 +53,8 @@ const free = [
     checked: false,
   },
 ];
-const premium = [
+
+const benefits = [
   {
     label: "View Featured Listings",
     checked: true,
@@ -89,20 +94,74 @@ const premium = [
 ];
 
 const Pricing = () => {
-  const [activeTab, setActiveTab] = useState("monthly");
+  const ApiKey = import.meta.env.VITE_API_KEY;
   const token = localStorage.getItem("token");
-  const navigate = useNavigate()
+  const navigate = useNavigate();
+  const [PricingData, setPricingData] = useState([]);
+  const [Loading, setLoading] = useState(false);
 
-  const alert = () => {
-    if (token) {
-      AlertModal({
-        icon: "error",
-        title: "Working In Progess",
-        iconColor: "#703BF7",
-        text: "This page is currently being updated. Please check back soon!",
-      });
-    }else{
-      navigate('/login')
+  const [checked, setchecked] = useState();
+
+  useEffect(() => {
+    const GetPricing = async () => {
+      setLoading(true);
+      try {
+        const response = await axios.get(`${ApiKey}/plans`);
+        setPricingData(response.data.plans);
+      } catch (error) {
+        setLoading(false);
+        console.log(error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    GetPricing();
+  }, []);
+  useEffect(() => {
+    const CurrentPricing = async () => {
+      setLoading(true);
+      try {
+        const response = await axios.get(`${ApiKey}/current-subscribtion`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        setchecked(response.data.subscription);
+        console.log(response);
+      } catch (error) {
+        setLoading(false);
+        console.log(error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    CurrentPricing();
+  }, []);
+
+  const Subscription = async (id) => {
+    try {
+      setLoading(true);
+      const response = await axios.post(
+        `${ApiKey}/subscribe`,
+        {
+          plan_id: id,
+          success_url: `${window.location.origin}/admin/subscription?session_id={CHECKOUT_SESSION_ID}`,
+          cancel_url: `${window.location.origin}/`,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      window.location.href = response.data.checkout_url;
+      console.log(response.data.checkout_url);
+      CurrentPricing()
+    } catch (error) {
+      setLoading(false);
+      console.log(error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -138,80 +197,83 @@ const Pricing = () => {
           <p className="mx-auto mt-4 lg:mt-6 max-w-3xl text-center text-[14.5px] sm:text-lg font-medium text-pretty text-gray-600 sm:text-md/8 font-Urbanist">
             Make offers, get insights, and build your real estate empire
           </p>
-          <div className="flex bg-[#F3EEFF] w-max rounded-full justify-center items-center mt-7 sm:mt-10">
-            <button
-              onClick={() => setActiveTab("monthly")}
-              className={`max-[350px]:px-5.5 px-7 py-2.5 font-Urbanist font-[600] max-[350px]:text-[13px] text-[14.5px]  rounded-full cursor-pointer ${
-                activeTab === "monthly"
-                  ? "bg-PurpleColor text-white"
-                  : "bg-[#F3EEFF] text-black"
-              }`}
-            >
-              MONTHLY
-            </button>
-            <button
-              onClick={() => setActiveTab("yearly")}
-              className={`max-[350px]:px-5.5 px-8 py-2.5 font-Urbanist font-[600] max-[350px]:text-[13px]  text-[14.5px]  rounded-full cursor-pointer ${
-                activeTab === "yearly"
-                  ? "bg-PurpleColor text-white"
-                  : "bg-[#F3EEFF] text-black"
-              }`}
-            >
-              YEARLY
-            </button>
-          </div>
+
           {/* HEADER SECTION END  */}
 
           {/* TABS SEC START  */}
-          <div className=" mt-16 max-[350px]:px-0  sm:px-5 lg:px-20  min-[890px]:w-[100%] xl:w-[85%] 2xl:w-[75%]">
-            {/* Cards */}
-            <div className="flex flex-col min-[870px]:flex-row gap-10 justify-center">
-              {activeTab === "monthly" && (
-                <>
-                  <PlansTabs
-                    PlanCard={"Free"}
-                    PlanNum={"Monthly"}
-                    Name={"$0 USD"}
-                    Desc={""}
-                    benefits={free}
-                    ButtonText={"Get started for free"}
-                    buttonlink={alert}
-                  />
-                  <PlansTabs
-                    PlanCard={"New Investor Pro Pricing (Save $61)"}
-                    PlanNum={"Monthly"}
-                    Name={"$29.99 USD"}
-                    Desc={""}
-                    benefits={premium}
-                    ButtonText={"Subscribe Now"}
-                    buttonlink={alert}
-                  />
-                </>
-              )}
-              {activeTab === "yearly" && (
-                <>
-                  <PlansTabs
-                    PlanCard={"Free"}
-                    PlanNum={"Yearly"}
-                    Name={"$0 USD"}
-                    Desc={""}
-                    benefits={free}
-                    ButtonText={"Get started for free"}
-                    buttonlink={alert}
-                  />
-                  <PlansTabs
-                    PlanCard={" New Investor Pro Pricing (Save $61)"}
-                    PlanNum={"Yearly"}
-                    Name={"$299.00 USD "}
-                    Desc={""}
-                    benefits={premium}
-                    ButtonText={"Subscribe Now"}
-                    buttonlink={alert}
-                  />
-                </>
-              )}
+          {!Loading ? (
+            <div className="">
+              <div className="  grid px-8 mt-10 grid-cols-1 items-center gap-y-6 sm:gap-y-0  lg:grid-cols-3 gap-6">
+                <PlansTabs
+                  features={freebenefits}
+                  featured={
+                    token
+                      ? checked === null
+                        ? true
+                        : false
+                      : false
+                  }
+                  PlanName={"Free"}
+                  Pricing={"0 "}
+                  Duration={""}
+                  ButtonText={
+                    token
+                      ? checked === null
+                        ? "Activated"
+                        : "Manage"
+                      : "Get Started For Free"
+                  }
+                  disabled={token ? true : false}
+                  buttonLink={token ? "" : "/login"}
+                />
+                {PricingData?.map((items) => {
+                  return (
+                    <PlansTabs
+                      features={benefits}
+                      featured={
+                        token
+                          ? checked?.plan_id === items?.id
+                            ? true
+                            : false
+                          : false
+                      }
+                      PlanName={"New Investor Pro Pricing (Save $61)"}
+                      Pricing={`${Math.round(items.price)} `}
+                      Duration={`/ ${items.type}`}
+                      ButtonText={
+                        token
+                          ? checked?.plan_id === items?.id
+                            ? "Activated"
+                            : "Manage"
+                          : "Get Started for Free"
+                      }
+                      disabled={
+                        token
+                          ? checked?.plan_id === items?.id
+                            ? true
+                            : false
+                          : false
+                      }
+                      buttonLink={
+                        token
+                          ? checked?.plan_id === items?.id
+                            ? "Activated"
+                            : " Manage"
+                          : "/login"
+                      }
+                      Onclick={() => items?.id && Subscription(items.id)}
+                      id={items?.id}
+                    />
+                  );
+                })}
+              </div>
             </div>
-          </div>
+          ) : (
+            <div className="flex justify-center items-center !h-[75vh]">
+              <Spinner style={"w-14 h-20 text-PurpleColor z-50"} />
+            </div>
+          )}
+
           {/* TABS SEC END   */}
         </div>
       </section>

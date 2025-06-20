@@ -21,15 +21,6 @@ import PropertiesImage2 from "../../assets/PropertiesImage2.png";
 import FilterIcon2 from "../../assets/FilterIcon2.png";
 import PropertiesImage3 from "../../assets/PropertiesImage3.png";
 import AddPropertyBanner from "../../assets/AddPropertyBanner.jpg";
-import ViewPropertyIcon1 from "../../assets/ViewPropertyIcon1.png";
-import ViewPropertyIcon2 from "../../assets/ViewPropertyIcon2.png";
-import ViewPropertyIcon3 from "../../assets/ViewPropertyIcon3.png";
-import ViewPropertyIcon4 from "../../assets/ViewPropertyIcon4.png";
-import ViewPropertyIcon5 from "../../assets/ViewPropertyIcon5.png";
-import ViewPropertyIcon6 from "../../assets/ViewPropertyIcon6.png";
-import ViewPropertyIcon7 from "../../assets/ViewPropertyIcon7.png";
-import ViewPropertyIcon8 from "../../assets/ViewPropertyIcon8.png";
-import ViewPropertyIcon9 from "../../assets/ViewPropertyIcon9.png";
 import PropertiesCards2 from "../../Components/Cards/PropertiesCards/PropertiesCards2";
 import SearchBar from "../../Components/SearchBar/SearchBar";
 import axios from "axios";
@@ -49,9 +40,10 @@ const BannerBackground = {
 const ViewProperty = () => {
   const ApiKey = import.meta.env.VITE_API_KEY;
   const [Properties, setProperties] = useState([]);
-  const [FilterValue, setFilterValue] = useState("");
+  const [FilterValue, setFilterValue] = useState("AllProperties");
   const isLoggedIn = localStorage.getItem("token");
   const [ShowEmpty, setShowEmpty] = useState(false);
+  const [selectedTab, setSelectedTab] = useState("");
 
   const [selectedIndex, setSelectedIndex] = useState(0);
 
@@ -70,33 +62,41 @@ const ViewProperty = () => {
     GetProperty();
   }, []);
 
-  // CHECK IF USER EXIST THEN SHOW OFF MARKET
+  
   const filteredProperties = useMemo(() => {
-    let filtered = [];
+    if (!Properties || Properties.length === 0) return [];
 
-    if (FilterValue === "Off Market Properties") {
-      if (isLoggedIn) {
-        filtered = Properties.filter((item) => item.off_market_listing);
-      } else {
-        filtered = [];
-      }
-    } else if (FilterValue === "Features Property") {
-      filtered = Properties.filter((item) => item.featured_listing);
-    } else if (FilterValue === "Filter") {
-      if (isLoggedIn) {
-        filtered = Properties.filter(
-          (item) => item.featured_listing || item.off_market_listing
-        );
-      } else {
-        filtered = Properties.filter((item) => item.featured_listing);
-      }
-    } else {
-      filtered = Properties.filter((item) => item.featured_listing);
+    // If dropdown is used
+    if (FilterValue === "Features Property") {
+      return Properties.filter((p) => p.featured_listing === true);
     }
 
-    setShowEmpty(filtered.length === 0);
-    return filtered;
-  }, [Properties, isLoggedIn, FilterValue]);
+    if (FilterValue === "Off Market Properties") {
+      return isLoggedIn
+        ? Properties.filter((p) => p.off_market_listing === true)
+        : [];
+    }
+
+    // ✅ Tab-based filtering when dropdown is "AllProperties"
+    if (FilterValue === "AllProperties") {
+      if (!selectedTab || selectedTab.toLowerCase() === "all properties") {
+        return isLoggedIn
+          ? Properties
+          : Properties.filter((p) => !p.off_market_listing);
+      }
+
+      // ✅ Filter by property type
+      return Properties.filter(
+        (p) =>
+          p.property_type?.toLowerCase().trim() ===
+          selectedTab.toLowerCase().trim()
+      );
+    }
+
+    return []; // fallback
+  }, [Properties, isLoggedIn, FilterValue, selectedTab]);
+
+  console.log(selectedTab);
 
   return (
     <>
@@ -117,7 +117,12 @@ const ViewProperty = () => {
         <TabGroup selectedIndex={selectedIndex} onChange={setSelectedIndex}>
           <div className="flex gap-5 sm:gap-8 px-4 sm:px-8 pt-6 items-end  justify-center  border-b-[1px] border-[#BBBBBB] border-solid ">
             <div>
-              <ResponsiveTabList />
+              <ResponsiveTabList
+                onTabSelect={(tab) => {
+                  setSelectedTab(tab);
+                  setFilterValue("AllProperties");
+                }}
+              />
             </div>
 
             <div className="flex justify-center gap-2 font-Poppins border-[1px] px-3 sm:px-4  border-solid border-[#bebebe] rounded-[6px] text-Paracolor text-[15px] items-center font-semibold mb-5 sm:mb-6  ">
@@ -135,7 +140,7 @@ const ViewProperty = () => {
               >
                 <option
                   className="text-[#1a1919] text-[11.5px] font-[500] font-Urbanist sm:text-[15px]"
-                  value="Filter"
+                  value="AllProperties"
                 >
                   Filter
                 </option>
@@ -160,38 +165,38 @@ const ViewProperty = () => {
               id="offmarket"
               className="w-[100%] flex flex-wrap justify-center gap-8 py-14 px-6 min-[350px]:px-10 sm:py-12 lg:py-16 xl:my-1 sm:gap-4 sm:px-13 md:gap-10 md:px-16 lg:gap-5 xl:gap-5 2xl:gap-10  2xl:w-[90%]"
             >
-              {ShowEmpty ? (
+              {filteredProperties.length === 0 ? (
                 <EmptyCards
                   Title={
-                    "Unlock hidden opportunities by upgrading to a premium membership"
+                    isLoggedIn
+                      ? "No properties match the selected filter."
+                      : "Unlock hidden opportunities by upgrading to a premium membership"
                   }
                 />
               ) : (
-                Properties.slice(0, 6).map((items) => (
+                filteredProperties.map((items) => (
                   <div
                     key={items.id}
                     className="sm:w-[48.5%] md:w-[43%] lg:w-[31%] xl:w-[23.5%] 2xl:w-[20.5%]"
                   >
-                    {
-                      <PropertiesCards2
-                        Img={items.images[0]}
-                        Heading={items.property_name}
-                        desc={
-                          <TruncatedText
-                            text={items.description}
-                            maxLength={90}
-                          />
-                        }
-                        Status={items.listing_type}
-                        Price={
-                          items.listing_type === "For Sale"
-                            ? items.sale_price
-                            : items.lease_rate
-                        }
-                        id={items.id}
-                        images={items.images[0]}
-                      ></PropertiesCards2>
-                    }
+                    <PropertiesCards2
+                      Img={items.images[0]}
+                      Heading={items.property_name}
+                      desc={
+                        <TruncatedText
+                          text={items.description}
+                          maxLength={90}
+                        />
+                      }
+                      Status={items.listing_type}
+                      Price={
+                        items.listing_type === "For Sale"
+                          ? items.sale_price
+                          : items.lease_rate
+                      }
+                      id={items.id}
+                      images={items.images[0]}
+                    />
                   </div>
                 ))
               )}

@@ -18,6 +18,7 @@ import ComboboxSelector from "../../../Components/ComboboxSelector/ComboboxSelec
 import CountrySelector from "../../../Components/RegisterCountrySelector/CountrySelection";
 import SuggestedState from "../../../Components/RegisterCountrySelector/SuggestedState.jsx";
 import ConfirmationModal from "../../../Components/ConfirmationModal/ConfirmationModal.jsx";
+import CitySearchForm from "./Fields/CitySelectionField.jsx";
 
 // IMAGES
 import CrossImage from "../../../assets/CrossImage.png";
@@ -172,6 +173,8 @@ const AccountSetting = () => {
       banner: null,
       headshot: null,
       investor_status: "Non-Active",
+      capRateMin: 0,
+      capRateMax: 30,
     },
     mode: "onTouched",
   });
@@ -510,7 +513,7 @@ const AccountSetting = () => {
                   <label className="block mb-1 font-[700] text-PurpleColor w-full max-[1280px]:text-[14px] max-[1666px]:text-[15px] min-[1666px]:text-[16px]">
                     City
                   </label>
-                  <ComboboxSelector
+                  {/* <ComboboxSelector
                     style={`flex items-center bg-[#F3EEFF] text-[#4b4b4b] font-[600] font-Urbanist text-[14px] w-full h-12 px-4 rounded-[6px] outline-none appearance-none cursor-pointer focus:outline-none ${
                       errors.city ? "border border-red-500" : ""
                     }`}
@@ -521,7 +524,14 @@ const AccountSetting = () => {
                     value={selectedCitys}
                     disabled={citiess.length === 0}
                   />
-
+                   */}
+                  <CitySearchForm
+                    error={errors.city}
+                    setValue={setValue}
+                    watch={watch}
+                    register={register}
+                    suggestedCities={citiess}
+                  ></CitySearchForm>
                   {errors.city && (
                     <p className="text-red-500 text-sm mt-1">
                       City is required.

@@ -77,7 +77,7 @@ const SubscriptionSetting = () => {
           </div>{" "}
           <div className="flex gap-10 mt-7">
             <div className="w-[43%]">
-              <PlansTabs
+              {/* <PlansTabs
                 PlanCard={"New Investor Pro Pricing (Save $61)"}
                 PlanNum={"Monthly"}
                 Name={"$29.99 USD"}
@@ -87,7 +87,7 @@ const SubscriptionSetting = () => {
                 benefits={benefits}
                 ButtonText={"Subscribe Now"}
                 buttonlink={"/premiummontlhy"}
-              />
+              /> */}
             </div>
           </div>
           {/* PRICING CARD  */}
