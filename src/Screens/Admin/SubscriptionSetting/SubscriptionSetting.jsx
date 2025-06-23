@@ -1,96 +1,157 @@
-import React from "react";
-import CheckIcon from "../../../assets/Icon.png";
-import { Check, X } from "lucide-react";
-import PlansTabs from "../../../Components/OurPlans/PlansTabs";
+import React, { useEffect, useState } from "react";
+import { CheckIcon, X } from "lucide-react";
+import axios from "axios";
 
-const benefits = [
-  {
-    label: "View Featured Listings",
-    checked: true,
-  },
-  {
-    label: "Basic Listings",
-    checked: true,
-  },
-  {
-    label: "View Off-Market Listings",
-    checked: true,
-  },
-  {
-    label: "Create & Expand Investor Network",
-    checked: true,
-  },
-  {
-    label: "Send and receive messages directly through your private dashboard",
-    checked: true,
-  },
-  {
-    label: "Analytics on Listings & Profile Views",
-    checked: true,
-  },
-  {
-    label: "Make Direct Property Offers and Receive Instant Notifications",
-    checked: true,
-  },
-  {
-    label: "Exclusive Early-Access Listings",
-    checked: true,
-  },
-  {
-    label: "Premium Customer Support",
-    checked: true,
-  },
+const freebenefits = [
+  { label: "View Featured Listings", checked: true },
+  { label: "Basic Listings", checked: true },
+  { label: "View Off-Market Listings", checked: false },
+  { label: "Create & Expand Investor Network", checked: false },
+  { label: "Send and receive messages directly through your private dashboard", checked: false },
+  { label: "Analytics on Listings & Profile Views", checked: false },
+  { label: "Make Direct Property Offers and Receive Instant Notifications", checked: false },
+  { label: "Exclusive Early-Access Listings", checked: false },
+  { label: "Premium Customer Support", checked: false },
+];
+
+const premiumBenefits = [
+  { label: "View Featured Listings", checked: true },
+  { label: "Basic Listings", checked: true },
+  { label: "View Off-Market Listings", checked: true },
+  { label: "Create & Expand Investor Network", checked: true },
+  { label: "Premium Customer Support", checked: true },
+  { label: "Analytics on Listings & Profile Views", checked: true },
+  { label: "Exclusive Early-Access Listings", checked: true },
+  { label: "Make Direct Property Offers and Receive Instant Notifications", checked: true },
+  { label: "Send and receive messages directly through your private dashboard", checked: true },
 ];
 
 const SubscriptionSetting = () => {
+  const ApiKey = import.meta.env.VITE_API_KEY;
+  const token = localStorage.getItem("token");
+
+  const [loading, setLoading] = useState(false);
+  const [CurrentPlan, setCurrentPlan] = useState(null);
+
+  useEffect(() => {
+    const fetchCurrentPlan = async () => {
+      setLoading(true);
+      try {
+        const response = await axios.get(`${ApiKey}/current-subscribtion`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        setCurrentPlan(response.data.subscription);
+        console.log("Fetched Plan:", response.data.subscription);
+      } catch (error) {
+        console.error("Error fetching subscription:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchCurrentPlan();
+  }, []);
+
+  // Plan data fallback
+  const planName = CurrentPlan?.plan.title || "Free";
+  const planPrice = CurrentPlan?.plan.price || 0;
+  const planDuration = CurrentPlan?.plan.type || "Unlimited";
+  const planStatus = CurrentPlan?.status || "Active";
+  const planBenefits = CurrentPlan ? premiumBenefits : freebenefits;
+
   return (
     <>
-      {/* HEADING SECTION  */}
+      {/* Heading Section */}
       <section className="p flex justify-between items-start mt-8 pb-5">
-        {/* PAGE TITTLE  */}
-        <div className="flex flex-co flex-wrap max-[350px]:gap-3 gap-5 sm:flex-row justify-between items-center">
+        <div className="flex flex-wrap max-[350px]:gap-3 gap-5 sm:flex-row justify-between items-center">
           <h1 className="font-Urbanist text-[#222222] text-[35px] font-[700]">
-            Current Plan
+            Subscription Setting
           </h1>
         </div>
       </section>
 
-      <section className="">
-        <div className="flex flex-col  gap-2">
-          <div className="bg-[#ffffff] px-5 py-4 rounded-[10px] flex justify-between w-[75%]">
+      {/* Current Plan Summary */}
+      <section>
+        <div className="flex flex-col gap-2">
+          <div className="bg-[#ffffff] px-5 py-4 rounded-[10px] flex justify-between">
             <div>
               <h2 className="font-Urbanist text-[#222222] text-[24px] font-[700]">
-                Professional Plan
+                {"Professional Plan"}
               </h2>
-              <p className="font-Urbanist text-Paracolor text-[17px] font-[600]">
-                Billed monthly
+              <p className="font-Urbanist text-Paracolor text-[19px] font-[600]">
+                {"Duration"}
+              </p>
+              <p className="font-Urbanist text-Paracolor text-[19px] font-[600]">
+                {"Billed monthly"}
               </p>
             </div>
             <div className="text-end">
               <h1 className="font-Inter text-[#222222] text-[24px] font-[700]">
-                $49.99/mo
+                ${planPrice}
               </h1>
-              <p className="font-Urbanist text-lime-600 font-semibold flex items-center gap-1 justify-end">
-                Active
+              <p className="font-Urbanist text-Paracolor font-semibold flex items-center justify-end">
+                {planDuration}
+              </p>
+              <p className="font-Urbanist text-[#2e7200] font-semibold flex items-center justify-end gap-1">
+                <span className="w-2 h-2 rounded-full bg-[#2e7200] relative" />
+                {"active"}
               </p>
             </div>
-          </div>{" "}
-          <div className="flex gap-10 mt-7">
-            <div className="w-[43%]">
-              {/* <PlansTabs
-                PlanCard={"New Investor Pro Pricing (Save $61)"}
-                PlanNum={"Monthly"}
-                Name={"$29.99 USD"}
-                Desc={
-                  "Lorem ipsum dolor sit amet consectetur. Nunc et pulvinar dui."
-                }
-                benefits={benefits}
-                ButtonText={"Subscribe Now"}
-                buttonlink={"/premiummontlhy"}
-              /> */}
+          </div>
+        </div>
+      </section>
+
+      {/* Benefits + Plan Pricing Section */}
+      <section className="mt-7">
+        <div className="flex flex-col items-center gap-5 md:flex-row bg-transparent border-[#d3d3d3] border rounded-2xl p-3 md:pl-7">
+          {/* Left: Plan Benefits */}
+          <div className="flex flex-col gap-2 w-[60%] py-8 font-Urbanist">
+            <p className="text-PurpleColor font-bold text-[16px] leading-[19px]">
+              Current Plan
+            </p>
+            <h2 className="font-[700] text-[35px]">{planName}</h2>
+
+            <div>
+              <h3 className="font-semibold mb-2 flex gap-0 items-center justify-start">
+                <span className="w-[25%]">What’s Included</span>
+                <span className="w-[68%] h-[1px] bg-Paracolor"></span>
+              </h3>
+              {planBenefits.map((feature, index) => (
+                <li
+                  key={index}
+                  className="flex gap-x-3 font-[600] text-[15px]"
+                >
+                  {feature.checked ? (
+                    <CheckIcon className="h-6 w-5 text-PurpleColor" />
+                  ) : (
+                    <X className="h-6 w-5 text-red-600" />
+                  )}
+                  {feature.label}
+                </li>
+              ))}
             </div>
           </div>
-          {/* PRICING CARD  */}
+
+          {/* Right: Price Card */}
+          <div className="text-white bg-black py-14 rounded-xl px-6 flex justify-center items-center flex-col gap-2 text-center w-[40%] mr-3">
+            <p className="font-Urbanist font-semibold">
+              <span className="font-Inter font-bold text-[50px]">
+                ${planPrice}
+              </span>{" "}
+              <span className="text-[15px]">USD</span>
+            </p>
+
+            <button
+              disabled
+              className="cursor-not-allowed hover-btn hover-btn-purple font-Urbanist font-semibold mb-2 bg-[#e9e9e9] text-black border-[#e9e9e9] hover:border-Paracolor"
+            >
+              <span>Manage</span>
+            </button>
+
+            <p className="font-Urbanist font-semibold text-[16px]">
+              Invoices and receipts available for easy company reimbursement
+            </p>
+          </div>
         </div>
       </section>
     </>

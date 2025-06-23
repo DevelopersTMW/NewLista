@@ -72,7 +72,6 @@ const Register = () => {
           last_name: Data.LastName,
           email: Data.Email,
           phone: Data.phone,
-          address: Data.address,
           password: Data.Password,
         },
         {
@@ -257,7 +256,7 @@ const Register = () => {
                 )}
               />
               {/* LOCATION */}
-              <span className="">
+              {/* <span className="">
                 <Inputs
                   name={"address"}
                   register={register("address", {
@@ -267,7 +266,7 @@ const Register = () => {
                   placeholder={"Enter your city"}
                   error={errors.address?.message}
                 ></Inputs>
-              </span>
+              </span> */}
               {/* PASSOWRD  */}
               <span className="relative">
                 <Inputs
