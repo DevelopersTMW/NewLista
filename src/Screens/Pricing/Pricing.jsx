@@ -128,6 +128,11 @@ const Pricing = () => {
         });
         setchecked(response.data.subscription);
         console.log(response);
+        localStorage.setItem(
+          "status",
+          response.data.subscription.status !== null &&
+            response.data.subscription.status
+        );
       } catch (error) {
         setLoading(false);
         console.log(error);
@@ -145,8 +150,8 @@ const Pricing = () => {
         `${ApiKey}/subscribe`,
         {
           plan_id: id,
-          success_url: `${window.location.origin}/admin/subscription?session_id={CHECKOUT_SESSION_ID}`,
-          cancel_url: `${window.location.origin}/`,
+          success_url: `${window.location.origin}/pricing?session_id={CHECKOUT_SESSION_ID}`,
+          cancel_url: `${window.location.origin}/pricing`,
         },
         {
           headers: {
@@ -156,7 +161,7 @@ const Pricing = () => {
       );
       window.location.href = response.data.checkout_url;
       console.log(response.data.checkout_url);
-      CurrentPricing()
+      CurrentPricing();
     } catch (error) {
       setLoading(false);
       console.log(error);
@@ -208,7 +213,7 @@ const Pricing = () => {
                   features={freebenefits}
                   featured={
                     token
-                      ? checked === null
+                      ? checked === null || checked?.plan_id === null
                         ? true
                         : false
                       : false
@@ -217,51 +222,58 @@ const Pricing = () => {
                   Pricing={"0 "}
                   Duration={""}
                   ButtonText={
-                    token
-                      ? checked === null
-                        ? "Activated"
-                        : "Manage"
-                      : "Get Started For Free"
+                    !token
+                      ? "Get Started"
+                      : checked === null || checked?.plan_id === null
+                      ? "Activated"
+                      : checked?.status === "active"
+                      ? "Downgrade"
+                      : "Upgrade"
                   }
-                  disabled={token ? true : false}
-                  buttonLink={token ? "" : "/login"}
+                  disabled={
+                    !token
+                      ? false
+                      : checked === null || checked?.status === "active"
+                  }
+                  buttonLink={
+                    !token
+                      ? "/login"
+                      : checked === null || checked?.status === "active"
+                      ? ""
+                      : "/admin/subscription"
+                  }
                 />
                 {PricingData?.map((items) => {
+                  const isCurrentPlan = checked?.plan_id === items?.id;
+                  const isActive = checked?.status === "active";
+
                   return (
                     <PlansTabs
                       features={benefits}
-                      featured={
-                        token
-                          ? checked?.plan_id === items?.id
-                            ? true
-                            : false
-                          : false
-                      }
+                      featured={token && isCurrentPlan && isActive}
                       PlanName={"New Investor Pro Pricing (Save $61)"}
                       Pricing={`${Math.round(items.price)} `}
                       Duration={`/ ${items.type}`}
                       ButtonText={
-                        token
-                          ? checked?.plan_id === items?.id
-                            ? "Activated"
-                            : "Manage"
-                          : "Get Started for Free"
+                        !token
+                          ? "Get Started"
+                          : isCurrentPlan && isActive
+                          ? "Activated"
+                          : "Upgrade"
                       }
-                      disabled={
-                        token
-                          ? checked?.plan_id === items?.id
-                            ? true
-                            : false
-                          : false
-                      }
+                      disabled={token && isCurrentPlan && isActive}
                       buttonLink={
-                        token
-                          ? checked?.plan_id === items?.id
-                            ? "Activated"
-                            : " Manage"
-                          : "/login"
+                        !token
+                          ? "/login"
+                          : isCurrentPlan && isActive
+                          ? ""
+                          : "/admin/subscription"
                       }
-                      Onclick={() => items?.id && Subscription(items.id)}
+                      Onclick={() =>
+                        token &&
+                        (!isCurrentPlan || !isActive) &&
+                        Subscription(items.id)
+                      }
                       id={items?.id}
                     />
                   );
