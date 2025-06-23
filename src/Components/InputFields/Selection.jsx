@@ -12,6 +12,7 @@ const Selection = ({
   register,
   name,
   error,
+  icon,
   rules,
   autoSelectFirst = false,
 }) => {
@@ -34,7 +35,7 @@ const Selection = ({
           {labels}
         </label>
         <Select
-          className={`bg-[#F3EEFF] border text-[#4b4b4b] font-[600] font-Urbanist text-[14px] w-[100%] h-12 px-4 rounded-[6px] outline-none appearance-none cursor-pointer focus:outline-none ${
+          className={`bg-[#F3EEFF] border text-[#4b4b4b] font-[600] font-Urbanist text-[14px] w-[100%] h-12 px-4 rounded-[6px] outline-none appearance-none cursor-pointer focus:outline-none ${Style} ${
             error ? "border-red-500 " : "border-[#F3EEFF]"
           }`}
           defaultValue={
@@ -66,7 +67,7 @@ const Selection = ({
           })}
         </Select>
         <ChevronDownIcon
-          className={`group pointer-events-none absolute top-10 right-2.5 size-5 fill-black text-black ${Style} `}
+          className={`group pointer-events-none absolute top-10 right-2.5 size-5 fill-black text-black ${Style} ${icon} `}
           aria-hidden="true"
         />
       </div>

@@ -31,6 +31,7 @@ import CardContentSection from "./HomeSections/CardContentSection";
 import Carousel from "../../Components/Carousel/Carousel";
 import CardCarousel from "../../Components/Carousel/Carousel";
 import { useDispatch, useSelector } from "react-redux";
+import EmptyCards from "../../Components/EmptyCard/EmptyCard";
 
 // BACKGORUND
 const HeroBackground = {
@@ -41,406 +42,11 @@ const HeroBackground = {
   backgroundBlendMode: "color",
 };
 
-const data = [
-  {
-    id: 1,
-    user_id: 1,
-    property_name: "Modern Office Space helloskjsnkjsnjksnshsjh",
-    listing_type: "For Lease",
-    property_type: "Office",
-    listing_status: "Available",
-    sale_price: null,
-    lease_rate: "15.50",
-    lease_rate_unit: "Per SF/Month",
-    lease_type: "NNN",
-    building_size: "3500.00",
-    address: "123 Main Street, Suite 200",
-    city: "Los Angeles",
-    state: "CA",
-    zip: "90001",
-    description:
-      "Spacious office located in the downtown business district with full amenities.",
-    images: [],
-    featured_listing: true,
-    off_market_listing: true,
-    custom_fields:
-      '{"parking_spaces":"10","floor_number":"2","built_year":"2015"}',
-    created_at: "2025-05-19T17:44:32.000000Z",
-    updated_at: "2025-05-19T18:03:44.000000Z",
-    user: {
-      id: 1,
-      first_name: "Umer",
-      last_name: "Farooq",
-      email: "test@gmail.com",
-      phone: "123456",
-      location: "karachi",
-      email_verified_at: null,
-      otp: "836910",
-      otp_expires_at: "2025-05-19 18:29:22",
-      company_name: null,
-      personal_website: null,
-      title: null,
-      property_interests: null,
-      property_interests_custom: null,
-      preferred_investment_range: null,
-      preferred_locations: null,
-      preferred_investment_type: null,
-      preferred_cap_rate_min: null,
-      preferred_cap_rate_max: null,
-      investor_status: null,
-      experience_level: null,
-      bio: null,
-      headshot: null,
-      banner: null,
-      created_at: "2025-05-19T17:02:49.000000Z",
-      updated_at: "2025-05-19T18:21:15.000000Z",
-    },
-  },
-  {
-    id: 1,
-    user_id: 1,
-    property_name: "Modern Office Space helloskjsnkjsnjksnshsjh",
-    listing_type: "For Lease",
-    property_type: "Office",
-    listing_status: "Available",
-    sale_price: null,
-    lease_rate: "15.50",
-    lease_rate_unit: "Per SF/Month",
-    lease_type: "NNN",
-    building_size: "3500.00",
-    address: "123 Main Street, Suite 200",
-    city: "Los Angeles",
-    state: "CA",
-    zip: "90001",
-    description:
-      "Spacious office located in the downtown business district with full amenities.",
-    images: [],
-    featured_listing: true,
-    off_market_listing: true,
-    custom_fields:
-      '{"parking_spaces":"10","floor_number":"2","built_year":"2015"}',
-    created_at: "2025-05-19T17:44:32.000000Z",
-    updated_at: "2025-05-19T18:03:44.000000Z",
-    user: {
-      id: 1,
-      first_name: "Umer",
-      last_name: "Farooq",
-      email: "test@gmail.com",
-      phone: "123456",
-      location: "karachi",
-      email_verified_at: null,
-      otp: "836910",
-      otp_expires_at: "2025-05-19 18:29:22",
-      company_name: null,
-      personal_website: null,
-      title: null,
-      property_interests: null,
-      property_interests_custom: null,
-      preferred_investment_range: null,
-      preferred_locations: null,
-      preferred_investment_type: null,
-      preferred_cap_rate_min: null,
-      preferred_cap_rate_max: null,
-      investor_status: null,
-      experience_level: null,
-      bio: null,
-      headshot: null,
-      banner: null,
-      created_at: "2025-05-19T17:02:49.000000Z",
-      updated_at: "2025-05-19T18:21:15.000000Z",
-    },
-  },
-  {
-    id: 2,
-    user_id: 1,
-    property_name: "Modern Office Space",
-    listing_type: "For Lease",
-    property_type: "Office",
-    listing_status: "Available",
-    sale_price: null,
-    lease_rate: "15.50",
-    lease_rate_unit: "Per SF/Month",
-    lease_type: "NNN",
-    building_size: "3500.00",
-    address: "123 Main Street, Suite 200",
-    city: "Los Angeles",
-    state: "CA",
-    zip: "90001",
-    description:
-      "Spacious office located in the downtown business district with full amenities.",
-    images: [
-      "https://example.com/image1.jpg",
-      "https://example.com/image2.jpg",
-    ],
-    featured_listing: true,
-    off_market_listing: true,
-    custom_fields:
-      '{"parking_spaces":"10","floor_number":"2","built_year":"2015"}',
-    created_at: "2025-05-19T18:06:32.000000Z",
-    updated_at: "2025-05-26T19:35:38.000000Z",
-    user: {
-      id: 1,
-      first_name: "Umer",
-      last_name: "Farooq",
-      email: "test@gmail.com",
-      phone: "123456",
-      location: "karachi",
-      email_verified_at: null,
-      otp: "836910",
-      otp_expires_at: "2025-05-19 18:29:22",
-      company_name: null,
-      personal_website: null,
-      title: null,
-      property_interests: null,
-      property_interests_custom: null,
-      preferred_investment_range: null,
-      preferred_locations: null,
-      preferred_investment_type: null,
-      preferred_cap_rate_min: null,
-      preferred_cap_rate_max: null,
-      investor_status: null,
-      experience_level: null,
-      bio: null,
-      headshot: null,
-      banner: null,
-      created_at: "2025-05-19T17:02:49.000000Z",
-      updated_at: "2025-05-19T18:21:15.000000Z",
-    },
-  },
-  {
-    id: 3,
-    user_id: 1,
-    property_name: "Modern Office Space",
-    listing_type: "For Lease",
-    property_type: "Office",
-    listing_status: "Available",
-    sale_price: null,
-    lease_rate: "15.50",
-    lease_rate_unit: "Per SF/Month",
-    lease_type: "NNN",
-    building_size: "3500.00",
-    address: "123 Main Street, Suite 200",
-    city: "Los Angeles",
-    state: "CA",
-    zip: "90001",
-    description:
-      "This beautiful property is located in the heart of the city with easy access to all amenities, featuring spacious rooms, modern kitchen, and a lovely garden area for relaxation",
-    images: [
-      "https://example.com/image1.jpg",
-      "https://example.com/image2.jpg",
-    ],
-    featured_listing: true,
-    off_market_listing: true,
-    custom_fields:
-      '{"parking_spaces":"10","floor_number":"2","built_year":"2015"}',
-    created_at: "2025-05-26T17:46:35.000000Z",
-    updated_at: "2025-05-26T17:46:35.000000Z",
-    user: {
-      id: 1,
-      first_name: "Umer",
-      last_name: "Farooq",
-      email: "test@gmail.com",
-      phone: "123456",
-      location: "karachi",
-      email_verified_at: null,
-      otp: "836910",
-      otp_expires_at: "2025-05-19 18:29:22",
-      company_name: null,
-      personal_website: null,
-      title: null,
-      property_interests: null,
-      property_interests_custom: null,
-      preferred_investment_range: null,
-      preferred_locations: null,
-      preferred_investment_type: null,
-      preferred_cap_rate_min: null,
-      preferred_cap_rate_max: null,
-      investor_status: null,
-      experience_level: null,
-      bio: null,
-      headshot: null,
-      banner: null,
-      created_at: "2025-05-19T17:02:49.000000Z",
-      updated_at: "2025-05-19T18:21:15.000000Z",
-    },
-  },
-  {
-    id: 3,
-    user_id: 1,
-    property_name: "Modern Office Space",
-    listing_type: "For Lease",
-    property_type: "Office",
-    listing_status: "Available",
-    sale_price: null,
-    lease_rate: "15.50",
-    lease_rate_unit: "Per SF/Month",
-    lease_type: "NNN",
-    building_size: "3500.00",
-    address: "123 Main Street, Suite 200",
-    city: "Los Angeles",
-    state: "CA",
-    zip: "90001",
-    description:
-      "This beautiful property is located in the heart of the city with easy access to all amenities, featuring spacious rooms, modern kitchen, and a lovely garden area for relaxation",
-    images: [
-      "https://example.com/image1.jpg",
-      "https://example.com/image2.jpg",
-    ],
-    featured_listing: true,
-    off_market_listing: true,
-    custom_fields:
-      '{"parking_spaces":"10","floor_number":"2","built_year":"2015"}',
-    created_at: "2025-05-26T17:46:35.000000Z",
-    updated_at: "2025-05-26T17:46:35.000000Z",
-    user: {
-      id: 1,
-      first_name: "Umer",
-      last_name: "Farooq",
-      email: "test@gmail.com",
-      phone: "123456",
-      location: "karachi",
-      email_verified_at: null,
-      otp: "836910",
-      otp_expires_at: "2025-05-19 18:29:22",
-      company_name: null,
-      personal_website: null,
-      title: null,
-      property_interests: null,
-      property_interests_custom: null,
-      preferred_investment_range: null,
-      preferred_locations: null,
-      preferred_investment_type: null,
-      preferred_cap_rate_min: null,
-      preferred_cap_rate_max: null,
-      investor_status: null,
-      experience_level: null,
-      bio: null,
-      headshot: null,
-      banner: null,
-      created_at: "2025-05-19T17:02:49.000000Z",
-      updated_at: "2025-05-19T18:21:15.000000Z",
-    },
-  },
-  {
-    id: 3,
-    user_id: 1,
-    property_name: "Modern Office Space",
-    listing_type: "For Lease",
-    property_type: "Office",
-    listing_status: "Available",
-    sale_price: null,
-    lease_rate: "15.50",
-    lease_rate_unit: "Per SF/Month",
-    lease_type: "NNN",
-    building_size: "3500.00",
-    address: "123 Main Street, Suite 200",
-    city: "Los Angeles",
-    state: "CA",
-    zip: "90001",
-    description:
-      "This beautiful property is located in the heart of the city with easy access to all amenities, featuring spacious rooms, modern kitchen, and a lovely garden area for relaxation",
-    images: [
-      "https://example.com/image1.jpg",
-      "https://example.com/image2.jpg",
-    ],
-    featured_listing: true,
-    off_market_listing: true,
-    custom_fields:
-      '{"parking_spaces":"10","floor_number":"2","built_year":"2015"}',
-    created_at: "2025-05-26T17:46:35.000000Z",
-    updated_at: "2025-05-26T17:46:35.000000Z",
-    user: {
-      id: 1,
-      first_name: "Umer",
-      last_name: "Farooq",
-      email: "test@gmail.com",
-      phone: "123456",
-      location: "karachi",
-      email_verified_at: null,
-      otp: "836910",
-      otp_expires_at: "2025-05-19 18:29:22",
-      company_name: null,
-      personal_website: null,
-      title: null,
-      property_interests: null,
-      property_interests_custom: null,
-      preferred_investment_range: null,
-      preferred_locations: null,
-      preferred_investment_type: null,
-      preferred_cap_rate_min: null,
-      preferred_cap_rate_max: null,
-      investor_status: null,
-      experience_level: null,
-      bio: null,
-      headshot: null,
-      banner: null,
-      created_at: "2025-05-19T17:02:49.000000Z",
-      updated_at: "2025-05-19T18:21:15.000000Z",
-    },
-  },
-  {
-    id: 3,
-    user_id: 1,
-    property_name: "Modern Office Space",
-    listing_type: "For Lease",
-    property_type: "Office",
-    listing_status: "Available",
-    sale_price: null,
-    lease_rate: "15.50",
-    lease_rate_unit: "Per SF/Month",
-    lease_type: "NNN",
-    building_size: "3500.00",
-    address: "123 Main Street, Suite 200",
-    city: "Los Angeles",
-    state: "CA",
-    zip: "90001",
-    description:
-      "This beautiful property is located in the heart of the city with easy access to all amenities, featuring spacious rooms, modern kitchen, and a lovely garden area for relaxation",
-    images: [
-      "https://example.com/image1.jpg",
-      "https://example.com/image2.jpg",
-    ],
-    featured_listing: true,
-    off_market_listing: true,
-    custom_fields:
-      '{"parking_spaces":"10","floor_number":"2","built_year":"2015"}',
-    created_at: "2025-05-26T17:46:35.000000Z",
-    updated_at: "2025-05-26T17:46:35.000000Z",
-    user: {
-      id: 1,
-      first_name: "Umer",
-      last_name: "Farooq",
-      email: "test@gmail.com",
-      phone: "123456",
-      location: "karachi",
-      email_verified_at: null,
-      otp: "836910",
-      otp_expires_at: "2025-05-19 18:29:22",
-      company_name: null,
-      personal_website: null,
-      title: null,
-      property_interests: null,
-      property_interests_custom: null,
-      preferred_investment_range: null,
-      preferred_locations: null,
-      preferred_investment_type: null,
-      preferred_cap_rate_min: null,
-      preferred_cap_rate_max: null,
-      investor_status: null,
-      experience_level: null,
-      bio: null,
-      headshot: null,
-      banner: null,
-      created_at: "2025-05-19T17:02:49.000000Z",
-      updated_at: "2025-05-19T18:21:15.000000Z",
-    },
-  },
-];
-
 const Home = () => {
   const ApiKey = import.meta.env.VITE_API_KEY;
   const [Properties, setProperties] = useState([]);
   const token = localStorage.getItem("token");
+  const [searchFilters, setSearchFilters] = useState(null);
 
   useEffect(() => {
     const docWidth = document.documentElement.offsetWidth;
@@ -451,8 +57,6 @@ const Home = () => {
       }
     });
   }, []);
- 
-
 
   useEffect(() => {
     async function GetProperty() {
@@ -470,6 +74,80 @@ const Home = () => {
   useEffect(() => {
     document.documentElement.classList.add("dark");
   }, []);
+
+  const applyFilters = (properties) => {
+    if (!searchFilters) return properties;
+
+    const { propertyType, listingType, city, state, priceRange } =
+      searchFilters;
+
+    return properties.filter((item) => {
+      const price =
+        item.listing_type === "For Sale" ? item.sale_price : item.lease_rate;
+
+      const matchesType =
+        propertyType && propertyType !== "Select Your Property"
+          ? item.property_type?.toLowerCase() === propertyType.toLowerCase()
+          : true;
+
+      const matchesListingType =
+        listingType && listingType !== "Select"
+          ? item.listing_type?.toLowerCase() === listingType.toLowerCase()
+          : true;
+
+      const matchesCity =
+        city && city.trim() !== ""
+          ? item.city?.toLowerCase().includes(city.toLowerCase())
+          : true;
+
+      const matchesState =
+        state && state !== "Select Your State"
+          ? item.state?.toLowerCase().includes(state.toLowerCase())
+          : true;
+
+      const matchesRange = (() => {
+        if (!priceRange || price == null) return true;
+
+        switch (priceRange) {
+          case "Under $250K":
+            return price < 250000;
+          case "$250K – $500K":
+            return price >= 250000 && price <= 500000;
+          case "$500K – $1M":
+            return price >= 500000 && price <= 1000000;
+          case "$1M – $2.5M":
+            return price >= 1000000 && price <= 2500000;
+          case "$2.5M – $5M":
+            return price >= 2500000 && price <= 5000000;
+          case "$5M – $10M":
+            return price >= 5000000 && price <= 10000000;
+          case "$10M – $25M":
+            return price >= 10000000 && price <= 25000000;
+          case "$25M – $50M":
+            return price >= 25000000 && price <= 50000000;
+          case "Over $50M":
+            return price > 50000000;
+          default:
+            return true;
+        }
+      })();
+
+      return (
+        matchesType &&
+        matchesListingType &&
+        matchesCity &&
+        matchesState &&
+        matchesRange
+      );
+    });
+  };
+
+  const filteredProperties = applyFilters(Properties);
+
+  const handleFilterChange = (filters) => {
+    console.log("Filters selected:", filters);
+    setSearchFilters(filters);
+  };
 
   return (
     <>
@@ -493,7 +171,7 @@ const Home = () => {
               </p> */}
               </div>
               <div className="max-[350px]:w-[90%] w-[75%] sm:w-[50%] md:w-[90%] min-[800px]:w-[80%] lg:w-[100%] xl:w-[100%] 2xl:w-[80%]">
-                <SearchBar></SearchBar>
+                <SearchBar handleFilterChange={handleFilterChange}></SearchBar>
               </div>
             </div>
           </section>
@@ -516,40 +194,45 @@ const Home = () => {
               ButtonLink={"/properties"}
             />
             <div className="flex flex-wrap gap-7 sm:gap-3 md:gap-5 md:w-[84%]">
-              {Properties?.filter((item) => item.featured_listing)
-                .slice(0, 6)
-                .map((items) => (
-                  <div
-                    key={items.id}
-                    className="sm:w-[48.5%] md:w-[47%] lg:w-[31.5%]"
-                  >
-                    <PropertiesCards
-                    PropertyType={items.property_type}
-                    Area={Math.round(items.building_size)}
-                      Img={items.images[0]}
-                      Heading={
-                        <TruncatedText
-                          text={items.property_name}
-                          maxLength={23}
-                        />
-                      }
-                      desc={
-                        <TruncatedText
-                          text={items.description}
-                          maxLength={90}
-                        />
-                      }
-                      Status={items.listing_status}
-                      type={items.listing_type}
-                      Price={
-                        items.listing_type === "For Sale"
-                          ? items.sale_price
-                          : items.lease_rate
-                      }
-                      id={items.id}
-                    />
-                  </div>
-                ))}
+              {filteredProperties.length === 0 ? (
+                <EmptyCards Title={"No matching properties found"} />
+              ) : (
+                filteredProperties
+                  .filter((item) => item.featured_listing)
+                  .slice(0, 6)
+                  .map((items) => (
+                    <div
+                      key={items.id}
+                      className="sm:w-[48.5%] md:w-[47%] lg:w-[31.5%]"
+                    >
+                      <PropertiesCards
+                        PropertyType={items.property_type}
+                        Area={Math.round(items.building_size)}
+                        Img={items.images[0]}
+                        Heading={
+                          <TruncatedText
+                            text={items.property_name}
+                            maxLength={23}
+                          />
+                        }
+                        desc={
+                          <TruncatedText
+                            text={items.description}
+                            maxLength={90}
+                          />
+                        }
+                        Status={items.listing_status}
+                        type={items.listing_type}
+                        Price={
+                          items.listing_type === "For Sale"
+                            ? items.sale_price
+                            : items.lease_rate
+                        }
+                        id={items.id}
+                      />
+                    </div>
+                  ))
+              )}
             </div>
           </section>
           {/* SECTION 2 END */}
@@ -570,27 +253,36 @@ const Home = () => {
             />
             {/* PROPERTY CARD SECTION  */}
             <div className="flex gap-7 sm:gap-3 sm:-ml-4 md:gap-5  md:w-[84%] blur-[12px]">
-              {Properties?.filter((items) => items.off_market_listing)
-                .slice(0, 3)
-                .map((items) => (
-                  <TopDevelopes
-                    key={items.id}
-                    Img={items.images[0]}
-                    Heading={items.property_name}
-                    MiniHeading={
-                      <TruncatedText text={items.address} maxLength={19} />
-                    }
-                    desc={
-                      <TruncatedText text={items.description} maxLength={90} />
-                    }
-                    Price={
-                      items.listing_type === "For Sale"
-                        ? items.sale_price
-                        : items.lease_rate
-                    }
-                    id={items.id}
-                  ></TopDevelopes>
-                ))}
+              {filteredProperties.length === 0 ? (
+                <EmptyCards Title={"No matching properties found"} />
+              ) : (
+              
+                filteredProperties
+                  .filter((items) => items.off_market_listing )
+                  .slice(0, 3)
+                  .map((items) => (
+                    <TopDevelopes
+                      key={items.id}
+                      Img={items.images[0]}
+                      Heading={items.property_name}
+                      MiniHeading={
+                        <TruncatedText text={items.address} maxLength={19} />
+                      }
+                      desc={
+                        <TruncatedText
+                          text={items.description}
+                          maxLength={90}
+                        />
+                      }
+                      Price={
+                        items.listing_type === "For Sale"
+                          ? items.sale_price
+                          : items.lease_rate
+                      }
+                      id={items.id}
+                    ></TopDevelopes>
+                  ))
+              )}
             </div>
           </section>
           {/* SECTION 3 END */}

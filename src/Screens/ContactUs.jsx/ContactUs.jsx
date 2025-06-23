@@ -9,13 +9,17 @@ import CountrySelector from "../../Components/RegisterCountrySelector/CountrySel
 import ContactImage1_1 from "../../assets/ContactImage1.1.png";
 import ContactImage1_2 from "../../assets/ContactImage1.2.png";
 import Inputs from "../../Components/InputFields/Inputs";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import TextAreas from "../../Components/InputFields/TextAreas";
 import Swal from "sweetalert2";
 import AlertModal from "../../Components/AlertModal/AlertModal";
+import axios from "axios";
+import Spinner from "../../Components/Spinner/Spinner";
 
 const ContactUs = () => {
   const [phone, setPhone] = useState("");
+  const ApiKey = import.meta.env.VITE_API_KEY;
+  const [loading, setloading] = useState(false);
   const {
     register,
     handleSubmit,
@@ -26,22 +30,51 @@ const ContactUs = () => {
   } = useForm();
 
   // CONTACT FORM
-  const ContactForm = (Value) => {
-    if (phone) {
-      console.log("FormValue  :", Value, phone);
+  const ContactForm = async (data) => {
+    function formatUSPhone(phone) {
+      const cleaned = phone.replace(/\D/g, "");
+      const match = cleaned.match(/^1?(\d{3})(\d{3})(\d{4})$/);
+      if (match) {
+        return `+1 (${match[1]}) ${match[2]}-${match[3]}`;
+      }
+      return phone;
+    }
+    const formatted = formatUSPhone(data.phone);
+    try {
+      setloading(true);
+      const response = await axios.post(
+        `${ApiKey}/contact`,
+        {
+          first_name: data.FirstName,
+          last_name: data.LastName,
+          email: data.Email,
+          phone: formatted,
+          subject: data.Subject,
+          message: data.Message,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
       AlertModal({
         icon: "success",
         title: "Thank You",
         iconColor: "#703BF7",
-        text: "Your Form has Been Submitted",
+        text: response.data.message,
       });
-    } else {
+    } catch (error) {
+      console.log(error);
+      setloading(false);
       AlertModal({
         icon: "error",
         iconColor: "red",
         title: "Failed Request",
-        text: "Enter Phone Number",
+        text: error.data.message,
       });
+    } finally {
+      setloading(false);
     }
     setPhone("");
     reset();
@@ -71,75 +104,107 @@ const ContactUs = () => {
               </p>
             </div>
 
+            {loading ? (
+              <div className="flex justify-center items-center !h-[75vh]">
+                <Spinner style={"w-14 h-20 text-PurpleColor z-50"} />
+              </div>
+            ) : (
+              <form
+                onSubmit={handleSubmit(ContactForm)}
+                className="flex flex-col gap-4"
+              >
+                {/* Name  */}
+                <div className="flex flex-wrap sm:flex-nowrap gap-5 w-[100%]">
+                  <span className="sm:w-[50%] w-full">
+                    <Inputs
+                      name={"FirstName"}
+                      register={register("FirstName", {
+                        required: "First name is required",
+                      })}
+                      error={errors.FirstName?.message}
+                      labels={"First Name"}
+                      placeholder={"Enter your first name"}
+                    ></Inputs>
+                  </span>
+                  <span className=" sm:w-[50%] w-full">
+                    <Inputs
+                      register={register("LastName", {
+                        required: "Last name is required",
+                      })}
+                      name={"LastName"}
+                      labels={"Last Name"}
+                      placeholder={"Enter your last name"}
+                      error={errors.LastName?.message}
+                    ></Inputs>
+                  </span>
+                </div>
+
+                {/* Email  */}
+                <div>
+                  <Inputs
+                    register={register("Email", {
+                      required: "Email is required",
+                    })}
+                    type={"email"}
+                    name={"Email"}
+                    labels={"Email Address"}
+                    error={errors.Email?.message}
+                    placeholder={"Enter a valid email (e.g., you@email.com)"}
+                  ></Inputs>
+                </div>
+
+                {/* Phone Number*/}
+                <Controller
+                  name="phone"
+                  control={control}
+                  render={({ field }) => (
+                    <CountrySelector
+                      phone={field.value}
+                      setPhone={field.onChange}
+                      error={errors.phone?.message}
+                    />
+                  )}
+                />
+                {/* Location  */}
+                <div>
+                  <Inputs
+                    register={register("Subject", {
+                      required: "Subject is required",
+                    })}
+                    name={"Subject"}
+                    labels={"Subject"}
+                    error={errors.Subject?.message}
+                    placeholder={"Enter General Inquiry"}
+                  ></Inputs>
+                </div>
+
+                {/* Message */}
+                <div>
+                  <TextAreas
+                    require={true}
+                    label={"Message"}
+                    placeholder={"Please enter your message here..."}
+                    register={register("Message", {
+                      required: "Message is required",
+                    })}
+                    name={"Message"}
+                    error={errors.Message?.message}
+                  ></TextAreas>
+                </div>
+
+                {/* Send Message Button */}
+                <div className="mt-1">
+                  <button
+                    className="text-[15px] sm:text-[16px] hover-btn hover-btn-purple font-[700] w-[100%] h-11 text-white font-Urbanist rounded-[6px]"
+                    type="submit"
+                  >
+                    <span>Send Message</span>
+                  </button>
+                </div>
+              </form>
+            )}
+
             {/* CONTACT FORM */}
-            <form
-              onSubmit={handleSubmit(ContactForm)}
-              className="flex flex-col gap-4"
-            >
-              {/* Name  */}
-              <div className="flex flex-wrap sm:flex-nowrap gap-5 w-[100%]">
-                <span className="sm:w-[50%] w-full">
-                  <Inputs
-                    register={register}
-                    name={"FirstName"}
-                    labels={"First Name"}
-                    placeholder={"Enter your first name"}
-                  ></Inputs>
-                </span>
-                <span className=" sm:w-[50%] w-full">
-                  <Inputs
-                    register={register}
-                    name={"LastName"}
-                    labels={"Last Name"}
-                    placeholder={"Enter your last name"}
-                  ></Inputs>
-                </span>
-              </div>
-
-              {/* Email  */}
-              <div>
-                <Inputs
-                  register={register}
-                  type={"email"}
-                  name={"Email"}
-                  labels={"Email Address"}
-                  placeholder={"Enter a valid email (e.g., you@email.com)"}
-                ></Inputs>
-              </div>
-
-              {/* Phone Number*/}
-              <CountrySelector setPhone={setPhone} phone={phone} />
-              {/* Location  */}
-              <div>
-                <Inputs
-                  register={register}
-                  name={"Subject"}
-                  labels={"Subject"}
-                  placeholder={"Enter General Inquiry"}
-                ></Inputs>
-              </div>
-
-              {/* Message */}
-              <div>
-                <TextAreas
-                  require={true}
-                  label={"Message"}
-                  placeholder={"Please enter your message here..."}
-                  register={register}
-                  name={"Message"}
-                ></TextAreas>
-              </div>
-
-              {/* Send Message Button */}
-              <div className="mt-1">
-                <button
-                  className="text-[15px] sm:text-[16px] hover-btn hover-btn-purple font-[700] w-[100%] h-11 text-white font-Urbanist rounded-[6px]"
-                  type="submit"
-                >
-                  <span>Send Message</span>
-                </button>
-              </div>
-            </form>
           </div>
           {/* IMAGE SECTION  */}
           <div className="w-[42%] hidden lg:flex lg:ml-10 xl:ml-0 justify-center items-center">

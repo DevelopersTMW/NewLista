@@ -15,56 +15,60 @@ import ListingImage1_3 from "../../../assets/listing1.3.png";
 import ListingImage1_4 from "../../../assets/listing1.4.png";
 import { Link } from "react-router-dom";
 import ListingTable from "./ListingSection/ListingTable/ListingTable.jsx";
+import { useForm } from "react-hook-form";
 
-const ListItem = [
-  {
-    name: "Modern 3BR Villa 123 Palm St, Miami, FL",
-    type: "Residential",
-    price: "$450,000",
-    status: "Active",
-    datelisted: "Jan 20, 2025 (42 Days)",
-  },
-  {
-    name: "Downtown Office Space 456 Market St, NYC",
-    type: "Commercial",
-    price: "$2,000,000",
-    status: "Leased",
-    datelisted: "Feb 5, 2025 (12 Days)",
-  },
-  {
-    name: "Luxury Beach House 789 Ocean Dr, LA, CA",
-    type: "Residential",
-    price: "$1,200,000",
-    status: "Sold",
-    datelisted: "Dec 15, 2024 (23 Days)",
-  },
-  {
-    name: "Modern 3BR Villa 123 Palm St, Miami, FL",
-    type: "Residential",
-    price: "$450,000",
-    status: "Active",
-    datelisted: "Jan 20, 2025 (42 Days)",
-  },
-  {
-    name: "Downtown Office Space 456 Market St, NYC",
-    type: "Commercial",
-    price: "$2,000,000",
-    status: "Leased",
-    datelisted: "Feb 5, 2025 (12 Days)",
-  },
-  {
-    name: "Luxury Beach House 789 Ocean Dr, LA, CA",
-    type: "Residential",
-    price: "$1,200,000",
-    status: "Sold",
-    datelisted: "Dec 15, 2024 (23 Days)",
-  },
+const propertyTypes = [
+  "Church",
+  "Gas Station",
+  "Hotel",
+  "Industrial Park",
+  "Medical Building",
+  "Mixed Use",
+  "Motel",
+  "Office Building",
+  "Recreation Center",
+  "Retail Center",
+  "Self-Storage Facility",
+  "School Building",
+  "Senior Living Facility",
+  "Shopping Center",
+  "Single Tenant Retail Building",
+  "Storage Facility",
+  "Vacant Land",
+  "Warehouse",
+  "Other",
+];
+
+const InvestmentRange = [
+  "Under $250K",
+  "$250K – $500K",
+  "$500K – $1M",
+  "$1M – $2.5M",
+  "$2.5M – $5M",
+  "$5M – $10M",
+  "$10M – $25M",
+  "$25M – $50M",
+  "Over $50M",
 ];
 
 const Listing = () => {
-  const [showMobileFilter, setShowMobileFilter] = useState(false);
+
+
+  const { register, watch, setValue } = useForm();
+  const status = watch("status");
+  const propertyType = watch("propertyType");
+  const priceRange = watch("priceRange");
 
   const [isFilterOpen, setIsFilterOpen] = useState(false);
+
+  console.log(status + propertyType + priceRange);
+  
+
+  const handleResetFilters = () => {
+    setValue("status", ""); 
+    setValue("propertyType", "");
+    setValue("priceRange", "");
+  };
 
   return (
     <>
@@ -117,107 +121,50 @@ const Listing = () => {
           {/* Desktop filter bar (hidden on mobile) */}
           <div className="hidden xl:flex gap-2 px-0 bg-white  w-[85%] border-[1px] border-solid border-[#1E1E1E] rounded-[10px]">
             {/* FILTER BUTTON  */}
-            <button className=" font-Inter bg-[#1E1E1E] text-white py-2.5 rounded-l-[7px] flex items-center px-4 gap-1">
+            <button className=" font-Inter bg-[#1E1E1E] text-white py-2.5 rounded-l-[7px] flex items-center px-4 gap-1 w-[15%]">
               <img className="w-5 h-5" src={FilterIcon} alt="" />{" "}
               <span className="font-Urbanist font-[500] text-[15px]">
                 Filter
               </span>
             </button>
             {/* STATUS  */}
-            <div className="flex gap-1 border-r-[1px] border-solid px-3.5 border-[#BBBBBB]">
-              <Select
-                className={
-                  " border-[#F3EEFF] text-[#444444] font-[600] font-Urbanist text-[14px] w-[100%] h-12 rounded-[6px] outline-none  "
-                }
-                name="status"
-                aria-label="Project status"
-              >
-                <option
-                  className="text-[#1a1919] font-[500] font-Urbanist text-[15px]"
-                  value="active"
-                >
-                  Status
-                </option>
-                <option
-                  className="text-[#1a1919] font-[500] font-Urbanist text-[14px]"
-                  value="paused"
-                >
-                  Paused
-                </option>
-              </Select>
+            <div className="border-r-[1px] border-solid border-[#BBBBBB] w-[17%]">
+              <Selection
+                defaultOption={"Status"}
+                Options={["Available", "Withdraw", "Pending", "Loss", "Lease"]}
+                icon={"!top-3.5"}
+                name={"status"}
+                register={register}
+                Style={"bg-transparent border-none"}
+              />
             </div>
-            <div className="flex gap-1  border-r-[1px] border-solid px-3.5 border-[#BBBBBB]">
-              <Select
-                className={
-                  " border-[#F3EEFF] text-[#444444] font-[600] font-Urbanist text-[14px] w-[100%] h-12 rounded-[6px] outline-none  "
-                }
-                name="status"
-                aria-label="Project status"
-              >
-                <option
-                  className="text-[#1a1919] font-[500] font-Urbanist text-[15px]"
-                  value="active"
-                >
-                  Property Type
-                </option>
-                <option
-                  className="text-[#1a1919] font-[500] font-Urbanist text-[14px]"
-                  value="paused"
-                >
-                  Paused
-                </option>
-              </Select>
+            <div className="border-r-[1px] border-solid border-[#BBBBBB] w-[23%]">
+              <Selection
+                defaultOption={"Property Type"}
+                Options={propertyTypes}
+                name={"propertyType"}
+                icon={"!top-3.5"}
+                register={register}
+                Style={"bg-transparent border-none"}
+              />
             </div>
-            <div className="flex gap-1  border-r-[1px] border-solid px-3.5 border-[#BBBBBB]">
-              <Select
-                className={
-                  " border-[#F3EEFF] text-[#444444] font-[600] font-Urbanist text-[14px] w-[100%] h-12  rounded-[6px] outline-none  "
-                }
-                name="status"
-                aria-label="Project status"
-              >
-                <option
-                  className="text-[#1a1919] font-[500] font-Urbanist text-[15px]"
-                  value="active"
-                >
-                  Date Range
-                </option>
-                <option
-                  className="text-[#1a1919] font-[500] font-Urbanist text-[14px]"
-                  value="paused"
-                >
-                  Paused
-                </option>
-              </Select>
+            <div className=" border-r-[1px] border-solid border-[#BBBBBB] w-[20%]">
+              <Selection
+                defaultOption={"Price Range"}
+                Options={InvestmentRange}
+                icon={"!top-3.5"}
+                name={"priceRange"}
+                register={register}
+                Style={"bg-transparent border-none"}
+              />
             </div>
-            <div className="flex gap-1  border-r-[1px] border-solid px-4 border-[#BBBBBB]">
-              <Select
-                className={
-                  " border-[#F3EEFF] text-[#444444] font-[600] font-Urbanist text-[14px] w-[100%] h-12 rounded-[6px] outline-none  "
-                }
-                name="status"
-                aria-label="Project status"
-              >
-                <option
-                  className="text-[#1a1919] font-[500] font-Urbanist text-[15px]"
-                  value="active"
-                >
-                  Sort
-                </option>
-                <option
-                  className="text-[#1a1919] font-[500] font-Urbanist text-[14px]"
-                  value="paused"
-                >
-                  Paused
-                </option>
-              </Select>
-            </div>
-            <div className="flex justify-end ml-3">
-              <button className="flex items-center justify-end gap-2">
+            <div className="flex justify-center items-center w-[20%]">
+              <button 
+              onClick={handleResetFilters} className="flex items-center justify-center gap-2 cursor-pointer">
                 <span className="font-Urbanist font-[500] text-[15px] text-[#E31D1C]">
                   Reset Filter
-                </span>{" "}
-                <img className="h-5" src={ResetImage} alt="" />{" "}
+                </span>
+                <img className="h-5" src={ResetImage} alt="" />
               </button>
             </div>
           </div>
@@ -305,9 +252,7 @@ const Listing = () => {
       </section>
 
       {/* TABLE SECTION */}
-      <ListingTable></ListingTable>
-
-     
+      <ListingTable priceRange={priceRange} status={status} propertyType={propertyType}></ListingTable>
 
       {/* HEADING SECTION  */}
       <section className="pt-6 pb-4 sm:py-6 px-2 sm:px-0 ">

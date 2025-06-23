@@ -6,11 +6,13 @@ import axios from "axios";
 import Inputs from "../../Components/InputFields/Inputs";
 // IMAGES
 import Image from "../../assets/RegisterPage.jpg";
+import { Eye, EyeOff } from "lucide-react";
 
 const Login = () => {
   const navigate = useNavigate();
   const clientId = import.meta.env.VITE_GOOGLE_CLIENT_ID;
   const ApiKey = import.meta.env.VITE_API_KEY;
+
   // STATES
   const [Loading, setLoading] = useState(false);
   const {
@@ -19,6 +21,7 @@ const Login = () => {
     setError,
     formState: { errors },
   } = useForm();
+  const [showPassword, setShowPassword] = useState(false);
 
   // LOGIN FORM
   const LoginForm = async (Data) => {
@@ -33,7 +36,10 @@ const Login = () => {
       localStorage.setItem("token", Response.data.token);
       localStorage.setItem("User", JSON.stringify(Response.data.user));
       if (Response.data.profile_complete) {
-        localStorage.setItem("ProfileComplete", JSON.stringify(Response.data.profile_complete));
+        localStorage.setItem(
+          "ProfileComplete",
+          JSON.stringify(Response.data.profile_complete)
+        );
         navigate("/admin");
         reset();
       } else {
@@ -89,7 +95,10 @@ const Login = () => {
       localStorage.setItem("token", Response.data.token);
       localStorage.setItem("User", JSON.stringify(Response.data.user));
       if (Response.data.profile_complete) {
-        localStorage.setItem("ProfileComplete", JSON.stringify(Response.data.profile_complete));
+        localStorage.setItem(
+          "ProfileComplete",
+          JSON.stringify(Response.data.profile_complete)
+        );
         navigate("/admin");
       } else {
         navigate("/admin/account-setting");
@@ -166,7 +175,7 @@ const Login = () => {
                 ></Inputs>
               </span>
               {/* PASSOWRD  */}
-              <span className="">
+              <span className="relative">
                 <Inputs
                   name={"Password"}
                   register={register("Password", {
@@ -177,10 +186,19 @@ const Login = () => {
                     },
                   })}
                   labels={"Password"}
-                  type={"password"}
+                  type={showPassword ? "text" : "password"}
                   placeholder={"Enter your password"}
                   error={errors.Password?.message}
                 ></Inputs>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setShowPassword((prev) => !prev);
+                  }}
+                  className="absolute right-6 text-[#747474] top-[50px] transform -translate-y-1/2 cursor-pointer"
+                >
+                  {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                </button>
               </span>
               <span>
                 <p className="font-Urbanist text-Paracolor font-[600] text-[14px] text-end">

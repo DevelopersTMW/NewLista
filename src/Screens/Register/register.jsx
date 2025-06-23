@@ -8,6 +8,7 @@ import Inputs from "../../Components/InputFields/Inputs";
 // IMAGES
 import Image from "../../assets/LoginPage.jpg";
 import { useDispatch } from "react-redux";
+import { Eye, EyeOff } from "lucide-react";
 
 const Register = () => {
   const {
@@ -19,11 +20,17 @@ const Register = () => {
     reset,
   } = useForm();
 
+
   const clientId = import.meta.env.VITE_GOOGLE_CLIENT_ID;
   const ApiKey = import.meta.env.VITE_API_KEY;
   const navigate = useNavigate();
-  const [ErrorMessage, setErrorMessage] = useState("");
+
+  // STATES 
   const [Loading, setLoading] = useState(false);
+  const [ErrorMessage, setErrorMessage] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setshowConfirmPassword] = useState(false);
+
 
   const RegisterForm = async (Data) => {
     console.log("RegisterUser :", Data);
@@ -262,30 +269,52 @@ const Register = () => {
                 ></Inputs>
               </span>
               {/* PASSOWRD  */}
-              <span className="">
+              <span className="relative">
                 <Inputs
                   name={"Password"}
                   register={register("Password", {
                     required: "Password is required",
                   })}
                   labels={"Password"}
-                  type={"password"}
+                  type={showPassword ? "text" : "password"}
                   placeholder={"Create a strong password"}
                   error={errors.Password?.message}
                 ></Inputs>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setShowPassword((prev) => !prev);
+                  }}
+                  className="absolute right-6 text-[#747474] top-[50px] transform -translate-y-1/2 cursor-pointer"
+                >
+                  {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                </button>
               </span>
               {/* CONFIRM PASSWORD  */}
-              <span className="">
+              <span className="relative">
                 <Inputs
                   name={"ConfirmPassword"}
                   register={register("ConfirmPassword", {
                     required: "Please confirm your password",
                   })}
                   labels={"ConfirmPassword"}
-                  type={"password"}
+                  type={showConfirmPassword ? "text" : "password"}
                   placeholder={"Re-enter your password"}
                   error={errors.ConfirmPassword?.message}
                 ></Inputs>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setshowConfirmPassword((prev) => !prev);
+                  }}
+                  className="absolute right-6 text-[#747474] top-[50px] transform -translate-y-1/2 cursor-pointer"
+                >
+                  {showConfirmPassword ? (
+                    <EyeOff size={18} />
+                  ) : (
+                    <Eye size={18} />
+                  )}
+                </button>
               </span>
             </div>
             {/* Sign Up Button */}

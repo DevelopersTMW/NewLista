@@ -40,9 +40,9 @@ const BannerBackground = {
 const ViewProperty = () => {
   const ApiKey = import.meta.env.VITE_API_KEY;
   const [Properties, setProperties] = useState([]);
+  const [searchFilters, setSearchFilters] = useState(null);
   const [FilterValue, setFilterValue] = useState("AllProperties");
   const isLoggedIn = localStorage.getItem("token");
-  const [ShowEmpty, setShowEmpty] = useState(false);
   const [selectedTab, setSelectedTab] = useState("");
 
   const [selectedIndex, setSelectedIndex] = useState(0);
@@ -62,41 +62,104 @@ const ViewProperty = () => {
     GetProperty();
   }, []);
 
-  
   const filteredProperties = useMemo(() => {
     if (!Properties || Properties.length === 0) return [];
 
-    // If dropdown is used
+    let result = [...Properties];
+
+    // Dropdown filtering
     if (FilterValue === "Features Property") {
-      return Properties.filter((p) => p.featured_listing === true);
+      result = result.filter((p) => p.featured_listing);
     }
 
     if (FilterValue === "Off Market Properties") {
-      return isLoggedIn
-        ? Properties.filter((p) => p.off_market_listing === true)
-        : [];
+      result = isLoggedIn ? result.filter((p) => p.off_market_listing) : [];
     }
 
-    // ✅ Tab-based filtering when dropdown is "AllProperties"
     if (FilterValue === "AllProperties") {
       if (!selectedTab || selectedTab.toLowerCase() === "all properties") {
-        return isLoggedIn
-          ? Properties
-          : Properties.filter((p) => !p.off_market_listing);
+        result = isLoggedIn
+          ? result
+          : result.filter((p) => !p.off_market_listing);
+      } else {
+        result = result.filter(
+          (p) =>
+            p.property_type?.toLowerCase().trim() ===
+            selectedTab.toLowerCase().trim()
+        );
       }
-
-      // ✅ Filter by property type
-      return Properties.filter(
-        (p) =>
-          p.property_type?.toLowerCase().trim() ===
-          selectedTab.toLowerCase().trim()
-      );
     }
 
-    return []; // fallback
-  }, [Properties, isLoggedIn, FilterValue, selectedTab]);
+    // 🔍 Apply SearchBar filters if provided
+    if (searchFilters) {
+      const { listingType, propertyType, state, city, priceRange } =
+        searchFilters;
+
+      if (listingType && listingType !== "Select") {
+        result = result.filter(
+          (p) => p.listing_type?.toLowerCase() === listingType.toLowerCase()
+        );
+      }
+
+      if (propertyType && propertyType !== "Select Your Property") {
+        result = result.filter(
+          (p) => p.property_type?.toLowerCase() === propertyType.toLowerCase()
+        );
+      }
+
+      if (state) {
+        result = result.filter(
+          (p) => p.state?.toLowerCase() === state.toLowerCase()
+        );
+      }
+
+      if (city) {
+        result = result.filter(
+          (p) => p.city?.toLowerCase() === city.toLowerCase()
+        );
+      }
+
+      if (priceRange && priceRange !== "") {
+        result = result.filter((p) => {
+          const price =
+            p.listing_type === "For Sale" ? p.sale_price : p.lease_rate;
+
+          if (price === null || price === undefined) return false;
+
+          switch (priceRange) {
+            case "Under $250K":
+              return price < 250000;
+            case "$250K – $500K":
+              return price >= 250000 && price <= 500000;
+            case "$500K – $1M":
+              return price >= 500000 && price <= 1000000;
+            case "$1M – $2.5M":
+              return price >= 1000000 && price <= 2500000;
+            case "$2.5M – $5M":
+              return price >= 2500000 && price <= 5000000;
+            case "$5M – $10M":
+              return price >= 5000000 && price <= 10000000;
+            case "$10M – $25M":
+              return price >= 10000000 && price <= 25000000;
+            case "$25M – $50M":
+              return price >= 25000000 && price <= 50000000;
+            case "Over $50M":
+              return price > 50000000;
+            default:
+              return true;
+          }
+        });
+      }
+    }
+
+    return result;
+  }, [Properties, isLoggedIn, FilterValue, selectedTab, searchFilters]);
 
   console.log(selectedTab);
+  const handleFilterChange = (filters) => {
+    console.log("Filters selected:", filters);
+    setSearchFilters(filters);
+  };
 
   return (
     <>
@@ -107,7 +170,7 @@ const ViewProperty = () => {
         className="flex items-center justify-center"
       >
         <div className=" pt-16 pb-20 ml-10 sm:ml-0 md:py-16 lg:py-28 lg:px-12  max-[350px]:w-[90%] w-[75%] sm:w-[50%] md:w-[90%] min-[800px]:w-[80%] lg:w-[100%] xl:w-[100%] 2xl:w-[80%]">
-          <SearchBar></SearchBar>
+          <SearchBar handleFilterChange={handleFilterChange}></SearchBar>
         </div>
       </section>
       {/* BANNER END   */}

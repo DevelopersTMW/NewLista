@@ -1,63 +1,88 @@
 import React, { useEffect, useState } from "react";
-import EditIcon from "../../../../../assets/EditIcon.png";
-import DownloadIcon from "../../../../../assets/DownloadIcon.png";
-import Spinner from "../../../../../Components/Spinner/Spinner";
-import RightSideArrow from "../../../../../assets/ListingRightSideArrow.png";
-import LeftSideArrow from "../../../../../assets/ListingLeftSideArrow.png";
 import axios from "axios";
-import { EyeClosed, FilePenLine, PencilOff, ScanSearch, UserRoundCheck } from "lucide-react";
+import Spinner from "../../../../../Components/Spinner/Spinner";
+import EditIcon from "../../../../../assets/EditIcon.png";
+import { PencilOff, ScanSearch } from "lucide-react";
+import RightSideArrow from "../../../../../assets/ListingRightSideArrow.png"
 import { Link, useNavigate } from "react-router-dom";
-import { useConfirmation } from "../../../AccountSetting/Fields/Confirmation";
 import ConfirmationModal from "../../../../../Components/ConfirmationModal/ConfirmationModal";
+import { useConfirmation } from "../../../AccountSetting/Fields/Confirmation";
 
-const ListingTable = () => {
+const ListingTable = ({ status, propertyType, priceRange }) => {
   const [listings, setListings] = useState([]);
   const [loading, setLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 5;
-  const { isOpen, confirm, handleConfirm, handleCancel } = useConfirmation();
+   // REACT HOOK FOR
+    const { isOpen, confirm, handleConfirm, handleCancel } = useConfirmation();
 
   const ApiKey = import.meta.env.VITE_API_KEY;
   const token = localStorage.getItem("token");
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   useEffect(() => {
-    const GetListing = async () => {
+    const fetchListings = async () => {
       try {
         setLoading(true);
-        const response = await axios.get(`${ApiKey}/user-properties`, {
+        const res = await axios.get(`${ApiKey}/user-properties`, {
           headers: { Authorization: `Bearer ${token}` },
         });
-        setListings(response.data?.data || []);
-        console.log(response.data);
-        
-      } catch (error) {
-        console.error("Fetch listing error:", error);
+        setListings(res.data?.data || []);
+      } catch (err) {
+        console.error("Error fetching listings:", err);
       } finally {
         setLoading(false);
       }
     };
 
-    GetListing();
+    fetchListings();
   }, []);
 
+  const applyFilters = (properties) => {
+    return properties.filter((item) => {
+      const matchesStatus = status
+        ? item.listing_status?.toLowerCase() === status.toLowerCase()
+        : true;
 
+      const matchesType = propertyType
+        ? item.property_type?.toLowerCase() === propertyType.toLowerCase()
+        : true;
 
-  const totalPages = Math.ceil(listings.length / itemsPerPage);
-  const currentListings = listings.slice(
+      const price = Number(item.sale_price);
+      const matchesPrice = (() => {
+        if (!priceRange || isNaN(price)) return true;
+
+        switch (priceRange) {
+          case "Under $250K": return price < 250000;
+          case "$250K – $500K": return price >= 250000 && price <= 500000;
+          case "$500K – $1M": return price >= 500000 && price <= 1000000;
+          case "$1M – $2.5M": return price >= 1000000 && price <= 2500000;
+          case "$2.5M – $5M": return price >= 2500000 && price <= 5000000;
+          case "$5M – $10M": return price >= 5000000 && price <= 10000000;
+          case "$10M – $25M": return price >= 10000000 && price <= 25000000;
+          case "$25M – $50M": return price >= 25000000 && price <= 50000000;
+          case "Over $50M": return price > 50000000;
+          default: return true;
+        }
+      })();
+
+      return matchesStatus && matchesType && matchesPrice;
+    });
+  };
+
+  const filteredListings = applyFilters(listings);
+  const totalPages = Math.ceil(filteredListings.length / itemsPerPage);
+  const currentListings = filteredListings.slice(
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage
   );
-
-
-  // EDIT PROPERTY 
-  const handleConfirmation = async (id)=>{
-     const confirmed = await confirm();
-     if(confirmed){
-      navigate(`/create-property?editId=${id}`)
-     }
-  }
-
+  // EDIT PROPERTY
+  const handleConfirmation = async (id) => {
+    const confirmed = await confirm();
+    if (confirmed) {
+      navigate(`/create-property?editId=${id}`);
+    }
+  };
 
   return (
     <>
@@ -128,7 +153,11 @@ const ListingTable = () => {
                       })}
                     </td>
                     <td className="px-4 py-6 text-[#222222] font-[550] text-[16px] flex gap-3 justify-center">
-                      <Link onClick={()=>{handleConfirmation(item.id)}}>
+                      <Link
+                        onClick={() => {
+                          handleConfirmation(item.id);
+                        }}
+                      >
                         <img
                           className="w-5.5 h-5.5"
                           src={EditIcon}
@@ -189,7 +218,10 @@ const ListingTable = () => {
         message="Do you want to Edit Property?"
         confirmLabel="Yes"
         icon={
-          <PencilOff  strokeWidth={1.75} className="size-16 text-red-600  bg-amber-50 px-3.5 py-3.5 rounded-full" />
+          <PencilOff
+            strokeWidth={1.75}
+            className="size-16 text-red-600  bg-amber-50 px-3.5 py-3.5 rounded-full"
+          />
         }
         style="bg-red-600"
       />

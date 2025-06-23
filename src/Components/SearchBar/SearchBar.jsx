@@ -1,10 +1,8 @@
-import { Select } from "@headlessui/react";
+import { useForm } from "react-hook-form";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import ComboboxSelector from "../ComboboxSelector/ComboboxSelector";
-import Selection from "../InputFields/Selection";
-import { ChevronDownIcon } from "@heroicons/react/20/solid";
-import { Grip, GripVertical, Search, Turtle } from "lucide-react";
+import { Search } from "lucide-react";
 import MobileMenu from "./MobileMenu";
 
 const propertyType = [
@@ -29,7 +27,9 @@ const propertyType = [
   { name: "Warehouse" },
   { name: "Other" },
 ];
+
 const statesArray = [
+  { id: 0, name: "Select Your State", code: "" },
   { id: 1, name: "Alabama", code: "AL" },
   { id: 2, name: "Alaska", code: "AK" },
   { id: 3, name: "Arizona", code: "AZ" },
@@ -88,190 +88,163 @@ const statesArray = [
   { id: 56, name: "Northern Mariana Islands", code: "MP" },
 ];
 
-const SearchBar = () => {
-  const [isFilterOpen, setIsFilterOpen] = useState(false);
-  const [selectedState, setSelectedState] = useState("");
+const SearchBar = ({ handleFilterChange }) => {
   const [cities, setCities] = useState([]);
+  const [selectedState, setSelectedState] = useState("");
   const [selectedCity, setSelectedCity] = useState("");
+  const [isFilterOpen, setIsFilterOpen] = useState(false);
 
-  const [selectedPerson, setSelectedPerson] = useState(null);
+  const { register, handleSubmit, setValue, getValues, watch } = useForm();
+
+  const listingType = watch("listingType");
+
+  const onSubmit = () => {
+    const data = {
+      listingType: getValues("listingType"),
+      propertyType: getValues("propertyType"),
+      state: selectedState,
+      city: selectedCity,
+      priceRange: getValues("priceRange"),
+    };
+
+    handleFilterChange(data);
+  };
 
   const StateSelectionHandler = (value) => {
-    let state = value.name;
+    const state = value.name;
     setSelectedState(state);
     setSelectedCity("");
-    setCities([]);
+    setValue("state", state);
 
-    try {
-      if (state) {
-        const stateShortNames = value.code;
-
-        axios
-          .get(`/states/${stateShortNames}.json`)
-          .then((res) => {
-            setCities(res.data);
-          })
-          .catch((error) => {
-            console.error("Failed to load cities:", error);
-            setCities([]);
-          });
-      }
-    } catch (error) {
-      console.error("Failed to load cities:", error);
+    if (value.code) {
+      axios
+        .get(`/states/${value.code}.json`)
+        .then((res) => {
+          setCities(res.data || []);
+        })
+        .catch((err) => {
+          console.error("Error loading cities", err);
+          setCities([]);
+        });
     }
   };
 
   const CitySelectionHandler = (value) => {
-    console.log("Selected Data :", value);
+    setSelectedCity(value.name);
+    setValue("city", value.name);
   };
 
-  //   CHECK IF CITY EXIST OR NOT
-  let citiess = cities.map((name, index) => ({
+  const cityOptions = cities.map((city, index) => ({
     id: index + 1,
-    name,
+    name: city,
   }));
 
-  const [listingType, setListingType] = useState(""); // "For Sale" or "For Lease"
-
   return (
-    <>
-      <div className=" sm:mb-8 sm:flex sm:justify-center mt-8">
-        <div className="relative w-[85%] justify-between md:w-[35%] lg:w-[94%] xl:w-[84%] flex rounded-full py-3 px-5 lg:px-6.5 sm:py-3.5 text-sm/6 text-gray-600 ring-1 ring-gray-900/10 hover:ring-gray-900/20 bg-textColor lg:justify-center items-center">
-          <div className="w-[45%] lg:w-[15%] px-4 py-2 lg:border-r-[1px] border-solid border-Paracolor">
-            <Select
-              name="status"
-              aria-label="Project status"
-              className={
-                "overline-none text-[16px] font-Inter text-black font-[500] focus:outline-none border-none focus:ring-0"
-              }
-              onChange={(e) => {
-                const value = e.target.value;
-                setListingType(value);
-                setIsFilterOpen(value !== "Select" && value !== ""); // Open only if valid
-              }}
-              defaultValue="Select"
-            >
-              <option
-                className="overline-none font-Inter block lg:hidden "
-                value="Select"
-              >
-                Select
-              </option>
-              <option className="overline-none font-Inter" value="For Sale">
-                For Sale
-              </option>
-              <option className="overline-none font-Inter" value="For Lease">
-                For Lease
-              </option>
-            </Select>
-          </div>
-          <div className="hidden lg:flex lg:w-[20%] px-8 py-1 md:border-r-[1px] border-solid border-Paracolor flex-col ">
-            <h1 className="text-[14px] font-semibold font-Inter text-black ">
-              Property Type
-            </h1>
-            <Select
-              name="status"
-              aria-label="Project status"
-              className={
-                "overline-none text-[13px] font-Inter text-Paracolor font-[500] -mt-0.5 -ml-1"
-              }
-            >
-              {propertyType.map((item, index) => (
-                <option
-                  key={index}
-                  className="outline-none font-Inter"
-                  value={item.name}
-                >
-                  {item.name}
-                </option>
-              ))}
-            </Select>
-          </div>
-          <div className=" hidden  lg:flex lg:w-[190px] whitespace-nowrap text-ellipsis px-8 py-1 lg:border-r-[1px] border-solid border-Paracolor flex-col">
-            <h1 className="text-[14px] font-Inter text-black font-[600]">
-              State
-            </h1>
-            <ComboboxSelector
-              options={statesArray}
-              onSelect={StateSelectionHandler}
-              placeholder={"Select Your State"}
-            ></ComboboxSelector>
-          </div>
+    <div className="sm:mb-8 sm:flex sm:justify-center mt-8">
+      <div className="relative w-[85%] justify-between md:w-[35%] lg:w-[94%] xl:w-[84%] flex rounded-full py-3 px-5 lg:px-6.5 sm:py-3.5 text-sm/6 text-gray-600 ring-1 ring-gray-900/10 hover:ring-gray-900/20 bg-textColor lg:justify-center items-center">
+        {/* Listing Type */}
+        <div className="w-[45%] lg:w-[15%] px-4 py-2 lg:border-r-[1px] border-solid border-Paracolor">
+          <select
+            {...register("listingType")}
+            className="text-[16px] font-Inter text-black font-[500] focus:outline-none border-none focus:ring-0 w-full"
+            onChange={(e) => {
+              setIsFilterOpen(
+                e.target.value !== "Select" && e.target.value !== ""
+              );
+              setValue("listingType", e.target.value);
+            }}
+          >
+            <option value="Select">Select</option>
+            <option value="For Sale">For Sale</option>
+            <option value="For Lease">For Lease</option>
+          </select>
+        </div>
 
-          <div className="w-[40%] flex justify-center items-center lg:hidden md:w-[10%] sm:w-[25%]">
-            {isFilterOpen && (
-              <MobileMenu
-                setIsFilterOpen={setIsFilterOpen}
-                isFilterOpen={isFilterOpen}
-                listingType={listingType}
-              ></MobileMenu>
-            )}
-          </div>
+        {/* Property Type */}
+        <div className="hidden lg:flex lg:w-[20%] px-8 py-1 md:border-r-[1px] border-solid border-Paracolor flex-col">
+          <h1 className="text-[14px] font-semibold font-Inter text-black">
+            Property Type
+          </h1>
+          <select
+            {...register("propertyType")}
+            className="text-[13px] font-Inter text-Paracolor font-[500] -mt-0.5 -ml-1"
+          >
+            {propertyType.map((item, index) => (
+              <option key={index} value={item.name}>
+                {item.name}
+              </option>
+            ))}
+          </select>
+        </div>
 
-          <div className=" hidden lg:w-[22%] px-8 py-1 border-r-[1px] border-solid border-Paracolor lg:flex flex-col ">
-            <h1 className="text-[14px] font-Inter text-black font-[600]">
-              City
-            </h1>
+        {/* State Selector */}
+        <div className="hidden lg:flex lg:w-[190px] whitespace-nowrap text-ellipsis px-8 py-1 lg:border-r-[1px] border-solid border-Paracolor flex-col">
+          <h1 className="text-[14px] font-Inter text-black font-[600]">
+            State
+          </h1>
+          <ComboboxSelector
+            options={statesArray}
+            onSelect={StateSelectionHandler}
+            placeholder="Select Your State"
+          />
+        </div>
 
-            <ComboboxSelector
-              options={citiess}
-              onSelect={CitySelectionHandler}
-              placeholder={"Select Your City"}
-              disabled={citiess.length > 0 ? false : true}
-            ></ComboboxSelector>
-          </div>
+        {/* Mobile Filter */}
+        <div className="w-[40%] flex justify-center items-center lg:hidden md:w-[10%] sm:w-[25%]">
+          {isFilterOpen && (
+            <MobileMenu
+              setIsFilterOpen={setIsFilterOpen}
+              isFilterOpen={isFilterOpen}
+              listingType={listingType}
+            />
+          )}
+        </div>
 
-          <div className="hidden lg:w-[20%] px-8 py-1  lg:flex flex-col ">
-            <h1 className="text-[14px] font-Inter text-black font-[600]">
-              Price Range
-            </h1>
-            <Select
-              name="status"
-              aria-label="Project status"
-              className={
-                "overline-none text-[13px] font-Inter text-Paracolor font-[500] -mt-0.5 -ml-1"
-              }
-            >
-              <option className="overline-none font-Inter" value="active">
-                Choose Price Range
-              </option>
-              <option value="active">Under $250K</option>
-              <option className="" value="paused">
-                $250K – $500K
-              </option>
-              <option className="" value="delayed">
-                $500K – $1M
-              </option>
-              <option className="" value="canceled">
-                $1M – $2.5M
-              </option>
-              <option className="" value="canceled">
-                $2.5M – $5M
-              </option>
-              <option className="" value="canceled">
-                $5M – $10M
-              </option>
-              <option className="" value="canceled">
-                $10M – $25M
-              </option>
-              <option className="" value="canceled">
-                $25M – $50M
-              </option>
-              <option className="" value="canceled">
-                Over $50M
-              </option>
-            </Select>
-          </div>
-          <div>
-            <button className="hover-btn hover-btn-purple text-white px-2 py-2 rounded-full text-[14px] cursor-pointer">
-              <span>
-                <Search />
-              </span>
-            </button>
-          </div>
+        {/* City Selector */}
+        <div className="hidden lg:w-[22%] px-8 py-1 border-r-[1px] border-solid border-Paracolor lg:flex flex-col">
+          <h1 className="text-[14px] font-Inter text-black font-[600]">City</h1>
+          <ComboboxSelector
+            options={cityOptions}
+            onSelect={CitySelectionHandler}
+            placeholder="Select Your City"
+            disabled={cityOptions.length === 0}
+          />
+        </div>
+
+        {/* Price Range */}
+        <div className="hidden lg:w-[20%] px-8 py-1 lg:flex flex-col">
+          <h1 className="text-[14px] font-Inter text-black font-[600]">
+            Price Range
+          </h1>
+          <select
+            {...register("priceRange")}
+            className="text-[13px] font-Inter text-Paracolor font-[500] -mt-0.5 -ml-1"
+          >
+            <option value="">Choose Price Range</option>
+            <option value="Under $250K">Under $250K</option>
+            <option value="$250K – $500K">$250K – $500K</option>
+            <option value="$500K – $1M">$500K – $1M</option>
+            <option value="$1M – $2.5M">$1M – $2.5M</option>
+            <option value="$2.5M – $5M">$2.5M – $5M</option>
+            <option value="$5M – $10M">$5M – $10M</option>
+            <option value="$10M – $25M">$10M – $25M</option>
+            <option value="$25M – $50M">$25M – $50M</option>
+            <option value="Over $50M">Over $50M</option>
+          </select>
+        </div>
+
+        {/* Search Button */}
+        <div>
+          <button
+            type="button"
+            className="hover-btn hover-btn-purple text-white px-2 py-2 rounded-full text-[14px] cursor-pointer"
+            onClick={onSubmit}
+          >
+            <span><Search /></span>
+          </button>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 
