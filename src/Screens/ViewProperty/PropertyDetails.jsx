@@ -56,6 +56,8 @@ const visibleFieldsByType = {
     "NumberOfUnits",
     "BuildingClass",
     "PercentageLeased",
+    "HVAC",
+    "Parking"
   ],
   Land: [
     "Currency",
@@ -65,6 +67,8 @@ const visibleFieldsByType = {
     "LandScapeNumber",
     "LandScapeAcres",
     "LandScapeNumber2",
+    "HVAC",
+    "Parking"
   ],
   // Add other property types as needed
 };

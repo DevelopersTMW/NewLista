@@ -350,7 +350,7 @@ const AdminSidebar = ({ screen }) => {
         </aside>
 
         {/* ADMIN SCREEN  */}
-        <div className="px-4 flex flex-col gap-2 sm:ml- w-[74%]">
+        <div className="px-4 flex flex-col gap-2 sm:ml- sm:w-[74%]">
           <div>
             <AdminNavbar></AdminNavbar>
           </div>

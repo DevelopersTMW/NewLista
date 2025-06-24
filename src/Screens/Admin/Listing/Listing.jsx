@@ -16,6 +16,7 @@ import ListingImage1_4 from "../../../assets/listing1.4.png";
 import { Link } from "react-router-dom";
 import ListingTable from "./ListingSection/ListingTable/ListingTable.jsx";
 import { useForm } from "react-hook-form";
+import { ChevronLeft, RefreshCw } from "lucide-react";
 
 const propertyTypes = [
   "Church",
@@ -52,20 +53,21 @@ const InvestmentRange = [
 ];
 
 const Listing = () => {
-
-
   const { register, watch, setValue } = useForm();
   const status = watch("status");
   const propertyType = watch("propertyType");
   const priceRange = watch("priceRange");
+  const search = watch("search");
 
   const [isFilterOpen, setIsFilterOpen] = useState(false);
 
   console.log(status + propertyType + priceRange);
-  
+
+  console.log(search);
 
   const handleResetFilters = () => {
-    setValue("status", ""); 
+    setValue("status", "");
+    setValue("search", "");
     setValue("propertyType", "");
     setValue("priceRange", "");
   };
@@ -113,8 +115,8 @@ const Listing = () => {
               type="search"
               id="default-search"
               className=" w-[100%] text-[#444444] placeholder:text-[#444444] font-Urbanist font-semibold py-3.5 pl-11 rounded-[10px] text-[15px] bg-[#F3EEFF] outline-none"
-              placeholder="Search Your Listing "
-              required
+              placeholder="Search Property Name "
+              {...register("search")}
             />
           </div>
           {/* FILTER  */}
@@ -159,12 +161,14 @@ const Listing = () => {
               />
             </div>
             <div className="flex justify-center items-center w-[20%]">
-              <button 
-              onClick={handleResetFilters} className="flex items-center justify-center gap-2 cursor-pointer">
+              <button
+                onClick={handleResetFilters}
+                className="flex items-center justify-center gap-2 cursor-pointer"
+              >
                 <span className="font-Urbanist font-[500] text-[15px] text-[#E31D1C]">
                   Reset Filter
                 </span>
-                <img className="h-5" src={ResetImage} alt="" />
+                <RefreshCw size={16} className="text-[#E31D1C]" />
               </button>
             </div>
           </div>
@@ -193,19 +197,7 @@ const Listing = () => {
                   onClick={() => setIsFilterOpen(false)}
                   className="text-[#1E1E1E] text-[18px] flex items-center gap-2 font-Urbanist  font-[600]"
                 >
-                  <svg
-                    className="w-5 h-5"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M15 19l-7-7 7-7"
-                    />
-                  </svg>
+                 <ChevronLeft />
                   Back
                 </button>
               </div>
@@ -218,32 +210,47 @@ const Listing = () => {
                     Sort by
                   </span>
                 </button>
-
-                {[
-                  ["Recently Added", "Paused"],
-                  ["Name", "Paused"],
-                  ["Location", "Paused"],
-                ].map((options, idx) => (
-                  <select
-                    key={idx}
-                    className="w-full h-12 text-[#444444] font-semibold font-Urbanist text-[14px] rounded-[6px] border border-[#F3EEFF] outline-none"
-                  >
-                    {options.map((opt) => (
-                      <option
-                        className="text-[12.5px] font-Urbanist font-[600]"
-                        key={opt}
-                      >
-                        {opt}
-                      </option>
-                    ))}
-                  </select>
-                ))}
-
-                <button className="flex items-center gap-2 justify-end mt-2">
+                <div>
+                  <Selection
+                    defaultOption={"Status"}
+                    Options={[
+                      "Available",
+                      "Withdraw",
+                      "Pending",
+                      "Loss",
+                      "Lease",
+                    ]}
+                    icon={"!top-3.5"}
+                    name={"status"}
+                    register={register}
+                  />
+                </div>
+                <div >
+                  <Selection
+                    defaultOption={"Property Type"}
+                    Options={propertyTypes}
+                    name={"propertyType"}
+                    icon={"!top-3.5"}
+                    register={register}
+                  />
+                </div>
+                <div >
+                  <Selection
+                    defaultOption={"Price Range"}
+                    Options={InvestmentRange}
+                    icon={"!top-3.5"}
+                    name={"priceRange"}
+                    register={register}
+                  />
+                </div>
+                <button
+                  onClick={handleResetFilters}
+                  className="flex items-center gap-2 justify-end mt-2"
+                >
                   <span className="font-Urbanist font-medium text-[15px] text-[#E31D1C]">
                     Reset Filter
                   </span>
-                  <img className="h-5" src={ResetImage} alt="Reset" />
+                  <RefreshCw size={16} className="text-[#E31D1C]" />
                 </button>
               </div>
             </div>
@@ -252,7 +259,12 @@ const Listing = () => {
       </section>
 
       {/* TABLE SECTION */}
-      <ListingTable priceRange={priceRange} status={status} propertyType={propertyType}></ListingTable>
+      <ListingTable
+        search={search}
+        priceRange={priceRange}
+        status={status}
+        propertyType={propertyType}
+      ></ListingTable>
 
       {/* HEADING SECTION  */}
       <section className="pt-6 pb-4 sm:py-6 px-2 sm:px-0 ">

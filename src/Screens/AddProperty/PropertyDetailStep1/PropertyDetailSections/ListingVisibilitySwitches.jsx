@@ -1,10 +1,14 @@
 import { Switch } from "@headlessui/react";
 import { AlertCircle } from "lucide-react";
-import React from "react";
+import React, { useState } from "react";
 import { Controller } from "react-hook-form";
 import Switches from "../../../../Components/InputFields/Switch";
+import { Link } from "react-router-dom";
 
 const ListingVisibilitySwitches = ({ register, controls }) => {
+  const status = localStorage.getItem("status");
+  const [ShowError  , setShowError] = useState(false)
+
   return (
     <>
       <div className="flex flex-col py-5 gap-3 sm:gap-2">
@@ -37,25 +41,34 @@ const ListingVisibilitySwitches = ({ register, controls }) => {
             </p>
           </div>
         </div>
-        <div className="flex  items-center gap-3">
-          <div className=" max-[400px]:w-[13%]">
+        <div className="flex items-center gap-3">
+          <div className="max-[400px]:w-[13%]">
             <Controller
               name="OffTheMarketListing"
               control={controls}
-              defaultValue={false}
-              render={({ field }) => <Switches {...field} />}
+              defaultValue={false} // Ensure this is set
+              render={({ field }) => (
+                <Switches
+                  value={status ?  field.value :  setShowError(true)} // Pass field.value
+                  onChange={status ?  field.onChange :  setShowError(true)}
+                  checked={status ?  field.value :  setShowError(true)} // Use field.value for checked
+                  onBlur={field.onBlur}
+                />
+              )}
             />
           </div>
           <div className="flex flex-col max-[400px]:w-[87%] gap-0.5">
             <span className="flex gap-4">
-              <h1 className="block font-Urbanist text-[14.5px] sm:text-[15px] lg:text-[17px] font-[500] text-[#000000]">
-                Off-the-Market Listing
+              <h1 className="font-Urbanist text-[14.5px] sm:text-[15px] lg:text-[17px] font-[500]">
+                Off‑the‑Market Listing
               </h1>
-              <button className="border-PurpleColor border  font-[600] cursor-pointer text-[12px] sm:text-[13px] w-max px-3 flex justify-center items-center text-PurpleColor font-Urbanist rounded-[14px] text-center">
+              <button
+                className={`border border-PurpleColor text-PurpleColor font-[600] text-[13px] px-3 flex justify-center items-center rounded-[14px] font-Urbanist`}
+              >
                 Premium
               </button>
             </span>
-            <p className="block font-Urbanist text-[12.5px] sm:text-[14px] lg:text-[14.5px] font-[400] text-[#222222]">
+            <p className="font-Urbanist text-[12.5px] sm:text-[14px] lg:text-[14.5px] font-[400] text-[#222]">
               Only visible to Professional users. Free users will see a blurred
               version.
             </p>
@@ -133,7 +146,9 @@ const ListingVisibilitySwitches = ({ register, controls }) => {
         </div>
       </div>
 
-      <div className="">
+      {/* WARNING DIV */}
+     {
+      ShowError ?  <div className="">
         <div
           variant="outline"
           className="bg-amber-50 border border-amber-200  py-4 px-4 pl-5 sm:pr-8 sm:py-6 sm:w-[80%] md:w-max rounded-[8px] flex flex-col sm:flex-row gap-2 "
@@ -147,17 +162,20 @@ const ListingVisibilitySwitches = ({ register, controls }) => {
             <div className="flex flex-col gap-3 lg:gap-0 lg:flex-row font-Urbanist mt-1.5 sm:mt-0 text-[13.5px] md:text-[14px] lg:text-[15px] font-[500] text-amber-800">
               Upgrade to a premium subscription to access featured and
               off-the-market listings.
-              <button
-                variant="outline"
-                size="sm"
-                className="lg:ml-2 text-[12.5px] md:text-[13px] w-max bg-amber-100 hover:bg-amber-200 border-amber-300 border px-4 rounded-[8px] py-2"
-              >
-                Upgrade Now
-              </button>
+              <Link to="/pricing">
+                <button
+                  variant="outline"
+                  size="sm"
+                  className="lg:ml-2 text-[12.5px] md:text-[13px] w-max text-black bg-amber-100 hover:bg-amber-200 border-amber-300 border px-4 rounded-[8px] py-2 hover-btn hover-btn-yellow"
+                >
+                  <span>Upgrade Now</span>
+                </button>
+              </Link>
             </div>
           </div>
         </div>
-      </div>
+      </div> : ""
+     }
     </>
   );
 };

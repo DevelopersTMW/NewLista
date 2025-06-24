@@ -5,6 +5,8 @@ import MessageIcon from "../../../assets/MessageIcon.png";
 import InvestorIcon1 from "../../../assets/InvestorIcon1.png";
 import InvestorIcon2 from "../../../assets/InvestorIcon2.png";
 import InvestorIcon3 from "../../../assets/InvestorIcon3.png";
+
+import DummyLogo from "../../../../public/Images/UnknowUser.png";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 
@@ -14,13 +16,15 @@ const InvestorCards = ({
   InvesDesc,
   onConnectClick,
   onMessageClick,
+  state,
+  PropertyInterest,
+  year
 }) => {
   const token = localStorage.getItem("token");
 
-  
   return (
     <>
-      <div className="border-[1px] border-solid border-[#BBBBBB] px-7 py-7 rounded-[8px] w-[94%] sm:w-[280px] md:w-[320px] min-[950px]:w-[280px] lg:w-[290px]">
+      <div className="border-[1px] border-solid border-[#BBBBBB] px-7 py-7 rounded-[8px] w-[94%] sm:w-[280px] md:w-[320px] min-[950px]:w-[280px] lg:w-[290px] h-[360px] flex flex-col justify-between ">
         {/* IMAGES AND USERNAME  */}
         <div className="flex justify-start items-center gap-3 border-b-[1px] border-solid border-Paracolor pb-7">
           <span>
@@ -37,25 +41,25 @@ const InvestorCards = ({
             <h6 className="font-Inter text-[15px] font-[500]">{InvesDesc}</h6>
           </span>
         </div>
-        <div className="pt-7">
+        <div className="pt-7 flex flex-col justify-end">
           {/* FEATURES  */}
           <ul className="flex justify-start items-start flex-col gap-3">
             <li className="flex gap-3 justify-center items-center">
               <img className="w-5 h-5 " src={InvestorIcon1} alt="" />
               <p className="font-Inter text-[15px] text-Paracolor font-[600]">
-                New York
+                {state || "Not Provided "}
               </p>
             </li>
             <li className="flex gap-3 justify-center items-center">
               <img className="w-5 h-5 " src={InvestorIcon2} alt="" />
               <p className="font-Inter text-[15px] text-Paracolor font-[600]">
-                Multifamily - Retail - Industrial
+                {PropertyInterest}
               </p>
             </li>
             <li className="flex gap-3 justify-center items-center">
               <img className="w-5 h-5 " src={InvestorIcon3} alt="" />
               <p className="font-Inter text-[15px] text-Paracolor font-[600]">
-                Member since 2022
+                Member {year}
               </p>
             </li>
           </ul>

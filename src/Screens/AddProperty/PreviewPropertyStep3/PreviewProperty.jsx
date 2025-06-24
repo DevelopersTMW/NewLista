@@ -14,15 +14,15 @@ const Step3 = ({ formData, onBack, onSubmit }) => {
     defaultValues: {
       confirmInfo: false,
       authorizedToList: false,
-    }, 
+    },
   });
   useEffect(() => {
-  if (formData) {
-    reset(); 
-  }
-}, [formData, reset]);
+    if (formData) {
+      reset();
+    }
+  }, [formData, reset]);
 
-console.log(formData);
+  console.log(formData);
 
   const handleFinalSubmit = (data) => {
     const finalData = { ...formData, ...data };
@@ -73,7 +73,7 @@ console.log(formData);
               <div className="w-full overflow-hidden relative h-[400px] bg-[#f5f5f5] mt-7 rounded-lg">
                 <img
                   className="object-cover w-full h-full"
-                  src={ URL.createObjectURL(formData.fileInput[0])}
+                  src={URL.createObjectURL(formData.fileInput[0])}
                   alt=""
                 />
               </div>

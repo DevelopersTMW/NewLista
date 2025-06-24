@@ -12,6 +12,12 @@ const defaultConfig = {
     { label: "Number Of Units", key: "NumberOfUnits" },
     { label: "Building Class", key: "BuildingClass" },
     { label: "Percentage Leased", key: "PercentageLeased" },
+    { label: "Parking", key: "Parking" },
+    { label: "HVAC", key: "HVAC" },
+    { label: "Sprinkler System", key: "SprinklerSystem" },
+    { label: "Security System", key: "SecuritySystem" },
+    { label: "High Speed Internet", key: "HighSpeedInternet" },
+    { label: "ADACompliant", key: "ADA Compliant" },
   ],
 };
 
@@ -35,6 +41,12 @@ const fieldConfig = {
             fields.LandScapeAcres || ""
           }`.trim(),
       },
+       { label: "Parking", key: "Parking" },
+      { label: "HVAC", key: "HVAC" },
+      { label: "Sprinkler System", key: "SprinklerSystem" },
+      { label: "Security System", key: "SecuritySystem" },
+      { label: "High Speed Internet", key: "HighSpeedInternet" },
+      { label: "ADACompliant", key: "ADA Compliant" },
     ],
   },
   Warehouse: {
@@ -42,6 +54,7 @@ const fieldConfig = {
       { label: "Currency", key: "Currency" },
       { label: "Monthly Rental", key: "MonthlyRental" },
       { label: "Ceiling Height", key: "CeilingHeight" },
+     
       {
         label: "LandScape",
         key: "LandScapeCombined",
@@ -62,6 +75,12 @@ const fieldConfig = {
       { label: "Building Class", key: "BuildingClass" },
       { label: "Ground-Level-Docks", key: "GroundLevelDocks" },
       { label: "High-Level-Docks", key: "HighLevelDocks" },
+       { label: "Parking", key: "Parking" },
+    { label: "HVAC", key: "HVAC" },
+    { label: "Sprinkler System", key: "SprinklerSystem" },
+    { label: "Security System", key: "SecuritySystem" },
+    { label: "High Speed Internet", key: "HighSpeedInternet" },
+    { label: "ADACompliant", key: "ADA Compliant" },
     ],
   },
   "Retail Center": {
@@ -87,6 +106,12 @@ const fieldConfig = {
       { label: "Percentage Lease", key: "Percentage-Lease" },
       { label: "Parking Space", key: "Parking-Space" },
       { label: "Outdoor Signage", key: "Outdoor-Signage" },
+       { label: "Parking", key: "Parking" },
+    { label: "HVAC", key: "HVAC" },
+    { label: "Sprinkler System", key: "SprinklerSystem" },
+    { label: "Security System", key: "SecuritySystem" },
+    { label: "High Speed Internet", key: "HighSpeedInternet" },
+    { label: "ADACompliant", key: "ADA Compliant" },
     ],
   },
 };
@@ -112,7 +137,8 @@ const KeyFeatures = ({ SingleProperty }) => {
     );
 
   // ✅ If no valid fields, return nothing (hide section)
-  if (computedFields.length === 0) return <span className="font-Urbanist font-semibold">Not Found!</span>;
+  if (computedFields.length === 0)
+    return <span className="font-Urbanist font-semibold">Not Found!</span>;
 
   // ✅ Render only fields with values
   return (

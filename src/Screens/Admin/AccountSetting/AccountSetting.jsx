@@ -99,6 +99,7 @@ const PropertyInterest = [
   { label: "Other", name: "Other" },
 ];
 
+
 const MinRange = [
   { label: "Under", value: 0 },
   { label: "$250K", value: 250 },

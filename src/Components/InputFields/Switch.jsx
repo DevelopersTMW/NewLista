@@ -1,7 +1,7 @@
 import { Switch } from "@headlessui/react";
 import React from "react";
 
-const Switches = ({ value, onChange }) => {
+const Switches = ({ value, onChange , checked  , onBlur }) => {
   return (
     <Switch
       checked={value}

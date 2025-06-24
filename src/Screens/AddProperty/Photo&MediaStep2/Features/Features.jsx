@@ -18,7 +18,7 @@ const Features = ({ control, errors }) => {
         Building Features
       </h1>
       <Controller
-        name="features"
+        name="custom_fields"
         control={control}
         defaultValue={{
           Parking: false,

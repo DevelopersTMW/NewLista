@@ -8,7 +8,7 @@ const ComboboxSelection = ({
   disabled,
   style,
   icon,
-  value, // ✅ new prop for current selected value
+  value,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [query, setQuery] = useState("");
@@ -16,9 +16,11 @@ const ComboboxSelection = ({
   const dropdownRef = useRef();
 
   useEffect(() => {
-    const found = options.find((opt) => opt.name === value);
-    if (found) {
-      setSelected(found);
+    if (!value) {
+      setSelected(null);
+    } else {
+      const found = options.find((opt) => opt.name === value);
+      setSelected(found || null);
     }
   }, [value, options]);
 
@@ -51,8 +53,7 @@ const ComboboxSelection = ({
       >
         {selected ? selected.name : placeholder}
         <ChevronDown
-          className={`group pointer-events-none absolute top-1 right-0.5 size-[16px] font-[900]  text-black ${icon}`}
-          aria-hidden="true"
+          className={`pointer-events-none absolute top-1 right-0.5 size-[16px] text-black ${icon}`}
         />
       </div>
 
@@ -64,7 +65,7 @@ const ComboboxSelection = ({
               placeholder="Search..."
               value={query}
               onChange={(e) => setQuery(e.target.value)}
-              className="w-full px-3 py-1.5 border border-gray-300 rounded focus:ring-none outline-none focus:outline-none"
+              className="w-full px-3 py-1.5 border border-gray-300 rounded focus:ring-none outline-none"
             />
           </div>
           {filteredOptions.length > 0 ? (
@@ -72,15 +73,15 @@ const ComboboxSelection = ({
               <div
                 key={index}
                 onClick={() => handleSelect(option)}
-                className={`px-2.5 text-[13px] font-Inter text-Paracolor font-[400] py-0.5 cursor-pointer hover:text-white hover:bg-PurpleColor ${
-                  selected?.value === index ? "bg-blue-50 font-semibold" : ""
-                }`}
+                className="px-2.5 text-[13px] font-Inter text-Paracolor font-[400] py-0.5 cursor-pointer hover:text-white hover:bg-PurpleColor"
               >
                 {option.name}
               </div>
             ))
           ) : (
-            <div className="px-4 py-2 font-Inter text-Paracolor">No results found</div>
+            <div className="px-4 py-2 font-Inter text-Paracolor">
+              No results found
+            </div>
           )}
         </div>
       )}

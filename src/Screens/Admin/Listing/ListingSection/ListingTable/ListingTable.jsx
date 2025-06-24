@@ -8,7 +8,7 @@ import { Link, useNavigate } from "react-router-dom";
 import ConfirmationModal from "../../../../../Components/ConfirmationModal/ConfirmationModal";
 import { useConfirmation } from "../../../AccountSetting/Fields/Confirmation";
 
-const ListingTable = ({ status, propertyType, priceRange }) => {
+const ListingTable = ({ status, propertyType, priceRange , search }) => {
   const [listings, setListings] = useState([]);
   const [loading, setLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
@@ -19,6 +19,7 @@ const ListingTable = ({ status, propertyType, priceRange }) => {
   const ApiKey = import.meta.env.VITE_API_KEY;
   const token = localStorage.getItem("token");
   const navigate = useNavigate();
+  
 
   useEffect(() => {
     const fetchListings = async () => {
@@ -38,37 +39,42 @@ const ListingTable = ({ status, propertyType, priceRange }) => {
     fetchListings();
   }, []);
 
-  const applyFilters = (properties) => {
-    return properties.filter((item) => {
-      const matchesStatus = status
-        ? item.listing_status?.toLowerCase() === status.toLowerCase()
-        : true;
+ const applyFilters = (properties) => {
+  return properties.filter((item) => {
+    const matchesStatus = status
+      ? item.listing_status?.toLowerCase() === status.toLowerCase()
+      : true;
 
-      const matchesType = propertyType
-        ? item.property_type?.toLowerCase() === propertyType.toLowerCase()
-        : true;
+    const matchesType = propertyType
+      ? item.property_type?.toLowerCase() === propertyType.toLowerCase()
+      : true;
 
-      const price = Number(item.sale_price);
-      const matchesPrice = (() => {
-        if (!priceRange || isNaN(price)) return true;
+    const price = Number(item.sale_price);
+    const matchesPrice = (() => {
+      if (!priceRange || isNaN(price)) return true;
 
-        switch (priceRange) {
-          case "Under $250K": return price < 250000;
-          case "$250K – $500K": return price >= 250000 && price <= 500000;
-          case "$500K – $1M": return price >= 500000 && price <= 1000000;
-          case "$1M – $2.5M": return price >= 1000000 && price <= 2500000;
-          case "$2.5M – $5M": return price >= 2500000 && price <= 5000000;
-          case "$5M – $10M": return price >= 5000000 && price <= 10000000;
-          case "$10M – $25M": return price >= 10000000 && price <= 25000000;
-          case "$25M – $50M": return price >= 25000000 && price <= 50000000;
-          case "Over $50M": return price > 50000000;
-          default: return true;
-        }
-      })();
+      switch (priceRange) {
+        case "Under $250K": return price < 250000;
+        case "$250K – $500K": return price >= 250000 && price <= 500000;
+        case "$500K – $1M": return price >= 500000 && price <= 1000000;
+        case "$1M – $2.5M": return price >= 1000000 && price <= 2500000;
+        case "$2.5M – $5M": return price >= 2500000 && price <= 5000000;
+        case "$5M – $10M": return price >= 5000000 && price <= 10000000;
+        case "$10M – $25M": return price >= 10000000 && price <= 25000000;
+        case "$25M – $50M": return price >= 25000000 && price <= 50000000;
+        case "Over $50M": return price > 50000000;
+        default: return true;
+      }
+    })();
 
-      return matchesStatus && matchesType && matchesPrice;
-    });
-  };
+    const matchesSearch = search
+      ? item.property_name?.toLowerCase().includes(search.toLowerCase())
+      : true;
+
+    return matchesStatus && matchesType && matchesPrice && matchesSearch;
+  });
+};
+
 
   const filteredListings = applyFilters(listings);
   const totalPages = Math.ceil(filteredListings.length / itemsPerPage);
@@ -83,10 +89,14 @@ const ListingTable = ({ status, propertyType, priceRange }) => {
       navigate(`/create-property?editId=${id}`);
     }
   };
+  useEffect(() => {
+  setCurrentPage(1);
+}, [status, propertyType, priceRange, search]);
+
 
   return (
     <>
-      <div className="pt-8 sm:px-4 md:px-7 bg-white w-[98%] rounded-b-[13px] xl:w-full overflow-x-auto h-[80vh]">
+      <div className="pt-8 sm:px-4 md:px-7 bg-white w-[98%] rounded-b-[13px] xl:w-full overflow-x-auto h-[85vh]">
         {loading ? (
           <div className="flex justify-center items-center !h-[75vh]">
             <Spinner style={"w-14 h-20 text-PurpleColor z-50"} />
@@ -96,7 +106,7 @@ const ListingTable = ({ status, propertyType, priceRange }) => {
             <thead className="text-[13.5px] tracking-[1.5px] sm:tracking-normal sm:text-[14px] md:text-[15px] text-white font-Urbanist uppercase bg-[#1E1E1E]">
               <tr>
                 <th className="px-6 py-4.5 rounded-tl-2xl">
-                  Property Name & Address
+                  Property Name 
                 </th>
                 <th className="px-6 py-4.5">Type</th>
                 <th className="px-6 py-4.5">Price</th>

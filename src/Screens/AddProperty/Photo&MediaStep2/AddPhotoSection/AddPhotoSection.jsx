@@ -1,7 +1,7 @@
-import { Upload } from "lucide-react";
+import { Upload, X } from "lucide-react";
 import React, { useEffect, useState } from "react";
 
-const AddPhotoSection = ({ register, setValue, error, DefaultImage }) => {
+const AddPhotoSection = ({ register, setValue, error, DefaultImage = [] }) => {
   const [images, setImages] = useState([]);
   const [loading, setLoading] = useState(false);
 
@@ -15,6 +15,12 @@ const AddPhotoSection = ({ register, setValue, error, DefaultImage }) => {
     setImages(allFiles);
     setValue("fileInput", allFiles, { shouldValidate: true });
   };
+
+  const removeImage = (indexToRemove) => {
+  const updatedImages = images.filter((_, index) => index !== indexToRemove);
+  setImages(updatedImages);
+  setValue("fileInput", updatedImages, { shouldValidate: true });
+};
 
   return (
     <>
@@ -70,7 +76,6 @@ const AddPhotoSection = ({ register, setValue, error, DefaultImage }) => {
             Selected Images*
           </h1>
           <div className="flex flex-wrap gap-4">
-            {/* Existing images from edit mode */}
             {DefaultImage.map((url, index) => (
               <img
                 key={`existing-${index}`}
@@ -78,16 +83,20 @@ const AddPhotoSection = ({ register, setValue, error, DefaultImage }) => {
                 src={import.meta.env.VITE_IMAGE_KEY + url}
                 alt={`Uploaded ${index}`}
               />
+              
             ))}
 
             {/* Newly selected images */}
             {images.map((file, index) => (
-              <img
+              <div className="relative">
+                <img
                 key={`new-${index}`}
                 className="object-cover w-40 h-36 rounded-2xl"
                 src={URL.createObjectURL(file)}
                 alt={`Uploaded ${index}`}
               />
+              <X onClick={() => removeImage(index)} className="absolute top-2 right-2 px-1 bg-PurpleColor text-white font-semibold rounded-full cursor-pointer" />
+              </div>
             ))}
           </div>
         </div>

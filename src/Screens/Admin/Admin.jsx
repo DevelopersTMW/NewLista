@@ -24,9 +24,9 @@ const Admin = () => {
             <Route path="/network" element={<MyNetwork2 />} />
             <Route path="/myoffers" element={<MyOffers />} />
             <Route path="/analytics" element={<Analytics />} />
-            <Route path="/account-setting" element={<ProtectiveRoute component={<AccountSetting />} />} />
             <Route path="/inbox" element={<Inbox />} />
             <Route path="/customer-support" element={<HelpSupport />} />
+            <Route path="/account-setting" element={<ProtectiveRoute component={<AccountSetting />} />} />
             <Route path="/subscription" element={<SubscriptionSetting />} />
           </Routes>
     }>

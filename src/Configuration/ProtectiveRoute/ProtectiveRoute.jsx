@@ -11,6 +11,7 @@ function ProtectiveRoute({ component }) {
   const location = useLocation();
 
   const token = localStorage.getItem("token");
+  const Status = localStorage.getItem("status");
   const profileComplete = localStorage.getItem("ProfileComplete");
   const ApiKey = import.meta.env.VITE_API_KEY;
 
@@ -26,10 +27,17 @@ function ProtectiveRoute({ component }) {
   }, [dispatch, token, ApiKey]);
 
   useEffect(() => {
-    // Wait until Redux loading is complete and user is fetched
+    if (!token) {
+      navigate("/login");
+    } else {
+      dispatch(fetchUser({ token, apiKey: ApiKey }));
+    }
+  }, [dispatch, token, ApiKey]);
+
+  useEffect(() => {
     if (!loading) {
       if (!token) {
-        navigate("/login"); // fallback if fetch failed
+        navigate("/login");
       } else if (profileComplete !== "true") {
         if (location.pathname !== "/admin/account-setting") {
           navigate("/admin/account-setting");
@@ -41,9 +49,32 @@ function ProtectiveRoute({ component }) {
           });
         }
       }
+
+      // 🔒 Check plan status for restricted admin pages
+      const restrictedRoutes = [
+        "/admin/network",
+        "/admin/inbox",
+        "/admin/myoffers",
+        "/admin/analytics",
+        "/admin/customer-support",
+      ];
+
+      if (
+        restrictedRoutes.includes(location.pathname.toLowerCase()) &&
+        Status !== "active"
+      ) {
+        navigate("/pricing");
+        AlertModal({
+          icon: "warning",
+          title: "Upgrade Required",
+          text: "You need an active plan to access this feature.",
+          iconColor: "#703BF7",
+        });
+      }
+
       setLocalLoading(false);
     }
-  }, [loading, user, profileComplete, navigate]);
+  }, [loading, user, profileComplete, location.pathname]);
 
   if (localLoading) {
     return (

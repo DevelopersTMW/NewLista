@@ -71,7 +71,7 @@ const PropertyForm = () => {
 
           lease_type: formData.leaseType,
 
-          building_size: Number(formData.BuildingSize_sqft),
+          building_size: formData.BuildingSize_sqft,
 
           sale_price: Number(formData.salePrice),
 
@@ -115,7 +115,7 @@ const PropertyForm = () => {
       console.log(Response);
     } catch (error) {
       setloading(false);
-      console.log(error);
+      console.log(error.response);
     } finally {
       setloading(false);
     }
@@ -128,6 +128,7 @@ const PropertyForm = () => {
   }, [editId]);
 
   const fetchPropertyData = async (id) => {
+    
     try {
       setloading(true);
 

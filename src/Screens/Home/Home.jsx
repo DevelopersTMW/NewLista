@@ -46,6 +46,7 @@ const Home = () => {
   const ApiKey = import.meta.env.VITE_API_KEY;
   const [Properties, setProperties] = useState([]);
   const token = localStorage.getItem("token");
+  const status = localStorage.getItem("status");
   const [searchFilters, setSearchFilters] = useState(null);
 
   useEffect(() => {
@@ -364,7 +365,7 @@ const Home = () => {
           </section>
           {/* SECTION 5 END  */}
           {/* SECTION 6 START  */}
-          <section className="flex flex-col justify-center items-center pb-28 px-6 gap-10 overflow-hidden sm:pb-20 sm:px-8 md:px-0 sm:pt-10 w-[100%] xl:w-[92%] 2xl:w-[85%]">
+          <section className="flex flex-col justify-center items-center pb-20 px-6 gap-10 overflow-hidden sm:pb-16 sm:px-8 md:px-0 sm:pt-10 w-[100%] xl:w-[92%] 2xl:w-[85%]">
             {/* CONTENT SECTION  */}
             <CardContentSection
               Heading={"Expand Your Real Estate Network"}
@@ -372,10 +373,12 @@ const Home = () => {
                 "Network with fellow investors. Exchange insights, build lasting partnerships, and discover exclusive real estate deals."
               }
               ButtonName={"View More"}
-              ButtonLink={token ? "/admin/network" : "/login"}
+              ButtonLink={token ?
+                status ? "/admin/subscription" : "/pricing"
+                 : "/login"}
             />
             {/* CARD SECTION  */}
-            <div className="w-[98%] sm:-ml-3 md:w-[84%] flex gap-10">
+            <div className="w-[98%] sm:-ml-3 md:w-[84%] flex gap-">
               <CardCarousel />
             </div>
           </section>
