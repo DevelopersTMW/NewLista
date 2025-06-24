@@ -42,7 +42,7 @@ const ViewProperty = () => {
   const [Properties, setProperties] = useState([]);
   const [searchFilters, setSearchFilters] = useState(null);
   const [FilterValue, setFilterValue] = useState("AllProperties");
-  const isLoggedIn = localStorage.getItem("token");
+  const isLoggedIn = localStorage.getItem("status");
   const [selectedTab, setSelectedTab] = useState("");
 
   const [selectedIndex, setSelectedIndex] = useState(0);
@@ -73,12 +73,12 @@ const ViewProperty = () => {
     }
 
     if (FilterValue === "Off Market Properties") {
-      result = isLoggedIn ? result.filter((p) => p.off_market_listing) : [];
+      result = isLoggedIn === 'active' ? result.filter((p) => p.off_market_listing) : [];
     }
 
     if (FilterValue === "AllProperties") {
-      if (!selectedTab || selectedTab.toLowerCase() === "all properties") {
-        result = isLoggedIn
+      if (!selectedTab  || selectedTab.toLowerCase() === "all properties") {
+        result = isLoggedIn === 'active'
           ? result
           : result.filter((p) => !p.off_market_listing);
       } else {
