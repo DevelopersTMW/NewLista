@@ -20,14 +20,6 @@ const Features = ({ control, errors }) => {
       <Controller
         name="custom_fields"
         control={control}
-        defaultValue={{
-          Parking: false,
-          SprinklerSystem: false,
-          SecuritySystem: false,
-          HVAC: false,
-          HighSpeedInternet: false,
-          ADACompliant: false,
-        }}
         rules={{
           validate: (value) =>
             Object.values(value).some(Boolean) ||
@@ -52,6 +44,7 @@ const Features = ({ control, errors }) => {
           </div>
         )}
       />
+
       {errors.features && (
         <p className="text-red-500 text-sm mt-1">{errors.features.message}</p>
       )}

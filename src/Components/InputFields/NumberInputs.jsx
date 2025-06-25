@@ -16,14 +16,14 @@ const NumberInputs = ({
   error,
   name,
   register,
-  setValue,     // 👈 add this
-  watch,        // 👈 optional if you want to auto-sync
+  setValue,
+  watch,
 }) => {
   const watchedValue = watch?.(name);
-  const [localValue, setLocalValue] = useState(formatNumber(watchedValue));
+
+  const [localValue, setLocalValue] = useState("");
 
   useEffect(() => {
-    // sync if watchedValue changes externally
     if (watchedValue !== undefined) {
       setLocalValue(formatNumber(watchedValue));
     }
@@ -37,7 +37,7 @@ const NumberInputs = ({
     if (/^\d*$/.test(rawValue)) {
       setLocalValue(formatNumber(rawValue));
 
-      // Update react-hook-form state so `watch()` works
+      // Update react-hook-form
       setValue?.(name, rawValue, {
         shouldValidate: true,
         shouldDirty: true,
@@ -56,30 +56,31 @@ const NumberInputs = ({
 
   return (
     <>
-      <label
-        htmlFor={name}
-        className="block mb-1 font-[700] text-PurpleColor w-full max-[1280px]:text-[14px] max-[1666px]:text-[15px] min-[1666px]:text-[16px]"
-      >
-        {labels}
-      </label>
+      {labels && (
+        <label
+          htmlFor={name}
+          className="block mb-1 font-[700] text-PurpleColor text-sm"
+        >
+          {labels}
+        </label>
+      )}
       <input
         name={name}
         type="text"
         inputMode="numeric"
         value={localValue}
+        setValue={setValue}
+        watch={watch}
         onChange={handleChange}
         onBlur={registrationProps.onBlur}
         ref={registrationProps.ref}
-        className={`bg-[#F3EEFF] border border-solid text-[#1d1d1d] font-[600] font-Urbanist text-[14px] placeholder:text-[12.5px] sm:placeholder:text-[14px] w-full px-4 rounded-[6px] outline-none
-          max-[481px]:h-11 max-[891px]:h-12 max-[1000px]:h-10.5 max-[1100px]:h-11
-          max-[1280px]:h-11.5 max-[1666px]:h-12 min-[1666px]:h-14 min-[1666px]:text-[15px] min-[1666px]:placeholder:text-[15px]
-          ${style} ${error ? "border-red-500" : "border-[#F3EEFF]"}`}
+        className={`bg-[#F3EEFF] border border-solid text-[#1d1d1d] font-[600] font-Urbanist text-[14px] placeholder:text-[12.5px] sm:placeholder:text-[14px] w-full px-4 rounded-[6px] outline-none max-[481px]:h-11 max-[891px]:h-12 max-[1000px]:h-10.5 max-[1100px]:h-11 max-[1280px]:h-11.5 max-[1666px]:h-12 min-[1666px]:h-14 min-[1666px]:text-[15px] min-[1666px]:placeholder:text-[15px] ${style} ${
+          error ? "border-red-500" : "border-[#F3EEFF]"
+        }`}
         placeholder={placeholder}
       />
       {error && (
-        <p className="text-red-500 font-[500] text-[14px] pt-1 font-Urbanist tracking-wide">
-          {error}
-        </p>
+        <p className="text-red-500 text-sm mt-1 font-Urbanist">{error}</p>
       )}
     </>
   );

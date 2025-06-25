@@ -208,7 +208,7 @@ const Pricing = () => {
           {/* TABS SEC START  */}
           {!Loading ? (
             <div className="">
-              <div className="  grid px-8 mt-10 grid-cols-1 items-center gap-y-6 sm:gap-y-0  lg:grid-cols-3 gap-6">
+              <div className="grid px-0 min-[400px]:px-3 mt-10 grid-cols-1 items-center gap-y-6 sm:gap-y-10 md:grid-cols-2 lg:gap-y-0 sm:px-24 md:px-0 min-[800px]:!px-8 lg:!px-0 xl:!px-8 2xl:!px-[6%]  lg:grid-cols-3 gap-6">
                 <PlansTabs
                   features={freebenefits}
                   featured={
@@ -310,7 +310,7 @@ const Pricing = () => {
       {/* SECTION 2 START  */}
 
       <section className="flex justify-center items-center">
-        <div className="flex flex-col justify-center gap-6 px-6 pb-16 sm:py-20 sm:pt-12 sm:gap-10 sm:pb-9 lg:pb-20 sm:px-8 md:px-0 md:items-center w-[100%] xl:w-[92%] 2xl:w-[85%]">
+        <div className="flex flex-col justify-center gap-6 px-5 pb-16 sm:py-20 sm:pt-12 sm:gap-10 sm:pb-9 lg:pb-20 sm:px-8 md:px-0 md:items-center w-[100%] xl:w-[92%] 2xl:w-[85%]">
           <div className="md:w-[84%]">
             <h1 className=" text-center sm:text-start text-[30px]  leading-[38px] font-[700] font-Urbanist  text-[#1E1E1E] sm:text-[37px] sm:leading-[48px]">
               Unlock Your Full Real Estate Potential

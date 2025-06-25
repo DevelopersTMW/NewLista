@@ -9,7 +9,7 @@ const CardContentSection = ({Heading , Desc , ButtonName , ButtonLink}) => {
           <h1 className="text-[34px] leading-[40px] font-[700] font-Urbanist  text-[#1E1E1E] sm:text-[32px] sm:leading-[39px] md:text-[37px] md:leading-[48px]">
            {Heading}
           </h1>
-          <p className="text-[14.5px] font-Inter font-medium text-pretty text-Paracolor mt-2 sm:mt-0 md:mt-2 sm:text-[13.5px]/5 ">
+          <p className="text-[14.5px] font-Inter font-medium text-pretty text-Paracolor mt-2 sm:mt-0 md:mt-2 sm:text-[15px]/5 ">
            {Desc}
           </p>
         </div>

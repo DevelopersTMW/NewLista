@@ -27,17 +27,17 @@ const PlansTabs = ({
         className={classNames(
           featured
             ? "relative bg-[#0a0a0a] shadow-2xl"
-            : "bg-white/60 sm:mx-8 lg:mx-0 rounded-2xl",
+            : "bg-white/60  ",
           featured
-            ? "rounded-3xl sm:rounded-b-none lg:rounded-3xl"
-            : "sm:rounded-t-none lg:rounded-3xl",
-          "rounded-3xl p-8 ring-1 ring-gray-900/10 sm:p-10"
+            ? "rounded-3xl "
+            : "rounded-3xl",
+          "rounded-3xl px-5 py-8 min-[400px]:px-8 md:px-7 min-[400px]:py-12 ring-1 ring-gray-900/10 sm:p-10"
         )}
       >
         <h3
           className={classNames(
             featured ? "text-indigo-400" : "text-PurpleColor",
-            "text-base/7 font-semibold"
+            "text-[15px] sm:text-base/7 md:text-[14.5px] font-semibold"
           )}
         >
           {PlanName}
@@ -46,7 +46,7 @@ const PlansTabs = ({
           <span
             className={classNames(
               featured ? "text-white" : "text-gray-900",
-              "text-[45px] font-semibold tracking-tight font-Inter leading-[49px]"
+               "text-[40px] sm:text-[45px] md:text-[43px]  font-semibold tracking-tight font-Inter leading-[49px]"
             )}
           >
             ${Pricing}USD
@@ -72,7 +72,7 @@ const PlansTabs = ({
           role="list"
           className={classNames(
             featured ? "text-white" : "text-gray-600",
-            "mt-8 space-y-2 text-sm/6 sm:mt-5"
+            " mt-8 space-y-2 text-[14px] sm:text-sm/6 md:text-[13.5px] lg:text-[13px] sm:mt-5"
           )}
         >
           {features.map((feature, index) => (

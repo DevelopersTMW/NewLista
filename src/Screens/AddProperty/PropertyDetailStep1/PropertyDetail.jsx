@@ -38,6 +38,8 @@ const Step1 = ({ onNext, defaultValues }) => {
     }
   }, [defaultValues, reset]);
 
+  console.log(watch("custom_fields.MonthlyRental"));
+
   // CHECK RADIO VALUE
   const PropertyRadio = watch("propertyType");
   const propertyType = watch("propertyName");
@@ -46,23 +48,39 @@ const Step1 = ({ onNext, defaultValues }) => {
     switch (propertyType) {
       case "Retail Center":
         return (
-          <RentailForm register={register} propertyTypeName={propertyType} />
+          <RentailForm
+            watch={watch}
+            setValue={setValue}
+            register={register}
+            propertyTypeName={propertyType}
+          />
         );
       case "Warehouse":
         return (
           <WareHouseForm
             register={register}
             control={control}
+            watch={watch}
+            setValue={setValue}
             propertyTypeName={propertyType}
           />
         );
       case "Vacant Land":
-        return <LandForm register={register} propertyTypeName={propertyType} />;
+        return (
+          <LandForm
+            watch={watch}
+            setValue={setValue}
+            register={register}
+            propertyTypeName={propertyType}
+          />
+        );
       default:
         return (
           <DefaultForm
             errors={errors}
             register={register}
+            watch={watch}
+            setValue={setValue}
             propertyTypeName={propertyType}
           />
         );

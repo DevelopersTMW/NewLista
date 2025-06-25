@@ -2,31 +2,43 @@ import { Upload, X } from "lucide-react";
 import React, { useEffect, useState } from "react";
 
 const AddPhotoSection = ({ register, setValue, error, DefaultImage = [] }) => {
-  const [images, setImages] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [defaultImages, setDefaultImages] = useState([]);
+  const [uploadedImages, setUploadedImages] = useState([]);
 
-  console.log(DefaultImage);
+ useEffect(() => {
+  if (Array.isArray(DefaultImage)) {
+    setDefaultImages(DefaultImage);
+  } else {
+    setDefaultImages([]);
+  }
+}, [DefaultImage]);
 
-  console.log(images);
+  useEffect(() => {
+    const combined = [...defaultImages, ...uploadedImages];
+    setValue("fileInput", combined, { shouldValidate: true });
+  }, [defaultImages, uploadedImages]);
 
   const handleChange = (e) => {
     const newFiles = Array.from(e.target.files);
-    const allFiles = [...images,  ...newFiles];
-    setImages(allFiles);
-    setValue("fileInput", allFiles, { shouldValidate: true });
+    setUploadedImages((prev) => [...prev, ...newFiles]);
   };
 
-  const removeImage = (indexToRemove) => {
-  const updatedImages = images.filter((_, index) => index !== indexToRemove);
-  setImages(updatedImages);
-  setValue("fileInput", updatedImages, { shouldValidate: true });
-};
+  const removeDefaultImage = (indexToRemove) => {
+    const updated = defaultImages.filter((_, index) => index !== indexToRemove);
+    setDefaultImages(updated);
+  };
+
+  const removeUploadedImage = (indexToRemove) => {
+    const updated = uploadedImages.filter((_, index) => index !== indexToRemove);
+    setUploadedImages(updated);
+  };
 
   return (
     <>
       <label className="block font-[700] text-PurpleColor w-full max-[1280px]:text-[16.5px]">
         Property Photos
       </label>
+
       <div className="mt-4 rounded-xl relative">
         <div className="flex flex-col items-center justify-center w-full py-10 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer">
           <div className="flex flex-col justify-center md:px-9 items-center gap-3">
@@ -34,6 +46,7 @@ const AddPhotoSection = ({ register, setValue, error, DefaultImage = [] }) => {
             <p className="text-center text-[15.5px] sm:text-[17px] md:text-[19px] lg:text-[22px] font-semibold w-[80%] sm:w-[60%]">
               Drag and drop your images here PNG, JPG, WEBP up to 10MB each
             </p>
+
             <div className="relative w-full flex flex-col items-center">
               <input
                 id="fileInput"
@@ -48,7 +61,7 @@ const AddPhotoSection = ({ register, setValue, error, DefaultImage = [] }) => {
                 className="inline-block cursor-pointer w-max text-center bg-PurpleColor text-white font-semibold py-2 px-4 rounded hover:bg-blue-700 transition hover-btn hover-btn-purple"
               >
                 <span className="text-[14px] sm:text-[14.5px] md:text-[15px] lg:text-[17px]">
-                  {loading ? "Uploading..." : "Select Files"}
+                  Select Files
                 </span>
               </label>
 
@@ -64,38 +77,47 @@ const AddPhotoSection = ({ register, setValue, error, DefaultImage = [] }) => {
             </div>
           </div>
         </div>
+
         {error && (
           <p className="text-red-500 font-[500] text-[14px] pt-4 font-Urbanist tracking-wide">
             {typeof error === "string" ? error : error.message}
           </p>
         )}
       </div>
-      {(DefaultImage.length > 0 || images.length > 0) && (
+
+      {(defaultImages.length > 0 || uploadedImages.length > 0) && (
         <div className="pt-5">
           <h1 className="font-Urbanist font-[500] mb-2 text-[#242424] text-[17px]">
             Selected Images*
           </h1>
           <div className="flex flex-wrap gap-4">
-            {DefaultImage.map((url, index) => (
-              <img
-                key={`existing-${index}`}
-                className="object-cover w-40 h-36 rounded-2xl"
-                src={import.meta.env.VITE_IMAGE_KEY + url}
-                alt={`Uploaded ${index}`}
-              />
-              
+            {/* Default Images from server */}
+            {defaultImages.map((url, index) => (
+              <div className="relative" key={`default-${index}`}>
+                <img
+                  className="object-cover w-40 h-36 rounded-2xl"
+                  src={import.meta.env.VITE_IMAGE_KEY + url}
+                  alt={`Default ${index}`}
+                />
+                <X
+                  onClick={() => removeDefaultImage(index)}
+                  className="absolute top-2 right-2 px-1 bg-PurpleColor text-white font-semibold rounded-full cursor-pointer"
+                />
+              </div>
             ))}
 
-            {/* Newly selected images */}
-            {images.map((file, index) => (
-              <div className="relative">
+            {/* Newly uploaded files */}
+            {uploadedImages.map((file, index) => (
+              <div className="relative" key={`upload-${index}`}>
                 <img
-                key={`new-${index}`}
-                className="object-cover w-40 h-36 rounded-2xl"
-                src={URL.createObjectURL(file)}
-                alt={`Uploaded ${index}`}
-              />
-              <X onClick={() => removeImage(index)} className="absolute top-2 right-2 px-1 bg-PurpleColor text-white font-semibold rounded-full cursor-pointer" />
+                  className="object-cover w-40 h-36 rounded-2xl"
+                  src={URL.createObjectURL(file)}
+                  alt={`Uploaded ${index}`}
+                />
+                <X
+                  onClick={() => removeUploadedImage(index)}
+                  className="absolute top-2 right-2 px-1 bg-PurpleColor text-white font-semibold rounded-full cursor-pointer"
+                />
               </div>
             ))}
           </div>

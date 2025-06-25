@@ -20,12 +20,12 @@ const AdminSidebar = ({ screen }) => {
 
   return (
     <>
-      <div className="bg-[#F9F7FF] flex flex-col min-[890px]:flex-row gap-10 min-h-screen py-6 min-[890px]:py-6.5 justify-end ">
+      <div className="bg-[#F9F7FF] flex flex-col min-[890px]:flex-row gap-10 py-6 min-[890px]:py-6.5 justify-end ">
         {/* MOBILE SCREEN BUTTON */}
         <button
           type="button"
           onClick={toggleDrawer}
-          className="absolute inline-flex w-max top-9 sm:top-8.5 left-2 sm:ml-4 items-center p-2 mt-2 ms-3 text-sm text-gray-500 rounded-lg min-[890px]:hidden sm:hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200"
+          className="absolute inline-flex w-max top-9 sm:top-8.5 left-3 sm:ml-4 items-center p-2 mt-2 ms-3 text-sm text-gray-500 rounded-lg min-[890px]:hidden sm:hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200"
         >
           <span className="sr-only">Open sidebar</span>
           <svg
@@ -44,7 +44,7 @@ const AdminSidebar = ({ screen }) => {
         {/* SIDE BAR MENU  */}
         <aside
           id="logo-sidebar"
-          className={` overflow-y-auto  fixed top-0 left-0 z-40 w-[90%] min-[890px]:top-6.5  sm:w-[50%] md:w-[43%] lg:w-[35%] xl:w-[24%] flex justify-center lg:justify-start flex-col transition-transform bg-white  min-[890px]:rounded-r-[20px]
+          className={` overflow-y-auto  fixed top-0 left-0 z-40 w-[100%] h-full py-6 sm:py-0 min-[890px]:!py-5 min-[890px]:top-6.5  sm:w-[50%] md:w-[43%] min-[890px]:!w-[30%] lg:!w-[30%] xl:!w-[24%]  flex justify-center lg:justify-start flex-col transition-transform bg-white  min-[890px]:rounded-r-[20px]
               min-[890px]:translate-x-0
             ${
               isMobileDrawerOpen ? "translate-x-0" : "-translate-x-full"
@@ -55,10 +55,10 @@ const AdminSidebar = ({ screen }) => {
           <button
             type="button"
             onClick={closeDrawer}
-            className="absolute top-10 right-10 inline-flex items-center p-2  text-gray-500 rounded-lg  focus:outline-none focus:ring-2 focus:ring-gray-200 min-[890px]:hidden"
+            className="absolute top-5 right-3 inline-flex items-center p-2  text-gray-500 rounded-lg  focus:outline-none focus:ring-2 focus:ring-gray-200 min-[890px]:hidden"
           >
             <span className="sr-only">Close sidebar</span>
-            <svg className="w-7 h-7" fill="currentColor" viewBox="0 0 20 20">
+            <svg className="w-5 h-5 sm:w-7 sm:h-7" fill="currentColor" viewBox="0 0 20 20">
               <path
                 fillRule="evenodd"
                 d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
@@ -66,25 +66,25 @@ const AdminSidebar = ({ screen }) => {
               />
             </svg>
           </button>
-          <div className="h-full py-10 md:py-10 lg:pt-9  overflow-y-auto bg-white rounded-r-[20px]">
+          <div className="h-full pb-10 sm:py-7 lg:pt-9 overflow-y-auto bg-white rounded-r-[20px] no-scrollbar">
             <Link
               to={"/"}
-              className="flex items-center px-7 pt-10 pb-6 min-[890px]:py-0 min-[890px]:justify-center min-[890px]:ps-2.5 min-[890px]:mb-8"
+              className="flex items-center px-7 pt-10 pb-8 sm:pb-7 min-[890px]:py-0 min-[890px]:justify-center min-[890px]:ps-2.5 min-[890px]:mb-"
             >
               <img
                 src={BlackLogo}
-                className="h-[58px] 2xl:h-[80px] me-3 sm:h-16"
+                className="h-[50px] sm:h-[60px] 2xl:h-[80px] me-3 md:h-16"
                 alt="NewLista Logo"
               />
             </Link>
-            <ul className="space-y-1 font-medium">
+            <ul className="space-y-0.5 sm:space-y-1 font-medium ">
               <li>
                 <Link
                   to={"/admin"}
                   onClick={() => {
                     setIsMobileDrawerOpen(false);
                   }}
-                  className={`flex items-center p-2 px-7 rounded-r-lg group gap-4 text-[#666666]  ${
+                  className={`flex items-center p-2 px-6 sm:px-7 sm:rounded-r-lg group gap-4 text-[#666666]  ${
                     location.pathname === "/admin"
                       ? "bg-PurpleColor text-white"
                       : "text-[#666666]"
@@ -92,18 +92,18 @@ const AdminSidebar = ({ screen }) => {
                 >
                   {location.pathname === "/admin" ? (
                     <img
-                      className="h-5 w-5 sm:h-4.5 sm:w-5 2xl:w-6 2xl:h-6"
+                      className="h-4.5 w-4.5 sm:h-4.5 sm:w-5 2xl:w-6 2xl:h-6"
                       src={Dashboardicon1_1}
                       alt=""
                     />
                   ) : (
                     <img
-                      className="h-5 w-5 sm:h-4.5 sm:w-5 2xl:w-6 2xl:h-6"
+                      className="h-4.5 w-4.5 sm:h-4.5 sm:w-5 2xl:w-6 2xl:h-6"
                       src={Dashboardicon1_11}
                       alt=""
                     />
                   )}
-                  <h1 className="font-Urbanist font-[500] sm:mt-1 text-[16px] 2xl:text-[19px]">
+                  <h1 className="font-Urbanist font-[500] text-[15px] sm:mt-1 sm:text-[16px] 2xl:text-[19px]">
                     Dashboard
                   </h1>
                 </Link>
@@ -114,7 +114,7 @@ const AdminSidebar = ({ screen }) => {
                   onClick={() => {
                     setIsMobileDrawerOpen(false);
                   }}
-                  className={`flex items-center p-2 px-7 text-gray-900 rounded-r-lg group gap-4  ${
+                  className={`flex items-center p-2 px-6 sm:px-7 text-gray-900 rounded-r-lg group gap-4  ${
                     location.pathname === "/admin/listing"
                       ? "bg-PurpleColor text-white"
                       : "text-[#666666]"
@@ -126,7 +126,7 @@ const AdminSidebar = ({ screen }) => {
                     viewBox="0 0 24 24"
                     strokeWidth="1.5"
                     stroke="currentColor"
-                    className="size-5.5 sm:size-6"
+                    className="size-5 sm:size-6"
                   >
                     <path
                       strokeLinecap="round"
@@ -135,7 +135,7 @@ const AdminSidebar = ({ screen }) => {
                     />
                   </svg>
 
-                  <h1 className="font-Urbanist font-[500] sm:mt-1 text-[16px] 2xl:text-[18.5px]">
+                  <h1 className="font-Urbanist font-[500] text-[15px] sm:mt-1 sm:text-[16px] 2xl:text-[18.5px]">
                     My Listings
                   </h1>
                 </Link>
@@ -146,7 +146,7 @@ const AdminSidebar = ({ screen }) => {
                   onClick={() => {
                     setIsMobileDrawerOpen(false);
                   }}
-                  className={`flex items-center p-2 px-7 text-gray-900 rounded-r-lg group gap-4  ${
+                  className={`flex items-center p-2 px-6 sm:px-7 text-gray-900 rounded-r-lg group gap-4  ${
                     location.pathname === "/admin/network"
                       ? "bg-PurpleColor text-white"
                       : "text-[#666666]"
@@ -154,19 +154,19 @@ const AdminSidebar = ({ screen }) => {
                 >
                   {location.pathname === "/admin/network" ? (
                     <img
-                      className="h-5 w-5 sm:h-4.5 sm:w-5 2xl:w-6 2xl:h-6"
+                      className="h-4.5 w-4.5 sm:h-4.5 sm:w-5 2xl:w-6 2xl:h-6"
                       src={Dashboardicon1_31}
                       alt=""
                     />
                   ) : (
                     <img
-                      className="h-5 w-5 sm:h-4.5 sm:w-5 2xl:w-6 2xl:h-6"
+                      className="h-4.5 w-4.5 sm:h-4.5 sm:w-5 2xl:w-6 2xl:h-6"
                       src={Dashboardicon1_3}
                       alt=""
                     />
                   )}
 
-                  <h1 className="font-Urbanist font-[500] sm:mt-1 text-[16px] 2xl:text-[18px]">
+                  <h1 className="font-Urbanist font-[500] text-[15px] sm:mt-1 sm:text-[16px] 2xl:text-[18px]">
                     My Network
                   </h1>
                 </Link>
@@ -177,7 +177,7 @@ const AdminSidebar = ({ screen }) => {
                   onClick={() => {
                     setIsMobileDrawerOpen(false);
                   }}
-                  className={`flex items-center p-2 px-7 text-gray-900 rounded-r-lg group gap-4  ${
+                  className={`flex items-center p-2 px-6 sm:px-7 text-gray-900 rounded-r-lg group gap-4  ${
                     location.pathname === "/admin/inbox"
                       ? "bg-PurpleColor text-white"
                       : "text-[#666666]"
@@ -189,7 +189,7 @@ const AdminSidebar = ({ screen }) => {
                     viewBox="0 0 24 24"
                     strokeWidth="1.5"
                     stroke="currentColor"
-                    className="size-5.5 sm:size-6"
+                    className="size-5 sm:size-6"
                   >
                     <path
                       strokeLinecap="round"
@@ -198,7 +198,7 @@ const AdminSidebar = ({ screen }) => {
                     />
                   </svg>
 
-                  <h1 className="font-Urbanist font-[500] sm:mt-1 text-[16px] 2xl:text-[18px]">
+                  <h1 className="font-Urbanist font-[500] sm:mt-1 text-[15px] sm:text-[16px] 2xl:text-[18px]">
                     Inbox
                   </h1>
                 </Link>
@@ -209,7 +209,7 @@ const AdminSidebar = ({ screen }) => {
                   onClick={() => {
                     setIsMobileDrawerOpen(false);
                   }}
-                  className={`flex items-center p-2 px-7 text-gray-900 rounded-r-lg group gap-4  ${
+                  className={`flex items-center p-2 px-6 sm:px-7 text-gray-900 rounded-r-lg group gap-4  ${
                     location.pathname === "/admin/myoffers"
                       ? "bg-PurpleColor text-white"
                       : "text-[#666666]"
@@ -221,7 +221,7 @@ const AdminSidebar = ({ screen }) => {
                     viewBox="0 0 24 24"
                     strokeWidth="1.5"
                     stroke="currentColor"
-                    className="size-5.5 sm:size-6"
+                    className="size-5 sm:size-6"
                   >
                     <path
                       strokeLinecap="round"
@@ -235,7 +235,7 @@ const AdminSidebar = ({ screen }) => {
                     />
                   </svg>
 
-                  <h1 className="font-Urbanist font-[500] sm:mt-1 text-[16px] 2xl:text-[18px]">
+                  <h1 className="font-Urbanist font-[500] sm:mt-1 text-[15px] sm:text-[16px] 2xl:text-[18px]">
                     My Offers
                   </h1>
                 </Link>
@@ -246,7 +246,7 @@ const AdminSidebar = ({ screen }) => {
                   onClick={() => {
                     setIsMobileDrawerOpen(false);
                   }}
-                  className={`flex items-center p-2 px-7 text-gray-900 rounded-r-lg group gap-4  ${
+                  className={`flex items-center p-2 px-6 sm:px-7 text-gray-900 rounded-r-lg group gap-4  ${
                     location.pathname === "/admin/analytics"
                       ? "bg-PurpleColor text-white"
                       : "text-[#666666]"
@@ -258,7 +258,7 @@ const AdminSidebar = ({ screen }) => {
                     viewBox="0 0 24 24"
                     strokeWidth="1.5"
                     stroke="currentColor"
-                    className="size-5.5 sm:size-6"
+                    className="size-5 sm:size-6"
                   >
                     <path
                       strokeLinecap="round"
@@ -267,7 +267,7 @@ const AdminSidebar = ({ screen }) => {
                     />
                   </svg>
 
-                  <h1 className="font-Urbanist font-[500] sm:mt-1 text-[16px] 2xl:text-[18px]">
+                  <h1 className="font-Urbanist font-[500] sm:mt-1 text-[15px] sm:text-[16px] 2xl:text-[18px]">
                     Analytics/Insights
                   </h1>
                 </Link>
@@ -278,7 +278,7 @@ const AdminSidebar = ({ screen }) => {
                   onClick={() => {
                     setIsMobileDrawerOpen(false);
                   }}
-                  className={`flex items-center p-2 px-7 text-gray-900 rounded-r-lg  group gap-4  ${
+                  className={`flex items-center p-2 px-6 sm:px-7 text-gray-900 rounded-r-lg  group gap-4  ${
                     location.pathname === "/admin/account-setting"
                       ? "bg-PurpleColor text-white"
                       : ""
@@ -290,7 +290,7 @@ const AdminSidebar = ({ screen }) => {
                     viewBox="0 0 24 24"
                     strokeWidth="1.5"
                     stroke="currentColor"
-                    className="size-5.5 sm:size-6"
+                    className="size-5 sm:size-6"
                   >
                     <path
                       strokeLinecap="round"
@@ -304,7 +304,7 @@ const AdminSidebar = ({ screen }) => {
                     />
                   </svg>
 
-                  <h1 className="font-Urbanist font-[500] sm:mt-1 text-[16px] 2xl:text-[18px]">
+                  <h1 className="font-Urbanist font-[500] sm:mt-1 text-[15px] sm:text-[16px] 2xl:text-[18px]">
                     Profile Settings
                   </h1>
                 </Link>
@@ -315,14 +315,14 @@ const AdminSidebar = ({ screen }) => {
                   onClick={() => {
                     setIsMobileDrawerOpen(false);
                   }}
-                  className={`flex items-center p-2 px-7 text-gray-900 rounded-r-lg  group gap-4 pl-7.5  ${
+                  className={`flex items-center py-2 sm:px-7 text-gray-900 rounded-r-lg  group gap-4 pl-6 sm:pl-7.5  ${
                     location.pathname === "/admin/subscription"
                       ? "bg-PurpleColor text-white"
                       : ""
                   }`}
                 >
-                  <CreditCard size={20} className="l" />
-                  <h1 className="font-Urbanist font-[500] sm:mt-1 text-[16px] 2xl:text-[18px]">
+                  <CreditCard size={20} className="sm:size-[21px]" />
+                  <h1 className="font-Urbanist font-[500] sm:mt-1 text-[15px] sm:text-[16px] 2xl:text-[18px]">
                     Subscription Settings
                   </h1>
                 </Link>
@@ -333,13 +333,13 @@ const AdminSidebar = ({ screen }) => {
                   onClick={() => {
                     setIsMobileDrawerOpen(false);
                   }}
-                  className={`flex items-center p-2 px-7 text-gray-900 rounded-r-lg  group gap-4 pl-7.5  ${
+                  className={`flex items-center p-2 px-7 text-gray-900 rounded-r-lg  group gap-4 pl-6.5 sm:pl-7.5  ${
                     location.pathname === "/admin/customer-support"
                       ? "bg-PurpleColor text-white"
                       : ""
                   }`}
                 >
-                  <Headset  size={20} className="l" />
+                  <Headset   className="size-[19px] sm:size-[21px]" />
                   <h1 className="font-Urbanist font-[500] sm:mt-1 text-[16px] 2xl:text-[18px]">
                     Help/Support
                   </h1>
@@ -350,7 +350,7 @@ const AdminSidebar = ({ screen }) => {
         </aside>
 
         {/* ADMIN SCREEN  */}
-        <div className="px-4 flex flex-col gap-2 sm:ml- sm:w-[74%]">
+        <div className="px-4 flex flex-col gap-2 min-[890px]:!w-[70%] xl:!w-[75%] min-h-screen">
           <div>
             <AdminNavbar></AdminNavbar>
           </div>

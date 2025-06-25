@@ -114,8 +114,14 @@ const PropertyForm = () => {
       navigate("/properties");
       console.log(Response);
     } catch (error) {
+      AlertModal({
+        icon: "success",
+        title: "Thank You",
+        iconColor: "#703BF7",
+        text: error.data.message,
+      });
       setloading(false);
-      console.log(error.response);
+      console.log(error);
     } finally {
       setloading(false);
     }

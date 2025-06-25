@@ -32,6 +32,7 @@ import Carousel from "../../Components/Carousel/Carousel";
 import CardCarousel from "../../Components/Carousel/Carousel";
 import { useDispatch, useSelector } from "react-redux";
 import EmptyCards from "../../Components/EmptyCard/EmptyCard";
+import ProtectedSection from "./HomeSections/ProtectiveSection";
 
 // BACKGORUND
 const HeroBackground = {
@@ -150,6 +151,36 @@ const Home = () => {
     setSearchFilters(filters);
   };
 
+  const OffMarketProperties = () => {
+    if (filteredProperties.length === 0) {
+      return <EmptyCards Title={"No matching properties found"} />;
+    }
+
+    const offMarket = filteredProperties
+      .filter((items) => items.off_market_listing)
+      .slice(0, 3);
+
+    if (offMarket.length === 0) {
+      return <EmptyCards Title={"No off-market listings available"} />;
+    }
+
+    return offMarket.map((items) => (
+      <TopDevelopes
+        key={items.id}
+        Img={items.images[0]}
+        Heading={items.property_name}
+        MiniHeading={<TruncatedText text={items.address} maxLength={19} />}
+        desc={<TruncatedText text={items.description} maxLength={90} />}
+        Price={
+          items.listing_type === "For Sale"
+            ? items.sale_price
+            : items.lease_rate
+        }
+        id={items.id}
+      />
+    ));
+  };
+
   return (
     <>
       <div className=" overflow-x-hidden">
@@ -194,6 +225,7 @@ const Home = () => {
               ButtonName={"View All Properties"}
               ButtonLink={"/properties"}
             />
+
             <div className="flex flex-wrap gap-7 sm:gap-3 md:gap-5 md:w-[84%]">
               {filteredProperties.length === 0 ? (
                 <EmptyCards Title={"No matching properties found"} />
@@ -253,36 +285,11 @@ const Home = () => {
               ButtonLink={"/login"}
             />
             {/* PROPERTY CARD SECTION  */}
-            <div className="flex gap-7 sm:gap-3 sm:-ml-4 md:gap-5  md:w-[84%] blur-[12px]">
-              {filteredProperties.length === 0 ? (
-                <EmptyCards Title={"No matching properties found"} />
+            <div className={`flex gap-7 sm:gap-3 sm:-ml-4 md:gap-5  md:w-[84%] ${status === "active" ? "" : "blur-xl"} `}>
+              {status === "active" ? (
+                OffMarketProperties()
               ) : (
-              
-                filteredProperties
-                  .filter((items) => items.off_market_listing )
-                  .slice(0, 3)
-                  .map((items) => (
-                    <TopDevelopes
-                      key={items.id}
-                      Img={items.images[0]}
-                      Heading={items.property_name}
-                      MiniHeading={
-                        <TruncatedText text={items.address} maxLength={19} />
-                      }
-                      desc={
-                        <TruncatedText
-                          text={items.description}
-                          maxLength={90}
-                        />
-                      }
-                      Price={
-                        items.listing_type === "For Sale"
-                          ? items.sale_price
-                          : items.lease_rate
-                      }
-                      id={items.id}
-                    ></TopDevelopes>
-                  ))
+                <ProtectedSection>{OffMarketProperties()}</ProtectedSection>
               )}
             </div>
           </section>
@@ -295,7 +302,7 @@ const Home = () => {
                 What Our Clients Say
               </h1>
 
-              <p className="text-[15px] font-Inter font-medium text-pretty text-Paracolor mt-2 sm:text-[14px]/5.5  ">
+              <p className="text-[16px] font-Inter font-medium text-pretty text-Paracolor mt-2 sm:text-[15px]/5.5  ">
                 Read the success stories and heartfelt testimonials from our
                 valued clients. Discover why they chose NewLista for their real
                 estate needs
@@ -373,9 +380,9 @@ const Home = () => {
                 "Network with fellow investors. Exchange insights, build lasting partnerships, and discover exclusive real estate deals."
               }
               ButtonName={"View More"}
-              ButtonLink={token ?
-                status ? "/admin/subscription" : "/pricing"
-                 : "/login"}
+              ButtonLink={
+                token ? (status ? "/admin/subscription" : "/pricing") : "/login"
+              }
             />
             {/* CARD SECTION  */}
             <div className="w-[98%] sm:-ml-3 md:w-[84%] flex gap-">

@@ -1,5 +1,13 @@
 import { useEffect, useState, useRef } from "react";
-import { getDatabase, ref, onChildAdded, push, set } from "firebase/database";
+import {
+  getDatabase,
+  ref,
+  onChildAdded,
+  push,
+  set,
+  remove,
+  onValue,
+} from "firebase/database";
 import db from "../../Configuration/Firebase/FirebaseConfig";
 import {
   Calendar,
@@ -8,16 +16,12 @@ import {
   EllipsisVertical,
   Info,
   MapPin,
-  Pen,
   Phone,
 } from "lucide-react";
 
 import RightSideImage1_2 from "../../assets/RightSideImage1.2.png";
-import DeleteIcon from "../../assets/DeleteIcon.png";
-import PrintIcon from "../../assets/PrintIcon.png";
-import StarIcon from "../../assets/StarIcon.png";
-import { Link } from "react-router-dom";
-import { DialogPanel, Menu } from "@headlessui/react";
+import { Menu } from "@headlessui/react";
+// other imports...
 
 function getChatId(userId1, userId2) {
   return userId1 < userId2 ? `${userId1}_${userId2}` : `${userId2}_${userId1}`;
@@ -26,8 +30,10 @@ function getChatId(userId1, userId2) {
 export default function PrivateChat({ currentUser, chatUser, setChatUser }) {
   const [messages, setMessages] = useState([]);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
-
+  const [isChatUserOnline, setIsChatUserOnline] = useState();
   const [text, setText] = useState("");
+  const [hoveredIndex, setHoveredIndex] = useState(null); // <-- added
+
   const chatId = getChatId(currentUser.id, chatUser.id);
   const messagesEndRef = useRef(null);
 
@@ -58,31 +64,78 @@ export default function PrivateChat({ currentUser, chatUser, setChatUser }) {
     setText("");
   };
 
-  console.log(chatUser);
+  const clearChat = async () => {
+    const confirmClear = window.confirm(
+      "Are you sure you want to clear this chat?"
+    );
+    if (!confirmClear) return;
+
+    try {
+      await remove(ref(db, `messages/${chatId}`));
+      setMessages([]);
+    } catch (error) {
+      console.error("Error clearing chat:", error);
+    }
+  };
+
+  useEffect(() => {
+    const statusRef = ref(getDatabase(), `onlineUsers/${chatUser.id}`);
+
+    const unsubscribe = onValue(statusRef, (snapshot) => {
+      setIsChatUserOnline(snapshot.val() === true);
+    });
+
+    return () => unsubscribe();
+  }, [chatUser.id]);
+
+  function formatDaySeparator(timestamp) {
+    const date = new Date(timestamp);
+    const now = new Date();
+
+    const diffInMs = now - date;
+    const diffInHours = diffInMs / (1000 * 60 * 60);
+
+    if (diffInHours >= 24) {
+      return date.toLocaleDateString(undefined, {
+        weekday: "long",
+        month: "long",
+        day: "numeric",
+      });
+    }
+
+    return null;
+  }
 
   return (
     <>
       <div className="sm:w-[75%] sm:relative h-[76vh] relative w-full  top-0 left-0 bg-white flex flex-col rounded-[10px] sm:border border-[#B9B9B9] justify-between overflow-hidden">
         {/* Header */}
         <div className="flex justify-between border-b border-[#B9B9B9] py-5 px-5">
-          <div className="flex gap-3 items-center">
+          <div className="flex gap-3 items-center relative">
             <div
               onClick={() => setChatUser(null)}
               className="bg-[#F5F5F5] px-3 rounded-[5px] py-2 cursor-pointer xl:hidden"
             >
               <img className="z-10 relative" src={RightSideImage1_2} alt="" />
             </div>
-            <img
-              className="h-11 w-11 rounded-full object-cover"
+            <div className="relative">
+              <img
+              className="h-11 w-11 rounded-full object-cover border border-[#e6e6e6]"
               src={import.meta.env.VITE_IMAGE_KEY + chatUser.headshot}
               alt=""
             />
+            <span
+              className={`absolute bottom-0.5 right-0 w-3 h-3 border-2 border-white rounded-full ${
+                isChatUserOnline ? "bg-green-500" : "bg-red-600"
+              }`}
+            ></span>
+            </div>
             <div className="flex flex-col gap-0">
               <h1 className="font-Urbanist font-[600] text-[#000] text-[18px]">
                 {chatUser.first_name + " " + chatUser.last_name}
               </h1>
               <h5 className="font-Urbanist font-[600] text-[#000] text-[13.5px]  -mt-1 ">
-                {chatUser.title}
+                {isChatUserOnline ? "Online" : "Offline"}
               </h5>
             </div>
           </div>
@@ -106,6 +159,7 @@ export default function PrivateChat({ currentUser, chatUser, setChatUser }) {
                   </Menu.Item>
                   <Menu.Item>
                     <button
+                      onClick={() => clearChat()}
                       className={`hover:bg-gray-200 flex gap-2 w-full text-left px-4 py-2 text-sm text-gray-700 cursor-pointer font-Urbanist font-[600]`}
                     >
                       <CircleMinus className="size-[17px]" />
@@ -120,39 +174,69 @@ export default function PrivateChat({ currentUser, chatUser, setChatUser }) {
 
         {/* Chat Messages */}
         <div className="p-6 flex flex-col gap-3 overflow-y-auto no-scrollbar">
-          {messages.map((msg, index) => {
-            const isOwn = msg.from === currentUser.id;
-            return (
-              <div
-                key={index}
-                className={`flex ${
-                  isOwn ? "justify-end" : "justify-start"
-                } gap-2 relative `}
-              >
-                {!isOwn && (
-                  <img
-                    className="w-7 h-7 mt-6 rounded-full"
-                    src={import.meta.env.VITE_IMAGE_KEY + chatUser.headshot}
-                    alt="User"
-                  />
-                )}
-                <div
-                  className={`relative flex flex-col items-center w-max leading-1.5 py-3 px-4 border-gray-200 ${
-                    isOwn
-                      ? "bg-[#4880FF] text-white rounded-t-xl rounded-l-xl"
-                      : "bg-gray-100 text-gray-900 rounded-t-xl rounded-r-xl"
-                  }`}
-                >
-                  <span className="text-sm font-[500] font-Urbanist text-[13.5px] ">
-                    {msg.text}
-                  </span>
-                  {/* <span className="text-sm mr-6 text-end font-Urbanist font-semibold mt-1">
-                  {new Date(msg.timestamp).toLocaleTimeString()}
-                </span> */}
+          {(() => {
+            let lastDateGroup = null;
+            return messages.map((msg, index) => {
+              const currentDate = new Date(msg.timestamp);
+              const currentDateGroup = currentDate.toDateString();
+
+              const daySeparator = formatDaySeparator(msg.timestamp);
+              const showSeparator =
+                daySeparator && currentDateGroup !== lastDateGroup;
+              lastDateGroup = currentDateGroup;
+
+              return (
+                <div key={index}>
+                  {showSeparator && (
+                    <div className="separator-line text-center my-4 text-gray-500 font-semibold text-sm">
+                      {daySeparator}
+                    </div>
+                  )}
+
+                  <div
+                    className={`flex ${
+                      msg.from === currentUser.id
+                        ? "justify-end"
+                        : "justify-start"
+                    } gap-2 relative`}
+                    onMouseEnter={() => setHoveredIndex(index)}
+                    onMouseLeave={() => setHoveredIndex(null)}
+                  >
+                    {/* Fix: Show avatar only if NOT current user */}
+                    {msg.from !== currentUser.id && (
+                      <img
+                        className="w-7 h-7 mt-6 rounded-full"
+                        src={import.meta.env.VITE_IMAGE_KEY + chatUser.headshot}
+                        alt="User"
+                      />
+                    )}
+                    <div
+                      className={`relative max-w-[80%] py-3 px-4 border-gray-200 leading-1.5 ${
+                        msg.from === currentUser.id
+                          ? "bg-[#4880FF] text-white rounded-t-xl rounded-l-xl"
+                          : "bg-gray-100 text-gray-900 rounded-t-xl rounded-r-xl"
+                      }`}
+                    >
+                      <p className="text-sm font-[500] font-Urbanist text-[13.5px] break-words whitespace-pre-wrap">
+                        {msg.text}
+                      </p>
+
+                      {/* Hover time */}
+                      {hoveredIndex === index && (
+                        <span className="absolute right-full top-[35%] mr-2 text-xs text-gray-500 select-none pointer-events-none font-Urbanist w-max">
+                          {currentDate.toLocaleTimeString(undefined, {
+                            hour: "2-digit",
+                            minute: "2-digit",
+                            hour12: true,
+                          })}
+                        </span>
+                      )}
+                    </div>
+                  </div>
                 </div>
-              </div>
-            );
-          })}
+              );
+            });
+          })()}
           <div ref={messagesEndRef} />
         </div>
 
@@ -177,34 +261,38 @@ export default function PrivateChat({ currentUser, chatUser, setChatUser }) {
             Send
           </button>
         </form>
+
         {isProfileOpen && (
           <>
+            {" "}
             <div
               className="absolute flex justify-end items-end inset-0 z-40 overflow-y-auto no-scrollbar w-full bg-[#b4b4b462] transition-opacity duration-500 ease-in-out opacity-100"
               onClick={() => setIsProfileOpen(false)}
             >
+              {" "}
               <div
                 className="absolute inset-0 z-40 bg-[#b4b4b462] flex justify-end"
                 onClick={() => setIsProfileOpen(false)}
               >
+                {" "}
                 <div
-                  onClick={(e) => e.stopPropagation()} 
-                  className={` bg-white shadow-xl sm:max-w-md md:max-w-lg 2xl:max-w-xl w-[90%] sm:w-[50%]
-      min-[380px]:rounded-lg overflow-y-auto no-scrollbar relative
-      transform transition-transform duration-500 ease-in
-      ${isProfileOpen ? "translate-x-0" : "translate-x-full"}
-     
-                      `}
+                  onClick={(e) => e.stopPropagation()}
+                  className={` bg-white shadow-xl sm:max-w-md md:max-w-lg 2xl:max-w-xl w-[90%] sm:w-[50%] min-[380px]:rounded-lg overflow-y-auto no-scrollbar relative transform transition-transform duration-500 ease-in ${
+                    isProfileOpen ? "translate-x-0" : "translate-x-full"
+                  } `}
                 >
+                  {" "}
                   <button
                     onClick={() => setIsProfileOpen(false)}
                     className="absolute top-5 right-5 text-[14px] font-semibold cursor-pointer text-black z-50 hover:text-black bg-[#f0f0f0] rounded-full px-1.5 py-0.5 transform transition-transform duration-1000 ease-in-out"
                   >
-                    ✕
-                  </button>
-
+                    {" "}
+                    ✕{" "}
+                  </button>{" "}
                   <div className="bg-gray-100 h-36 flex justify-center items-center relative rounded-t-[10px] cursor-pointer ">
+                    {" "}
                     <div className="absolute left-6 bottom-[-40px] w-[105px] h-[105px] bg-gray-300 rounded-full border-4 border-PurpleColor shadow-md overflow-hidden">
+                      {" "}
                       <img
                         className="rounded-full w-full h-[120%] object-cover absolute -mt-1.5"
                         src={
@@ -213,85 +301,104 @@ export default function PrivateChat({ currentUser, chatUser, setChatUser }) {
                             : "UnkownUser"
                         }
                         alt=""
-                      />
-                    </div>
+                      />{" "}
+                    </div>{" "}
                     {chatUser.banner ? (
                       <div className="overflow-hidden h-36">
+                        {" "}
                         <img
                           className="object-cover"
                           src={import.meta.env.VITE_IMAGE_KEY + chatUser.banner}
                           alt=""
-                        />
+                        />{" "}
                       </div>
                     ) : (
                       <div className="text-gray-400">📷</div>
-                    )}
-                  </div>
-
-                  {/* Content */}
+                    )}{" "}
+                  </div>{" "}
+                  {/* Content */}{" "}
                   <div className="px-6 pt-16 pb-6">
                     {" "}
                     <h1 className="font-Urbanist text-[23px] mb-3 font-semibold">
-                      Profile Details
-                    </h1>
+                      {" "}
+                      Profile Details{" "}
+                    </h1>{" "}
                     <h2 className="text-2xl font-bold font-Urbanist">
-                      {chatUser.first_name + " " + chatUser.last_name}
-                    </h2>
+                      {" "}
+                      {chatUser.first_name + " " + chatUser.last_name}{" "}
+                    </h2>{" "}
                     <p className="text-gray-600 font-Urbanist font-[500]">
-                      {chatUser.title}
-                    </p>
+                      {" "}
+                      {chatUser.title}{" "}
+                    </p>{" "}
                     <div className="mt-4 space-y-2 text-sm text-gray-600">
+                      {" "}
                       <div className="flex items-center gap-2">
-                        <Phone className="size-5 text-PurpleColor" />
+                        {" "}
+                        <Phone className="size-5 text-PurpleColor" />{" "}
                         <span className="font-Urbanist font-semibold text-[16px] text-Paracolor">
-                          {chatUser.phone}
-                        </span>
-                      </div>
+                          {" "}
+                          {chatUser.phone}{" "}
+                        </span>{" "}
+                      </div>{" "}
                       <div className="flex items-center gap-2">
-                        <Calendar className="size-5 text-PurpleColor" />
+                        {" "}
+                        <Calendar className="size-5 text-PurpleColor" />{" "}
                         <span className="font-Urbanist font-semibold text-[16px] text-Paracolor">
-                          {chatUser.created_at}
-                        </span>
-                      </div>
+                          {" "}
+                          {chatUser.created_at}{" "}
+                        </span>{" "}
+                      </div>{" "}
                       <div className="flex items-center gap-2">
-                        <MapPin className="size-5 text-PurpleColor" />
+                        {" "}
+                        <MapPin className="size-5 text-PurpleColor" />{" "}
                         <span className="font-Urbanist font-semibold text-[16px] text-Paracolor">
-                          {chatUser.address}
-                        </span>
-                      </div>
+                          {" "}
+                          {chatUser.address}{" "}
+                        </span>{" "}
+                      </div>{" "}
                       <div className="flex items-center gap-2">
-                        <DollarSign className="size-5 text-PurpleColor" />
+                        {" "}
+                        <DollarSign className="size-5 text-PurpleColor" />{" "}
                         <span className="font-Urbanist font-semibold text-[16px] text-Paracolor">
-                          {chatUser.preferred_investment_range}
-                        </span>
-                      </div>
-                    </div>
+                          {" "}
+                          {chatUser.preferred_investment_range}{" "}
+                        </span>{" "}
+                      </div>{" "}
+                    </div>{" "}
                     <div className="mt-4 pt-4 border-t border-[#dfdfdf]">
+                      {" "}
                       <h3 className="text-[20px] font-bold font-Urbanist">
-                        About Us
-                      </h3>
+                        {" "}
+                        About Us{" "}
+                      </h3>{" "}
                       <p className="text-Paracolor font-Urbanist font-[500] text-[15px] mt-1">
-                        {chatUser.bio}
-                      </p>
-                    </div>
+                        {" "}
+                        {chatUser.bio}{" "}
+                      </p>{" "}
+                    </div>{" "}
                     <div>
+                      {" "}
                       <h3 className="text-[18px] font-bold mt-3 font-Urbanist">
-                        Property Interests
-                      </h3>
+                        {" "}
+                        Property Interests{" "}
+                      </h3>{" "}
                       <div className="flex gap-1.5 mt-2 flex-wrap">
+                        {" "}
                         {chatUser.property_interests.map((items) => {
                           return (
                             <span className="bg-[#E3E3E3] text-Paracolor font-semibold font-Inter px-3 py-1 text-[12.5px] rounded-full w-max">
-                              {items}
+                              {" "}
+                              {items}{" "}
                             </span>
                           );
-                        })}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+                        })}{" "}
+                      </div>{" "}
+                    </div>{" "}
+                  </div>{" "}
+                </div>{" "}
+              </div>{" "}
+            </div>{" "}
           </>
         )}
       </div>

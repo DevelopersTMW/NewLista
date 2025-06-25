@@ -14,7 +14,7 @@ const currencies = [
 ];
 
 
-const LandForm = ({ propertyTypeName, register }) => {
+const LandForm = ({ propertyTypeName, register , watch , setValue }) => {
   return (
     <div className="border-[2px] rounded-[8px] px-4 border-solid border-[#ececec] mt-5 bg-[#fcfcfc] py-8">
       <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-5 md:gap-8">
@@ -33,6 +33,8 @@ const LandForm = ({ propertyTypeName, register }) => {
               type={"text"}
               placeholder={"Ex: 10000"}
               name={"custom_fields.MonthlyRental"}
+              watch={watch} 
+              setValue={setValue}
               register={register}
             ></NumberInputs>
           </span>
@@ -50,6 +52,8 @@ const LandForm = ({ propertyTypeName, register }) => {
               labels={"‎"}
               type={"text"}
               placeholder={"Ex: 10000"}
+              watch={watch} 
+              setValue={setValue}
               name={"custom_fields.BuildingSizeNumber"}
               register={register}
             ></NumberInputs>
@@ -68,6 +72,8 @@ const LandForm = ({ propertyTypeName, register }) => {
               labels={"Year Built"}
               type={"number"}
               placeholder={"2020"}
+              watch={watch} 
+              setValue={setValue}
               name={"custom_fields.YearBuilt"}
               register={register}
             ></NumberInputs>
@@ -86,6 +92,8 @@ const LandForm = ({ propertyTypeName, register }) => {
               labels={"‎"}
               type={"number"}
               placeholder={"Ex:1"}
+              watch={watch} 
+              setValue={setValue}
               name={"custom_fields.LandScapeNumber"}
               register={register}
             ></NumberInputs>
@@ -95,6 +103,8 @@ const LandForm = ({ propertyTypeName, register }) => {
               labels={"‎"}
               type={"number"}
               placeholder={"Ex:10"}
+              watch={watch} 
+              setValue={setValue}
               name={"custom_fields.LandScapeNumber2"}
               register={register}
             ></NumberInputs>

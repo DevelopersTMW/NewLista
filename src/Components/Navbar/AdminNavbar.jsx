@@ -64,17 +64,17 @@ function AdminNavbar() {
     <>
       <Disclosure as="nav" className="bg-white rounded-[15px]">
         <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
-          <div className="flex gap-2 min-[350px]:gap-10 justify-between m:gap-0 sm:flex-row sm:items-center sm:justify-between py-4">
+          <div className="flex gap-2 min-[350px]:gap-10 sm:!gap-3 justify-between lg:gap-0 sm:flex-row sm:items-center sm:justify-between py-4">
             {/* Top Row: Welcome + Search */}
-            <div className="flex items-center ml-10 min-[890px]:ml-0 sm:gap-0 md:w-full">
+            <div className="flex items-center ml-11 min-[890px]:ml-0 sm:gap-0  md:w-full">
               {/* Welcome Message */}
-              <div className="min-[1170px]:w-[50%]">
-                <h1 className="text-[#111111] font-Urbanist text-[17px] min-[350px]:text-[20px] font-medium">
-                  Welcome,{" "}
+              <div className="w-full min-[1170px]:w-[50%]">
+                <h1 className="text-[#111111] flex gap-1.5 w-max font-Urbanist  text-[17px] min-[350px]:text-[20px] font-medium">
+                  <span className="hidden sm:block">Welcome,{" "}</span>
                   {user
                     ? user?.first_name + " " + user?.last_name || "Guest"
                     : "loading.."}
-                  !
+                  {" "}!
                 </h1>
               </div>
 
@@ -151,6 +151,14 @@ function AdminNavbar() {
                       className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                     >
                       Your Profile
+                    </Link>
+                  </MenuItem>
+                  <MenuItem>
+                    <Link
+                      to={"/change-password"}
+                      className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                    >
+                      Change Password
                     </Link>
                   </MenuItem>
                   <MenuItem onClick={handleConfirmation}>

@@ -51,7 +51,7 @@ const Register = () => {
     if (!/[!@#$%^&*()<>,."]/.test(Data.Password)) {
       setError("Password", {
         type: "manual",
-        message: "Password must contain any special character",
+        message: "Password must contain any special character (!@#$%^&*_+-=?) "
       });
       return;
     }

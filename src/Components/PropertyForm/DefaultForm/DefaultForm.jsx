@@ -37,7 +37,9 @@ const currencies = [
   "KRW",
   "MYR",
 ];
-const DefaultForm = ({ propertyTypeName, register }) => {
+const DefaultForm = ({ propertyTypeName, register , watch , setValue }) => {
+  // should log: "434"
+
   return (
     <div className="border-[2px] rounded-[8px] px-4 border-solid border-[#ececec] mb-10 bg-[#fcfcfc] py-8">
       <div className="flex flex-col gap-8">
@@ -54,7 +56,9 @@ const DefaultForm = ({ propertyTypeName, register }) => {
           <span className="">
             <NumberInputs
               labels={"Monthly Rental*"}
-              type={"number"}
+              type={"text"}
+              watch={watch} 
+              setValue={setValue}
               placeholder={"Ex: 10000"}
               name={"custom_fields.MonthlyRental"}
               register={register}
@@ -73,6 +77,8 @@ const DefaultForm = ({ propertyTypeName, register }) => {
             <NumberInputs
               labels={"‎"}
               type={"text"}
+              watch={watch} 
+              setValue={setValue}
               placeholder={"Ex: 10000"}
               name={"custom_fields.BuildingSizeNumber"}
               register={register}
@@ -82,6 +88,8 @@ const DefaultForm = ({ propertyTypeName, register }) => {
             <NumberInputs
               labels={"Building Levels"}
               type={"text"}
+              watch={watch}
+            setValue={setValue}
               placeholder={"Ex:1"}
               name={"custom_fields.BuildingLevels"}
               register={register}
@@ -90,7 +98,9 @@ const DefaultForm = ({ propertyTypeName, register }) => {
           <span className="">
             <NumberInputs
               labels={"Year Built"}
-              type={"number"}
+              type={"text"}
+              watch={watch} 
+              setValue={setValue}
               placeholder={"2020"}
               name={"custom_fields.YearBuilt"}
               register={register}
@@ -108,8 +118,10 @@ const DefaultForm = ({ propertyTypeName, register }) => {
           <span className="">
             <NumberInputs
               labels={"Parking Spaces"}
-              type={"number"}
+              type={"text"}
               placeholder={"Ex:1"}
+              watch={watch} 
+              setValue={setValue}
               name={"custom_fields.ParkingSpace"}
               register={register}
             ></NumberInputs>
@@ -117,8 +129,10 @@ const DefaultForm = ({ propertyTypeName, register }) => {
           <span className="">
             <NumberInputs
               labels={"CAM (Common Area Maint..) Cost"}
-              type={"number"}
+              type={"text"}
               placeholder={"Ex: $1.00"}
+              watch={watch} 
+              setValue={setValue}
               name={"custom_fields.CAM"}
               register={register}
             ></NumberInputs>
@@ -126,10 +140,12 @@ const DefaultForm = ({ propertyTypeName, register }) => {
           <span className="">
             <NumberInputs
               labels={"Number of Units"}
-              type={"number"}
+              type={"text"}
               placeholder={"Ex:1"}
               name={"custom_fields.NumberOfUnits"}
               register={register}
+              watch={watch} 
+              setValue={setValue}
             ></NumberInputs>
           </span>
           <span className="">
@@ -144,7 +160,9 @@ const DefaultForm = ({ propertyTypeName, register }) => {
           <span className="">
             <NumberInputs
               labels={"Percentage Leased (%)"}
-              type={"number"}
+              type={"text"}
+              watch={watch} 
+              setValue={setValue}
               placeholder={"Ex: 75"}
               name={"custom_fields.PercentageLeased"}
               register={register}

@@ -92,13 +92,13 @@ const ContactUs = () => {
 
         <div className="flex justify-center 2xl:w-[85%]">
           {/* CONTACT FORM SECTION */}
-          <div className=" w-[100%] lg:w-[58%] flex flex-col gap-8">
+          <div className=" w-[100%] lg:w-[58%] xl:w-[55%] 2xl:w-[50%] flex flex-col gap-8">
             {/* CONTACT INFO  */}
             <div>
-              <h1 className="max-[400px]:text-[31px] text-[32px] leading-[36px] sm:text-[35px] font-[700] font-Urbanist  text-[#1E1E1E] md:text-[43px] md:leading-[48px]">
+              <h1 className="max-[400px]:text-[31px] text-[32px] leading-[36px] sm:text-[35px] font-[700] font-Urbanist  text-[#1E1E1E] md:text-[43px] 2xl:text-[48px] md:leading-[48px]">
                 Get in Touch with NewLista
               </h1>
-              <p className="text-[12.5px] font-Inter font-medium text-pretty text-Paracolor mt-2 sm:text-[14px]/8 sm:leading-[18px] ">
+              <p className="text-[12.5px] font-Inter font-medium text-pretty text-Paracolor mt-2 sm:text-[14px] lg:text-[15px] sm:leading-[18px] 2xl:text-[16px] 2xl:leading-[23px] ">
                 Have questions or need assistance? Our team is here to help.
                 Reach out, and we'll get back to you as soon as possible.
               </p>
@@ -207,7 +207,7 @@ const ContactUs = () => {
             {/* CONTACT FORM */}
           </div>
           {/* IMAGE SECTION  */}
-          <div className="w-[42%] hidden lg:flex lg:ml-10 xl:ml-0 justify-center items-center">
+          <div className="w-[42%] 2xl:w-[40%] hidden lg:flex lg:ml-10 xl:ml-0 justify-center items-center">
             <span>
               <img src={ContactImage1_1} alt="" />
             </span>

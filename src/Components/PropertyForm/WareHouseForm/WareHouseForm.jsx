@@ -43,7 +43,7 @@ const currencies = [
   "MYR",
 ];
 
-const WareHouseForm = ({ propertyTypeName, register , control }) => {
+const WareHouseForm = ({ propertyTypeName, register , control , watch , setValue }) => {
   return (
     <div className="border-[2px] rounded-[8px] px-4 border-solid border-[#ececec] mt-5 bg-[#fcfcfc] py-8">
       <div className="">
@@ -61,6 +61,8 @@ const WareHouseForm = ({ propertyTypeName, register , control }) => {
               <NumberInputs
                 labels={"Monthly Rental*"}
                 type={"text"}
+                watch={watch}
+            setValue={setValue}
                 placeholder={"Ex: 10000"}
                 name={"custom_fields.MonthlyRental"}
                 register={register}
@@ -79,6 +81,8 @@ const WareHouseForm = ({ propertyTypeName, register , control }) => {
               <NumberInputs
                 labels={"‎"}
                 type={"text"}
+                watch={watch}
+            setValue={setValue}
                 placeholder={"Ex: 10000"}
                 name={"custom_fields.BuildingSizeNumber"}
                 register={register}
@@ -89,6 +93,8 @@ const WareHouseForm = ({ propertyTypeName, register , control }) => {
                 labels={"Ceiling Height (FT/M)"}
                 type={"number"}
                 placeholder={"Ex:1"}
+                watch={watch}
+            setValue={setValue}
                 name={"custom_fields.CeilingHeight"}
                 register={register}
               ></NumberInputs>
@@ -98,6 +104,8 @@ const WareHouseForm = ({ propertyTypeName, register , control }) => {
                 labels={"Year Built"}
                 type={"number"}
                 placeholder={"2020"}
+                watch={watch}
+            setValue={setValue}
                 name={"custom_fields.YearBuilt"}
                 register={register}
               ></NumberInputs>
@@ -116,6 +124,8 @@ const WareHouseForm = ({ propertyTypeName, register , control }) => {
                 labels={"‎"}
                 type={"number"}
                 placeholder={"Ex:1"}
+                watch={watch}
+            setValue={setValue}
                 name={"custom_fields.LandScapeNumber"}
                 register={register}
               ></NumberInputs>
@@ -133,6 +143,8 @@ const WareHouseForm = ({ propertyTypeName, register , control }) => {
               <NumberInputs
                 labels={"‎"}
                 type={"number"}
+                watch={watch}
+            setValue={setValue}
                 placeholder={"Ex:10"}
                 name={"custom_fields.LandScapeNumber2"}
                 register={register}
@@ -143,6 +155,8 @@ const WareHouseForm = ({ propertyTypeName, register , control }) => {
                 labels={"Overhead Doors"}
                 type={"number"}
                 placeholder={"Ex:1"}
+                watch={watch}
+            setValue={setValue}
                 name={"custom_fields.OverheadDoors"}
                 register={register}
               ></NumberInputs>
@@ -152,6 +166,8 @@ const WareHouseForm = ({ propertyTypeName, register , control }) => {
                 labels={"Parking Space"}
                 type={"number"}
                 placeholder={"Ex:1"}
+                watch={watch}
+            setValue={setValue}
                 name={"custom_fields.ParkingSpace"}
                 register={register}
               ></NumberInputs>
@@ -161,6 +177,8 @@ const WareHouseForm = ({ propertyTypeName, register , control }) => {
                 labels={"Number of Docks"}
                 type={"number"}
                 placeholder={"Ex:1"}
+                watch={watch}
+            setValue={setValue}
                 name={"custom_fields.NumberOfDocks"}
                 register={register}
               ></NumberInputs>
@@ -179,6 +197,8 @@ const WareHouseForm = ({ propertyTypeName, register , control }) => {
                 labels={"Ground Level Docks"}
                 type={"number"}
                 placeholder={"Ex:75"}
+                watch={watch}
+            setValue={setValue}
                 name={"custom_fields.GroundLevelDocks "}
                 register={register}
               ></NumberInputs>
@@ -188,6 +208,8 @@ const WareHouseForm = ({ propertyTypeName, register , control }) => {
                 labels={"High Level Docks"}
                 type={"number"}
                 placeholder={"Ex:1"}
+                watch={watch}
+            setValue={setValue}
                 name={"custom_fields.HighLevelDocks"}
                 register={register}
               ></NumberInputs>

@@ -12,8 +12,7 @@ const socialPlatforms = [
 ];
 
 const Step2 = ({ onNext, onBack, defaultValues }) => {
-
-  const [images , setimages] = useState({})
+  const [images, setimages] = useState({});
   const {
     register,
     handleSubmit,
@@ -22,23 +21,44 @@ const Step2 = ({ onNext, onBack, defaultValues }) => {
     reset,
     control,
   } = useForm({
-    defaultValues,
+    defaultValues: {
+      ...defaultValues,
+      custom_fields: defaultValues?.custom_fields || {
+        Parking: false,
+        SprinklerSystem: false,
+        SecuritySystem: false,
+        HVAC: false,
+        HighSpeedInternet: false,
+        ADACompliant: false,
+      },
+    },
   });
 
   const FormSubmit = async (Data) => {
-    console.log('New' , Data);
+    console.log("New", Data);
     if (Data) {
       onNext(Data);
     }
   };
 
   useEffect(() => {
-    if (defaultValues && Object.keys(defaultValues).length > 0) {
-      console.log("Step2", defaultValues);
-      setimages(defaultValues.fileInput)
-      reset(defaultValues);
+  if (defaultValues && Object.keys(defaultValues).length > 0) {
+    console.log("Step2", defaultValues);
+    setimages(defaultValues.fileInput);
+
+    // Convert custom_fields values from "true"/"false" to boolean
+    const convertedFields = {};
+    const fields = defaultValues.custom_fields || {};
+    for (const key in fields) {
+      convertedFields[key] = fields[key] === "true";
     }
-  }, [defaultValues, reset]);
+
+    reset({
+      ...defaultValues,
+      custom_fields: convertedFields,
+    });
+  }
+}, [defaultValues, reset]);
 
   return (
     <>

@@ -56,8 +56,9 @@ const Step3 = ({ formData, onBack, onSubmit }) => {
           </div>
 
           {/* Image Preview */}
+          
           <div>
-            {!formData ? (
+            {!formData || !formData.fileInput?.length ? (
               <div className="mt-7 rounded-lg bg-muted flex items-center justify-center bg-[#f5f5f5] max-[400px]:py-20 py-24 sm:py-28 lg:py-40">
                 <div className="text-center flex flex-col justify-center items-center gap-2">
                   <Image
@@ -73,33 +74,37 @@ const Step3 = ({ formData, onBack, onSubmit }) => {
               <div className="w-full overflow-hidden relative h-[400px] bg-[#f5f5f5] mt-7 rounded-lg">
                 <img
                   className="object-cover w-full h-full"
-                  src={URL.createObjectURL(formData.fileInput[0])}
-                  alt=""
+                  src={
+                    typeof formData.fileInput[0] === "string"
+                      ? import.meta.env.VITE_IMAGE_KEY + formData.fileInput[0]
+                      : URL.createObjectURL(formData.fileInput[0])
+                  }
+                  alt="Main Preview"
                 />
               </div>
             )}
           </div>
 
-          <div>
-            {formData.fileInput?.length > 1 && (
-              <div className="flex flex-wrap gap-4 mt-4">
-                {Array.from(formData.fileInput)
-                  .slice(1) // skip the first one
-                  .map((file, index) => (
-                    <div
-                      key={index}
-                      className="w-40 h-36 overflow-hidden rounded-lg bg-gray-100"
-                    >
-                      <img
-                        src={URL.createObjectURL(file)}
-                        alt={`preview-${index + 1}`}
-                        className="object-cover w-full h-full"
-                      />
-                    </div>
-                  ))}
-              </div>
-            )}
-          </div>
+          {formData.fileInput?.length > 1 && (
+            <div className="flex flex-wrap gap-4 mt-4">
+              {formData.fileInput.slice(1).map((img, index) => (
+                <div
+                  key={index}
+                  className="w-40 h-36 overflow-hidden rounded-lg bg-gray-100"
+                >
+                  <img
+                    src={
+                      typeof img === "string"
+                        ? import.meta.env.VITE_IMAGE_KEY + img
+                        : URL.createObjectURL(img)
+                    }
+                    alt={`preview-${index + 1}`}
+                    className="object-cover w-full h-full"
+                  />
+                </div>
+              ))}
+            </div>
+          )}
 
           {/* Property Details */}
           <PropertyDetail formData={formData} />
