@@ -49,61 +49,59 @@ const PropertyForm = () => {
       console.error("Form submission failed: no data.");
       return;
     }
-    console.log("Submitted Data:", formData);
+    console.log("Submitted Data:", formData.fileInput);
     setloading(true);
     try {
-      const Response = await axios.post(
-        `${ApiKey}/add-update-property`,
+      const form = new FormData();
 
-        {
-          property_id: editId,
-          property_name: formData.PropertyTitle,
+      // Basic fields
+      form.append("property_id", editId || "");
+      form.append("property_name", formData.PropertyTitle);
+      form.append("listing_type", formData.propertyType);
+      form.append("property_type", formData.propertyName);
+      form.append("listing_status", formData.ListingStatus);
+      form.append("lease_rate", formData.leaseRate);
+      form.append("lease_rate_unit", formData.persf);
+      form.append("lease_type", formData.leaseType);
+      form.append("building_size", formData.BuildingSize_sqft);
+      form.append("sale_price", formData.salePrice || "");
+      form.append("address", formData.PropertyAddress);
+      form.append("city", formData.City);
+      form.append("state", formData.StateProvince);
+      form.append("zip", formData.ZipPostalCode);
+      form.append("description", formData.description);
+      form.append("featured_listing", formData.FeaturedListing ? 1 : 0);
+      form.append("off_market_listing", formData.OffTheMarketListing ? 1 : 0);
+      form.append("owner_financing", formData.OwnerFinancing ? 1 : 0);
+      form.append("noi", formData.Noi || "");
+      form.append("cap_rate", formData.CapRate || "");
+      form.append("show_phone", formData.ShowNumber ? 1 : 0);
+      form.append("show_email", formData.ShowEmail ? 1 : 0);
 
-          listing_type: formData.propertyType,
-
-          property_type: formData.propertyName,
-
-          listing_status: formData.ListingStatus,
-
-          lease_rate: formData.leaseRate,
-
-          lease_rate_unit: formData.persf,
-
-          lease_type: formData.leaseType,
-
-          building_size: formData.BuildingSize_sqft,
-
-          sale_price: Number(formData.salePrice),
-
-          address: formData.PropertyAddress,
-
-          city: formData.City,
-
-          state: formData.StateProvince,
-
-          zip: formData.ZipPostalCode,
-
-          description: formData.description,
-
-          images: formData.fileInput,
-
-          featured_listing: formData.FeaturedListing ? 1 : 0,
-
-          off_market_listing: formData.OffTheMarketListing ? 1 : 0,
-          owner_financing: formData.OwnerFinancing ? 1 : 0,
-          noi: formData.Noi,
-          cap_rate: formData.CapRate,
-          show_phone: formData.ShowNumber ? 1 : 0,
-          show_email: formData.ShowEmail ? 1 : 0,
-          custom_fields: formData.custom_fields,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "multipart/form-data",
-          },
+      // Split fileInput into old URLs and new files
+      formData.fileInput.forEach((item) => {
+        if (typeof item === "string") {
+          form.append("image_urls[]", item); // Existing image URLs
+        } else {
+          form.append("images[]", item); // New uploaded files
         }
-      );
+      });
+
+      // Handle flat custom_fields
+      const customFields = formData.custom_fields;
+      if (customFields && typeof customFields === "object") {
+        Object.keys(customFields).forEach((key) => {
+          form.append(`custom_fields[${key}]`, customFields[key]);
+        });
+      }
+
+      // Send request
+      const response = await axios.post(`${ApiKey}/add-update-property`, form, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "multipart/form-data",
+        },
+      });
 
       AlertModal({
         icon: "success",
@@ -111,15 +109,9 @@ const PropertyForm = () => {
         iconColor: "#703BF7",
         text: "Your Form has Been Submitted",
       });
-      navigate("/properties");
-      console.log(Response);
+      navigate('/properties')
+      console.log(response);
     } catch (error) {
-      AlertModal({
-        icon: "success",
-        title: "Thank You",
-        iconColor: "#703BF7",
-        text: error.data.message,
-      });
       setloading(false);
       console.log(error);
     } finally {
@@ -134,7 +126,6 @@ const PropertyForm = () => {
   }, [editId]);
 
   const fetchPropertyData = async (id) => {
-    
     try {
       setloading(true);
 

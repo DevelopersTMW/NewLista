@@ -32,10 +32,14 @@ import PropertyDetailMap from "../../assets/PropertyDetailMap.png";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import Spinner from "../../Components/Spinner/Spinner";
-import { MapPin } from "lucide-react";
+import { Link, MapPin } from "lucide-react";
 import EmptyCards from "../../Components/EmptyCard/EmptyCard";
 import TruncatedText from "../../Components/TruncatedText/TruncatedText";
 import KeyFeatures from "./KeyFeatures&Amenities/KeyFeatures";
+import InquiryForm from "../../Components/InquiryForm/InquiryForm";
+import DummyLogo from "../../../public/Images/UnknowUser.png";
+import MakeOffer from "../../Components/MakeAnOffer/MakeOffer";
+import { useSelector } from "react-redux";
 
 const features = [
   "Ample Parking",
@@ -57,7 +61,7 @@ const visibleFieldsByType = {
     "BuildingClass",
     "PercentageLeased",
     "HVAC",
-    "Parking"
+    "Parking",
   ],
   Land: [
     "Currency",
@@ -68,7 +72,7 @@ const visibleFieldsByType = {
     "LandScapeAcres",
     "LandScapeNumber2",
     "HVAC",
-    "Parking"
+    "Parking",
   ],
   // Add other property types as needed
 };
@@ -76,6 +80,8 @@ const visibleFieldsByType = {
 const PropertyDetails = () => {
   const ApiKey = import.meta.env.VITE_API_KEY;
   const params = useParams();
+  const { user } = useSelector((state) => state.auth);
+
   const [Properties, setProperties] = useState([]);
   const [SingleProperty, setSingleProperty] = useState();
   const [Loading, setLoading] = useState(true);
@@ -91,12 +97,6 @@ const PropertyDetails = () => {
         console.log(Response);
         const GetPropertyData = await axios.get(`${ApiKey}/properties`);
         const Responses = GetPropertyData.data.data;
-        // const filtered = Responses.filter(
-        //   (item) =>
-        //     item.property_type === Response.property_type &&
-        //     item.id !== params.id
-        // );
-
         setProperties(Responses);
       } catch (error) {
         setErrorMessage(error.message);
@@ -241,17 +241,24 @@ const PropertyDetails = () => {
                       ? SingleProperty.sale_price
                       : SingleProperty.lease_rate}
                   </h1>
-
-                  <button className="bg-PurpleColor  flex justify-center items-center gap-2 text-white font-Inter px-3.5 py-2 text-[13px] rounded-[8px] ">
-                    Apply for a Loan
-                  </button>
+                  <InquiryForm
+                    id={params.id}
+                    propertyAddress={
+                      SingleProperty.address + " " +
+                      SingleProperty.city + " " +
+                      SingleProperty.state
+                    }
+                  />
                 </div>
 
                 <div className="flex flex-col gap-5">
                   <span className="flex items-center gap-3">
                     <img
                       className="rounded-full w-[60px] sm:w-[65px]"
-                      src={ProfileImage}
+                      src={
+                        import.meta.env.VITE_IMAGE_KEY +
+                          SingleProperty.user.headshot || DummyLogo
+                      }
                       alt=""
                     />
 
@@ -290,23 +297,7 @@ const PropertyDetails = () => {
                     )}
                   </span>
 
-                  <span>
-                    <button className="flex border-[1px] text-[15px] sm:text-[16px] border-solid border-[#2E70FF] px-3.5 py-1.5 justify-center items-center gap-2 font-semibold text-[#2E70FF] rounded-[10px]">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 24 24"
-                        fill="#2E70FF"
-                        className="size-4.5"
-                      >
-                        <path
-                          fillRule="evenodd"
-                          d="M1.5 4.5a3 3 0 0 1 3-3h1.372c.86 0 1.61.586 1.819 1.42l1.105 4.423a1.875 1.875 0 0 1-.694 1.955l-1.293.97c-.135.101-.164.249-.126.352a11.285 11.285 0 0 0 6.697 6.697c.103.038.25.009.352-.126l.97-1.293a1.875 1.875 0 0 1 1.955-.694l4.423 1.105c.834.209 1.42.959 1.42 1.82V19.5a3 3 0 0 1-3 3h-2.25C8.552 22.5 1.5 15.448 1.5 6.75V4.5Z"
-                          clipRule="evenodd"
-                        />
-                      </svg>
-                      Inquire Now
-                    </button>
-                  </span>
+                  <MakeOffer id={params.id}></MakeOffer>
                 </div>
 
                 <div className="border-[1px] border-solid border-[#BBBBBB] rounded-[8px]  px-5 py-6 flex flex-col justify-center gap-2">

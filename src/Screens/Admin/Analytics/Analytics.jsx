@@ -59,11 +59,11 @@ const Analytics = () => {
       </section>
 
       <div className="flex flex-col sm:flex-row gap-5 px-2 sm:px-0">
-        <section className="sm:w-[70%]">
+        <section className="sm:w-[100%]">
           {/* CARD SECTION  */}
-          <div className="flex flex-wrap gap-5 ">
+          <div className="grid grid-cols-3 gap-5 ">
             {/* CARD 1 */}
-            <div className="w-[90%] flex flex-col justify-between bg-white px-5 gap-3 py-7 sm:w-[40%] rounded-[14px]">
+            <div className="w-[90%] flex flex-col justify-between bg-white px-5 gap-3 py-7 sm:w-[95%] rounded-[14px]">
               <div className="flex justify-between items-center">
                 <span>
                   <h4 className="text-[15px] font-Urbanist font-[500] text-[#666666]">
@@ -89,7 +89,7 @@ const Analytics = () => {
               </div>
             </div>
             {/* CARD 2 */}
-            <div className="w-[90%] flex flex-col justify-between bg-white px-5 gap-3 py-7 sm:w-[40%] rounded-[14px]">
+            <div className="w-[90%] flex flex-col justify-between bg-white px-5 gap-3 py-7  sm:w-[95%] rounded-[14px]">
               <div className="flex justify-between items-center">
                 <span>
                   <h4 className="text-[15px] font-Urbanist font-[500] text-[#666666]">
@@ -115,7 +115,7 @@ const Analytics = () => {
               </div>
             </div>
             {/* CARD 3 */}
-            <div className="w-[90%] flex flex-col justify-between bg-white px-5 gap-3 py-7 sm:w-[40%] rounded-[14px]">
+            <div className="w-[90%] flex flex-col justify-between bg-white px-5 gap-3 py-7  sm:w-[95%] rounded-[14px]">
               <div className="flex justify-between items-center">
                 <span>
                   <h4 className="text-[15px] font-Urbanist font-[500] text-[#666666]">
@@ -144,7 +144,7 @@ const Analytics = () => {
 
           {/* TABLE SECTION  */}
 
-          <div className="mt-10 overflow-x-auto rounded-[10px]">
+          <div className="mt-10 overflow-x-auto rounded-[10px] w-[70%]">
             <table className="min-w-full text-sm text-left rtl:text-right text-gray-500 font-Urbanist">
               <thead className="text-[14px] text-white uppercase bg-[#1E1E1E]">
                 <tr>
@@ -191,15 +191,14 @@ const Analytics = () => {
 
 
         </section>
-        
 
         <section>
-          <div className="flex justify-between">
+          {/* <div className="flex justify-between">
             <h1 className="font-Urbanist text-[#222222] text-[30px] font-[700] sm:-mt-[65px]">
               Network Insights
             </h1>
-          </div>
-          <div className="flex flex-col gap-4 mt-3 sm:mt-1 w-[95%]">
+          </div> */}
+          {/* <div className="flex flex-col gap-4 mt-3 sm:mt-1 w-[95%]">
             <div className="bg-white rounded-[10px] px-5 py-2.5">
               <h1 className="font-Urbanist text-[#222222] text-[18px] font-[500]">
                 New Connections This Month
@@ -233,7 +232,7 @@ const Analytics = () => {
               </h3>
             </div>
 
-          </div>
+          </div> */}
         </section>
       </div>
       

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 // COMPONENTS
 import Inputs from "../../Components/InputFields/Inputs";
@@ -13,7 +13,12 @@ import Image from "../../assets/SetNewPassword.jpg";
 import { Eye, EyeOff } from "lucide-react";
 
 const ChangePassword = () => {
+  const navigate = useNavigate();
+  const token = localStorage.getItem("token");
+  const ApiKey = import.meta.env.VITE_API_KEY;
+
   const [loading, setLoading] = useState(false);
+  const [Error, setErrors] = useState("");
   const [showSuccess, setShowSuccess] = useState(false);
   const [showOldPassword, setShowOldPassword] = useState(false);
   const [showNewPassword, setShowNewPassword] = useState(false);
@@ -32,7 +37,7 @@ const ChangePassword = () => {
     setLoading(true);
     clearErrors(); // clear old errors
 
-    // Front-end validations
+    // // Front-end validations
     if (data.NewPassword.length < 8 || data.ReEnterNewPassword.length < 8) {
       setError("NewPassword", {
         message: "Password must be at least 8 characters long",
@@ -43,7 +48,7 @@ const ChangePassword = () => {
 
     if (!/[!@#$%^&*()<>,."]/.test(data.NewPassword)) {
       setError("NewPassword", {
-        message: "Password must contain a special character",
+        message: "Password must contain a special character (!@#$%^&*()<>,.)",
       });
       setLoading(false);
       return;
@@ -64,27 +69,38 @@ const ChangePassword = () => {
       setLoading(false);
       return;
     }
+    console.log(data.NewPassword);
 
     // API Call
     try {
       const response = await axios.post(
-        "https://newlista.secureserverinternal.com/api/reset-password",
+        `${ApiKey}/update-password`,
         {
-          email,
-          password: data.NewPassword,
+          current_password: data.oldPassword,
+          new_password: data.NewPassword,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         }
       );
-
-      if (response.data.message === "Password reset successful") {
-        localStorage.setItem("passwordResetSuccess", "true");
-        localStorage.removeItem("ForgetUser");
-        setShowSuccess(true);
-        reset(); // clear form fields
-      }
+      AlertModal({
+        icon: "success",
+        title: "Password Updated Successfully",
+        iconColor: "#703BF7",
+        text: "Your password has been changed. Please use your new password the next time you log in.",
+      });
+      navigate('/admin')
     } catch (error) {
       const errorMsg =
-        error?.response?.data?.message || "Something went wrong. Try again.";
-      setError("NewPassword", { message: errorMsg });
+        error?.response?.data?.message === "Current password is incorrect.";
+      const ErrorMsg =
+        error.response.data.message ===
+          "The new password field and current password must be different." &&
+        error.response.data.message;
+      setError("NewPassword" , { message: ErrorMsg });
+      setError("oldPassword", { message: errorMsg });
     } finally {
       setLoading(false);
     }
@@ -122,13 +138,13 @@ const ChangePassword = () => {
               <span className="relative">
                 <Inputs
                   name="oldPassword"
-                  register={register("NewPassword", {
-                    required: "Old password is required",
+                  register={register("oldPassword", {
+                    required: "Current Password is required",
                   })}
                   labels="Current Password"
-                  placeholder="Enter new password"
+                  placeholder="Enter Current password"
                   type={showOldPassword ? "text" : "password"}
-                  error={errors.NewPassword?.message}
+                  error={errors.oldPassword?.message}
                 />
                 <button
                   type="button"
@@ -187,18 +203,13 @@ const ChangePassword = () => {
                   )}
                 </button>
               </span>
+              
 
               <button
                 type="submit"
-                className="bg-PurpleColor font-bold text-white h-11 w-full rounded-[6px] font-Urbanist"
+                className="bg-PurpleColor font-bold text-white h-11 w-full rounded-[6px] font-Urbanist cursor-pointer hover-btn hover-btn-purple"
               >
-                {loading ? (
-                  <div className="flex justify-center">
-                    <Spinner />
-                  </div>
-                ) : (
-                  "Save new password"
-                )}
+                <span>{loading ? "Saving..." : "Save New Password"}</span>
               </button>
             </form>
           </div>

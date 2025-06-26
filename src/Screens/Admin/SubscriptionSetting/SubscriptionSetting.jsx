@@ -79,7 +79,7 @@ const SubscriptionSetting = () => {
       const response = await axios.post(
         `${ApiKey}/manage-subscribtion`,
         {
-          return_url: "http://localhost:5173/admin/subscription",
+          return_url: `${window.location.origin}/admin/subscription`,
         },
         {
           headers: { Authorization: `Bearer ${token}` },
