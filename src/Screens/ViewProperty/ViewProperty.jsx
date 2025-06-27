@@ -27,6 +27,7 @@ import axios from "axios";
 import TruncatedText from "../../Components/TruncatedText/TruncatedText";
 import EmptyCards from "../../Components/EmptyCard/EmptyCard";
 import ResponsiveTabList from "./PropertyTabs/PropertyTabs";
+import Spinner from "../../Components/Spinner/Spinner";
 
 // BACKGORUND
 const BannerBackground = {
@@ -44,12 +45,14 @@ const ViewProperty = () => {
   const [FilterValue, setFilterValue] = useState("AllProperties");
   const isLoggedIn = localStorage.getItem("status");
   const [selectedTab, setSelectedTab] = useState("");
+  const [Loading, setLoading] = useState(false);
 
   const [selectedIndex, setSelectedIndex] = useState(0);
 
   useEffect(() => {
     async function GetProperty() {
       try {
+        setLoading(true);
         const GetPropertyData = await axios.get(`${ApiKey}/properties`);
         const Response = GetPropertyData.data.data;
         console.log(Response);
@@ -57,6 +60,8 @@ const ViewProperty = () => {
         setProperties(Response);
       } catch (error) {
         console.log(error);
+      } finally {
+        setLoading(false);
       }
     }
     GetProperty();
@@ -73,14 +78,18 @@ const ViewProperty = () => {
     }
 
     if (FilterValue === "Off Market Properties") {
-      result = isLoggedIn === 'active' ? result.filter((p) => p.off_market_listing) : [];
+      result =
+        isLoggedIn === "active"
+          ? result.filter((p) => p.off_market_listing)
+          : [];
     }
 
     if (FilterValue === "AllProperties") {
-      if (!selectedTab  || selectedTab.toLowerCase() === "all properties") {
-        result = isLoggedIn === 'active'
-          ? result
-          : result.filter((p) => !p.off_market_listing);
+      if (!selectedTab || selectedTab.toLowerCase() === "all properties") {
+        result =
+          isLoggedIn === "active"
+            ? result
+            : result.filter((p) => !p.off_market_listing);
       } else {
         result = result.filter(
           (p) =>
@@ -224,46 +233,52 @@ const ViewProperty = () => {
           </div>
 
           <TabPanels className={"flex justify-center"}>
-            <TabPanel
-              id="offmarket"
-              className="w-[100%] flex flex-wrap justify-center gap-8 py-14 px-6 min-[350px]:px-10 sm:py-12 lg:py-16 xl:my-1 sm:gap-4 sm:px-13 md:gap-10 md:px-16 lg:gap-5 xl:gap-5 2xl:gap-10  2xl:w-[90%]"
-            >
-              {filteredProperties.length === 0 ? (
-                <EmptyCards
-                  Title={
-                    isLoggedIn
-                      ? "No properties match the selected filter."
-                      : "Unlock hidden opportunities by upgrading to a premium membership"
-                  }
-                />
-              ) : (
-                filteredProperties.map((items) => (
-                  <div
-                    key={items.id}
-                    className="sm:w-[48.5%] md:w-[43%] lg:w-[31%] xl:w-[23.5%] 2xl:w-[20.5%]"
-                  >
-                    <PropertiesCards2
-                      Img={items.images[0]}
-                      Heading={items.property_name}
-                      desc={
-                        <TruncatedText
-                          text={items.description}
-                          maxLength={90}
-                        />
-                      }
-                      Status={items.listing_type}
-                      Price={
-                        items.listing_type === "For Sale"
-                          ? items.sale_price
-                          : items.lease_rate
-                      }
-                      id={items.id}
-                      images={items.images[0]}
-                    />
-                  </div>
-                ))
-              )}
-            </TabPanel>
+            {!Loading ? (
+              <TabPanel
+                id="offmarket"
+                className="w-[100%] flex flex-wrap justify-center gap-8 py-14 px-6 min-[350px]:px-10 sm:py-12 lg:py-16 xl:my-1 sm:gap-4 sm:px-13 md:gap-10 md:px-16 lg:gap-5 xl:gap-5 2xl:gap-10  2xl:w-[90%]"
+              >
+                {filteredProperties.length === 0 ? (
+                  <EmptyCards
+                    Title={
+                      isLoggedIn
+                        ? "No properties match the selected filter."
+                        : "Unlock hidden opportunities by upgrading to a premium membership"
+                    }
+                  />
+                ) : (
+                  filteredProperties.map((items) => (
+                    <div
+                      key={items.id}
+                      className="sm:w-[48.5%] md:w-[43%] lg:w-[31%] xl:w-[23.5%] 2xl:w-[20.5%]"
+                    >
+                      <PropertiesCards2
+                        Img={items.images[0]}
+                        Heading={items.property_name}
+                        desc={
+                          <TruncatedText
+                            text={items.description}
+                            maxLength={90}
+                          />
+                        }
+                        Status={items.listing_type}
+                        Price={
+                          items.listing_type === "For Sale"
+                            ? items.sale_price
+                            : items.lease_rate
+                        }
+                        id={items.id}
+                        images={items.images[0]}
+                      />
+                    </div>
+                  ))
+                )}
+              </TabPanel>
+            ) : (
+              <div className="flex justify-center items-center !h-[75vh]">
+                <Spinner style={"w-14 h-20 text-PurpleColor z-50"} />
+              </div>
+            )}
           </TabPanels>
         </TabGroup>
       </section>

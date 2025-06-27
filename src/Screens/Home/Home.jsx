@@ -33,6 +33,7 @@ import CardCarousel from "../../Components/Carousel/Carousel";
 import { useDispatch, useSelector } from "react-redux";
 import EmptyCards from "../../Components/EmptyCard/EmptyCard";
 import ProtectedSection from "./HomeSections/ProtectiveSection";
+import AntiInspect from "../ProtectedScreen/AntiInspect";
 
 // BACKGORUND
 const HeroBackground = {
@@ -49,6 +50,8 @@ const Home = () => {
   const token = localStorage.getItem("token");
   const status = localStorage.getItem("status");
   const [searchFilters, setSearchFilters] = useState(null);
+
+
 
   useEffect(() => {
     const docWidth = document.documentElement.offsetWidth;
@@ -183,6 +186,7 @@ const Home = () => {
 
   return (
     <>
+      <AntiInspect/>
       <div className=" overflow-x-hidden">
         <TransparentNavbar></TransparentNavbar>
         <div className="flex flex-col justify-center items-center ">
@@ -282,13 +286,18 @@ const Home = () => {
                 "Access exclusive off-market deals not available to the public. To view full property details, you must be a subscriber."
               }
               ButtonName={"View All Off-Market Properties"}
-              ButtonLink={"/login"}
+              ButtonLink={token ? status === "active" ? '/properties' : "/pricing" : "/login"}
             />
             {/* PROPERTY CARD SECTION  */}
-            <div className={`flex gap-7 sm:gap-3 sm:-ml-4 md:gap-5  md:w-[84%] ${status === "active" ? "" : "blur-xl"} `}>
+            <div
+              className={`flex gap-7 sm:gap-3 sm:-ml-4 md:gap-5  md:w-[84%] ${
+                status === "active" ? "" : "blur-xl"
+              } `}
+            >
               {status === "active" ? (
                 OffMarketProperties()
               ) : (
+                
                 <ProtectedSection>{OffMarketProperties()}</ProtectedSection>
               )}
             </div>

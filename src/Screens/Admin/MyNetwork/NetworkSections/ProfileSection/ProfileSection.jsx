@@ -64,7 +64,7 @@ const ProfileSection = () => {
             <li className="flex gap-2 justify-center items-center">
               <img className="w-4 h-4 " src={InvestorIcon1} alt="" />
               <p className="font-Inter text-[14px] text-Paracolor font-[600]">
-                {user.city + " " + user.state || "Not Provided"}
+                {user.city + ", " + user.state || "Not Provided"}
               </p>
             </li>
             <li className="flex gap-2 justify-center items-center">

@@ -10,13 +10,13 @@ import { Links, useNavigate } from "react-router-dom";
 export default function MyOffersTable() {
   const [tab, setTab] = useState("sent");
   const token = localStorage.getItem("token");
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const ApiKey = import.meta.env.VITE_API_KEY;
   const [loading, setLoading] = useState(true);
   const [sentOffers, setSentOffers] = useState([]);
   const [receivedOffers, setReceivedOffers] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 5;
+  const itemsPerPage = 8;
 
   const offers = tab === "sent" ? sentOffers : receivedOffers;
   const totalPages = Math.ceil(offers.length / itemsPerPage);
@@ -52,7 +52,10 @@ export default function MyOffersTable() {
 
       await axios.post(
         `${ApiKey}/${endpoint}`,
-        { offer_id: id, action_url: `${window.location.origin}/admin/myoffers` },
+        {
+          offer_id: id,
+          action_url: `${window.location.origin}/admin/myoffers`,
+        },
         { headers: { Authorization: `Bearer ${token}` } }
       );
 
@@ -169,18 +172,22 @@ export default function MyOffersTable() {
               <tbody className="divide-y divide-gray-200 ">
                 {paginatedOffers.map((items) => (
                   <tr
-                    onClick={() => {
-                      if (items.property?.id) {
-                        navigate(`/properties/${items.property.id}`);
-                      }
-                    }}
                     key={items.id}
-                    className="hover:bg-gray-100 cursor-pointer"
+                    className="hover:bg-gray-100  w-max"
                   >
                     <td className="pl-6 py-6 text-[17px] font-[600] font-Urbanist text-gray-900">
-                      {tab === "sent"
-                        ? items.property?.property_name
-                        : `${items.user?.first_name} ${items.user?.last_name} / ${items.property?.property_name}`}
+                      <h1
+                        onClick={() => {
+                          if (items.property?.id) {
+                            navigate(`/properties/${items.property.id}`);
+                          }
+                        }}
+                        className="w-max cursor-pointer"
+                      >
+                        {tab === "sent"
+                          ? items.property?.property_name
+                          : `${items.user?.first_name} ${items.user?.last_name} / ${items.property?.property_name}`}
+                      </h1>
                     </td>
                     <td className="px-6 py-4 text-[16px] font-Urbanist font-bold text-gray-900">
                       ${items.amount} {/* amount is a string with commas */}

@@ -83,9 +83,9 @@ function ResponsiveTabs({ onTabSelect }) {
   return (
     <div className="relative">
       <TabGroup selectedIndex={selectedIndex} onChange={setSelectedIndex}>
-        <TabList className="flex items-end justify-center gap-7 sm:gap-8 flex-wrap">
+        <TabList className="flex items-end justify-center gap-7 sm:gap-8 flex-wrap ">
           {mainTabs.map((item, idx) => (
-            <Tab as={Fragment} key={idx}>
+            <Tab className={"cursor-pointer"} as={Fragment} key={idx}>
               {({ selected }) => (
                 <span
                   className={classNames(
@@ -114,13 +114,13 @@ function ResponsiveTabs({ onTabSelect }) {
               </span>
 
               {showMoreTabs && (
-                <div className="absolute top-full left-1/2 -translate-x-1/2 bg-white border border-gray-200 rounded-md shadow-lg mt-1 w-48 max-h-64 overflow-auto z-20">
+                <div className="absolute top-full left-1/2 -translate-x-1/2 bg-white border border-gray-200 rounded-md shadow-lg mt-1 w-48 max-h-64 overflow-auto z-20 cursor-pointer">
                   <TabList className="flex flex-col py-4">
                     {moreTabs.map((item, idx) => (
-                      <Tab key={visibleTabs + idx} as={Fragment}>
+                      <Tab className="cursor-pointer" key={visibleTabs + idx} as={Fragment}>
                         {({ selected }) => (
                           <div
-                            className="flex items-center px-4 py-2 border-b-[1px] border-[#e9e9e9] hover:bg-[#ececec] hover:text-white"
+                            className="flex items-center px-4 py-2 border-b-[1px] border-[#e9e9e9] hover:bg-[#ececec] hover:text-white !cursor-pointer"
                             onClick={() => {
                               setSelectedIndex(visibleTabs + idx);
                               setShowMoreTabs(false);

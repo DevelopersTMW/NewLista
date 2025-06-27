@@ -30,6 +30,7 @@ export default function UserList({
   });
 
   return (
+    
     <div className="w-full sm:w-[60%] md:w-[70%] lg:w-[35%] xl:w-[25%] overflow-auto no-scrollbar">
       <div className="pt-7 pb-29 sm:py-10 bg-white rounded-[20px]">
         <h1

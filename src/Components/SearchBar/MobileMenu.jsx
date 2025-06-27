@@ -5,6 +5,7 @@ import ComboboxSelector from "../ComboboxSelector/ComboboxSelector";
 import { Select } from "@headlessui/react";
 import Selection from "../InputFields/Selection";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
+import { useForm } from "react-hook-form";
 
 const propertyType = [
   { name: "Select Your Property" },
@@ -85,16 +86,46 @@ const statesArray = [
   { id: 50, name: "Wyoming", code: "WY" },
 ];
 
-const MobileMenu = ({ isFilterOpen, setIsFilterOpen, listingType }) => {
+const MobileMenu = ({
+  isFilterOpen,
+  setIsFilterOpen,
+  listingType,
+  handleFilterChange,
+}) => {
   const [selectedState, setSelectedState] = useState("");
   const [cities, setCities] = useState([]);
   const [selectedCity, setSelectedCity] = useState("");
+
+  const { register, setValue, getValues, watch } = useForm({
+    defaultValues: {
+      propertyType: "Select Your Property",
+      listingTypes: listingType,
+      priceRange: "Choose Price Range",
+      city: "",
+      state: "",
+    },
+  });
+  // const listingType = watch("listingTypes");
+  const onSubmit = () => {
+    const formValues = getValues();
+    const data = {
+      listingType: formValues.listingTypes, // if needed
+      propertyType: formValues.propertyType,
+      state: selectedState,
+      city: selectedCity,
+      priceRange: formValues.priceRange,
+    };
+    handleFilterChange(data);
+    setIsFilterOpen(false)
+
+  };
 
   const StateSelectionHandler = (value) => {
     let state = value.name;
     setSelectedState(state);
     setSelectedCity("");
     setCities([]);
+    setValue("state", state);
 
     try {
       if (state) {
@@ -117,6 +148,8 @@ const MobileMenu = ({ isFilterOpen, setIsFilterOpen, listingType }) => {
 
   const CitySelectionHandler = (value) => {
     console.log("Selected Data :", value);
+    setSelectedCity(value.name)
+    setValue("city", value.name);
   };
 
   //   CHECK IF CITY EXIST OR NOT
@@ -170,6 +203,8 @@ const MobileMenu = ({ isFilterOpen, setIsFilterOpen, listingType }) => {
                 )}
                 labels={"ㅤ"}
                 defaultOption={listingType}
+                name="listingTypes"
+                register={register}
               ></Selection>
             </div>
             {/* PROPERTY TYPE  */}
@@ -177,8 +212,8 @@ const MobileMenu = ({ isFilterOpen, setIsFilterOpen, listingType }) => {
               <label className="block mb-1 font-[700] text-PurpleColor w-[100%] max-[1280px]:text-[14px] max-[1666px]:text-[15px] min-[1666px]:text-[16px]">
                 {"Property Type"}
               </label>
-              <Select
-                name="status"
+              <select
+                {...register("propertyType")}
                 aria-label="Project status"
                 className={
                   "bg-[#F3EEFF] border-[#F3EEFF]  text-[#4b4b4b] font-[600] font-Urbanist text-[14px] w-[100%] h-12 px-4 rounded-[6px] outline-none appearance-none cursor-pointer focus:outline-none"
@@ -193,7 +228,7 @@ const MobileMenu = ({ isFilterOpen, setIsFilterOpen, listingType }) => {
                     {item.name}
                   </option>
                 ))}
-              </Select>
+              </select>
               <ChevronDownIcon
                 className={`group pointer-events-none absolute top-10 right-2.5 size-5 fill-black text-black `}
                 aria-hidden="true"
@@ -246,10 +281,15 @@ const MobileMenu = ({ isFilterOpen, setIsFilterOpen, listingType }) => {
                 ]}
                 defaultOption={"Choose Price Range"}
                 labels={" Price Range"}
+                name="priceRange"
+                register={register}
               ></Selection>
             </div>
 
-            <button className="hover-btn hover-btn-purple w-[40%] text-white px-4 pr-7 py-2 mt-4 text-[14px] cursor-pointer">
+            <button
+              onClick={onSubmit}
+              className="hover-btn hover-btn-purple w-[40%] text-white px-4 pr-7 py-2 mt-4 text-[14px] cursor-pointer"
+            >
               <span className="flex gap-2 justify-center items-center font-Urbanist font-[600]">
                 <Search size={19} />
                 Search

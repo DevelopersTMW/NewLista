@@ -106,7 +106,6 @@ const SearchBar = ({ handleFilterChange }) => {
       city: selectedCity,
       priceRange: getValues("priceRange"),
     };
-
     handleFilterChange(data);
   };
 
@@ -193,9 +192,11 @@ const SearchBar = ({ handleFilterChange }) => {
         <div className="w-[40%] flex justify-center items-center lg:hidden md:w-[10%] sm:w-[25%]">
           {isFilterOpen && (
             <MobileMenu
+              register={register}
               setIsFilterOpen={setIsFilterOpen}
               isFilterOpen={isFilterOpen}
               listingType={listingType}
+              handleFilterChange={handleFilterChange}
             />
           )}
         </div>

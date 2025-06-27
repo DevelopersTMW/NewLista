@@ -18,13 +18,8 @@ function Inbox() {
   const ApiKey = import.meta.env.VITE_API_KEY;
   const [chatUser, setChatUser] = useState(null);
   const [Loading, setLoading] = useState(false);
-
   const tokens = localStorage.getItem("token");
-
   const [unreadCounts, setUnreadCounts] = useState({});
-
-  console.log(unreadCounts);
-
   const [latestMessages, setLatestMessages] = useState({});
 
   useEffect(() => {
