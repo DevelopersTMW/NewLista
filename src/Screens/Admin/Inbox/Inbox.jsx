@@ -86,11 +86,10 @@ function Inbox() {
 
         const connections = response.data.my_connections;
         setOtherUsers(connections);
-
-        // Automatically select the first user if exists
-        if (connections && connections.length > 0) {
-          setChatUser(connections[0]);
-        }
+        // setChatUser(connections);
+        // // Automatically select the first user if exists
+        // if (connections && connections.length > 0) {
+        // }
       } catch (error) {
         console.error("Error fetching users:", error);
       } finally {
