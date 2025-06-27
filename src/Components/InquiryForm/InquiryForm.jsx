@@ -10,10 +10,11 @@ import TextAreas from "../InputFields/TextAreas";
 import axios from "axios";
 import AlertModal from "../AlertModal/AlertModal";
 import { AtSign, X } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 function InquiryForm({ id, propertyAddress }) {
   const ApiKey = import.meta.env.VITE_API_KEY;
+    const location = useLocation();
   const [open, setOpen] = useState(false);
   const token = localStorage.getItem("token");
   const [Loading, setLoading] = useState(false);
@@ -58,7 +59,7 @@ function InquiryForm({ id, propertyAddress }) {
           cash_on_hand: data.AvailableCash,
           timeline: data.Timeline,
           payment_method: data.PaymentMethod,
-          property_address: data.PropertyAddress,
+          property_address: propertyAddress,
           message: data.Message,
           property_id: id,
           action_url: `${window.location.origin}/properties/${id}`,
@@ -96,7 +97,7 @@ function InquiryForm({ id, propertyAddress }) {
 
   const handleMakeOfferClick = () => {
     if (!token) {
-      navigate("/login");
+      navigate("/login" , { state: { from: location.pathname } });
     } else {
       setOpen(true);
     }

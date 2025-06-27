@@ -1,39 +1,30 @@
-import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+
 // COMPONENTS
+import Footer from "../../Components/Footer/Footer";
+import HomeSection1 from "./HomeSections/HomeSection1";
+import AntiInspect from "../ProtectedScreen/AntiInspect";
+import MiniFooter from "../../Components/Footer/MiniFooter";
+import SearchBar from "../../Components/SearchBar/SearchBar";
+import CardCarousel from "../../Components/Carousel/Carousel";
+import EmptyCards from "../../Components/EmptyCard/EmptyCard";
+import ProtectedSection from "./HomeSections/ProtectiveSection";
+import CardContentSection from "./HomeSections/CardContentSection";
+import Testimonials from "../../Components/Testimonials/Testimonials";
+import TruncatedText from "../../Components/TruncatedText/TruncatedText";
 import TransparentNavbar from "../../Components/Navbar/TransparentNavbar";
 import TopDevelopes from "../../Components/Cards/TopDevelopes/TopDevelopes";
 import PropertiesCards from "../../Components/Cards/PropertiesCards/PropertiesCards";
-import Testimonials from "../../Components/Testimonials/Testimonials";
+
 // IMAGES
 import HeroBg from "../../assets/HeroSecImage.jpg";
-import TopDeveloper1_1 from "../../assets/TopDeveloper1.1.jpg";
-import TopDeveloper1_2 from "../../assets/TopDeveloper1.2.jpg";
-import TopDeveloper1_3 from "../../assets/TopDeveloper1.3.jpg";
-import PropertiesImage1 from "../../assets/PropertiesImage1.png";
-import PropertiesImage2 from "../../assets/PropertiesImage2.png";
-import PropertiesImage3 from "../../assets/PropertiesImage3.png";
-import Testimonials1 from "../../assets/Testimonials1.png";
 import RevImage1 from "../../assets/RevImage1.jpg";
 import RevImage2 from "../../assets/RevImage2.jpg";
 import RevImage3 from "../../assets/RevImage3.jpg";
 import HomeSec5_1 from "../../assets/HomeSec5.1.png";
 import HomeSec5_2 from "../../assets/HomeSec5.2.png";
-import InvestorCards from "../../Components/Cards/InvestorCards/InvestorCards";
-import Footer from "../../Components/Footer/Footer";
-import MiniFooter from "../../Components/Footer/MiniFooter";
-import axios from "axios";
-import SearchBar from "../../Components/SearchBar/SearchBar";
-import TruncatedText from "../../Components/TruncatedText/TruncatedText";
-import { Link } from "react-router-dom";
-import { Map, MapPlus } from "lucide-react";
-import HomeSection1 from "./HomeSections/HomeSection1";
-import CardContentSection from "./HomeSections/CardContentSection";
-import Carousel from "../../Components/Carousel/Carousel";
-import CardCarousel from "../../Components/Carousel/Carousel";
-import { useDispatch, useSelector } from "react-redux";
-import EmptyCards from "../../Components/EmptyCard/EmptyCard";
-import ProtectedSection from "./HomeSections/ProtectiveSection";
-import AntiInspect from "../ProtectedScreen/AntiInspect";
 
 // BACKGORUND
 const HeroBackground = {
@@ -45,23 +36,13 @@ const HeroBackground = {
 };
 
 const Home = () => {
+  // KEYS
   const ApiKey = import.meta.env.VITE_API_KEY;
-  const [Properties, setProperties] = useState([]);
   const token = localStorage.getItem("token");
   const status = localStorage.getItem("status");
+  // STATES
+  const [Properties, setProperties] = useState([]);
   const [searchFilters, setSearchFilters] = useState(null);
-
-
-
-  useEffect(() => {
-    const docWidth = document.documentElement.offsetWidth;
-    document.querySelectorAll("*").forEach((el) => {
-      if (el.offsetWidth > docWidth) {
-        el.style.outline = "2px solid red";
-        console.log("Overflowing element:", el);
-      }
-    });
-  }, []);
 
   useEffect(() => {
     async function GetProperty() {
@@ -74,9 +55,15 @@ const Home = () => {
       }
     }
     GetProperty();
-  }, []);
 
-  useEffect(() => {
+    const docWidth = document.documentElement.offsetWidth;
+    document.querySelectorAll("*").forEach((el) => {
+      if (el.offsetWidth > docWidth) {
+        el.style.outline = "2px solid red";
+        console.log("Overflowing element:", el);
+      }
+    });
+
     document.documentElement.classList.add("dark");
   }, []);
 
@@ -150,7 +137,6 @@ const Home = () => {
   const filteredProperties = applyFilters(Properties);
 
   const handleFilterChange = (filters) => {
-    console.log("Filters selected:", filters);
     setSearchFilters(filters);
   };
 
@@ -186,7 +172,7 @@ const Home = () => {
 
   return (
     <>
-      <AntiInspect/>
+      <AntiInspect />
       <div className=" overflow-x-hidden">
         <TransparentNavbar></TransparentNavbar>
         <div className="flex flex-col justify-center items-center ">
@@ -196,15 +182,10 @@ const Home = () => {
             className="relative px-6  -mt-[40%] sm:pt-10 sm:-mt-[18%] max-[891px]:pt-12 min-[891px]:pt-18 md:-mt-[15%] lg:px-8 lg:pt-18  xl:-mt-[10%] xl:pt-14"
           >
             <div className="max-[350px]:pt-28 pt-40 pb-20 min-[480px]:pt-44 flex flex-col justify-center sm:items-center  sm:py-44 lg:py-44">
-              {/* CONTENT SECTION START  */}
               <div className="sm:text-center max-[891px]:pt-7 min-[891px]:pt-10 lg:pt-20">
                 <h1 className="text-[35.5px] leading-[47px] sm:text-[41px] sm:leading-[46px]  md:text-[47px]	md:leading-[53px] lg:text-[53px] lg:leading-[65px] xl:text-[60px] font-[600] font-Poppins tracking-tight lg:text-balance text-white ">
                   The Ultimate Commercial Estate Marketplace & Investor Network
                 </h1>
-                {/* <p className="mt-8 text-md font-medium text-pretty text-textColor sm:text-lg/8 ">
-                List properties, connect with investors, and unlock exclusive
-                off-the-market deals—all in one powerful platform.
-              </p> */}
               </div>
               <div className="max-[350px]:w-[90%] w-[75%] sm:w-[50%] md:w-[90%] min-[800px]:w-[80%] lg:w-[100%] xl:w-[100%] 2xl:w-[80%]">
                 <SearchBar handleFilterChange={handleFilterChange}></SearchBar>
@@ -213,9 +194,10 @@ const Home = () => {
           </section>
           {/* HERO SECTION END */}
 
+          {/* CARDS SECTION   */}
           <HomeSection1 token={token}></HomeSection1>
 
-          {/* SECTION 2 START  */}
+          {/* FEATUES PROPERTIES */}
           <section
             id="featurelisting"
             className="flex flex-col justify-center items-center py-3 sm:py-8 lg:py-14 px-6 sm:px-8 gap-10 md:px-0 sm:gap-6 w-[100%] xl:w-[94%] 2xl:w-[85%]"
@@ -272,9 +254,9 @@ const Home = () => {
               )}
             </div>
           </section>
-          {/* SECTION 2 END */}
+          {/* FEATURES END */}
 
-          {/* SECTION 3 START  */}
+          {/* OFF MARKET PROPERTIES START  */}
           <section
             id="OffMarketingListing"
             className="flex flex-col justify-center items-center py-20 px-6 sm:px-8 sm:py-14 md:px-0  gap-10 sm:gap-6 w-[100%] xl:w-[92%] 2xl:w-[85%]"
@@ -286,7 +268,13 @@ const Home = () => {
                 "Access exclusive off-market deals not available to the public. To view full property details, you must be a subscriber."
               }
               ButtonName={"View All Off-Market Properties"}
-              ButtonLink={token ? status === "active" ? '/properties' : "/pricing" : "/login"}
+              ButtonLink={
+                token
+                  ? status === "active"
+                    ? "/properties"
+                    : "/pricing"
+                  : "/login"
+              }
             />
             {/* PROPERTY CARD SECTION  */}
             <div
@@ -297,13 +285,13 @@ const Home = () => {
               {status === "active" ? (
                 OffMarketProperties()
               ) : (
-                
                 <ProtectedSection>{OffMarketProperties()}</ProtectedSection>
               )}
             </div>
           </section>
-          {/* SECTION 3 END */}
-          {/* SECTION 4 START  */}
+          {/* OFF MARKET PROPERTIES  3 END */}
+
+          {/* TESTIMONIAL START  */}
           <section className="flex flex-col justify-center items-center py-3  gap-10 px-6 sm:gap-7 sm:py-5 sm:px-8 md:px-0 lg:py-16 w-[100%] xl:w-[92%] 2xl:w-[85%]">
             {/* CONTENT SECTION  */}
             <div className="md:w-[84%]">
@@ -351,7 +339,8 @@ const Home = () => {
               ></Testimonials>
             </div>
           </section>
-          {/* SECTION 4 END  */}
+          {/* TESTIMONIAL 4 END  */}
+
           {/* SECTION 5 START  */}
           <section className="flex flex-col justify-center gap-6 px-6 py-20 sm:pt-12 sm:gap-10 sm:pb-9 lg:pb-20 sm:px-8 md:px-0 md:items-center w-[100%] xl:w-[92%] 2xl:w-[85%]">
             <div className="md:w-[84%]">
@@ -380,6 +369,7 @@ const Home = () => {
             </div>
           </section>
           {/* SECTION 5 END  */}
+
           {/* SECTION 6 START  */}
           <section className="flex flex-col justify-center items-center pb-20 px-6 gap-10 overflow-hidden sm:pb-16 sm:px-8 md:px-0 sm:pt-10 w-[100%] xl:w-[92%] 2xl:w-[85%]">
             {/* CONTENT SECTION  */}

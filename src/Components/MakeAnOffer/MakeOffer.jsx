@@ -10,12 +10,13 @@ import TextAreas from "../InputFields/TextAreas";
 import axios from "axios";
 import AlertModal from "../AlertModal/AlertModal";
 import { AtSign, DollarSign, X } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 function MakeOffer({ id }) {
   const ApiKey = import.meta.env.VITE_API_KEY;
   const token = localStorage.getItem("token");
   const status = localStorage.getItem("status");
+   const location = useLocation();
   const [open, setOpen] = useState(false);
   const [Loading, setLoading] = useState(false);
   const navigate = useNavigate();
@@ -72,7 +73,7 @@ function MakeOffer({ id }) {
 
   const handleMakeOfferClick = () => {
     if (!token) {
-      navigate("/login");
+      navigate("/login" , { state: { from: location.pathname } });
     } else if (status === "active") {
       setOpen(true);
     } else {

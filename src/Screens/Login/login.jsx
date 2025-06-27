@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import axios from "axios";
@@ -10,6 +10,7 @@ import { Eye, EyeOff } from "lucide-react";
 
 const Login = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const clientId = import.meta.env.VITE_GOOGLE_CLIENT_ID;
   const ApiKey = import.meta.env.VITE_API_KEY;
 
@@ -22,6 +23,8 @@ const Login = () => {
     formState: { errors },
   } = useForm();
   const [showPassword, setShowPassword] = useState(false);
+
+  const from = location.state?.from || "/admin";
 
   // LOGIN FORM
   const LoginForm = async (Data) => {
@@ -40,7 +43,7 @@ const Login = () => {
           "ProfileComplete",
           JSON.stringify(Response.data.profile_complete)
         );
-        navigate("/admin");
+        navigate(from, { replace: true });
         reset();
       } else {
         navigate("/admin/account-setting");
