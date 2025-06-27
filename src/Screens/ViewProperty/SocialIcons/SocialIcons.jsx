@@ -10,7 +10,7 @@ import SocialIcons5 from "../../../assets/SocialIcons5.png"; // Clipboard
 
 const SocialPage = ({ id, setLoading }) => {
   const ApiKey = import.meta.env.VITE_API_KEY;
-  const listingUrl = `${window.location.origin}/properties/${id}`;
+  const listingUrl = `https://newlista.secureserverinternal.com/share/property/${id}`;
   const encodedListingUrl = encodeURIComponent(listingUrl);
 
   const shareUrls = {
