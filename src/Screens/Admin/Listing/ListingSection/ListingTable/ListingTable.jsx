@@ -2,24 +2,26 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Spinner from "../../../../../Components/Spinner/Spinner";
 import EditIcon from "../../../../../assets/EditIcon.png";
-import { PencilOff, ScanSearch } from "lucide-react";
-import RightSideArrow from "../../../../../assets/ListingRightSideArrow.png"
-import { Link, useNavigate } from "react-router-dom";
+import { PencilOff, ScanSearch, Trash2 } from "lucide-react";
+import RightSideArrow from "../../../../../assets/ListingRightSideArrow.png";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import ConfirmationModal from "../../../../../Components/ConfirmationModal/ConfirmationModal";
 import { useConfirmation } from "../../../AccountSetting/Fields/Confirmation";
 
-const ListingTable = ({ status, propertyType, priceRange , search }) => {
+const ListingTable = ({ status, propertyType, priceRange, search }) => {
   const [listings, setListings] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [confirmationAction, setConfirmationAction] = useState(null);
+  const [selectedId, setSelectedId] = useState(null);
+
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 5;
-   // REACT HOOK FOR
-    const { isOpen, confirm, handleConfirm, handleCancel } = useConfirmation();
+  // REACT HOOK FOR
+  const { isOpen, confirm, handleConfirm, handleCancel } = useConfirmation();
 
   const ApiKey = import.meta.env.VITE_API_KEY;
   const token = localStorage.getItem("token");
   const navigate = useNavigate();
-  
 
   useEffect(() => {
     const fetchListings = async () => {
@@ -39,42 +41,51 @@ const ListingTable = ({ status, propertyType, priceRange , search }) => {
     fetchListings();
   }, []);
 
- const applyFilters = (properties) => {
-  return properties.filter((item) => {
-    const matchesStatus = status
-      ? item.listing_status?.toLowerCase() === status.toLowerCase()
-      : true;
+  const applyFilters = (properties) => {
+    return properties.filter((item) => {
+      const matchesStatus = status
+        ? item.listing_status?.toLowerCase() === status.toLowerCase()
+        : true;
 
-    const matchesType = propertyType
-      ? item.property_type?.toLowerCase() === propertyType.toLowerCase()
-      : true;
+      const matchesType = propertyType
+        ? item.property_type?.toLowerCase() === propertyType.toLowerCase()
+        : true;
 
-    const price = Number(item.sale_price);
-    const matchesPrice = (() => {
-      if (!priceRange || isNaN(price)) return true;
+      const price = Number(item.sale_price);
+      const matchesPrice = (() => {
+        if (!priceRange || isNaN(price)) return true;
 
-      switch (priceRange) {
-        case "Under $250K": return price < 250000;
-        case "$250K – $500K": return price >= 250000 && price <= 500000;
-        case "$500K – $1M": return price >= 500000 && price <= 1000000;
-        case "$1M – $2.5M": return price >= 1000000 && price <= 2500000;
-        case "$2.5M – $5M": return price >= 2500000 && price <= 5000000;
-        case "$5M – $10M": return price >= 5000000 && price <= 10000000;
-        case "$10M – $25M": return price >= 10000000 && price <= 25000000;
-        case "$25M – $50M": return price >= 25000000 && price <= 50000000;
-        case "Over $50M": return price > 50000000;
-        default: return true;
-      }
-    })();
+        switch (priceRange) {
+          case "Under $250K":
+            return price < 250000;
+          case "$250K – $500K":
+            return price >= 250000 && price <= 500000;
+          case "$500K – $1M":
+            return price >= 500000 && price <= 1000000;
+          case "$1M – $2.5M":
+            return price >= 1000000 && price <= 2500000;
+          case "$2.5M – $5M":
+            return price >= 2500000 && price <= 5000000;
+          case "$5M – $10M":
+            return price >= 5000000 && price <= 10000000;
+          case "$10M – $25M":
+            return price >= 10000000 && price <= 25000000;
+          case "$25M – $50M":
+            return price >= 25000000 && price <= 50000000;
+          case "Over $50M":
+            return price > 50000000;
+          default:
+            return true;
+        }
+      })();
 
-    const matchesSearch = search
-      ? item.property_name?.toLowerCase().includes(search.toLowerCase())
-      : true;
+      const matchesSearch = search
+        ? item.property_name?.toLowerCase().includes(search.toLowerCase())
+        : true;
 
-    return matchesStatus && matchesType && matchesPrice && matchesSearch;
-  });
-};
-
+      return matchesStatus && matchesType && matchesPrice && matchesSearch;
+    });
+  };
 
   const filteredListings = applyFilters(listings);
   const totalPages = Math.ceil(filteredListings.length / itemsPerPage);
@@ -84,15 +95,35 @@ const ListingTable = ({ status, propertyType, priceRange , search }) => {
   );
   // EDIT PROPERTY
   const handleConfirmation = async (id) => {
+    setSelectedId(id);
+    setConfirmationAction("edit");
     const confirmed = await confirm();
     if (confirmed) {
       navigate(`/create-property?editId=${id}`);
     }
   };
+  // DELETE
+  const handleDeleteConfirmation = async (id) => {
+    setSelectedId(id);
+    setConfirmationAction("delete");
+    const confirmed = await confirm();
+    if (confirmed) {
+      try {
+        const response = await axios.get(`${ApiKey}/delete-property/${id}`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        console.log(response);
+        setListings((prev) => prev.filter((listing) => listing.id !== id));
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setLoading(false);
+      }
+    }
+  };
   useEffect(() => {
-  setCurrentPage(1);
-}, [status, propertyType, priceRange, search]);
-
+    setCurrentPage(1);
+  }, [status, propertyType, priceRange, search]);
 
   return (
     <>
@@ -105,9 +136,7 @@ const ListingTable = ({ status, propertyType, priceRange , search }) => {
           <table className="min-w-[880px] w-full text-sm text-left rtl:text-right text-gray-500 bg-[#fcfcfc]">
             <thead className="text-[13.5px] tracking-[1.5px] sm:tracking-normal sm:text-[14px] md:text-[15px] text-white font-Urbanist uppercase bg-[#1E1E1E]">
               <tr>
-                <th className="px-6 py-4.5 rounded-tl-2xl">
-                  Property Name 
-                </th>
+                <th className="px-6 py-4.5 rounded-tl-2xl">Property Name</th>
                 <th className="px-6 py-4.5">Type</th>
                 <th className="px-6 py-4.5">Price</th>
                 <th className="px-6 py-4.5">Status</th>
@@ -135,7 +164,9 @@ const ListingTable = ({ status, propertyType, priceRange , search }) => {
                       scope="row"
                       className="w-[30%] text-[14px] px-4 py-6 font-medium text-gray-900 whitespace-nowrap sm:text-[14px] md:text-[16px]"
                     >
-                      {item.property_name}
+                      <NavLink to={`/properties/${item.id}`}>
+                        {item.property_name}
+                      </NavLink>
                     </th>
                     <td className="w-[15%] text-center px-3.5 py-6 text-[#222222] font-[550] text-[16px]">
                       {item.property_type}
@@ -163,20 +194,25 @@ const ListingTable = ({ status, propertyType, priceRange , search }) => {
                       })}
                     </td>
                     <td className="px-4 py-6 text-[#222222] font-[550] text-[16px] flex gap-3 justify-center">
-                      <Link
+                      <button
                         onClick={() => {
                           handleConfirmation(item.id);
                         }}
+                        className="cursor-pointer"
                       >
                         <img
                           className="w-5.5 h-5.5"
                           src={EditIcon}
                           alt="Edit"
                         />
-                      </Link>
-                      <Link to={`/properties/${item.id}`}>
-                        <ScanSearch />
-                      </Link>
+                      </button>
+                      <button
+                        onClick={() => {
+                          handleDeleteConfirmation(item.id);
+                        }}
+                      >
+                        <Trash2 className="size-5 cursor-pointer" />
+                      </button>
                     </td>
                   </tr>
                 ))
@@ -225,15 +261,26 @@ const ListingTable = ({ status, propertyType, priceRange , search }) => {
         isOpen={isOpen}
         onClose={handleCancel}
         onConfirm={handleConfirm}
-        message="Do you want to Edit Property?"
+        message={
+          confirmationAction === "delete"
+            ? "Do you want to Delete this Property?"
+            : "Do you want to Edit this Property?"
+        }
         confirmLabel="Yes"
         icon={
-          <PencilOff
-            strokeWidth={1.75}
-            className="size-16 text-red-600  bg-amber-50 px-3.5 py-3.5 rounded-full"
-          />
+          confirmationAction === "delete" ? (
+            <Trash2
+              strokeWidth={1.75}
+              className="size-16 text-red-600 bg-amber-50 px-3.5 py-3.5 rounded-full"
+            />
+          ) : (
+            <PencilOff
+              strokeWidth={1.75}
+              className="size-16 text-blue-600 bg-blue-100 px-3.5 py-3.5 rounded-full"
+            />
+          )
         }
-        style="bg-red-600"
+        style={confirmationAction === "delete" ? "bg-red-600" : "bg-blue-600"}
       />
     </>
   );

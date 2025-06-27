@@ -241,7 +241,7 @@ const Dashboard = () => {
               <div className="flex justify-between">
                 <span>
                   <h4 className="text-[15px] font-Urbanist font-[500] text-[#666666]">
-                    Pending Offers
+                    Pending Listing
                   </h4>
                   <h1 className="font-Urbanist text-[#222222] text-[30px] md:text-[35px] font-[700]">
                     {listingStats.pendingCount}
@@ -269,7 +269,7 @@ const Dashboard = () => {
                 </span>
                 <span>
                   <h4 className="text-[#606060] font-Urbanist font-[600] text-[15px]">
-                    {listingStats.todayPendingCount} Offer Today
+                    {listingStats.todayPendingCount} Listing Today
                   </h4>
                 </span>
               </div>

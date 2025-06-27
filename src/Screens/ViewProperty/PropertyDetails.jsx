@@ -40,6 +40,7 @@ import InquiryForm from "../../Components/InquiryForm/InquiryForm";
 import DummyLogo from "../../../public/Images/UnknowUser.png";
 import MakeOffer from "../../Components/MakeAnOffer/MakeOffer";
 import { useSelector } from "react-redux";
+import SocialPage from "./SocialIcons/SocialIcons";
 
 const features = [
   "Ample Parking",
@@ -74,14 +75,14 @@ const visibleFieldsByType = {
     "HVAC",
     "Parking",
   ],
-  // Add other property types as needed
 };
 
 const PropertyDetails = () => {
-  const ApiKey = import.meta.env.VITE_API_KEY;
   const params = useParams();
-  const { user } = useSelector((state) => state.auth);
+  const token = localStorage.getItem("token");
+  const ApiKey = import.meta.env.VITE_API_KEY;
 
+  const [UserId, setUserId] = useState("");
   const [Properties, setProperties] = useState([]);
   const [SingleProperty, setSingleProperty] = useState();
   const [Loading, setLoading] = useState(true);
@@ -110,6 +111,37 @@ const PropertyDetails = () => {
   console.log(SingleProperty);
 
   const currentFields = visibleFieldsByType["Default"] || [];
+
+  useEffect(() => {
+    const FindId = async () => {
+      try {
+        setLoading(true);
+        const res = await axios.get(`${ApiKey}/user`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        if (res) {
+          setUserId(res.data.id);
+        } else {
+          setLoading(true);
+        }
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    FindId();
+
+    const ViewCounter = async ()=>{
+      try {
+        const response = await axios.post(`${ApiKey}/listing/view/${params.id}` , {})
+        console.log(response);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    ViewCounter()
+  }, []);
 
   return (
     <>
@@ -158,28 +190,8 @@ const PropertyDetails = () => {
                     </div>
                   </div>
                 </div>
-                <div className="flex lg:justify-center md:items-center flex-col sm:flex-row mt-4 lg:mt-0 gap-2">
-                  <h1 className="font-Poppins text-[20px] font-[500] text-[#222222]">
-                    Share
-                  </h1>
-                  <div className="flex gap-2">
-                    <button className="bg-PurpleColor  flex justify-center items-center gap-2 text-white font-Inter px-2 sm:px-3 sm:py-1.5 sm:ml-2 text-[14px] rounded-[5px] sm:rounded-[8px] ">
-                      <img
-                        className="w-[14px] h-[14px]"
-                        src={SocialIcons6}
-                        alt=""
-                      />
-                      <span className="hidden sm:block">Network</span>
-                    </button>
-                    <div className="flex gap-2">
-                      <img src={SocialIcons1} className="w-[30px]" alt="" />
-                      <img src={SocialIcons2} className="w-[30px]" alt="" />
-                      <img src={SocialIcons3} className="w-[30px]" alt="" />
-                      <img src={SocialIcons4} className="w-[30px]" alt="" />
-                      <img src={SocialIcons5} className="w-[30px]" alt="" />
-                    </div>
-                  </div>
-                </div>
+                <SocialPage setLoading={setLoading} id={params.id}/>
+               
               </div>
             </section>
 
@@ -244,8 +256,10 @@ const PropertyDetails = () => {
                   <InquiryForm
                     id={params.id}
                     propertyAddress={
-                      SingleProperty.address + " " +
-                      SingleProperty.city + " " +
+                      SingleProperty.address +
+                      " " +
+                      SingleProperty.city +
+                      " " +
                       SingleProperty.state
                     }
                   />
@@ -254,7 +268,7 @@ const PropertyDetails = () => {
                 <div className="flex flex-col gap-5">
                   <span className="flex items-center gap-3">
                     <img
-                      className="rounded-full w-[60px] sm:w-[65px]"
+                      className="rounded-full w-[60px] h-[62px] sm:w-[65px]"
                       src={
                         import.meta.env.VITE_IMAGE_KEY +
                           SingleProperty.user.headshot || DummyLogo
@@ -297,7 +311,9 @@ const PropertyDetails = () => {
                     )}
                   </span>
 
-                  <MakeOffer id={params.id}></MakeOffer>
+                  {UserId !== SingleProperty.user.id && (
+                    <MakeOffer id={params.id} />
+                  )}
                 </div>
 
                 <div className="border-[1px] border-solid border-[#BBBBBB] rounded-[8px]  px-5 py-6 flex flex-col justify-center gap-2">

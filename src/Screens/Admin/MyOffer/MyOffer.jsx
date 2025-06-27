@@ -45,8 +45,6 @@ export default function MyOffersTable() {
     GetOffers();
   }, [ApiKey, token]);
 
-  // ...other state and hooks
-
   const handleAction = async (id, action) => {
     try {
       setLoading(true);
@@ -54,20 +52,18 @@ export default function MyOffersTable() {
 
       await axios.post(
         `${ApiKey}/${endpoint}`,
-        { offer_id: id, action_url: "http://localhost:5173/admin/myoffers" },
+        { offer_id: id, action_url: `${window.location.origin}/admin/myoffers` },
         { headers: { Authorization: `Bearer ${token}` } }
       );
 
       const newStatus = action === "accept" ? "accepted" : "rejected";
 
-      // Update receivedOffers state
       setReceivedOffers((prevOffers) =>
         prevOffers.map((offer) =>
           offer.id === id ? { ...offer, status: newStatus } : offer
         )
       );
 
-      // Update sentOffers state
       setSentOffers((prevOffers) =>
         prevOffers.map((offer) =>
           offer.id === id ? { ...offer, status: newStatus } : offer

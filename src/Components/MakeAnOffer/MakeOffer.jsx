@@ -80,22 +80,6 @@ function MakeOffer({ id }) {
     }
   };
 
-  useEffect(() => {
-    const GetUser = async () => {
-      try {
-        const res = await axios.get(`${ApiKey}/user`, {
-          headers: { Authorization: `Bearer ${token}` },
-        });
-        console.log(res);
-        setOverId(res);
-      } catch (error) {
-        console.log(error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    GetUser();
-  });
 
   return (
     <div>

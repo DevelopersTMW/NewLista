@@ -267,18 +267,18 @@ const Listing = () => {
       ></ListingTable>
 
       {/* HEADING SECTION  */}
-      <section className="pt-6 pb-4 sm:py-6 px-2 sm:px-0 ">
-        {/* PAGE TITTLE  */}
+      {/* <section className="pt-6 pb-4 sm:py-6 px-2 sm:px-0 ">
+        PAGE TITTLE 
         <div className="flex justify-between">
           <h1 className="font-Urbanist text-[#222222] text-[26px]  sm:text-[30px] font-[700]">
             Performance Overview
           </h1>
         </div>
-      </section>
+      </section> */}
 
       {/* CARDS  */}
-      <section className="flex  flex-wrap gap-3  ">
-        {/* CARD 1 */}
+      {/* <section className="flex  flex-wrap gap-3  ">
+        CARD 1
         <div className="flex flex-col justify-between bg-white px-5 gap-5 sm:py-7 py-10 max-[350px]:w-[100%] w-[90%] sm:w-[47%] md:w-[35%] 2xl:w-[24%] rounded-[14px]">
           <div className="flex justify-between ">
             <span>
@@ -294,7 +294,7 @@ const Listing = () => {
             </span>
           </div>
         </div>
-        {/* CARD 2 */}
+        CARD 2
         <div className="flex flex-col justify-between bg-white px-5 gap-5 sm:py-7 py-10 w-[90%] max-[350px]:w-[100%] sm:w-[47%] md:w-[35%] 2xl:w-[24%] rounded-[14px]">
           <div className="flex justify-between">
             <span>
@@ -310,7 +310,7 @@ const Listing = () => {
             </span>
           </div>
         </div>
-        {/* CARD 3 */}
+        CARD 3
         <div className="flex flex-col justify-between bg-white px-5 gap-5 sm:py-7 py-10 w-[90%] max-[350px]:w-[100%] sm:w-[47%] md:w-[35%] 2xl:w-[24%] rounded-[14px]">
           <div className="flex justify-between">
             <span>
@@ -326,7 +326,7 @@ const Listing = () => {
             </span>
           </div>
         </div>
-        {/* CARD 4 */}
+        CARD 4
         <div className="flex flex-col justify-between bg-white px-5 gap-5 sm:py-7 py-10 w-[90%] max-[350px]:w-[100%] sm:w-[47%] md:w-[35%] 2xl:w-[24%] rounded-[14px]">
           <div className="flex justify-between">
             <span>
@@ -342,7 +342,7 @@ const Listing = () => {
             </span>
           </div>
         </div>
-      </section>
+      </section> */}
     </>
   );
 };
