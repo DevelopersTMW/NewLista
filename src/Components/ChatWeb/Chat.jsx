@@ -7,6 +7,7 @@ import {
   set,
   remove,
   onValue,
+  update,
 } from "firebase/database";
 import db from "../../Configuration/Firebase/FirebaseConfig";
 import {
@@ -44,7 +45,6 @@ export default function PrivateChat({ currentUser, chatUser, setChatUser }) {
       setMessages((prev) => [...prev, snapshot.val()]);
     });
   }, [chatId]);
-  
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -60,6 +60,7 @@ export default function PrivateChat({ currentUser, chatUser, setChatUser }) {
       to: chatUser.id,
       text: text.trim(),
       timestamp: Date.now(),
+      read: false,
     });
 
     setText("");
@@ -107,6 +108,31 @@ export default function PrivateChat({ currentUser, chatUser, setChatUser }) {
     return null;
   }
 
+  // UPDATE READ ESSAGE
+  useEffect(() => {
+    if (!currentUser || !chatUser) return;
+
+    const chatRef = ref(getDatabase(), `messages/${chatId}`);
+
+    const unsubscribe = onValue(chatRef, (snapshot) => {
+      const updates = {};
+
+      snapshot.forEach((childSnapshot) => {
+        const msg = childSnapshot.val();
+
+        if (msg.to === currentUser.id && msg.read === false) {
+          updates[childSnapshot.key] = { ...msg, read: true };
+        }
+      });
+
+      if (Object.keys(updates).length > 0) {
+        update(chatRef, updates);
+      }
+    });
+
+    return () => unsubscribe();
+  }, [chatUser.id, currentUser.id]);
+
   return (
     <>
       <div className="sm:w-[75%] sm:relative h-[76vh] relative w-full  top-0 left-0 bg-white flex flex-col rounded-[10px] sm:border border-[#B9B9B9] justify-between overflow-hidden">
@@ -121,15 +147,15 @@ export default function PrivateChat({ currentUser, chatUser, setChatUser }) {
             </div>
             <div className="relative">
               <img
-              className="h-11 w-11 rounded-full object-cover border border-[#e6e6e6]"
-              src={import.meta.env.VITE_IMAGE_KEY + chatUser.headshot}
-              alt=""
-            />
-            <span
-              className={`absolute bottom-0.5 right-0 w-3 h-3 border-2 border-white rounded-full ${
-                isChatUserOnline ? "bg-green-500" : "bg-red-600"
-              }`}
-            ></span>
+                className="h-11 w-11 rounded-full object-cover border border-[#e6e6e6]"
+                src={import.meta.env.VITE_IMAGE_KEY + chatUser.headshot}
+                alt=""
+              />
+              <span
+                className={`absolute bottom-0.5 right-0 w-3 h-3 border-2 border-white rounded-full ${
+                  isChatUserOnline ? "bg-green-500" : "bg-red-600"
+                }`}
+              ></span>
             </div>
             <div className="flex flex-col gap-0">
               <h1 className="font-Urbanist font-[600] text-[#000] text-[18px]">
@@ -224,7 +250,13 @@ export default function PrivateChat({ currentUser, chatUser, setChatUser }) {
 
                       {/* Hover time */}
                       {hoveredIndex === index && (
-                        <span className="absolute right-full top-[35%] mr-2 text-xs text-gray-500 select-none pointer-events-none font-Urbanist w-max">
+                        <span
+                          className={`absolute text-xs text-gray-500 select-none pointer-events-none font-Urbanist w-max ${
+                            msg.from === currentUser.id
+                              ? "right-full top-[35%] mr-2"
+                              : "left-full ml-2"
+                          }`}
+                        >
                           {currentDate.toLocaleTimeString(undefined, {
                             hour: "2-digit",
                             minute: "2-digit",

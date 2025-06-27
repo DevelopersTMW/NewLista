@@ -2,7 +2,12 @@ import React, { useEffect, useState } from "react";
 import { getDatabase, ref, onValue } from "firebase/database";
 import TruncatedText from "../TruncatedText/TruncatedText";
 
-export default function UserList({ users, onSelect, unreadCounts = {} }) {
+export default function UserList({
+  users,
+  onSelect,
+  unreadCounts = {},
+  latestMessages = {},
+}) {
   const [onlineUsers, setOnlineUsers] = useState({});
 
   useEffect(() => {
@@ -11,11 +16,18 @@ export default function UserList({ users, onSelect, unreadCounts = {} }) {
 
     const unsubscribe = onValue(onlineRef, (snapshot) => {
       const data = snapshot.val() || {};
-      setOnlineUsers(data); // Object: { userId: true/false }
+      setOnlineUsers(data);
     });
 
     return () => unsubscribe();
   }, []);
+
+  // Sort users based on latest message timestamp
+  const sortedUsers = [...users].sort((a, b) => {
+    const timeA = latestMessages[a.id] || 0;
+    const timeB = latestMessages[b.id] || 0;
+    return timeB - timeA;
+  });
 
   return (
     <div className="w-full sm:w-[60%] md:w-[70%] lg:w-[35%] xl:w-[25%] overflow-auto no-scrollbar">
@@ -27,7 +39,7 @@ export default function UserList({ users, onSelect, unreadCounts = {} }) {
           Connections
         </h1>
         <div className="flex flex-col overflow-auto no-scrollbar h-[55vh]">
-          {users.map((user, index) => {
+          {sortedUsers.map((user, index) => {
             const isOnline = onlineUsers[user.id] === true;
             const unread = unreadCounts[user.id] || 0;
             return (
@@ -61,7 +73,7 @@ export default function UserList({ users, onSelect, unreadCounts = {} }) {
 
                 <div className="relative ">
                   {unread > 0 && (
-                    <span className="absolute -top-1 -right-1 min-w-[18px] h-[18px] flex items-center justify-center bg-green-500 text-white text-[10px] px-1.5 rounded-full font-semibold font-Inter leading-none">
+                    <span className="absolute -top-2 -right-1 min-w-[18px] h-[18px] flex items-center justify-center bg-green-500 text-white text-[10px] px-1.5 rounded-full font-semibold font-Inter leading-none">
                       {unread > 99 ? "99+" : unread}
                     </span>
                   )}

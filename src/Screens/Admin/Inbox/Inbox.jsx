@@ -3,7 +3,13 @@ import axios from "axios";
 import UserList from "../../../Components/ChatWeb/userlist";
 import PrivateChat from "../../../Components/ChatWeb/Chat";
 import Spinner from "../../../Components/Spinner/Spinner";
-import { getDatabase, ref, set, onDisconnect ,onValue  } from "firebase/database";
+import {
+  getDatabase,
+  ref,
+  set,
+  onDisconnect,
+  onValue,
+} from "firebase/database";
 import db from "../../../Configuration/Firebase/FirebaseConfig";
 
 function Inbox() {
@@ -17,35 +23,42 @@ function Inbox() {
 
   const [unreadCounts, setUnreadCounts] = useState({});
 
+  console.log(unreadCounts);
+
+  const [latestMessages, setLatestMessages] = useState({});
+
   useEffect(() => {
-    if (!currentUser) return;
+    if (!currentUser || otherUsers.length === 0) return;
 
     const db = getDatabase();
     const messagesRef = ref(db, "messages");
 
     const unsubscribe = onValue(messagesRef, (snapshot) => {
-      const allMessages = snapshot.val() || {};
+      const allMens = snapshot.val() || {};
       const counts = {};
+      const latest = {};
 
-      Object.values(allMessages).forEach((msgGroup) => {
-        Object.values(msgGroup).forEach((msg) => {
-          if (
-            msg.to === currentUser.id &&
-            msg.read === false &&
-            msg.from // ensure `from` exists
-          ) {
+      Object.entries(allMens).forEach(([chatId, msgGroup]) => {
+        Object.entries(msgGroup).forEach(([msgId, msg]) => {
+          if (msg.to === currentUser.id && msg.read === false && msg.from) {
             counts[msg.from] = (counts[msg.from] || 0) + 1;
+          }
+
+          const otherUserId = msg.from === currentUser.id ? msg.to : msg.from;
+
+          if (!latest[otherUserId] || msg.timestamp > latest[otherUserId]) {
+            latest[otherUserId] = msg.timestamp;
           }
         });
       });
 
       setUnreadCounts(counts);
+      setLatestMessages(latest);
     });
 
     return () => unsubscribe();
-  }, [currentUser]);
-  
-  
+  }, [currentUser, otherUsers]);
+
   useEffect(() => {
     const storedUser = JSON.parse(localStorage.getItem("User"));
     if (storedUser) {
@@ -95,7 +108,12 @@ function Inbox() {
       {!Loading ? (
         otherUsers ? (
           <div className="flex flex-col sm:flex-row w-full mt-3 sm:gap-5 lg:gap-10 text-black">
-            <UserList users={otherUsers} onSelect={setChatUser} unreadCounts={unreadCounts} />
+            <UserList
+              users={otherUsers}
+              onSelect={setChatUser}
+              unreadCounts={unreadCounts}
+              latestMessages={latestMessages}
+            />
 
             {!chatUser ? (
               <div className="w-full sm:w-[75%] flex items-center justify-center text-center">
