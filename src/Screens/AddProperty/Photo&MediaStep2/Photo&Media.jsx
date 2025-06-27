@@ -42,23 +42,28 @@ const Step2 = ({ onNext, onBack, defaultValues }) => {
   };
 
   useEffect(() => {
-  if (defaultValues && Object.keys(defaultValues).length > 0) {
-    console.log("Step2", defaultValues);
-    setimages(defaultValues.fileInput);
+    if (defaultValues && Object.keys(defaultValues).length > 0) {
+      setimages(defaultValues.fileInput);
 
-    // Convert custom_fields values from "true"/"false" to boolean
-    const convertedFields = {};
-    const fields = defaultValues.custom_fields || {};
-    for (const key in fields) {
-      convertedFields[key] = fields[key] === "true";
+      const fields = defaultValues.custom_fields || {};
+      const convertedFields = {};
+
+      for (const key in fields) {
+        const value = fields[key];
+        // Only convert "true" or "false" strings to booleans
+        if (value === "true" || value === "false") {
+          convertedFields[key] = value === "true";
+        } else {
+          convertedFields[key] = value; // leave other values as-is
+        }
+      }
+
+      reset({
+        ...defaultValues,
+        custom_fields: convertedFields,
+      });
     }
-
-    reset({
-      ...defaultValues,
-      custom_fields: convertedFields,
-    });
-  }
-}, [defaultValues, reset]);
+  }, [defaultValues, reset]);
 
   return (
     <>

@@ -53,7 +53,7 @@ const SocialPage = ({ id, setLoading }) => {
       } else {
         Swal.fire({
           icon: "info",
-          title: "Instagram does not support direct web sharing.",
+          title: "Network Error",
           toast: true,
           position: "bottom-right",
           timer: 3000,
@@ -108,9 +108,6 @@ const SocialPage = ({ id, setLoading }) => {
         </div>
         <div onClick={() => openShare("linkedin")} className="cursor-pointer">
           <img src={SocialIcons2} className="w-[30px]" alt="LinkedIn" />
-        </div>
-        <div onClick={() => openShare("instagram")} className="cursor-pointer">
-          <img src={SocialIcons3} className="w-[30px]" alt="Instagram" />
         </div>
         <div onClick={() => openShare("email")} className="cursor-pointer">
           <img src={SocialIcons4} className="w-[30px]" alt="Email" />

@@ -3,7 +3,7 @@ import axios from "axios";
 import UserList from "../../../Components/ChatWeb/userlist";
 import PrivateChat from "../../../Components/ChatWeb/Chat";
 import Spinner from "../../../Components/Spinner/Spinner";
-import { getDatabase, ref, set, onDisconnect } from "firebase/database";
+import { getDatabase, ref, set, onDisconnect ,onValue  } from "firebase/database";
 import db from "../../../Configuration/Firebase/FirebaseConfig";
 
 function Inbox() {
@@ -15,12 +15,43 @@ function Inbox() {
 
   const tokens = localStorage.getItem("token");
 
+  const [unreadCounts, setUnreadCounts] = useState({});
+
+  useEffect(() => {
+    if (!currentUser) return;
+
+    const db = getDatabase();
+    const messagesRef = ref(db, "messages");
+
+    const unsubscribe = onValue(messagesRef, (snapshot) => {
+      const allMessages = snapshot.val() || {};
+      const counts = {};
+
+      Object.values(allMessages).forEach((msgGroup) => {
+        Object.values(msgGroup).forEach((msg) => {
+          if (
+            msg.to === currentUser.id &&
+            msg.read === false &&
+            msg.from // ensure `from` exists
+          ) {
+            counts[msg.from] = (counts[msg.from] || 0) + 1;
+          }
+        });
+      });
+
+      setUnreadCounts(counts);
+    });
+
+    return () => unsubscribe();
+  }, [currentUser]);
+  
+  
   useEffect(() => {
     const storedUser = JSON.parse(localStorage.getItem("User"));
     if (storedUser) {
       setCurrentUser(storedUser);
       const userStatusRef = ref(getDatabase(), `onlineUsers/${storedUser.id}`);
-      set(userStatusRef, true); 
+      set(userStatusRef, true);
       onDisconnect(userStatusRef).set(false);
       return () => {
         set(userStatusRef, false);
@@ -64,7 +95,8 @@ function Inbox() {
       {!Loading ? (
         otherUsers ? (
           <div className="flex flex-col sm:flex-row w-full mt-3 sm:gap-5 lg:gap-10 text-black">
-            <UserList users={otherUsers} onSelect={setChatUser} />
+            <UserList users={otherUsers} onSelect={setChatUser} unreadCounts={unreadCounts} />
+
             {!chatUser ? (
               <div className="w-full sm:w-[75%] flex items-center justify-center text-center">
                 <p className="text-[18px] font-Urbanist text-gray-500 font-semibold">

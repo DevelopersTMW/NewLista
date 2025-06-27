@@ -44,6 +44,7 @@ export default function PrivateChat({ currentUser, chatUser, setChatUser }) {
       setMessages((prev) => [...prev, snapshot.val()]);
     });
   }, [chatId]);
+  
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
