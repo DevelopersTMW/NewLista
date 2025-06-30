@@ -9,12 +9,14 @@ import Dashboardicon1_3 from "../../assets/AdminIcon1.3.png";
 import Dashboardicon1_8 from "../../assets/AdminIcon1.8.png";
 import Dashboardicon1_11 from "../../assets/AdminIcon1.1.1.png";
 import Dashboardicon1_31 from "../../assets/Dashboardicon1.3.1.png";
-import { CreditCard, Headset } from "lucide-react";
+import { CreditCard, Headset, Lock } from "lucide-react";
 
 const AdminSidebar = ({ screen }) => {
   const location = useLocation();
+  const status = localStorage.getItem("status");
+  const token = localStorage.getItem("token");
   const [isMobileDrawerOpen, setIsMobileDrawerOpen] = useState(false);
-
+  const isLocked = !token || status !== "active";
   const toggleDrawer = () => setIsMobileDrawerOpen((prev) => !prev);
   const closeDrawer = () => setIsMobileDrawerOpen(false);
 
@@ -58,7 +60,11 @@ const AdminSidebar = ({ screen }) => {
             className="absolute top-5 right-3 inline-flex items-center p-2  text-gray-500 rounded-lg  focus:outline-none focus:ring-2 focus:ring-gray-200 min-[890px]:hidden"
           >
             <span className="sr-only">Close sidebar</span>
-            <svg className="w-5 h-5 sm:w-7 sm:h-7" fill="currentColor" viewBox="0 0 20 20">
+            <svg
+              className="w-5 h-5 sm:w-7 sm:h-7"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+            >
               <path
                 fillRule="evenodd"
                 d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
@@ -173,16 +179,22 @@ const AdminSidebar = ({ screen }) => {
               </li>
               <li>
                 <Link
-                  to={"/admin/inbox"}
-                  onClick={() => {
-                    setIsMobileDrawerOpen(false);
-                  }}
-                  className={`flex items-center p-2 px-6 sm:px-7 text-gray-900 rounded-r-lg group gap-4  ${
-                    location.pathname === "/admin/inbox"
+                  to={isLocked ? "#" : "/admin/inbox"}
+                  onClick={
+                    isLocked
+                      ? (e) => e.preventDefault()
+                      : () => setIsMobileDrawerOpen(false)
+                  }
+                  className={`flex items-center p-2 px-6 sm:px-7 rounded-r-lg group gap-4 ${
+                    location.pathname === "/admin/inbox" && !isLocked
                       ? "bg-PurpleColor text-white"
                       : "text-[#666666]"
-                  }`}
+                  } ${isLocked ? "cursor-not-allowed opacity-60" : ""}`}
+                  title={
+                    isLocked ? "Upgrade Your Plan to access Inbox" : ""
+                  }
                 >
+                  {isLocked &&  <Lock strokeWidth={3}  className="absolute text-red-600 size-2 right-7  sm:size-4" /> }
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
@@ -197,12 +209,12 @@ const AdminSidebar = ({ screen }) => {
                       d="M2.25 12.76c0 1.6 1.123 2.994 2.707 3.227 1.087.16 2.185.283 3.293.369V21l4.076-4.076a1.526 1.526 0 0 1 1.037-.443 48.282 48.282 0 0 0 5.68-.494c1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0 0 12 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018Z"
                     />
                   </svg>
-
-                  <h1 className="font-Urbanist font-[500] sm:mt-1 text-[15px] sm:text-[16px] 2xl:text-[18px]">
+                  <h1 className="font-Urbanist font-[500] text-[15px] sm:mt-1 sm:text-[16px] 2xl:text-[18px]">
                     Inbox
                   </h1>
                 </Link>
               </li>
+
               <li>
                 <Link
                   to={"/admin/myoffers"}
@@ -339,7 +351,7 @@ const AdminSidebar = ({ screen }) => {
                       : ""
                   }`}
                 >
-                  <Headset   className="size-[19px] sm:size-[21px]" />
+                  <Headset className="size-[19px] sm:size-[21px]" />
                   <h1 className="font-Urbanist font-[500] sm:mt-1 text-[16px] 2xl:text-[18px]">
                     Help/Support
                   </h1>

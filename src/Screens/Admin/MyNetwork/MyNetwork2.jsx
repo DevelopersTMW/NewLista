@@ -47,11 +47,14 @@ const MyNetwork2 = () => {
 
   const [AddNetwork, setAddNetwork] = useState([]);
   const [MyNetwork, setMyNetwork] = useState([]);
+  const [SentRequest, setSentRequest] = useState([]);
   const [PendinNetwork, setPendingNetwork] = useState([]);
   const [selectedUser, setSelectedUser] = useState([null]);
   const [type, settype] = useState();
   const [showModal, setShowModal] = useState(false);
   const [activeTab, setActiveTab] = useState("addToNetwork");
+
+  console.log(SentRequest);
 
 
   const getJoinYear = (timestamp) => new Date(timestamp).getFullYear();
@@ -79,8 +82,6 @@ const MyNetwork2 = () => {
           interests.some((interest) => interest.includes(searchTerm))
         : true;
 
-        console.log(matchesSearch);
-        
 
       const matchesInterest = propertyinterest
         ? interests.includes(selectedInterest)
@@ -112,6 +113,7 @@ const MyNetwork2 = () => {
         setMyNetwork(Data.my_connections);
         setAddNetwork(Data.all_users);
         setPendingNetwork(Data.received_requests);
+        setSentRequest(Data.sentRequests);
       } catch (error) {
         console.log(error);
         setloading(false);
@@ -125,26 +127,36 @@ const MyNetwork2 = () => {
   const AddtoNetwork = async (id) => {
     setloading(true);
     try {
-      await axios.post(
+      const response = await axios.post(
         `${ApiKey}/connections/request`,
         { to_user_id: id },
         { headers: { Authorization: `Bearer ${tokens}` } }
       );
 
-      setAddNetwork((prev) =>
-        prev
-          .map((user) =>
-            user.id === id ? { ...user, connection_status: "pending" } : user
-          )
-          .filter(
-            (user) =>
-              user.connection_status === null ||
-              user.connection_status === "pending"
-          )
+      const sentUser = AddNetwork.find((user) => user.id === id);
+
+      // Update AddNetwork list to only include users who are not connected or pending
+      setAddNetwork(
+        (prev) =>
+          prev
+            .map((user) =>
+              user.id === id ? { ...user, connection_status: "pending" } : user
+            )
+            .filter((user) => user.connection_status === null) 
       );
+
+      // Add to pending tab
+      if (sentUser) {
+        setSentRequest((prev) => [
+          ...prev,
+          {
+            id: Math.random(), // temporary ID
+            from_user: sentUser,
+          },
+        ]);
+      }
     } catch (error) {
       console.log(error);
-      setloading(false);
     } finally {
       setloading(false);
     }
@@ -174,8 +186,6 @@ const MyNetwork2 = () => {
       setloading(false);
     }
   };
-
-  console.log("Filtered Users:", applyFilters(AddNetwork));
 
 
   return (
@@ -254,6 +264,7 @@ const MyNetwork2 = () => {
             selectedUser={selectedUser}
             setSelectedUser={setSelectedUser}
             type={type}
+            sentRequest={applyFilters(SentRequest)}
           />
         )}
       </div>

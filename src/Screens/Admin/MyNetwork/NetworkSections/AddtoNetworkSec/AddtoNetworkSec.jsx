@@ -25,9 +25,7 @@ const AddtoNetworkSec = ({
   }, [searchTerm]);
 
   // Filter users not already accepted and match search
-  const filtered = AddNetwork.filter(
-    (user) => user.connection_status !== "accepted"
-  );
+  const filtered = AddNetwork.filter((user) => user.connection_status === null);
 
   const totalPages = Math.ceil(filtered.length / pageSize);
   const paginatedUsers = filtered.slice(

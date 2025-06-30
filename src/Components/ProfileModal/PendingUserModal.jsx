@@ -25,12 +25,15 @@ const PendingUserModal = ({
 }) => {
   if (!isOpen) return null;
 
+  const profileData = user?.user?.from_user || user?.user?.to_user || {};
+
+
   console.log(user);
 
   const formatJoinDate = (isoDate) => {
     const date = new Date(isoDate);
     const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, "0"); // Months are 0-indexed
+    const month = String(date.getMonth() + 1).padStart(2, "0"); 
     const day = String(date.getDate()).padStart(2, "0");
 
     return `Joined ${year}-${month}-${day}`;
@@ -177,18 +180,18 @@ const PendingUserModal = ({
                 <img
                   className="rounded-full w-full h-[120%] object-cover absolute -mt-1.5"
                   src={
-                    user.user.from_user.headshot
-                      ? import.meta.env.VITE_IMAGE_KEY + user.user.from_user.headshot
+                    profileData.headshot
+                      ? import.meta.env.VITE_IMAGE_KEY + profileData.headshot
                       : UnkownUser
                   }
                   alt=""
                 />
               </div>
-              {user.user.from_user.banner ? (
+              {profileData.banner ? (
                 <div className="overflow-hidden h-36">
                   <img
                     className="object-cover"
-                    src={import.meta.env.VITE_IMAGE_KEY + user.user.from_user.banner}
+                    src={import.meta.env.VITE_IMAGE_KEY + profileData.banner}
                     alt=""
                   />
                 </div>
@@ -207,35 +210,35 @@ const PendingUserModal = ({
               </h1>
               {/* Basic Info */}
               <h2 className="text-2xl font-bold font-Urbanist">
-                {user.user.from_user.first_name + " " + user.user.from_user.last_name}
+                {profileData.first_name + " " + profileData.last_name}
               </h2>
               <p className="text-gray-600 font-Urbanist font-[500]">
-                {user.user.from_user.title}
+                {profileData.title}
               </p>
               {/* Info Grid */}
               <div className="mt-4 space-y-2 text-sm text-gray-600">
                 <div className="flex items-center gap-2">
                   <Phone className="size-5 text-PurpleColor" />
                   <span className="font-Urbanist font-semibold text-[16px] text-Paracolor">
-                    {user.user.from_user.phone}
+                    {profileData.phone}
                   </span>
                 </div>
                 <div className="flex items-center gap-2">
                   <Calendar className="size-5 text-PurpleColor" />
                   <span className="font-Urbanist font-semibold text-[16px] text-Paracolor">
-                    {formatJoinDate(user.user.from_user.created_at)}
+                    {formatJoinDate(profileData.created_at)}
                   </span>
                 </div>
                 <div className="flex items-center gap-2">
                   <MapPin className="size-5 text-PurpleColor" />
                   <span className="font-Urbanist font-semibold text-[16px] text-Paracolor">
-                    {user.user.from_user.address}
+                    {profileData.address}
                   </span>
                 </div>
                 <div className="flex items-center gap-2">
                   <DollarSign className="size-5 text-PurpleColor" />
                   <span className="font-Urbanist font-semibold text-[16px] text-Paracolor">
-                    {user.user.from_user.preferred_investment_range}
+                    {profileData.preferred_investment_range}
                   </span>
                 </div>
               </div>
@@ -245,7 +248,7 @@ const PendingUserModal = ({
                   About Us
                 </h3>
                 <p className="text-Paracolor font-Urbanist font-[500] text-[15px] mt-1">
-                  {user.user.from_user.bio}
+                  {profileData.bio}
                 </p>
               </div>
               {/* Property Interests */}
@@ -254,7 +257,7 @@ const PendingUserModal = ({
                   Property Interests
                 </h3>
                 <div className="flex gap-1.5 mt-2 flex-wrap">
-                  {user.user.from_user.property_interests.map((items) => {
+                  {profileData.property_interests.map((items) => {
                     return (
                       <span className="bg-[#E3E3E3] text-Paracolor font-semibold font-Inter px-3 py-1 text-[12.5px] rounded-full w-max">
                         {items}

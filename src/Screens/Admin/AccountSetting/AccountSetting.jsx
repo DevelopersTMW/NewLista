@@ -579,8 +579,8 @@ const AccountSetting = () => {
                         required: "Year Of Experince is required",
                       })}
                       type="number"
-                      labels={"Year Of Experince"}
-                      placeholder={"Enter Your Year Of Experince"}
+                      labels={"Year Of Experience"}
+                      placeholder={"Enter Your Year Of Experience"}
                       error={errors.years_of_experiance?.message}
                     ></Inputs>
                   </div>

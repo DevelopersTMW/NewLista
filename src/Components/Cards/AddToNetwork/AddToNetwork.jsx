@@ -17,11 +17,6 @@ import {
 } from "lucide-react";
 
 // IMAGES
-import CallIcon from "../../../assets/CallIcon.png";
-import MessageIcon2 from "../../../assets/MessageIcon2.png";
-import InvestorIcon1 from "../../../assets/InvestorIcon1.png";
-import InvestorIcon2 from "../../../assets/InvestorIcon2.png";
-import InvestorIcon3 from "../../../assets/InvestorIcon3.png";
 import UnkownUser from "/public/Images/UnknowUser.png";
 
 // COMPONENTS
