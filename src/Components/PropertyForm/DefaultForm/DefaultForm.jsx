@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Inputs from "../../InputFields/Inputs";
 import Selection from "../../InputFields/Selection";
 import NumberInputs from "../../InputFields/NumberInputs";
+import { DollarSign } from "lucide-react";
 const currencies = [
   "USD",
   "EUR",
@@ -37,7 +38,7 @@ const currencies = [
   "KRW",
   "MYR",
 ];
-const DefaultForm = ({ propertyTypeName, register , watch , setValue }) => {
+const DefaultForm = ({ propertyTypeName, register, watch, setValue }) => {
   // should log: "434"
 
   return (
@@ -57,7 +58,7 @@ const DefaultForm = ({ propertyTypeName, register , watch , setValue }) => {
             <NumberInputs
               labels={"Monthly Rental*"}
               type={"text"}
-              watch={watch} 
+              watch={watch}
               setValue={setValue}
               placeholder={"Ex: 10000"}
               name={"custom_fields.MonthlyRental"}
@@ -77,7 +78,7 @@ const DefaultForm = ({ propertyTypeName, register , watch , setValue }) => {
             <NumberInputs
               labels={"‎"}
               type={"text"}
-              watch={watch} 
+              watch={watch}
               setValue={setValue}
               placeholder={"Ex: 10000"}
               name={"custom_fields.BuildingSizeNumber"}
@@ -89,22 +90,24 @@ const DefaultForm = ({ propertyTypeName, register , watch , setValue }) => {
               labels={"Building Levels"}
               type={"text"}
               watch={watch}
-            setValue={setValue}
+              setValue={setValue}
               placeholder={"Ex:1"}
               name={"custom_fields.BuildingLevels"}
               register={register}
             ></NumberInputs>
           </span>
           <span className="">
-            <NumberInputs
+            <Inputs
               labels={"Year Built"}
-              type={"text"}
-              watch={watch} 
+              type={"number"}
+              watch={watch}
               setValue={setValue}
               placeholder={"2020"}
               name={"custom_fields.YearBuilt"}
               register={register}
-            ></NumberInputs>
+              min={1900}
+              max={new Date().getFullYear()}
+            ></Inputs>
           </span>
           <span className="">
             <Selection
@@ -120,22 +123,31 @@ const DefaultForm = ({ propertyTypeName, register , watch , setValue }) => {
               labels={"Parking Spaces"}
               type={"text"}
               placeholder={"Ex:1"}
-              watch={watch} 
+              watch={watch}
               setValue={setValue}
               name={"custom_fields.ParkingSpace"}
               register={register}
             ></NumberInputs>
           </span>
-          <span className="">
-            <NumberInputs
-              labels={"CAM (Common Area Maint..) Cost"}
-              type={"text"}
-              placeholder={"Ex: $1.00"}
-              watch={watch} 
-              setValue={setValue}
-              name={"custom_fields.CAM"}
-              register={register}
-            ></NumberInputs>
+          <span className="relative ">
+            <label className="block mb-1 font-[700] text-PurpleColor text-[15px]">
+              {"CAM (Common Area Maint..) Cost"}
+            </label>
+            <div className="flex items-end">
+              <span className="px-2 bg-[#F3EEFF] py-3.5 rounded-l-[5px]">
+                <DollarSign className="size-4 top-4 md:size-4.5 lg:size-5" />
+              </span>
+              <span className="w-full">
+                <NumberInputs
+                  name={"custom_fields.CAM"}
+                  register={register}
+                  labels={""}
+                  style={"!rounded-l-[0px]"}
+                  type="text"
+                  placeholder={"Ex: $1.00"}
+                ></NumberInputs>
+              </span>
+            </div>
           </span>
           <span className="">
             <NumberInputs
@@ -144,7 +156,7 @@ const DefaultForm = ({ propertyTypeName, register , watch , setValue }) => {
               placeholder={"Ex:1"}
               name={"custom_fields.NumberOfUnits"}
               register={register}
-              watch={watch} 
+              watch={watch}
               setValue={setValue}
             ></NumberInputs>
           </span>
@@ -161,7 +173,7 @@ const DefaultForm = ({ propertyTypeName, register , watch , setValue }) => {
             <NumberInputs
               labels={"Percentage Leased (%)"}
               type={"text"}
-              watch={watch} 
+              watch={watch}
               setValue={setValue}
               placeholder={"Ex: 75"}
               name={"custom_fields.PercentageLeased"}

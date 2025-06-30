@@ -92,7 +92,7 @@ const RentailForm = ({ propertyTypeName, register, watch, setValue }) => {
           ></NumberInputs>
         </span>
         <span className="w-[100%]">
-          <NumberInputs
+          <Inputs
             labels={"Year Built"}
             type={"number"}
             placeholder={"2020"}
@@ -100,7 +100,7 @@ const RentailForm = ({ propertyTypeName, register, watch, setValue }) => {
             setValue={setValue}
             name={"custom_fields.YearBuilt"}
             register={register}
-          ></NumberInputs>
+          ></Inputs>
         </span>
         <span className="w-[100%]">
           <Selection

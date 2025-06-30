@@ -68,7 +68,7 @@ const LandForm = ({ propertyTypeName, register , watch , setValue }) => {
             ></Selection>
           </span>
           <span className="w-[100%]">
-            <NumberInputs
+            <Inputs
               labels={"Year Built"}
               type={"number"}
               placeholder={"2020"}
@@ -76,7 +76,7 @@ const LandForm = ({ propertyTypeName, register , watch , setValue }) => {
               setValue={setValue}
               name={"custom_fields.YearBuilt"}
               register={register}
-            ></NumberInputs>
+            ></Inputs>
           </span>
           <span className="w-[100%]">
             <Selection
