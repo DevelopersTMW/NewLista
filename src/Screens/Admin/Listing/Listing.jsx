@@ -19,22 +19,24 @@ import { useForm } from "react-hook-form";
 import { ChevronLeft, RefreshCw } from "lucide-react";
 
 const propertyTypes = [
+  "Apartments / Multifamily",
+  "Automotive Property",
   "Church",
   "Gas Station",
-  "Hotel",
+  "Healthcare Facility",
+  "Hospitality",
+  "Industrial Building",
   "Industrial Park",
-  "Medical Building",
-  "Mixed Use",
-  "Motel",
+  "Mixed Use Property",
   "Office Building",
   "Recreation Center",
   "Retail Center",
-  "Self-Storage Facility",
   "School Building",
+  "Self-Storage Facility",
   "Senior Living Facility",
   "Shopping Center",
-  "Single Tenant Retail Building",
-  "Storage Facility",
+  "Single-Tenant Retail Building",
+  "Strip Center",
   "Vacant Land",
   "Warehouse",
   "Other",
@@ -197,7 +199,7 @@ const Listing = () => {
                   onClick={() => setIsFilterOpen(false)}
                   className="text-[#1E1E1E] text-[18px] flex items-center gap-2 font-Urbanist  font-[600]"
                 >
-                 <ChevronLeft />
+                  <ChevronLeft />
                   Back
                 </button>
               </div>
@@ -225,7 +227,7 @@ const Listing = () => {
                     register={register}
                   />
                 </div>
-                <div >
+                <div>
                   <Selection
                     defaultOption={"Property Type"}
                     Options={propertyTypes}
@@ -234,7 +236,7 @@ const Listing = () => {
                     register={register}
                   />
                 </div>
-                <div >
+                <div>
                   <Selection
                     defaultOption={"Price Range"}
                     Options={InvestmentRange}

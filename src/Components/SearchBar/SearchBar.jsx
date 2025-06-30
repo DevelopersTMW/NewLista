@@ -6,27 +6,34 @@ import { Search } from "lucide-react";
 import MobileMenu from "./MobileMenu";
 
 const propertyType = [
-  { name: "Select Your Property" },
-  { name: "Church" },
-  { name: "Gas Station" },
-  { name: "Hotel" },
-  { name: "Industrial Park" },
-  { name: "Medical Building" },
-  { name: "Mixed Use" },
-  { name: "Motel" },
-  { name: "Office Building" },
-  { name: "Recreation Center" },
-  { name: "Retail Center" },
-  { name: "Self-Storage Facility" },
-  { name: "School Building" },
-  { name: "Senior Living Facility" },
-  { name: "Shopping Center" },
-  { name: "Single Tenant Retail Building" },
-  { name: "Storage Facility" },
-  { name: "Vacant Land" },
-  { name: "Warehouse" },
-  { name: "Other" },
+  { label: "Apartments / Multifamily", name: "Select Your Property" },
+  { label: "Apartments / Multifamily", name: "Apartments / Multifamily" },
+  { label: "Automotive Property", name: "Automotive Property" },
+  { label: "Church", name: "Church" },
+  { label: "Gas Station", name: "GasStation" },
+  { label: "Healthcare Facility", name: "Healthcare Facility" },
+  { label: "Hospitality", name: "Hospitality" },
+  { label: "Industrial Building", name: "Industrial Building" },
+  { label: "Industrial Park", name: "Industrial Park" },
+  { label: "Mixed Use Property", name: "Mixed Use Property" },
+  { label: "Office Building", name: "Office Building" },
+  { label: "Recreation Center", name: "Recreation Center" },
+  { label: "Retail Center", name: "Retail Center" },
+  { label: "School Building", name: "School Building" },
+  { label: "Self-Storage Facility", name: "Self-Storage-Facility" },
+  { label: "Senior Living Facility", name: "Senior Living Facility" },
+  { label: "Shopping Center", name: "Shopping Center" },
+  {
+    label: "Single-Tenant Retail Building",
+    name: "Single-Tenant-Retail-Building",
+  },
+  { label: "Strip Center", name: "Strip Center" },
+  { label: "Vacant Land", name: "Vacant Land" },
+  { label: "Warehouse", name: "Warehouse" },
+  { label: "Other", name: "Other" },
 ];
+
+
 
 const statesArray = [
   { id: 0, name: "Select Your State", code: "" },
@@ -241,7 +248,9 @@ const SearchBar = ({ handleFilterChange }) => {
             className="hover-btn hover-btn-purple text-white px-2 py-2 rounded-full text-[14px] cursor-pointer"
             onClick={onSubmit}
           >
-            <span><Search /></span>
+            <span>
+              <Search />
+            </span>
           </button>
         </div>
       </div>

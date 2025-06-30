@@ -45,6 +45,9 @@ const MyNetwork2 = () => {
   const search = watch("search");
   const state = watch("state");
 
+  
+  
+
   const [AddNetwork, setAddNetwork] = useState([]);
   const [MyNetwork, setMyNetwork] = useState([]);
   const [PendinNetwork, setPendingNetwork] = useState([]);
@@ -62,6 +65,9 @@ const MyNetwork2 = () => {
     const selectedInvestment = investmentRange?.toLowerCase() || "";
     const selectedState = state?.toLowerCase() || "";
 
+    
+
+
     const fullName = `${user.first_name || ""} ${user.last_name || ""}`.toLowerCase();
     const email = user.email?.toLowerCase() || "";
     const company = user.company_name?.toLowerCase() || "";
@@ -70,6 +76,10 @@ const MyNetwork2 = () => {
     const interests = Array.isArray(user.property_interests)
       ? user.property_interests.map((i) => i.toLowerCase())
       : [];
+
+      
+
+      
 
     const matchesSearch = search
       ? fullName.includes(searchTerm) ||
@@ -80,6 +90,9 @@ const MyNetwork2 = () => {
     const matchesInterest = propertyinterest
       ? interests.includes(selectedInterest)
       : true;
+
+      console.log(matchesInterest);
+      
 
     const matchesInvestment = investmentRange
       ? investment === selectedInvestment
