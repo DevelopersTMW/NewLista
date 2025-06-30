@@ -445,9 +445,16 @@ const PropertyDetails = () => {
                   </p>
                 </div>
 
+                {console.log(
+                  SingleProperty.address +
+                    SingleProperty.city +
+                    SingleProperty.state +
+                    SingleProperty.zip
+                )}
+
                 <div className="flex justify-center items-center">
                   <iframe
-                    src={`https://www.google.com/maps?q=404${
+                    src={`https://www.google.com/maps?q=404 ${
                       SingleProperty.address +
                       SingleProperty.city +
                       SingleProperty.state +
