@@ -21,9 +21,9 @@ import OurRequest from "./NetworkSections/OurRequest/OurRequest";
 import { useForm } from "react-hook-form";
 
 const TabNames = [
-  { name: "Discover", TabLink: "addToNetwork" },
-  { name: "My Network", TabLink: "myNetwork" },
-  { name: `My Request`, TabLink: "pending" },
+  { name: "Discover Investors", TabLink: "addToNetwork" },
+  { name: "My Connections", TabLink: "myNetwork" },
+  { name: `Requests`, TabLink: "pending" },
 ];
 
 const MyNetwork2 = () => {
@@ -31,22 +31,19 @@ const MyNetwork2 = () => {
   const tokens = localStorage.getItem("token");
   const [loading, setloading] = useState(false);
 
-  const { register, watch, setValue ,reset , control } = useForm({
-     defaultValues: {
-    propertyinterest: "",
-    search: "",
-    investmentRange: "",
-    state: ""
-  }
+  const { register, watch, setValue, reset, control } = useForm({
+    defaultValues: {
+      propertyinterest: "",
+      search: "",
+      investmentRange: "",
+      state: "",
+    },
   });
 
   const propertyinterest = watch("propertyinterest");
   const investmentRange = watch("investmentRange");
   const search = watch("search");
   const state = watch("state");
-
-  
-  
 
   const [AddNetwork, setAddNetwork] = useState([]);
   const [MyNetwork, setMyNetwork] = useState([]);
@@ -56,58 +53,50 @@ const MyNetwork2 = () => {
   const [showModal, setShowModal] = useState(false);
   const [activeTab, setActiveTab] = useState("addToNetwork");
 
+
   const getJoinYear = (timestamp) => new Date(timestamp).getFullYear();
 
   const applyFilters = (users) => {
-  return users.filter((user) => {
-    const searchTerm = search?.toLowerCase() || "";
-    const selectedInterest = propertyinterest?.toLowerCase() || "";
-    const selectedInvestment = investmentRange?.toLowerCase() || "";
-    const selectedState = state?.toLowerCase() || "";
+    return users.filter((user) => {
+      const searchTerm = search?.toLowerCase() || "";
+      const selectedInterest = propertyinterest?.toLowerCase() || "";
+      const selectedInvestment = investmentRange?.toLowerCase() || "";
+      const selectedState = state?.toLowerCase() || "";
 
-    
+      const fullName = `${user.first_name || ""} ${
+        user.last_name || ""
+      }`.toLowerCase();
+      const title = user.title?.toLowerCase() || "";
+      const userState = user.state?.toLowerCase() || "";
+      const investment = user.preferred_investment_range?.toLowerCase() || "";
+      const interests = Array.isArray(user.property_interests)
+        ? user.property_interests.map((i) => i.toLowerCase())
+        : [];
 
+      const matchesSearch = search
+        ? fullName.includes(searchTerm) ||
+          title.includes(searchTerm) ||
+          interests.some((interest) => interest.includes(searchTerm))
+        : true;
 
-    const fullName = `${user.first_name || ""} ${user.last_name || ""}`.toLowerCase();
-    const email = user.email?.toLowerCase() || "";
-    const company = user.company_name?.toLowerCase() || "";
-    const userState = user.state?.toLowerCase() || "";
-    const investment = user.preferred_investment_range?.toLowerCase() || "";
-    const interests = Array.isArray(user.property_interests)
-      ? user.property_interests.map((i) => i.toLowerCase())
-      : [];
+        console.log(matchesSearch);
+        
 
-      
+      const matchesInterest = propertyinterest
+        ? interests.includes(selectedInterest)
+        : true;
 
-      
+      const matchesInvestment = investmentRange
+        ? investment === selectedInvestment
+        : true;
 
-    const matchesSearch = search
-      ? fullName.includes(searchTerm) ||
-        email.includes(searchTerm) ||
-        company.includes(searchTerm)
-      : true;
+      const matchesState = state ? userState === selectedState : true;
 
-    const matchesInterest = propertyinterest
-      ? interests.includes(selectedInterest)
-      : true;
-
-      console.log(matchesInterest);
-      
-
-    const matchesInvestment = investmentRange
-      ? investment === selectedInvestment
-      : true;
-
-    const matchesState = state
-      ? userState === selectedState
-      : true;
-
-    return (
-      matchesSearch && matchesInterest && matchesInvestment && matchesState
-    );
-  });
-};
-
+      return (
+        matchesSearch && matchesInterest && matchesInvestment && matchesState
+      );
+    });
+  };
 
   useEffect(() => {
     const GetNetwork = async () => {
@@ -119,6 +108,7 @@ const MyNetwork2 = () => {
           },
         });
         const Data = response.data;
+        console.log(Data);
         setMyNetwork(Data.my_connections);
         setAddNetwork(Data.all_users);
         setPendingNetwork(Data.received_requests);
@@ -185,11 +175,20 @@ const MyNetwork2 = () => {
     }
   };
 
+  console.log("Filtered Users:", applyFilters(AddNetwork));
+
+
   return (
     <>
       <ProfileSection />
 
-      <SearchFilters register={register} watch={watch} setValue={setValue} reset={reset} control={control} />
+      <SearchFilters
+        register={register}
+        watch={watch}
+        setValue={setValue}
+        reset={reset}
+        control={control}
+      />
 
       <div className="w-full">
         <div className="flex flex-wrap justify-between gap-2 sm:gap-4 mt-11 mb-6 bg-gray-200 rounded-[10px] w-full">

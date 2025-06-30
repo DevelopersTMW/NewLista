@@ -478,7 +478,7 @@ const PropertyDetails = () => {
                       >
                         <PropertiesCards2
                           PropertyType={items.property_type}
-                          Area={Math.round(items.building_size)}
+                          Area={items.building_size}
                           Img={PropertiesImage3}
                           Heading={items.property_name}
                           desc={

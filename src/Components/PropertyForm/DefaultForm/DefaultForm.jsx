@@ -106,7 +106,9 @@ const DefaultForm = ({ propertyTypeName, register, watch, setValue }) => {
               name={"custom_fields.YearBuilt"}
               register={register}
               min={"1900"}
-              max={new Date().getFullYear()}
+              onInput={(e) => {
+                e.target.value = e.target.value.replace(/\D/g, "").slice(0, 4);
+              }}
             ></Inputs>
           </span>
           <span className="">
@@ -138,14 +140,14 @@ const DefaultForm = ({ propertyTypeName, register, watch, setValue }) => {
                 <DollarSign className="size-4 top-4 md:size-4.5 lg:size-5" />
               </span>
               <span className="w-full">
-                <NumberInputs
+                <Inputs
                   name={"custom_fields.CAM"}
                   register={register}
                   labels={""}
                   style={"!rounded-l-[0px]"}
-                  type="text"
+                  type="number"
                   placeholder={"Ex: $1.00"}
-                ></NumberInputs>
+                ></Inputs>
               </span>
             </div>
           </span>

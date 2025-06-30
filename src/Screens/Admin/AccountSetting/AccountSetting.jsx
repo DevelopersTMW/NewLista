@@ -101,13 +101,15 @@ const PropertyInterest = [
   { label: "Self-Storage Facility", name: "Self-Storage Facility" },
   { label: "Senior Living Facility", name: "Senior Living Facility" },
   { label: "Shopping Center", name: "Shopping Center" },
-  { label: "Single-Tenant Retail Building", name: "Single-Tenant Retail Building" },
+  {
+    label: "Single-Tenant Retail Building",
+    name: "Single-Tenant Retail Building",
+  },
   { label: "Strip Center", name: "Strip Center" },
   { label: "Vacant Land", name: "Vacant Land" },
   { label: "Warehouse", name: "Warehouse" },
   { label: "Other", name: "Other" },
 ];
-
 
 const InvestmentRange = [
   "Under $250K",
@@ -230,7 +232,7 @@ const AccountSetting = () => {
 
         const data = res.data;
         console.log(data);
-        
+
         setbanner(res.data.banner);
         setLogo(res.data.headshot);
 
@@ -304,7 +306,6 @@ const AccountSetting = () => {
             first_name: data.first_name,
             last_name: data.last_name,
             phone: formatted,
-            company_name: null,
             email: data.email,
             address: data.address,
             personal_website: data.personal_website,
@@ -325,6 +326,10 @@ const AccountSetting = () => {
             city: data.city,
             state: data.state,
             zip: data.zip,
+            company_name: data.company_name,
+            years_of_experiance: data.years_of_experiance,
+            show_email: data.show_email ? 1 : 0,
+            show_phone: data.show_phone ? 1 : 0,
           },
           {
             headers: {
@@ -542,21 +547,44 @@ const AccountSetting = () => {
                       required: "Property Title is required",
                     })}
                     labels={"User Title"}
-                    placeholder={"Select your title"}
+                    placeholder={"Enter Your title"}
                     error={errors.title?.message}
                   ></Inputs>
                 </span>
                 <span>
-                  <Selection
-                    labels={"Experience Level"}
-                    defaultOption={"Select"}
-                    Options={["Beginner", "Intermediate", "Experienced"]}
-                    name="experience_level"
-                    register={register}
-                    rules={{ required: "Please select an option." }}
-                    error={errors.experience_level?.message}
-                  />
+                  <Inputs
+                    register={register("company_name", {
+                      required: "Company Name is required",
+                    })}
+                    labels={"Company Name"}
+                    placeholder={"Enter Your Company Name"}
+                    error={errors.company_name?.message}
+                  ></Inputs>
                 </span>
+                <div className="grid grid-cols-2 gap-5">
+                  <span>
+                    <Selection
+                      labels={"Experience Level"}
+                      defaultOption={"Select"}
+                      Options={["Beginner", "Intermediate", "Experienced"]}
+                      name="experience_level"
+                      register={register}
+                      rules={{ required: "Please select an option." }}
+                      error={errors.experience_level?.message}
+                    />
+                  </span>
+                  <div>
+                    <Inputs
+                      register={register("years_of_experiance", {
+                        required: "Year Of Experince is required",
+                      })}
+                      type="number"
+                      labels={"Year Of Experince"}
+                      placeholder={"Enter Your Year Of Experince"}
+                      error={errors.years_of_experiance?.message}
+                    ></Inputs>
+                  </div>
+                </div>
               </div>
               <div>
                 <label
@@ -585,6 +613,64 @@ const AccountSetting = () => {
                     Active
                   </h4>
                 </span>
+              </div>
+              <div className="grid grid-cols-2">
+                <div>
+                  <label
+                    htmlFor="email"
+                    className="block mb-2 text-[15px] font-[700] text-PurpleColor"
+                  >
+                    Show Phone Number
+                  </label>
+                  <span className="flex items-center gap-3">
+                    <h4 className="font-Urbanist font-[500] text-[16px] text-[#444444]">
+                      No
+                    </h4>
+                    <Controller
+                      name="show_phone"
+                      control={control}
+                      render={({ field: { value, onChange } }) => (
+                        <Switches
+                          value={value}
+                          onChange={(checked) =>
+                            onChange(checked)
+                          }
+                        />
+                      )}
+                    />
+                    <h4 className="font-Urbanist font-[500] text-[16px] text-[#444444]">
+                      Yes
+                    </h4>
+                  </span>
+                </div>
+                <div>
+                  <label
+                    htmlFor="email"
+                    className="block mb-2 text-[15px] font-[700] text-PurpleColor"
+                  >
+                    Show Email
+                  </label>
+                  <span className="flex items-center gap-3">
+                    <h4 className="font-Urbanist font-[500] text-[16px] text-[#444444]">
+                      No
+                    </h4>
+                    <Controller
+                      name="show_email"
+                      control={control}
+                      render={({ field: { value, onChange } }) => (
+                        <Switches
+                          value={value}
+                          onChange={(checked) =>
+                            onChange(checked)
+                          }
+                        />
+                      )}
+                    />
+                    <h4 className="font-Urbanist font-[500] text-[16px] text-[#444444]">
+                      Yes
+                    </h4>
+                  </span>
+                </div>
               </div>
               {/* Location  */}
 
@@ -660,6 +746,7 @@ const AccountSetting = () => {
                     error={errors.preferred_investment_range?.message}
                   />
                 </div>
+
                 {/* <div className="flex items-center gap-2">
                   <div className="flex items-center gap-2">
                     <label

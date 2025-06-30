@@ -254,7 +254,7 @@ const ViewProperty = () => {
                     >
                       <PropertiesCards2
                         PropertyType={items.property_type}
-                        Area={Math.round(items.building_size)}
+                        Area={items.building_size}
                         type={items.listing_type}
                         Img={items.images[0]}
                         Heading={items.property_name}

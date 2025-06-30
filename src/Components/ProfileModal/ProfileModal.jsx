@@ -1,9 +1,12 @@
 import React, { useState } from "react";
 import { Dialog, DialogBackdrop, DialogPanel } from "@headlessui/react";
 import {
+  Award,
+  Building2,
   Calendar,
   CircleCheck,
   DollarSign,
+  Mail,
   MapPin,
   Phone,
   UserRoundCheck,
@@ -209,33 +212,55 @@ const ProfileModal = ({
               <h2 className="text-2xl font-bold font-Urbanist">
                 {user.user.first_name + " " + user.user.last_name}
               </h2>
-               <p className="text-gray-600 font-Urbanist font-[500]">
+              <p className="text-gray-600 font-Urbanist font-[500]">
                 {user.user.title}
               </p>
               {/* Info Grid */}
               <div className="mt-4 space-y-2 text-sm text-gray-600">
-                <div className="flex items-center gap-2">
-                  <Phone className="size-5 text-PurpleColor" />
-                  <span className="font-Urbanist font-semibold text-[16px] text-Paracolor">
-                    {user.user.phone}
-                  </span>
-                </div>
+                {user.user.show_phone && (
+                  <div className="flex items-center gap-2">
+                    <Phone className="size-5 text-PurpleColor" />
+                    <span className="font-Urbanist font-semibold text-[16px] text-Paracolor">
+                      {user.user.phone}
+                    </span>
+                  </div>
+                )}
+                {user.user.show_email && (
+                  <div className="flex items-center gap-2">
+                    <Mail className="size-5 text-PurpleColor" />
+                    <span className="font-Urbanist font-semibold text-[16px] text-Paracolor">
+                      {user.user.email}
+                    </span>
+                  </div>
+                )}
                 <div className="flex items-center gap-2">
                   <Calendar className="size-5 text-PurpleColor" />
                   <span className="font-Urbanist font-semibold text-[16px] text-Paracolor">
                     {formatJoinDate(user.user.created_at)}
                   </span>
                 </div>
+                 <div className="flex items-center gap-2">
+                  <Building2 className="size-5 text-PurpleColor" />
+                  <span className="font-Urbanist font-semibold text-[16px] text-Paracolor">
+                    {user.user.company_name || "Not Provided"}
+                  </span>
+                </div>
                 <div className="flex items-center gap-2">
                   <MapPin className="size-5 text-PurpleColor" />
                   <span className="font-Urbanist font-semibold text-[16px] text-Paracolor">
-                    {user.user.address}
+                    {user.user.address + ", " + user.user.city + ", " + user.user.state}
                   </span>
                 </div>
                 <div className="flex items-center gap-2">
                   <DollarSign className="size-5 text-PurpleColor" />
                   <span className="font-Urbanist font-semibold text-[16px] text-Paracolor">
                     {user.user.preferred_investment_range}
+                  </span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <Award className="size-5 text-PurpleColor" />
+                  <span className="font-Urbanist font-semibold text-[16px] text-Paracolor">
+                    {user.user.years_of_experiance ? user.user.years_of_experiance + "Year" : "0 Year"}
                   </span>
                 </div>
               </div>

@@ -181,13 +181,13 @@ const SearchFilters = ({ watch, setValue, register ,control  }) => {
               type="search"
               id="default-search"
               className=" w-[100%] text-[#444444] placeholder:text-[#444444] font-Urbanist font-semibold py-4.5 pl-11 rounded-[10px] text-[15px] bg-[#F3EEFF] outline-none"
-              placeholder="Search Property Name "
+              placeholder="Search by Name, Company, Keyword"
               {...register("search")}
             />
           </div>
           {/* FILTER  */}
           {/* Desktop filter bar (hidden on mobile) */}
-          <div className="hidden xl:flex gap-2 px-0 bg-white  w-[85%] border-[1px] border-solid border-[#1E1E1E] rounded-[10px]">
+          <div className="hidden xl:flex gap- px-0 bg-white  w-[85%] border-[1px] border-solid border-[#1E1E1E] rounded-[10px]">
             {/* FILTER BUTTON  */}
             <button className=" font-Inter bg-[#1E1E1E] text-white py-2.5 rounded-l-[7px] flex items-center px-4 gap-1 w-[15%]">
               <img className="w-5 h-5" src={SortIcon} alt="" />{" "}
@@ -196,34 +196,34 @@ const SearchFilters = ({ watch, setValue, register ,control  }) => {
               </span>
             </button>
             {/* STATUS  */}
-            <div className="border-r-[1px] border-solid border-[#BBBBBB] w-[23%]">
+            <div className="border-r-[1px] border-solid border-[#BBBBBB] w-[22%]">
               <Selection
-                defaultOption={"Property Interest"}
+                defaultOption={"Investment Interest"}
                 Options={PropertyInterest}
-                icon={"!top-3.5"}
+                icon={"!top-3.5 !right-0.5"}
                 name={"propertyinterest"}
                 register={register}
                 Style={"bg-transparent border-none"}
               />
             </div>
-            <div className="border-r-[1px] border-solid border-[#BBBBBB] w-[25%]">
+            <div className="border-r-[1px] border-solid border-[#BBBBBB] w-[24%]">
               <Selection
-                defaultOption={"Investment Range"}
+                defaultOption={"Investment Capacity"}
                 Options={InvestmentRange}
                 name={"investmentRange"}
-                icon={"!top-3.5"}
+                icon={"!top-3.5 !right-1.5"}
                 register={register}
                 Style={"bg-transparent border-none"}
               />
             </div>
-            <div className=" border-r-[1px] border-solid border-[#BBBBBB] w-[17%]">
+            <div className=" border-r-[1px] border-solid border-[#BBBBBB] w-[24%]">
               <ComboboxSelector
-                style={`flex items-center pt-5 px-4 text-[#4b4b4b] font-[600] font-Urbanist text-[14px] outline-none appearance-none cursor-pointer focus:outline-none`}
-                icon={"top-6 right-3.5"}
+                style={`flex items-center pt-5 px-4 text-[#4b4b4b] font-[600] font-Urbanist text-[14px] outline-none appearance-none cursor-pointer focus:outline-none overflow-hidden`}
+                icon={"top-6 right-1.5"}
                 options={statesArray}
                 onSelect={StateSelectionHandler}
                 value={DefaultSelection}
-                placeholder={"Location"}
+                placeholder={"Investment Locations"}
               />
             </div>
             <div className="flex justify-center items-center w-[20%]">

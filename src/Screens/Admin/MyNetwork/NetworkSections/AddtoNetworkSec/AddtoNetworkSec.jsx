@@ -15,7 +15,7 @@ const AddtoNetworkSec = ({
   AddtoNetwork,
   selectedUser,
   setSelectedUser,
-  type
+  type,
 }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const pageSize = 9;
@@ -26,11 +26,7 @@ const AddtoNetworkSec = ({
 
   // Filter users not already accepted and match search
   const filtered = AddNetwork.filter(
-    (user) =>
-      user.connection_status !== "accepted" &&
-      `${user.first_name} ${user.last_name} ${user.location} ${user.preferred_investment_type}`
-        .toLowerCase()
-        .includes(searchTerm.toLowerCase())
+    (user) => user.connection_status !== "accepted"
   );
 
   const totalPages = Math.ceil(filtered.length / pageSize);
@@ -60,7 +56,10 @@ const AddtoNetworkSec = ({
                 location={user.city + ", " + user.state}
                 propertyTypes={user.property_interests}
                 memberSince={getJoinYear(user.created_at)}
+                companyname={user.company_name}
+                year={user.years_of_experiance}
                 email={user.email}
+                range={user.preferred_investment_range}
                 phone={user.phone}
                 showModal={showModal}
                 setShowModal={setShowModal}

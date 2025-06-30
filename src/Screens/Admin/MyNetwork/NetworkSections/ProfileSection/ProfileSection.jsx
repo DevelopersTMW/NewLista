@@ -20,9 +20,7 @@ const ProfileSection = () => {
 
   const BackgroundImages = {
     backgroundImage: `url(${
-      user?.banner
-        ? import.meta.env.VITE_IMAGE_KEY + user.banner
-        : "DummyLogo"
+      user?.banner ? import.meta.env.VITE_IMAGE_KEY + user.banner : "DummyLogo"
     })`,
     backgroundPosition: "5%",
   };
@@ -40,17 +38,19 @@ const ProfileSection = () => {
           </h1>
         </div>
       </section>
-      <section className="flex flex-col items-center gap-0 sm:gap-3 sm:flex-row ">
-        <div className=" z-10 relative py-3 ml-3 sm:py-5 sm:w-[20%]">
-          <img
-            className="border-solid  border-PurpleColor w-[92%] h-[180px] border-[3px] object-cover  rounded-full"
-            src={
-              user?.headshot
-                ? import.meta.env.VITE_IMAGE_KEY + user.headshot
-                : DummyLogo
-            }
-            alt=""
-          />
+      <section className="flex flex-col items-center gap-0 sm:gap-5 sm:py-3 sm:flex-row ">
+        <div>
+          <div className="w-full h-auto max-w-[180px] mx-auto">
+            <img
+              className="w-full aspect-square rounded-full object-cover border-4 border-PurpleColor"
+              src={
+                user?.headshot
+                  ? import.meta.env.VITE_IMAGE_KEY + user.headshot
+                  : DummyLogo
+              }
+              alt="Profile"
+            />
+          </div>
         </div>
 
         <div className="flex items-center gap-2 flex-col sm:items-start sm:gap-2">

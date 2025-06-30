@@ -65,7 +65,6 @@ const Listing = () => {
 
   console.log(status + propertyType + priceRange);
 
-  console.log(search);
 
   const handleResetFilters = () => {
     setValue("status", "");

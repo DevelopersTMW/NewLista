@@ -8,8 +8,8 @@ const Inputs = ({
   error,
   name,
   register,
-  min,
-  max,
+  maxle,
+  onInput,
 }) => {
   const registrationProps =
     typeof register === "function" && name ? register(name) : register || {};
@@ -24,10 +24,9 @@ const Inputs = ({
       </label>
       <input
         name={name}
-        min={min}
-        max={new Date().getFullYear()}
         type={type}
-        maxLength={4}
+        maxLength={maxle}
+        onInput={onInput}
         {...registrationProps}
         className={`bg-[#F3EEFF] border border-solid text-[#1d1d1d] font-[600] font-Urbanist text-[14px] placeholder:text-[12.5px] sm:placeholder:text-[14px] w-full px-4 rounded-[6px] outline-none
             max-[481px]:h-11 max-[891px]:h-12 max-[1000px]:h-10.5 max-[1100px]:h-11

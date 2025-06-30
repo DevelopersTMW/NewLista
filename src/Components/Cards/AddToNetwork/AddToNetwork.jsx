@@ -1,5 +1,20 @@
 import { useState } from "react";
-import { CircleCheck, UserRoundCheck, X } from "lucide-react";
+import {
+  Award,
+  Building,
+  Building2,
+  Calendar,
+  CircleCheck,
+  DollarSign,
+  Mail,
+  MessageSquareDot,
+  Navigation,
+  Phone,
+  User,
+  UserRoundCheck,
+  WalletCards,
+  X,
+} from "lucide-react";
 
 // IMAGES
 import CallIcon from "../../../assets/CallIcon.png";
@@ -13,6 +28,7 @@ import UnkownUser from "/public/Images/UnknowUser.png";
 import TruncatedText from "../../TruncatedText/TruncatedText";
 import ConfirmationModal from "../../ConfirmationModal/ConfirmationModal";
 import { Link } from "react-router-dom";
+import { FaMoneyBillWave } from "react-icons/fa";
 
 const AddToNetwork = ({
   id,
@@ -30,6 +46,9 @@ const AddToNetwork = ({
   AddtoNetwork,
   PendingRequest,
   button,
+  year,
+  range,
+  companyname,
 }) => {
   const [openModal, setOpenModal] = useState(false);
   const [modalData, setModalData] = useState({
@@ -38,7 +57,6 @@ const AddToNetwork = ({
     confirmLabel: "",
     onConfirm: () => {},
   });
-
 
   // SEND CONNECTION REQUEST
   const openConfirmation = (actionType) => {
@@ -99,7 +117,8 @@ const AddToNetwork = ({
   // INFO ITEMS
   const renderInfoItem = (icon, text, maxLength = null) => (
     <li className="flex gap-3 justify-center items-center">
-      <img className="w-5 h-5" src={icon} alt="" />
+      {<span className="text-[13px]">{icon}</span>}
+      {/* {<img className="w-5 h-5" src={icon} alt="" />} */}
       <p className="font-Inter text-[15px] text-Paracolor font-[600]">
         {maxLength ? <TruncatedText text={text} maxLength={maxLength} /> : text}
       </p>
@@ -120,7 +139,7 @@ const AddToNetwork = ({
                 : "bg-PurpleColor border-PurpleColor cursor-pointer 64AAE9"
             }`}
           >
-            {button === "pending" ? "Already Sent" : "Add to Network"}
+            {button === "pending" ? "Pending" : "Add to Network"}
           </button>
 
           {/* {button === "pending" ? (
@@ -139,12 +158,10 @@ const AddToNetwork = ({
     if (type === "myNetwork") {
       return (
         <Link to={"/admin/inbox"}>
-        <button  className="font-Inter text-[#fff] font-semibold text-[15px] px-7 py-1.5 rounded-full border-solid border-[2px] border-[#43B274] bg-[#43B274] cursor-pointer">
-          Message
-        </button>
+          <button className="font-Inter text-[#fff] font-semibold text-[15px] px-7 py-1.5 rounded-full border-solid border-[2px] border-[#43B274] bg-[#43B274] cursor-pointer">
+            Message
+          </button>
         </Link>
-        
-        
       );
     }
     if (type === "pending") {
@@ -181,8 +198,7 @@ const AddToNetwork = ({
               className="w-[68px] h-[70px] object-cover rounded-full"
               src={
                 InvesImage
-                  ? `${import.meta.env.VITE_IMAGE_KEY
-                  }${InvesImage}`
+                  ? `${import.meta.env.VITE_IMAGE_KEY}${InvesImage}`
                   : UnkownUser
               }
               alt="Investor Profile"
@@ -192,17 +208,58 @@ const AddToNetwork = ({
             <h4 className="font-Inter font-bold text-[20px]">
               <TruncatedText text={InvesUserName} maxLength={11} />
             </h4>
-            <h6 className="font-Inter text-[14px] font-[500]">{InvesDesc}</h6>
+            <h6 className="font-Inter text-[14px] leading-[15px] font-[500]">
+              <TruncatedText
+                text={`${InvesDesc}`}
+                maxLength={19}
+              />
+            </h6>
           </span>
         </div>
         <div className="pt-7">
           {/* FEATURES  */}
           <ul className="flex justify-start items-start flex-col gap-3">
-            {renderInfoItem(InvestorIcon1, location, 20)}
-            {renderInfoItem(InvestorIcon2, propertyTypes?.join(" - "), 20)}
-            {renderInfoItem(InvestorIcon3, `Member since ${memberSince}`)}
-            {renderInfoItem(MessageIcon2, email, 20)}
-            {renderInfoItem(CallIcon, phone, 15)}
+            {renderInfoItem(
+              <Building2
+                strokeWidth={2.5}
+                className="size-5.5 text-PurpleColor font-[900]"
+              />,
+              `${companyname || "Not Provide"}`
+            )}
+            {renderInfoItem(
+              <Navigation
+                strokeWidth={3}
+                className="size-5.5 text-PurpleColor font-[900]"
+              />,
+              location,
+              20
+            )}
+
+            {renderInfoItem(
+              <Building
+                strokeWidth={2.5}
+                className="size-5.5 text-PurpleColor font-[900]"
+              />,
+              propertyTypes?.join(" - "),
+              20
+            )}
+
+            {renderInfoItem(
+              <DollarSign
+                strokeWidth={2}
+                className="size-5.5 text-PurpleColor font-[900]"
+              />,
+              range,
+              15
+            )}
+            {renderInfoItem(
+              <Award
+                strokeWidth={2}
+                className="size-5.5 text-PurpleColor font-[900]"
+              />,
+              year ?  year + "Year" : "0 Year",
+              15
+            )}
           </ul>
           {/* BUTTONS  */}
           <div className="flex gap-1 sm:gap-3 pt-5">{renderButtons()}</div>
