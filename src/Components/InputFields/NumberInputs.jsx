@@ -59,7 +59,7 @@ const NumberInputs = ({
       {labels && (
         <label
           htmlFor={name}
-          className="block mb-1 font-[700] text-PurpleColor text-sm"
+          className="block mb-1 font-[700] text-PurpleColor text-[14.5px]"
         >
           {labels}
         </label>

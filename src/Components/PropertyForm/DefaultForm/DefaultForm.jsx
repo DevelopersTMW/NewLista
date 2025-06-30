@@ -105,7 +105,7 @@ const DefaultForm = ({ propertyTypeName, register, watch, setValue }) => {
               placeholder={"2020"}
               name={"custom_fields.YearBuilt"}
               register={register}
-              min={1900}
+              min={"1900"}
               max={new Date().getFullYear()}
             ></Inputs>
           </span>
@@ -130,7 +130,7 @@ const DefaultForm = ({ propertyTypeName, register, watch, setValue }) => {
             ></NumberInputs>
           </span>
           <span className="relative ">
-            <label className="block mb-1 font-[700] text-PurpleColor text-[15px]">
+            <label className="block mb-1 font-[700] text-PurpleColor text-[14px]">
               {"CAM (Common Area Maint..) Cost"}
             </label>
             <div className="flex items-end">
