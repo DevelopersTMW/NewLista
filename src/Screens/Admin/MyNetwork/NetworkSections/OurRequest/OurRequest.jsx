@@ -57,7 +57,7 @@ const OurRequest = ({
     <>
       <section className="flex flex-col gap-7 sm:gap-10 items-center sm:items-start w-full">
         <h1 className="text-[26px] mt-5 font-Urbanist text-[#f5f5f5] bg-PurpleColor w-max px-5 rounded-[7px] sm:text-[30px] font-[700]">
-          Recieved Requests
+          Received Requests
         </h1>
 
         {/* 🔻 Received Requests */}

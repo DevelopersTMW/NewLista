@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Select, Textarea } from "@headlessui/react";
 // Components
@@ -14,6 +14,8 @@ import Spinner from "../../../Components/Spinner/Spinner";
 
 const HelpSupport = () => {
   const ApiKey = import.meta.env.VITE_API_KEY;
+  const [user, setUser] = useState([]);
+  const token = localStorage.getItem("token");
   const [loading, setloading] = useState(false);
   const [phone, setPhone] = useState("");
   const {
@@ -64,6 +66,22 @@ const HelpSupport = () => {
     reset();
   };
 
+  useEffect(() => {
+    const loadInitialData = async () => {
+      try {
+        const res = await axios.get(`${ApiKey}/user`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+
+        const data = res.data;
+        setUser(data);
+      } catch (err) {
+        console.error("Failed to fetch user profile:", err);
+      }
+    };
+    loadInitialData();
+  });
+
   return (
     <>
       {/* CONTACT SECTION START   */}
@@ -100,42 +118,38 @@ const HelpSupport = () => {
               >
                 {/* Name  */}
                 <div className="flex flex-wrap sm:flex-nowrap gap-5 w-[100%]">
-                  <span className="sm:w-[50%] w-full">
-                    <Inputs
-                      name={"FirstName"}
-                      register={register("FirstName", {
-                        required: "First name is required",
-                      })}
-                      error={errors.FirstName?.message}
-                      labels={"First Name"}
-                      placeholder={"Enter your first name"}
-                    ></Inputs>
+                  <span className=" sm:w-[50%] w-full">
+                      <span>
+                        <div className="block mb-1 font-[700] text-PurpleColor w-full max-[1280px]:text-[14px] max-[1666px]:text-[15px] min-[1666px]:text-[16px] ">
+                          First Name
+                        </div>
+                        <div className="bg-[#F3EEFF] text-[#1d1d1d] font-[600] font-Urbanist text-[14px] w-full px-4 rounded-[6px] h-12 flex items-center cursor-not-allowed">
+                          {user.first_name}
+                        </div>
+                      </span>
                   </span>
                   <span className=" sm:w-[50%] w-full">
-                    <Inputs
-                      register={register("LastName", {
-                        required: "Last name is required",
-                      })}
-                      name={"LastName"}
-                      labels={"Last Name"}
-                      placeholder={"Enter your last name"}
-                      error={errors.LastName?.message}
-                    ></Inputs>
+                      <span>
+                        <div className="block mb-1 font-[700] text-PurpleColor w-full max-[1280px]:text-[14px] max-[1666px]:text-[15px] min-[1666px]:text-[16px] ">
+                          Last Name
+                        </div>
+                        <div className="bg-[#F3EEFF] text-[#1d1d1d] font-[600] font-Urbanist text-[14px] w-full px-4 rounded-[6px] h-12 flex items-center cursor-not-allowed">
+                          {user.last_name}
+                        </div>
+                      </span>
                   </span>
                 </div>
 
                 {/* Email  */}
                 <div>
-                  <Inputs
-                    register={register("Email", {
-                      required: "Email is required",
-                    })}
-                    type={"email"}
-                    name={"Email"}
-                    labels={"Email Address"}
-                    error={errors.Email?.message}
-                    placeholder={"Enter a valid email (e.g., you@email.com)"}
-                  ></Inputs>
+                  <span>
+                    <div className="block mb-1 font-[700] text-PurpleColor w-full max-[1280px]:text-[14px] max-[1666px]:text-[15px] min-[1666px]:text-[16px] ">
+                      Email
+                    </div>
+                    <div className="bg-[#F3EEFF] text-[#1d1d1d] font-[600] font-Urbanist text-[14px] w-full px-4 rounded-[6px] h-12 flex items-center cursor-not-allowed">
+                      {user.email}
+                    </div>
+                  </span>
                 </div>
 
                 {/* Message */}

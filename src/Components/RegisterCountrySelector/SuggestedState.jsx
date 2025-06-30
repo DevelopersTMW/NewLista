@@ -65,11 +65,11 @@ const SuggestedState = ({ onSelect, register, errors }) => {
 
   const handleChange = (e) => {
     const value = e.target.value;
-    setInputValue(value); // ✅ Keep user's input
+    setInputValue(value); 
     const filtered = statesArray.filter((state) =>
       state.name.toLowerCase().startsWith(value.toLowerCase())
     );
-    setSuggestions(filtered); // ✅ Update suggestions based on input
+    setSuggestions(filtered); 
   };
 
   const handleFocus = () => {
@@ -82,6 +82,8 @@ const SuggestedState = ({ onSelect, register, errors }) => {
     setInputValue(state.name);
     setSuggestions([]);
     if (onSelect) onSelect(state);
+    setInputValue("")
+
   };
 
   const handleKeyDown = (e) => {

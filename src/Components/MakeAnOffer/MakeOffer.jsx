@@ -53,6 +53,7 @@ function MakeOffer({ id }) {
         title: "Thank you for your Offer!",
         iconColor: "#703BF7",
         text: "",
+        timer: 3000
       });
     } catch (error) {
       setLoading(false);
@@ -62,6 +63,7 @@ function MakeOffer({ id }) {
         title: "Sorry!",
         iconColor: "#703BF7",
         text: error.response.data.message,
+        timer: 3000
       });
       console.log(error);
     } finally {

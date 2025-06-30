@@ -25,93 +25,146 @@ const fieldConfig = {
   "Vacant Land": {
     fields: [
       { label: "Currency", key: "Currency" },
+
       { label: "Monthly Rental", key: "MonthlyRental" },
+
       { label: "Fenced", key: "Fenced" },
+
       {
         label: "LandScape",
+
         key: "LandScapeCombined",
+
         combine: (fields) =>
           `${fields.LandScapeNumber || ""} ${fields.LandScape || ""}`.trim(),
       },
+
       {
         label: "LandScape Acres",
+
         key: "LandScapeAcresCombined",
+
         combine: (fields) =>
           `${fields.LandScapeNumber2 || ""} ${
             fields.LandScapeAcres || ""
           }`.trim(),
       },
-       { label: "Parking", key: "Parking" },
+
+      { label: "Parking", key: "Parking" },
+
       { label: "HVAC", key: "HVAC" },
+
       { label: "Sprinkler System", key: "SprinklerSystem" },
+
       { label: "Security System", key: "SecuritySystem" },
+
       { label: "High Speed Internet", key: "HighSpeedInternet" },
+
       { label: "ADACompliant", key: "ADA Compliant" },
     ],
   },
+
   Warehouse: {
     fields: [
       { label: "Currency", key: "Currency" },
+
       { label: "Monthly Rental", key: "MonthlyRental" },
+
       { label: "Ceiling Height", key: "CeilingHeight" },
-     
+
       {
         label: "LandScape",
+
         key: "LandScapeCombined",
+
         combine: (fields) =>
           `${fields.LandScapeNumber || ""} ${fields.LandScape || ""}`.trim(),
       },
+
       {
         label: "LandScape Acres",
+
         key: "LandScapeAcresCombined",
+
         combine: (fields) =>
           `${fields.LandScapeNumber2 || ""} ${
             fields.LandScapeAcres || ""
           }`.trim(),
       },
+
       { label: "Over Head Doors", key: "OverheadDoors" },
+
       { label: "Parking Space", key: "ParkingSpace" },
+
       { label: "Number Of Docks", key: "NumberOfDocks" },
+
       { label: "Building Class", key: "BuildingClass" },
+
       { label: "Ground-Level-Docks", key: "GroundLevelDocks" },
+
       { label: "High-Level-Docks", key: "HighLevelDocks" },
-       { label: "Parking", key: "Parking" },
-    { label: "HVAC", key: "HVAC" },
-    { label: "Sprinkler System", key: "SprinklerSystem" },
-    { label: "Security System", key: "SecuritySystem" },
-    { label: "High Speed Internet", key: "HighSpeedInternet" },
-    { label: "ADACompliant", key: "ADA Compliant" },
+
+      { label: "Parking", key: "Parking" },
+
+      { label: "HVAC", key: "HVAC" },
+
+      { label: "Sprinkler System", key: "SprinklerSystem" },
+
+      { label: "Security System", key: "SecuritySystem" },
+
+      { label: "High Speed Internet", key: "HighSpeedInternet" },
+
+      { label: "ADACompliant", key: "ADA Compliant" },
     ],
   },
+
   "Retail Center": {
     fields: [
       { label: "Monthly Rental", key: "MonthlyRental" },
+
       { label: "Building Levels", key: "BuildingLevels" },
+
       { label: "Number Of Units", key: "NumberOfUnits" },
+
       {
         label: "LandScape",
+
         key: "LandScapeCombined",
+
         combine: (fields) =>
           `${fields.LandScapeNumber || ""} ${fields.LandScape || ""}`.trim(),
       },
+
       {
         label: "LandScape Acres",
+
         key: "LandScapeAcresCombined",
+
         combine: (fields) =>
           `${fields.LandScapeNumber2 || ""} ${
             fields.LandScapeAcres || ""
           }`.trim(),
       },
+
       { label: "Building Class", key: "BuildingClass" },
+
       { label: "Percentage Lease", key: "Percentage-Lease" },
+
       { label: "Parking Space", key: "Parking-Space" },
+
       { label: "Outdoor Signage", key: "Outdoor-Signage" },
-       { label: "Parking", key: "Parking" },
-    { label: "HVAC", key: "HVAC" },
-    { label: "Sprinkler System", key: "SprinklerSystem" },
-    { label: "Security System", key: "SecuritySystem" },
-    { label: "High Speed Internet", key: "HighSpeedInternet" },
-    { label: "ADACompliant", key: "ADA Compliant" },
+
+      { label: "Parking", key: "Parking" },
+
+      { label: "HVAC", key: "HVAC" },
+
+      { label: "Sprinkler System", key: "SprinklerSystem" },
+
+      { label: "Security System", key: "SecuritySystem" },
+
+      { label: "High Speed Internet", key: "HighSpeedInternet" },
+
+      { label: "ADACompliant", key: "ADA Compliant" },
     ],
   },
 };
@@ -119,28 +172,36 @@ const fieldConfig = {
 const KeyFeatures = ({ SingleProperty }) => {
   const property_type = SingleProperty?.property_type;
   const custom_fields = SingleProperty?.custom_fields || {};
-  // Select the config: use specific if available, otherwise default
+
   const config = fieldConfig[property_type] || defaultConfig;
 
-  // Build field list with actual values
   const computedFields = config.fields
     .map(({ key, label, combine }) => {
-      const value = combine ? combine(custom_fields) : custom_fields[key];
-      return { key, label, value };
+      let rawValue = combine ? combine(custom_fields) : custom_fields[key];
+
+      // Handle booleans or "true"/"false" strings
+      if (typeof rawValue === "boolean") {
+        rawValue = rawValue ? "Yes" : "No";
+      } else if (typeof rawValue === "string") {
+        const lowerVal = rawValue.toLowerCase();
+        if (lowerVal === "true") rawValue = "Yes";
+        else if (lowerVal === "false") rawValue = "No";
+      }
+
+      return { key, label, value: rawValue };
     })
     .filter(
       ({ value }) =>
         value !== undefined &&
         value !== null &&
         value !== "" &&
-        value !== "None"
+        String(value).toLowerCase() !== "none"
     );
 
-  // ✅ If no valid fields, return nothing (hide section)
-  if (computedFields.length === 0)
+  if (computedFields.length === 0) {
     return <span className="font-Urbanist font-semibold">Not Found!</span>;
+  }
 
-  // ✅ Render only fields with values
   return (
     <div className="flex flex-wrap sm:grid-cols-2 md:grid-cols-2 gap-4 sm:gap-5">
       {computedFields.map(({ key, label, value }, index) => (
@@ -152,7 +213,7 @@ const KeyFeatures = ({ SingleProperty }) => {
         >
           <Zap size={16} className="fill-black" />
           <span className="font-semibold text-[#000000]">
-            {label} : {value}
+            {label}: {value}
           </span>
         </div>
       ))}
