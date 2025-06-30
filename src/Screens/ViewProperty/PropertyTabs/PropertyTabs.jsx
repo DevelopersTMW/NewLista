@@ -1,7 +1,7 @@
 import React, { useState, useEffect, Fragment } from "react";
 import { Tab, TabGroup, TabList } from "@headlessui/react";
 import classNames from "classnames";
-import { Grip } from "lucide-react";
+import { Building2, Grip } from "lucide-react";
 import ViewPropertyIcon1 from "../../../assets/ViewPropertyIcon1.png";
 import ViewPropertyIcon2 from "../../../assets/ViewPropertyIcon2.png";
 import ViewPropertyIcon3 from "../../../assets/ViewPropertyIcon3.png";
@@ -12,31 +12,35 @@ import ViewPropertyIcon7 from "../../../assets/ViewPropertyIcon7.png";
 import ViewPropertyIcon8 from "../../../assets/ViewPropertyIcon8.png";
 import ViewPropertyIcon9 from "../../../assets/ViewPropertyIcon9.png";
 
+import { FaBuilding, FaCar, FaChurch, FaGasPump, FaHospital, FaHotel, FaIndustry, FaWarehouse, FaSchool, FaShoppingCart, FaStore, FaLandmark, FaHome } from "react-icons/fa";
+import { MdLocalHospital, MdOutlineApartment } from "react-icons/md";
+import { GiStripedSun, GiVacuumCleaner, GiParkBench, GiSelfLove, GiShoppingBag, GiOfficeChair } from "react-icons/gi";
+import { TbBuildingCommunity, TbBuildingSkyscraper, TbBuildingWarehouse } from "react-icons/tb";
+
+
 const propertyType = [
-  { name: "All Properties", icon: ViewPropertyIcon1 },
-  { name: "Church", icon: ViewPropertyIcon9 },
-  { name: "Condominium", icon: ViewPropertyIcon2 },
-  { name: "Gas Station", icon: ViewPropertyIcon3 },
-  { name: "Hotel", icon: ViewPropertyIcon6 },
-  { name: "Industrial Park", icon: ViewPropertyIcon4 },
-  { name: "Medical Building", icon: ViewPropertyIcon5 },
-  { name: "Mixed Use", icon: ViewPropertyIcon6 },
-  { name: "Mobile Home Park", icon: ViewPropertyIcon2 },
-  { name: "Motel", icon: ViewPropertyIcon7 },
-  { name: "Multifamily", icon: ViewPropertyIcon8 },
-  { name: "Office Building", icon: ViewPropertyIcon1 },
-  { name: "Recreation Center", icon: ViewPropertyIcon9 },
-  { name: "Retail Center", icon: ViewPropertyIcon1 },
-  { name: "Self-Storage Facility", icon: ViewPropertyIcon2 },
-  { name: "School Building", icon: ViewPropertyIcon3 },
-  { name: "Senior Living Facility", icon: ViewPropertyIcon4 },
-  { name: "Shopping Center", icon: ViewPropertyIcon5 },
-  { name: "Single Tenant Retail Building", icon: ViewPropertyIcon6 },
-  { name: "Storage Facility", icon: ViewPropertyIcon7 },
-  { name: "Townhomes", icon: ViewPropertyIcon8 },
-  { name: "Vacant Land", icon: ViewPropertyIcon9 },
-  { name: "Warehouse", icon: ViewPropertyIcon3 },
-  { name: "Other", icon: ViewPropertyIcon2 },
+  { name: "All Properties", icon: <TbBuildingCommunity  className="size-7 text-gray-700 font-[900]" />  },
+  { name: "Apartments / Multifamily", icon: <MdOutlineApartment className="size-7 text-gray-700 font-[900]" /> },
+  { name: "Automotive Property", icon: <FaCar className="size-7 text-gray-700 font-[900]" /> },
+  { name: "Church", icon: <FaChurch className="size-7 text-gray-700 font-[900]" /> },
+  { name: "Gas Station", icon: <FaGasPump className="size-7 text-gray-700 font-[900]" /> },
+  { name: "Healthcare Facility", icon: <MdLocalHospital className="size-7 text-gray-700 font-[900]" /> },
+  { name: "Hospitality", icon: <FaHotel className="size-7 text-gray-700 font-[900]" /> },
+  { name: "Industrial Building", icon: <FaIndustry className="size-7 text-gray-700 font-[900]" /> },
+  { name: "Industrial Park", icon: <GiParkBench className="size-7 text-gray-700 font-[900]" /> },
+  { name: "Mixed Use Property", icon: <FaBuilding className="size-7 text-gray-700 font-[900]" /> },
+  { name: "Office Building", icon: <TbBuildingSkyscraper className="size-7 text-gray-700 font-[900]" /> },
+  { name: "Recreation Center", icon: <GiStripedSun className="size-7 text-gray-700 font-[900]" /> },
+  { name: "Retail Center", icon: <FaStore className="size-7 text-gray-700 font-[900]" /> },
+  { name: "School Building", icon: <FaSchool className="size-7 text-gray-700 font-[900]" /> },
+  { name: "Self-Storage Facility", icon: <GiSelfLove className="size-7 text-gray-700 font-[900]" /> },
+  { name: "Senior Living Facility", icon: <FaHome className="size-7 text-gray-700 font-[900]" /> },
+  { name: "Shopping Center", icon: <GiShoppingBag className="size-7 text-gray-700 font-[900]" /> },
+  { name: "Single-Tenant Retail Building", icon: <FaShoppingCart className="size-7 text-gray-700 font-[900]" /> },
+  { name: "Strip Center", icon: <GiStripedSun className="size-7 text-gray-700 font-[900]" /> },
+  { name: "Vacant Land", icon: <FaLandmark className="size-7 text-gray-700 font-[900]" /> },
+  { name: "Warehouse", icon: <TbBuildingWarehouse className="size-7 text-gray-700 font-[900]" /> },
+  { name: "Other", icon: <FaBuilding className="size-7 text-gray-700 font-[900]" /> },
 ];
 
 function ResponsiveTabs({ onTabSelect }) {
@@ -50,10 +54,10 @@ function ResponsiveTabs({ onTabSelect }) {
       if (width <= 640) setVisibleTabs(1);
       else if (width <= 720) setVisibleTabs(3);
       else if (width <= 890) setVisibleTabs(5);
-      else if (width <= 900) setVisibleTabs(6);
-      else if (width <= 1080) setVisibleTabs(7);
-      else if (width <= 1280) setVisibleTabs(8);
-      else if (width <= 1480) setVisibleTabs(10);
+      else if (width <= 900) setVisibleTabs(5);
+      else if (width <= 1080) setVisibleTabs(6);
+      else if (width <= 1280) setVisibleTabs(7);
+      else if (width <= 1480) setVisibleTabs(8);
       else setVisibleTabs(11);
     }
 
@@ -95,7 +99,8 @@ function ResponsiveTabs({ onTabSelect }) {
                       : "border-b-2 border-transparent"
                   )}
                 >
-                  <img className="w-[25px]" src={item.icon} alt="" />
+                <span >{item.icon}</span>
+                  {/* <img className="w-[25px]" src={item.icon} alt="" /> */}
                   <span className="text-[13.5px] mt-1 font-Urbanist font-[600]">
                     {item.label}
                   </span>
@@ -126,7 +131,10 @@ function ResponsiveTabs({ onTabSelect }) {
                               setShowMoreTabs(false);
                             }}
                           >
-                            <img className="w-[24px]" src={item.icon} alt="" />
+                            <span>
+                              {item.icon}
+                            </span>
+                            {/* <img className="w-[24px]" src={item.icon} alt="" /> */}
                             <span
                               className={classNames(
                                 "block font-Urbanist text-[17px] font-[600] px-4 py-2 cursor-pointer rounded-md leading-[19px]",

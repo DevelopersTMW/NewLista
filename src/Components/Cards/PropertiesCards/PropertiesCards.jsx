@@ -66,10 +66,10 @@ const PropertiesCards = ({
               </p>
             </div>
             <div className="flex flex-wrap gap-3">
-              <span className="bg-[#E3E3E3] text-Paracolor font-semibold font-Inter px-3 py-1 text-[13px] flex rounded-full w-max gap-1">
+              {/* <span className="bg-[#E3E3E3] text-Paracolor font-semibold font-Inter px-3 py-1 text-[13px] flex rounded-full w-max gap-1">
                 <Pickaxe size={17} />
                 {Area} Sq
-              </span>
+              </span> */}
               <span className="bg-[#E3E3E3] text-Paracolor font-semibold font-Inter px-3 py-1 text-[13px] flex rounded-full w-max gap-1">
                 <img className="w-[18px] h-4.5" src={PropertyIcon} alt="" />{" "}
                 {Area} Sq

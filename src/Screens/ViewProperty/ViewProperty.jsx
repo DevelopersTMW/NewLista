@@ -253,6 +253,9 @@ const ViewProperty = () => {
                       className="sm:w-[48.5%] md:w-[43%] lg:w-[31%] xl:w-[23.5%] 2xl:w-[20.5%]"
                     >
                       <PropertiesCards2
+                        PropertyType={items.property_type}
+                        Area={Math.round(items.building_size)}
+                        type={items.listing_type}
                         Img={items.images[0]}
                         Heading={items.property_name}
                         desc={
@@ -263,9 +266,14 @@ const ViewProperty = () => {
                         }
                         Status={items.listing_type}
                         Price={
-                          items.listing_type === "For Sale"
-                            ? items.sale_price
-                            : items.lease_rate
+                          <TruncatedText
+                            text={
+                              items.listing_type === "For Sale"
+                                ? items.sale_price
+                                : items.lease_rate
+                            }
+                            maxLength={10}
+                          />
                         }
                         id={items.id}
                         images={items.images[0]}

@@ -2,6 +2,7 @@ import React from "react";
 import PropertyIcon from "../../../assets/PropertyIcon.png";
 import PropertyIcon2 from "../../../assets/PropertyIcon2.png";
 import { Link } from "react-router-dom";
+import { Pickaxe } from "lucide-react";
 
 const PropertiesCards2 = ({
   Img,
@@ -12,6 +13,8 @@ const PropertiesCards2 = ({
   Features,
   id,
   images,
+  PropertyType,
+  Area,
 }) => {
   return (
     <>
@@ -45,14 +48,18 @@ const PropertiesCards2 = ({
               {desc}
             </p>
           </div>
-          <div className="flex gap-1">
-            <span className="bg-[#E3E3E3] text-Paracolor font-semibold font-Inter px-3 py-1 text-[12.5px] flex rounded-full w-max gap-1">
-              <img className="w-[16px] h-4.5" src={PropertyIcon} alt="" />{" "}
-              10,000 SF
+          <div className="flex flex-wrap gap-3">
+            {/* <span className="bg-[#E3E3E3] text-Paracolor font-semibold font-Inter px-3 py-1 text-[13px] flex rounded-full w-max gap-1">
+              <Pickaxe size={17} />
+              {Area} Sq
+            </span> */}
+            <span className="bg-[#E3E3E3] text-Paracolor font-semibold font-Inter px-3 py-1 text-[13px] flex rounded-full w-max gap-1">
+              <img className="w-[18px] h-4.5" src={PropertyIcon} alt="" />{" "}
+              {Area} Sq
             </span>
-            <span className="bg-[#E3E3E3] text-Paracolor font-semibold font-Inter px-3 py-1 text-[12.5px] flex rounded-full w-max gap-1">
-              <img className="w-[16px] h-4.5" src={PropertyIcon2} alt="" /> 15
-              Units
+            <span className="bg-[#E3E3E3] text-Paracolor font-semibold font-Inter px-3 py-1 text-[13px] flex rounded-full w-max gap-1">
+              <img className="w-[18px] h-4.5" src={PropertyIcon2} alt="" />{" "}
+              {PropertyType}
             </span>
           </div>
           <div className="flex justify-between items-center mt-5">

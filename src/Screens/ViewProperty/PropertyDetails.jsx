@@ -132,15 +132,18 @@ const PropertyDetails = () => {
     };
     FindId();
 
-    const ViewCounter = async ()=>{
+    const ViewCounter = async () => {
       try {
-        const response = await axios.post(`${ApiKey}/listing/view/${params.id}` , {})
+        const response = await axios.post(
+          `${ApiKey}/listing/view/${params.id}`,
+          {}
+        );
         console.log(response);
       } catch (error) {
         console.log(error);
       }
-    }
-    ViewCounter()
+    };
+    ViewCounter();
   }, []);
 
   return (
@@ -190,8 +193,7 @@ const PropertyDetails = () => {
                     </div>
                   </div>
                 </div>
-                <SocialPage setLoading={setLoading} id={params.id}/>
-               
+                <SocialPage setLoading={setLoading} id={params.id} />
               </div>
             </section>
 
@@ -475,6 +477,8 @@ const PropertyDetails = () => {
                         className="max-[400px]:w-[270px] w-[300px] sm:w-[275px] md:w-[300px] xl:w-[275px]"
                       >
                         <PropertiesCards2
+                          PropertyType={items.property_type}
+                          Area={Math.round(items.building_size)}
                           Img={PropertiesImage3}
                           Heading={items.property_name}
                           desc={
@@ -485,9 +489,14 @@ const PropertyDetails = () => {
                           }
                           Status={items.listing_type}
                           Price={
-                            items.listing_type === "For Sale"
-                              ? items.sale_price
-                              : items.lease_rate
+                            <TruncatedText
+                              text={
+                                items.listing_type === "For Sale"
+                                  ? items.sale_price
+                                  : items.lease_rate
+                              }
+                              maxLength={9}
+                            />
                           }
                           id={items.id}
                           images={items.images[0]}
