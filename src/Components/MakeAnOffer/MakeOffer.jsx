@@ -50,16 +50,16 @@ function MakeOffer({ id }) {
       setOpen(false);
       AlertModal({
         icon: "success",
-        title: "Thank you for your inquiry!",
+        title: "Thank you for your Offer!",
         iconColor: "#703BF7",
-        text: "Please allow us some time to process your request. A team member will get back to you shortly",
+        text: "",
       });
     } catch (error) {
       setLoading(false);
       setOpen(false);
       AlertModal({
         icon: "error",
-        title: "Thank You",
+        title: "Sorry!",
         iconColor: "#703BF7",
         text: error.response.data.message,
       });

@@ -172,7 +172,7 @@ const Home = () => {
 
   return (
     <>
-      <AntiInspect />
+      {/* <AntiInspect /> */}
       <div className=" overflow-x-hidden">
         <TransparentNavbar></TransparentNavbar>
         <div className="flex flex-col justify-center items-center ">
@@ -380,7 +380,7 @@ const Home = () => {
               }
               ButtonName={"View More"}
               ButtonLink={
-                token ? (status ? "/admin/subscription" : "/pricing") : "/login"
+                token ? (status ? "/admin/network" : "/pricing") : "/login"
               }
             />
             {/* CARD SECTION  */}

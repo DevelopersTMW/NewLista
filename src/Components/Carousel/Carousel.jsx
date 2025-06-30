@@ -10,24 +10,40 @@ import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 
 import DummyLogo from "../../../public/Images/UnknowUser.png";
+import { useConfirmation } from "../../Screens/Admin/AccountSetting/Fields/Confirmation";
+import ConfirmationModal from "../ConfirmationModal/ConfirmationModal";
+import { UserRoundCheck } from "lucide-react";
+import Spinner from "../Spinner/Spinner";
 
 const InvestorCarousel = () => {
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
   const status = localStorage.getItem("status");
   const ApiKey = import.meta.env.VITE_API_KEY;
-
+  const [AddNetwork, setAddNetwork] = useState([]);
   const [investors, setInvestors] = useState([]);
   const [loading, setLoading] = useState(false);
+
+
+  const { isOpen, confirm, handleConfirm, handleCancel } = useConfirmation();
 
   useEffect(() => {
     const fetchNetworks = async () => {
       setLoading(true);
       try {
-        const { data } = await axios.get(`${ApiKey}/users`, {
-          headers: { Authorization: `Bearer ${token}` },
-        });
-        setInvestors(data.all_users);
+        if (token) {
+          const { data } = await axios.get(`${ApiKey}/users`, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
+          setInvestors(data.all_users);
+          console.log(data);
+        } else {
+          const { data } = await axios.get(`${ApiKey}/home-network-users`);
+          setInvestors(data.all_users);
+          console.log(data);
+        }
       } catch (err) {
         console.error(err);
       } finally {
@@ -48,11 +64,7 @@ const InvestorCarousel = () => {
   const getJoinYear = (ts) => new Date(ts).getFullYear();
 
   const handleConnectClick = () => {
-    const route = token
-      ? status
-        ? "/admin/subscription"
-        : "/pricing"
-      : "/login";
+    const route = token ? (status ? "/admin/inbox" : "/pricing") : "/login";
     Swal.fire({
       icon: "info",
       title: "Join To View Investors",
@@ -63,9 +75,49 @@ const InvestorCarousel = () => {
     }).then(() => navigate(route));
   };
 
+  const AddtoNetwork = async (id) => {
+    const confirmed = await confirm();
+    if (confirmed) {
+      setLoading(true);
+      try {
+        const response = await axios.post(
+          `${ApiKey}/connections/request`,
+
+          { to_user_id: id },
+
+          { headers: { Authorization: `Bearer ${token}` } }
+        );
+        console.log(response);
+
+        setAddNetwork((prev) =>
+          prev
+
+            .map((user) =>
+              user.id === id ? { ...user, connection_status: "pending" } : user
+            )
+            .filter(
+              (user) =>
+                user.connection_status === null ||
+                user.connection_status === "pending"
+            )
+        );
+      } catch (error) {
+        console.log(error);
+        setLoading(false);
+      } finally {
+        setLoading(false);
+      }
+    }
+  };
+
   const handleMessageClick = handleConnectClick;
 
-  if (loading) return <div>Loading...</div>;
+  if (loading)
+    return (
+      <div className="flex justify-center items-center !h-[75vh]">
+        <Spinner style={"w-14 h-20 text-PurpleColor z-50"} />
+      </div>
+    );
 
   return (
     <Swiper
@@ -85,7 +137,11 @@ const InvestorCarousel = () => {
       {sortedLatest.map((inv, i) => (
         <SwiperSlide key={inv.id || i} className="mb-12">
           <InvestorCards
-            InvesImage={inv.headshot ? import.meta.env.VITE_IMAGE_KEY + inv.headshot : DummyLogo}
+            InvesImage={
+              inv.headshot
+                ? import.meta.env.VITE_IMAGE_KEY + inv.headshot
+                : DummyLogo
+            }
             InvesUserName={
               <TruncatedText
                 text={`${inv.first_name} ${inv.last_name}`}
@@ -101,11 +157,25 @@ const InvestorCarousel = () => {
               />
             }
             year={getJoinYear(inv.created_at)}
-            onConnectClick={handleConnectClick}
+            id={inv.id}
+            button={AddNetwork || inv.connection_status}
+            onConnectClick={AddtoNetwork}
             onMessageClick={handleMessageClick}
           />
         </SwiperSlide>
       ))}
+
+      <ConfirmationModal
+        isOpen={isOpen}
+        onClose={handleCancel}
+        onConfirm={handleConfirm}
+        message="Do you want to Connect This User?"
+        confirmLabel="Yes, Save"
+        icon={
+          <UserRoundCheck className="size-20 text-PurpleColor  bg-amber-50 PurpleColor px-3.5 py-3.5 rounded-full" />
+        }
+        style="bg-PurpleColor"
+      />
     </Swiper>
   );
 };

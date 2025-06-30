@@ -49,6 +49,7 @@ function AdminNavbar() {
           }
         );
         localStorage.removeItem("token");
+        localStorage.removeItem("status");
         navigate("/login");
         console.log(response);
       } catch (error) {
@@ -116,13 +117,13 @@ function AdminNavbar() {
               </Link>
 
               {/* Notification Icon */}
-              <button className="p-1 text-[#666666] rounded-full">
+              {/* <button className="p-1 text-[#666666] rounded-full">
                 <span className="sr-only">View notifications</span>
                 <BellIcon
                   className="max-[380px]:w-5.5 h-7 w-7"
                   aria-hidden="true"
                 />
-              </button>
+              </button> */}
               {/* Profile Menu */}
               <Menu as="div" className="relative">
                 <MenuButton className="flex rounded-full overflow-hidden">

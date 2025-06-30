@@ -17,7 +17,7 @@ const SocialPage = ({ id, setLoading }) => {
     facebook: `https://www.facebook.com/sharer/sharer.php?u=${encodedListingUrl}`,
     linkedin: `https://www.linkedin.com/sharing/share-offsite/?url=${encodedListingUrl}`,
     twitter: `https://twitter.com/intent/tweet?url=${encodedListingUrl}&text=Check out this property!`,
-    email: `mailto:?subject=Check out this property&body=Check this out: ${listingUrl}`,
+    email: `mailto:?subject=Check out this property&body=Check this out: ${window.location.origin}/properties/${id}`,
     instagram: null,
   };
 
@@ -71,7 +71,7 @@ const SocialPage = ({ id, setLoading }) => {
     await callViewAPI("copy_link");
 
     try {
-      await navigator.clipboard.writeText(listingUrl);
+      await navigator.clipboard.writeText(`${window.location.origin}/properties/${id}`);
       Swal.fire({
         toast: true,
         position: "bottom-right",

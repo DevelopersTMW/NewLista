@@ -5,6 +5,8 @@ import HomeSec1_2 from "../../../assets/HomeSec1.2.png";
 import HomeSec1_3 from "../../../assets/HomeSec1.3.png";
 
 const HomeSection1 = ({ token }) => {
+
+  const status = localStorage.getItem("status")
   const CardDetails = [
     {
       image: HomeSec1_1,
@@ -25,7 +27,7 @@ const HomeSection1 = ({ token }) => {
       name: "Search for Off-Market Properties",
       desc: "Access off-market deals and make direct offers.",
       buttonName: "Find Off Market Properties",
-      ButtonLink: token ? "/view-property" : "/pricing",
+      ButtonLink: token ? "/properties" : "/pricing",
     },
   ];
 

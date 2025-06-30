@@ -18,7 +18,9 @@ const InvestorCards = ({
   onMessageClick,
   state,
   PropertyInterest,
-  year
+  year,
+  id,
+  button
 }) => {
   const token = localStorage.getItem("token");
 
@@ -66,14 +68,26 @@ const InvestorCards = ({
           {/* BUTTONS  */}
           <div className=" swiper-no-swiping flex gap-4 pt-7">
             <button
+              onClick={(e) => {
+                onConnectClick(id);
+              }}
+              disabled={button === "pending"}
+              className={`font-Inter swiper-no-swiping font-semibold text-[15px]  py-1.5 rounded-full border-solid border-[2px] hover-btn hover-btn-green ${
+                button === "pending"
+                  ? "bg-gray-400 border-gray-400  text-white cursor-not-allowed"
+                  : "hover-btn hover-btn-green cursor-pointer 64AAE9 pl-4 pr-6"
+              }`}
+            >
+              <span>{button === "pending" ? "Sent" : "Connect"}</span>
+            </button>
+            {/* <button
               className="font-Inter swiper-no-swiping font-semibold text-[15px] pl-4 pr-6 py-1.5 rounded-full border-solid border-[2px] hover-btn hover-btn-green"
               onClick={(e) => {
-                e.stopPropagation();
-                if (onConnectClick) onConnectClick(e);
+                onConnectClick(id);
               }}
             >
               <span>Connect</span>
-            </button>
+            </button> */}
             <button
               className="swiper-no-swiping font-Inter text-white hover-btn-purple hover-btn font-semibold text-[15px] px-5 py-1.5 rounded-full "
               onClick={(e) => {

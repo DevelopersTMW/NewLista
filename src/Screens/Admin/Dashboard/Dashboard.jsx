@@ -109,6 +109,31 @@ const Dashboard = () => {
     GetNetwork();
   }, [ApiKey, token]);
 
+  useEffect(() => {
+    const CurrentPricing = async () => {
+      setLoading(true);
+      try {
+        const response = await axios.get(`${ApiKey}/current-subscribtion`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        console.log(response);
+        localStorage.setItem(
+          "status",
+          response.data.subscription.status !== null &&
+            response.data.subscription.status
+        );
+      } catch (error) {
+        setLoading(false);
+        console.log(error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    CurrentPricing();
+  }, []);
+
   return (
     <>
       <section className="py-6 px-2 sm:px-3 min-[890px]:px-0 ">

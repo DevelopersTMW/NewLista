@@ -85,44 +85,29 @@ const statesArray = [
 ];
 
 const PropertyInterest = [
-  { label: "Apartment", name: "Apartment" },
-  { label: "Mixed Use Property", name: "MixedUseProperty" },
-  { label: "Retail", name: "Retail" },
-  { label: "Office Building", name: "OfficeBuilding" },
+  { label: "Apartments / Multifamily", name: "Apartments / Multifamily" },
+  { label: "Automotive Property", name: "Automotive Property" },
+  { label: "Church", name: "Church" },
+  { label: "Gas Station", name: "GasStation" },
+  { label: "Healthcare Facility", name: "Healthcare Facility" },
   { label: "Hospitality", name: "Hospitality" },
-  { label: "Land", name: "Land" },
-  { label: "Shopping / Strip Center", name: "ShoppingStripCenter" },
-  { label: "Industrial Building", name: "IndustrialBuilding" },
-  { label: "Healthcare", name: "Healthcare" },
-  { label: "Storage Facility", name: "StorageFacility" },
-  { label: "Automotive", name: "Automotive" },
+  { label: "Industrial Building", name: "Industrial Building" },
+  { label: "Industrial Park", name: "Industrial Park" },
+  { label: "Mixed Use Property", name: "Mixed Use Property" },
+  { label: "Office Building", name: "Office Building" },
+  { label: "Recreation Center", name: "Recreation Center" },
+  { label: "Retail Center", name: "Retail Center" },
+  { label: "School Building", name: "School Building" },
+  { label: "Self-Storage Facility", name: "Self-Storage-Facility" },
+  { label: "Senior Living Facility", name: "Senior Living Facility" },
+  { label: "Shopping Center", name: "Shopping Center" },
+  { label: "Single-Tenant Retail Building", name: "Single-Tenant-Retail-Building" },
+  { label: "Strip Center", name: "Strip Center" },
+  { label: "Vacant Land", name: "Vacant Land" },
+  { label: "Warehouse", name: "Warehouse" },
   { label: "Other", name: "Other" },
 ];
 
-
-const MinRange = [
-  { label: "Under", value: 0 },
-  { label: "$250K", value: 250 },
-  { label: "$500K", value: 500 },
-  { label: "$1M", value: 1000 },
-  { label: "$2.5M", value: 2500 },
-  { label: "$5M", value: 5000 },
-  { label: "$10M", value: 10000 },
-  { label: "$25M", value: 25000 },
-  { label: "Over", value: 50000 },
-];
-
-const MaxRange = [
-  { label: "250K", value: 250 },
-  { label: "$500K", value: 500 },
-  { label: "$1M", value: 1000 },
-  { label: "$2.5M", value: 2500 },
-  { label: "$5M", value: 5000 },
-  { label: "$10M", value: 10000 },
-  { label: "$25M", value: 25000 },
-  { label: "$50M", value: 50000 },
-  { label: "$50M", value: 100000 },
-];
 
 const InvestmentRange = [
   "Under $250K",
@@ -244,7 +229,8 @@ const AccountSetting = () => {
         });
 
         const data = res.data;
-
+        console.log(data);
+        
         setbanner(res.data.banner);
         setLogo(res.data.headshot);
 
