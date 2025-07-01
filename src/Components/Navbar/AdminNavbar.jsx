@@ -48,7 +48,10 @@ function AdminNavbar() {
             },
           }
         );
+        
         localStorage.removeItem("token");
+        localStorage.removeItem("User");
+        localStorage.removeItem("ProfileComplete");
         localStorage.removeItem("status");
         navigate("/login");
         console.log(response);

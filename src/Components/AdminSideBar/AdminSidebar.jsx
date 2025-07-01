@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 // COMPONETS
 import AdminNavbar from "../Navbar/AdminNavbar";
@@ -16,9 +16,15 @@ const AdminSidebar = ({ screen }) => {
   const status = localStorage.getItem("status");
   const token = localStorage.getItem("token");
   const [isMobileDrawerOpen, setIsMobileDrawerOpen] = useState(false);
-  const isLocked = !token || status !== "active";
+  const [isLocked , setisLocked] = useState(false)
   const toggleDrawer = () => setIsMobileDrawerOpen((prev) => !prev);
   const closeDrawer = () => setIsMobileDrawerOpen(false);
+
+  useEffect(() => {
+    if(!token || status !== "active"){
+      setisLocked(true)
+    }
+  }, []);
 
   return (
     <>
@@ -146,18 +152,27 @@ const AdminSidebar = ({ screen }) => {
                   </h1>
                 </Link>
               </li>
-              <li>
+              <li className="relative">
                 <Link
-                  to={"/admin/network"}
-                  onClick={() => {
-                    setIsMobileDrawerOpen(false);
-                  }}
-                  className={`flex items-center p-2 px-6 sm:px-7 text-gray-900 rounded-r-lg group gap-4  ${
-                    location.pathname === "/admin/network"
+                  to={isLocked ? "#" : "/admin/network"}
+                  onClick={
+                    isLocked
+                      ? (e) => e.preventDefault()
+                      : () => setIsMobileDrawerOpen(false)
+                  }
+                  className={`flex items-center p-2 px-6 sm:px-7 text-gray-900 rounded-r-lg group gap-4 ${
+                    location.pathname === "/admin/network" && !isLocked
                       ? "bg-PurpleColor text-white"
                       : "text-[#666666]"
-                  }`}
+                  } ${isLocked ? "cursor-not-allowed opacity-60" : ""}`}
+                  title={isLocked ? "Upgrade Your Plan to access Inbox" : ""}
                 >
+                  {isLocked && (
+                    <Lock
+                      strokeWidth={3}
+                      className="absolute text-red-600 size-3 right-7  sm:size-4 -mt-1 sm:mt-0 "
+                    />
+                  )}
                   {location.pathname === "/admin/network" ? (
                     <img
                       className="h-4.5 w-4.5 sm:h-4.5 sm:w-5 2xl:w-6 2xl:h-6"
@@ -171,13 +186,12 @@ const AdminSidebar = ({ screen }) => {
                       alt=""
                     />
                   )}
-
                   <h1 className="font-Urbanist font-[500] text-[15px] sm:mt-1 sm:text-[16px] 2xl:text-[18px]">
                     My Network
                   </h1>
                 </Link>
               </li>
-              <li>
+              <li className="relative">
                 <Link
                   to={isLocked ? "#" : "/admin/inbox"}
                   onClick={
@@ -190,11 +204,14 @@ const AdminSidebar = ({ screen }) => {
                       ? "bg-PurpleColor text-white"
                       : "text-[#666666]"
                   } ${isLocked ? "cursor-not-allowed opacity-60" : ""}`}
-                  title={
-                    isLocked ? "Upgrade Your Plan to access Inbox" : ""
-                  }
+                  title={isLocked ? "Upgrade Your Plan to access Inbox" : ""}
                 >
-                  {isLocked &&  <Lock strokeWidth={3}  className="absolute text-red-600 size-2 right-7  sm:size-4" /> }
+                  {isLocked && (
+                    <Lock
+                      strokeWidth={3}
+                      className="absolute text-red-600 size-3 right-7  sm:size-4 -mt-1 sm:mt-0 "
+                    />
+                  )}
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
@@ -215,18 +232,27 @@ const AdminSidebar = ({ screen }) => {
                 </Link>
               </li>
 
-              <li>
+              <li className="relative">
                 <Link
-                  to={"/admin/myoffers"}
-                  onClick={() => {
-                    setIsMobileDrawerOpen(false);
-                  }}
-                  className={`flex items-center p-2 px-6 sm:px-7 text-gray-900 rounded-r-lg group gap-4  ${
-                    location.pathname === "/admin/myoffers"
+                  to={isLocked ? "#" : "/admin/myoffers"}
+                  onClick={
+                    isLocked
+                      ? (e) => e.preventDefault()
+                      : () => setIsMobileDrawerOpen(false)
+                  }
+                  className={`flex items-center p-2 px-6 sm:px-7 text-gray-900 rounded-r-lg group gap-4 ${
+                    location.pathname === "/admin/myoffers" && !isLocked
                       ? "bg-PurpleColor text-white"
                       : "text-[#666666]"
-                  }`}
+                  } ${isLocked ? "cursor-not-allowed opacity-60" : ""}`}
+                  title={isLocked ? "Upgrade Your Plan to access Inbox" : ""}
                 >
+                  {isLocked && (
+                    <Lock
+                      strokeWidth={3}
+                      className="absolute text-red-600 size-3 right-7  sm:size-4 -mt-1 sm:mt-0 "
+                    />
+                  )}
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
@@ -246,24 +272,32 @@ const AdminSidebar = ({ screen }) => {
                       d="M6 6h.008v.008H6V6Z"
                     />
                   </svg>
-
-                  <h1 className="font-Urbanist font-[500] sm:mt-1 text-[15px] sm:text-[16px] 2xl:text-[18px]">
+                  <h1 className="font-Urbanist font-[500] text-[15px] sm:mt-1 sm:text-[16px] 2xl:text-[18px]">
                     My Offers
                   </h1>
                 </Link>
               </li>
-              <li>
+              <li className="relative">
                 <Link
-                  to={"/admin/analytics"}
-                  onClick={() => {
-                    setIsMobileDrawerOpen(false);
-                  }}
-                  className={`flex items-center p-2 px-6 sm:px-7 text-gray-900 rounded-r-lg group gap-4  ${
-                    location.pathname === "/admin/analytics"
+                  to={isLocked ? "#" : "/admin/analytics"}
+                  onClick={
+                    isLocked
+                      ? (e) => e.preventDefault()
+                      : () => setIsMobileDrawerOpen(false)
+                  }
+                  className={`flex items-center p-2 px-6 sm:px-7 text-gray-900 rounded-r-lg group gap-4 ${
+                    location.pathname === "/admin/analytics" && !isLocked
                       ? "bg-PurpleColor text-white"
                       : "text-[#666666]"
-                  }`}
+                  } ${isLocked ? "cursor-not-allowed opacity-60" : ""}`}
+                  title={isLocked ? "Upgrade Your Plan to access Inbox" : ""}
                 >
+                  {isLocked && (
+                    <Lock
+                      strokeWidth={3}
+                      className="absolute text-red-600 size-3 right-7  sm:size-4 -mt-1 sm:mt-0 "
+                    />
+                  )}
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
@@ -278,8 +312,7 @@ const AdminSidebar = ({ screen }) => {
                       d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 0 1 3 19.875v-6.75ZM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 0 1-1.125-1.125V8.625ZM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 0 1-1.125-1.125V4.125Z"
                     />
                   </svg>
-
-                  <h1 className="font-Urbanist font-[500] sm:mt-1 text-[15px] sm:text-[16px] 2xl:text-[18px]">
+                  <h1 className="font-Urbanist font-[500] text-[15px] sm:mt-1 sm:text-[16px] 2xl:text-[18px]">
                     Analytics/Insights
                   </h1>
                 </Link>
@@ -339,20 +372,29 @@ const AdminSidebar = ({ screen }) => {
                   </h1>
                 </Link>
               </li>
-              <li>
+              <li className="relative">
                 <Link
-                  to={"/admin/customer-support"}
-                  onClick={() => {
-                    setIsMobileDrawerOpen(false);
-                  }}
-                  className={`flex items-center p-2 px-7 text-gray-900 rounded-r-lg  group gap-4 pl-6.5 sm:pl-7.5  ${
-                    location.pathname === "/admin/customer-support"
+                  to={isLocked ? "#" : "/admin/customer-support"}
+                  onClick={
+                    isLocked
+                      ? (e) => e.preventDefault()
+                      : () => setIsMobileDrawerOpen(false)
+                  }
+                  className={`flex items-center p-2 px-6 sm:px-7 text-gray-900 rounded-r-lg group gap-4 ${
+                    location.pathname === "/admin/customer-support" && !isLocked
                       ? "bg-PurpleColor text-white"
-                      : ""
-                  }`}
+                      : "text-[#666666]"
+                  } ${isLocked ? "cursor-not-allowed opacity-60" : ""}`}
+                  title={isLocked ? "Upgrade Your Plan to access Inbox" : ""}
                 >
+                  {isLocked && (
+                    <Lock
+                      strokeWidth={3}
+                      className="absolute text-red-600 size-3 right-7  sm:size-4 -mt-1 sm:mt-0 "
+                    />
+                  )}
                   <Headset className="size-[19px] sm:size-[21px]" />
-                  <h1 className="font-Urbanist font-[500] sm:mt-1 text-[16px] 2xl:text-[18px]">
+                  <h1 className="font-Urbanist font-[500] text-[15px] sm:mt-1 sm:text-[16px] 2xl:text-[18px]">
                     Help/Support
                   </h1>
                 </Link>

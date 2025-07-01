@@ -11,6 +11,7 @@ import PasswordChangeSuccesFully from "../../Components/PasswordChangeSuccesFull
 // IMAGE
 import Image from "../../assets/SetNewPassword.jpg";
 import { Eye, EyeOff } from "lucide-react";
+import AlertModal from "../../Components/AlertModal/AlertModal";
 
 const ChangePassword = () => {
   const navigate = useNavigate();
@@ -85,16 +86,20 @@ const ChangePassword = () => {
           },
         }
       );
+      console.log(response);
+      
       AlertModal({
         icon: "success",
         title: "Password Updated Successfully",
         iconColor: "#703BF7",
         text: "Your password has been changed. Please use your new password the next time you log in.",
       });
-      navigate('/admin')
+      navigate('/admin/account-setting')
     } catch (error) {
+      console.log(error);
+      
       const errorMsg =
-        error?.response?.data?.message === "Current password is incorrect.";
+        error.response.data.message === "Current password is incorrect." && error.response.data.message;
       const ErrorMsg =
         error.response.data.message ===
           "The new password field and current password must be different." &&

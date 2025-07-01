@@ -53,8 +53,6 @@ const PropertyForm = () => {
     setloading(true);
     try {
       const form = new FormData();
-
-      // Basic fields
       form.append("property_id", editId || "");
       form.append("property_name", formData.PropertyTitle);
       form.append("listing_type", formData.propertyType);

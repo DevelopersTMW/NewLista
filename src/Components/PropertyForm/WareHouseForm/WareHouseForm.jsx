@@ -55,6 +55,7 @@ const WareHouseForm = ({ propertyTypeName, register , control , watch , setValue
                 defaultOption={"Select"}
                 register={register}
                 name={"custom_fields.Currency"}
+                value={watch("custom_fields.Currency")}
               ></Selection>
             </span>
             <span className="w-[100%]">
@@ -75,6 +76,7 @@ const WareHouseForm = ({ propertyTypeName, register , control , watch , setValue
                 Options={["Sq Ft", "Sq M"]}
                 name={"custom_fields.BuildingSize"}
                 register={register}
+                value={watch("custom_fields.BuildingSize")}
               ></Selection>
             </span>
             <span className="w-[100%]">
@@ -117,6 +119,7 @@ const WareHouseForm = ({ propertyTypeName, register , control , watch , setValue
                 Options={["Sq Ft", "Sq M"]}
                 name={"custom_fields.LandScape"}
                 register={register}
+                 value={watch("custom_fields.LandScape")}
               ></Selection>
             </span>
             <span className="w-[100%]">
@@ -137,6 +140,7 @@ const WareHouseForm = ({ propertyTypeName, register , control , watch , setValue
                 Options={["Acres", "Hectacres"]}
                 name={"custom_fields.LandScapeAcres"}
                 register={register}
+                 value={watch("custom_fields.LandScapeAcres")}
               ></Selection>
             </span>
             <span className="w-[100%]">
@@ -190,6 +194,7 @@ const WareHouseForm = ({ propertyTypeName, register , control , watch , setValue
                 Options={["A", "B", "C", "D"]}
                 name={"custom_fields.BuildingClass"}
                 register={register}
+                  value={watch("custom_fields.BuildingClass")}
               ></Selection>
             </span>
             <span className="w-[100%]">

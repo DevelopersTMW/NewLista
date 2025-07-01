@@ -72,6 +72,7 @@ const PropertytypeSelection = ({
             labels={"Property Type"}
             Options={propertyTypes}
             name={"propertyName"}
+            value={watch("propertyName")}
             register={register}
             rules={{ required: "Please select an option." }}
             error={errors.propertyName?.message}
@@ -85,6 +86,7 @@ const PropertytypeSelection = ({
             Options={["Available", "Withdrawn", "Pending", "Under Contract", "Leased"]}
             name={"ListingStatus"}
             register={register}
+            value={watch("ListingStatus")}
             rules={{ required: "Please select an option." }}
             error={errors.ListingStatus?.message}
           />
@@ -174,6 +176,7 @@ const PropertytypeSelection = ({
                   "Per Year",
                 ]}
                 name="persf"
+                value={watch("persf")}
                 register={register}
                 rules={{ required: "Please select an option." }}
                 error={errors.persf?.message}

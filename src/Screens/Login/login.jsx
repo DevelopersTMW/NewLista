@@ -34,9 +34,8 @@ const Login = () => {
         email: Data.Email,
         password: Data.Password,
       });
-
-      console.log(Response.data);
       localStorage.setItem("token", Response.data.token);
+      localStorage.setItem("status", Response.data.status);
       localStorage.setItem("User", JSON.stringify(Response.data.user));
       if (Response.data.profile_complete) {
         localStorage.setItem(
@@ -96,6 +95,7 @@ const Login = () => {
         }
       );
       localStorage.setItem("token", Response.data.token);
+        localStorage.setItem("status", Response.data.status);
       localStorage.setItem("User", JSON.stringify(Response.data.user));
       if (Response.data.profile_complete) {
         localStorage.setItem(

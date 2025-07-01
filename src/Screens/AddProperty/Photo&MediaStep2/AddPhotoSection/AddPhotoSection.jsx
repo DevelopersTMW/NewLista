@@ -5,13 +5,13 @@ const AddPhotoSection = ({ register, setValue, error, DefaultImage = [] }) => {
   const [defaultImages, setDefaultImages] = useState([]);
   const [uploadedImages, setUploadedImages] = useState([]);
 
- useEffect(() => {
-  if (Array.isArray(DefaultImage)) {
-    setDefaultImages(DefaultImage);
-  } else {
-    setDefaultImages([]);
-  }
-}, [DefaultImage]);
+  useEffect(() => {
+    if (Array.isArray(DefaultImage)) {
+      setDefaultImages(DefaultImage);
+    } else {
+      setDefaultImages([]);
+    }
+  }, [DefaultImage]);
 
   useEffect(() => {
     const combined = [...defaultImages, ...uploadedImages];
@@ -29,7 +29,9 @@ const AddPhotoSection = ({ register, setValue, error, DefaultImage = [] }) => {
   };
 
   const removeUploadedImage = (indexToRemove) => {
-    const updated = uploadedImages.filter((_, index) => index !== indexToRemove);
+    const updated = uploadedImages.filter(
+      (_, index) => index !== indexToRemove
+    );
     setUploadedImages(updated);
   };
 

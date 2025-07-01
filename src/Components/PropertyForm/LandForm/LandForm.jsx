@@ -25,6 +25,7 @@ const LandForm = ({ propertyTypeName, register , watch , setValue }) => {
               Options={currencies}
               name={"custom_fields.Currency"}
               register={register}
+              value={watch("custom_fields.Currency")}
             ></Selection>
           </span>
           <span className="w-[100%]">
@@ -34,6 +35,7 @@ const LandForm = ({ propertyTypeName, register , watch , setValue }) => {
               placeholder={"Ex: 10000"}
               name={"custom_fields.MonthlyRental"}
               watch={watch} 
+
               setValue={setValue}
               register={register}
             ></NumberInputs>
@@ -45,6 +47,7 @@ const LandForm = ({ propertyTypeName, register , watch , setValue }) => {
                Options={["Sq Ft" , "Sq M"]}
               name={"custom_fields.BuildingSize"}
               register={register}
+              value={watch("custom_fields.BuildingSize")}
             ></Selection>
           </span>
           <span className="w-[100%]">
@@ -65,6 +68,7 @@ const LandForm = ({ propertyTypeName, register , watch , setValue }) => {
               Options={["Yes" , "No"]}
               name={"custom_fields.Fenced"}
               register={register}
+              value={watch("custom_fields.Fenced")}
             ></Selection>
           </span>
           <span className="w-[100%]">
@@ -76,6 +80,7 @@ const LandForm = ({ propertyTypeName, register , watch , setValue }) => {
               setValue={setValue}
               name={"custom_fields.YearBuilt"}
               register={register}
+              value={watch("custom_fields.YearBuilt")}
             ></Inputs>
           </span>
           <span className="w-[100%]">
@@ -85,6 +90,7 @@ const LandForm = ({ propertyTypeName, register , watch , setValue }) => {
                Options={["Sq Ft" , "Sq M"]}
               name={"custom_fields.LandScape"}
               register={register}
+              value={watch("custom_fields.LandScape")}
             ></Selection>
           </span>
           <span className="w-[100%]">
@@ -116,6 +122,7 @@ const LandForm = ({ propertyTypeName, register , watch , setValue }) => {
               Options={["Acres" , "Hectacres"]}
               name={"custom_fields.LandScapeAcres"}
               register={register}
+              value={watch("custom_fields.LandScapeAcres")}
             ></Selection>
           </span>
       </div>

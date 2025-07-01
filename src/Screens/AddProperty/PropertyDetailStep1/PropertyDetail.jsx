@@ -19,7 +19,7 @@ import Inputs from "../../../Components/InputFields/Inputs.jsx";
 import NumberInputs from "../../../Components/InputFields/NumberInputs.jsx";
 import IndustrialForm from "../../../Components/PropertyForm/IndustrialForm/IndustrialForm.jsx";
 
-const Step1 = ({ onNext, defaultValues }) => {
+const Step1 = ({ onNext, defaultValues  , prevStep }) => {
   const {
     register,
     handleSubmit,
@@ -105,11 +105,13 @@ const Step1 = ({ onNext, defaultValues }) => {
         );
     }
   };
+  
 
   const SubmitPropertyForm = (value) => {
     console.log("Validated Form Data:", value);
     if (value) {
       onNext(value);
+      reset(value);
     }
     return;
   };
@@ -126,6 +128,7 @@ const Step1 = ({ onNext, defaultValues }) => {
               PropertyRadios={PropertyRadio}
               register={register}
               errors={errors}
+              control={control}
             />
             {/* CUSTOM FIELD  */}
             {propertyType && renderFormFields()}

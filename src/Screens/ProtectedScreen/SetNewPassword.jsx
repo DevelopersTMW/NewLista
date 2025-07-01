@@ -26,6 +26,9 @@ const SetNewPassword = () => {
   } = useForm();
 
   const SetNewPassword = async (data) => {
+
+    console.log(data);
+    
     setLoading(true);
     clearErrors(); // clear old errors
 
@@ -71,12 +74,13 @@ const SetNewPassword = () => {
           password: data.NewPassword,
         }
       );
+      console.log(response);
+      
 
       if (response.data.message === "Password reset successful") {
-        localStorage.setItem("passwordResetSuccess", "true");
         localStorage.removeItem("ForgetUser");
         setShowSuccess(true);
-        reset(); // clear form fields
+        reset(); 
       }
     } catch (error) {
       const errorMsg =

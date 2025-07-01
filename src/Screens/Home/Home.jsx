@@ -192,6 +192,16 @@ const Home = () => {
     }
   };
 
+  const NetWorkView = () => {
+    if (!token) {
+      navigate('/login')
+    } else if (status !== "active") {
+      navigate("/pricing")
+    } else {
+      navigate("/admin/network")
+    }
+  };
+
   return (
     <>
       {/* <AntiInspect /> */}
@@ -396,9 +406,7 @@ const Home = () => {
                 "Network with fellow investors. Exchange insights, build lasting partnerships, and discover exclusive real estate deals."
               }
               ButtonName={"View More"}
-              ButtonLink={
-                token ? (status ? "/admin/network" : "/pricing") : "/login"
-              }
+              onClick={()=>{NetWorkView()}}
             />
             {/* CARD SECTION  */}
             <div className="w-[98%] sm:-ml-3 md:w-[84%] flex gap-">

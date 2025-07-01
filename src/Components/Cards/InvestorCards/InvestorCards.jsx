@@ -72,7 +72,7 @@ const InvestorCards = ({
                 onConnectClick(id);
               }}
               disabled={button === "pending"}
-              className={`font-Inter swiper-no-swiping font-semibold text-[15px]  py-1.5 rounded-full border-solid border-[2px] hover-btn hover-btn-green ${
+              className={`font-Inter swiper-no-swiping font-semibold text-[15px]  py-1.5 rounded-full border-solid border-[2px] hover-btn ${
                 button === "pending"
                   ? "bg-gray-400 border-gray-400  text-white cursor-not-allowed"
                   : "hover-btn hover-btn-green cursor-pointer 64AAE9 pl-4 pr-6"
@@ -88,18 +88,18 @@ const InvestorCards = ({
             >
               <span>Connect</span>
             </button> */}
-            <button
+            {/* <button
               className="swiper-no-swiping font-Inter text-white hover-btn-purple hover-btn font-semibold text-[15px] px-5 py-1.5 rounded-full "
               onClick={(e) => {
                 e.stopPropagation();
                 if (onMessageClick) onMessageClick(e);
               }}
-            >
-              <span className=" flex gap-2 justify-center items-center">
+            > */}
+              {/* <span className=" flex gap-2 justify-center items-center">
                 <img className="w-4 h-4" src={MessageIcon} alt="" />
                 Message
-              </span>
-            </button>
+              </span> */}
+            {/* </button> */}
           </div>
         </div>
       </div>

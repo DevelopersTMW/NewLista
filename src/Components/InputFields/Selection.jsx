@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { Select } from "@headlessui/react";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
 
 const Selection = ({
@@ -7,8 +6,8 @@ const Selection = ({
   defaultOption,
   Options,
   Style,
-  values,
-  onchange,
+  value,
+  onChange,
   register,
   name,
   error,
@@ -19,60 +18,51 @@ const Selection = ({
   const [Optionss, setOptions] = useState([]);
 
   useEffect(() => {
-    // CHECK OPTIONS AND CHECK DUBLICATE OPTIONS
-    if (Options && Array.isArray(Options)) {
+    if (Array.isArray(Options)) {
       setOptions(Options);
     }
   }, [Options]);
 
   return (
     <>
-      <div className={`relative ${Style} `}>
+      <div className={`relative ${Style}`}>
         <label
           htmlFor={name}
-          className="block mb-1 font-[700] text-PurpleColor w-[100%] max-[1280px]:text-[14px] max-[1666px]:text-[15px] min-[1666px]:text-[16px]"
+          className="block mb-1 font-[700] text-PurpleColor w-full text-[14px] lg:text-[15px]"
         >
           {labels}
         </label>
-        <Select
-          className={`bg-[#F3EEFF] border text-[#4b4b4b] font-[600] font-Urbanist text-[14px] w-[100%] h-12 px-4 rounded-[6px] outline-none appearance-none cursor-pointer focus:outline-none ${Style} ${
-            error ? "border-red-500 " : "border-[#F3EEFF]"
+        <select
+          id={name}
+          name={name}
+          className={`bg-[#F3EEFF] border text-[#4b4b4b] font-[600] font-Urbanist text-[14px] w-full h-12 px-4 rounded-[6px] outline-none appearance-none cursor-pointer focus:outline-none ${Style} ${
+            error ? "border-red-500" : "border-[#F3EEFF]"
           }`}
-          defaultValue={
-            autoSelectFirst ? Options[0] : defaultOption === null ? "" : ""
-          }
-          name="status"
-          value={values}
-          onChange={onchange}
+          value={value}
+          onChange={onChange}
           {...(register && typeof register === "function"
-            ? {...register(name, rules)}
+            ? { ...register(name, rules) }
             : {})}
-          aria-label="Project status"
         >
-          {defaultOption !== null && !autoSelectFirst && (
-            <option className="text-[11px] sm:text-[14px]" value="">
-              {defaultOption}
+          {!autoSelectFirst && (
+            <option value="">
+              {defaultOption || "Select an option"}
             </option>
           )}
-          {Optionss?.map((items, index) => {
-            return (
-              <option
-                key={index}
-                className="text-[#1a1919] font-[500] font-Urbanist text-[11px] sm:text-[14px] "
-                value={items}
-              >
-                {items}
-              </option>
-            );
-          })}
-        </Select>
+          {Optionss.map((opt, index) => (
+            <option key={index} value={opt}>
+              {opt}
+            </option>
+          ))}
+        </select>
+
         <ChevronDownIcon
-          className={`group pointer-events-none absolute top-10 right-2.5 size-5 fill-black text-black ${Style} ${icon} `}
+          className={`pointer-events-none absolute top-10 right-2.5 size-5 fill-black text-black ${Style} ${icon}`}
           aria-hidden="true"
         />
       </div>
-       {error && (
-        <p className="text-red-500 font-[500] text-[14px] pt-1 font-Urbanist tracking-wide">
+      {error && (
+        <p className="text-red-500 font-[500] text-[14px] pt-1 font-Urbanist">
           {typeof error === "string" ? error : error.message}
         </p>
       )}

@@ -38,6 +38,7 @@ const Step2 = ({ onNext, onBack, defaultValues }) => {
     console.log("New", Data);
     if (Data) {
       onNext(Data);
+      reset(value);
     }
   };
 

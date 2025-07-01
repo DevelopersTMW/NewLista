@@ -52,6 +52,7 @@ const DefaultForm = ({ propertyTypeName, register, watch, setValue }) => {
               defaultOption={"Select"}
               name={"custom_fields.Currency"}
               register={register}
+              value={watch("custom_fields.Currency")}
             ></Selection>
           </span>
           <span className="">
@@ -71,6 +72,7 @@ const DefaultForm = ({ propertyTypeName, register, watch, setValue }) => {
               defaultOption={"Select"}
               Options={["Sq Ft", "Sq M"]}
               name={"custom_fields.BuildingSize"}
+              value={watch("custom_fields.BuildingSize")}
               register={register}
             ></Selection>
           </span>
@@ -117,6 +119,7 @@ const DefaultForm = ({ propertyTypeName, register, watch, setValue }) => {
               defaultOption={"Select"}
               Options={["Multiple", "Single"]}
               name={"custom_fields.Tenancy"}
+              value={watch("custom_fields.Tenancy")}
               register={register}
             ></Selection>
           </span>
@@ -169,6 +172,7 @@ const DefaultForm = ({ propertyTypeName, register, watch, setValue }) => {
               Options={["A", "B", "C", "D"]}
               name={"custom_fields.BuildingClass"}
               register={register}
+              value={watch("custom_fields.BuildingClass")}
             ></Selection>
           </span>
           <span className="">

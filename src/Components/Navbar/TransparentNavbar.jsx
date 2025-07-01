@@ -50,6 +50,9 @@ function TransparentNavbar() {
         );
         localStorage.removeItem("token");
         localStorage.removeItem("status");
+        localStorage.removeItem("passwordResetSuccess");
+        localStorage.removeItem("ProfileComplete");
+        localStorage.removeItem("ForgetUser");
         navigate("/login");
         console.log(response);
       } catch (error) {

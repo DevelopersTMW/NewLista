@@ -60,10 +60,6 @@ const ForgetPassOtp = () => {
         otp: data.otp,
         email: storedEmail,
       });
-      // dispatch(setUser(response.data.user));
-      console.log(response.data.user);
-      localStorage.removeItem("UserEmail");
-
       navigate("/set-new-password")
     //   if (response.data.profile_complete) {
     //     navigate("/admin");

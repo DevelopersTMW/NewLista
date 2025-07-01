@@ -138,6 +138,7 @@ const IndustrialForm = ({
               Options={["Yes", "No"]}
               name={"custom_fields.Crane"}
               register={register}
+              value={watch("custom_fields.Crane")}
             ></Selection>
           </span>
            <span className="">
@@ -146,6 +147,7 @@ const IndustrialForm = ({
               defaultOption={"Select"}
               Options={["Yes", "No"]}
               name={"custom_fields.office/meetingroom"}
+              value={watch("custom_fields.office/meetingroom")}
               register={register}
             ></Selection>
           </span>
@@ -155,6 +157,7 @@ const IndustrialForm = ({
               defaultOption={"Select"}
               Options={["Yes", "No"]}
               name={"custom_fields.stabilizedyard"}
+              value={watch("custom_fields.stabilizedyard")}
               register={register}
             ></Selection>
           </span>
@@ -164,6 +167,7 @@ const IndustrialForm = ({
               defaultOption={"Select"}
               Options={["Yes", "No"]}
               name={"custom_fields.fence"}
+              value={watch("custom_fields.fence")}
               register={register}
             ></Selection>
           </span>
@@ -173,6 +177,7 @@ const IndustrialForm = ({
               defaultOption={"Select"}
               Options={["Yes", "No"]}
               name={"custom_fields.kitchen/breakArea"}
+              value={watch("custom_fields.kitchen/breakArea")}
               register={register}
             ></Selection>
           </span>

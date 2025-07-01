@@ -47,6 +47,9 @@ const RentailForm = ({ propertyTypeName, register, watch, setValue }) => {
             labels={"Currency"}
             defaultOption={"Select Your Currency"}
             Options={currencies}
+            name={"custom_fields.Currency"}
+            register={register}
+            value={watch("custom_fields.Currency")}
           ></Selection>
         </span>
         <span className="w-[100%]">
@@ -67,6 +70,7 @@ const RentailForm = ({ propertyTypeName, register, watch, setValue }) => {
             Options={["Sq Ft", "Sq M"]}
             name={"custom_fields.BuildingSize"}
             register={register}
+            value={watch("custom_fields.BuildingSize")}
           ></Selection>
         </span>
         <span className="w-[100%]">
@@ -77,6 +81,7 @@ const RentailForm = ({ propertyTypeName, register, watch, setValue }) => {
             setValue={setValue}
             placeholder={"Ex: 10000"}
             name={"custom_fields.BuildingSizeNumber"}
+            
             register={register}
           ></NumberInputs>
         </span>
@@ -109,6 +114,7 @@ const RentailForm = ({ propertyTypeName, register, watch, setValue }) => {
             Options={["Sq Ft", "Sq M"]}
             name={"custom_fields.LandScape"}
             register={register}
+            value={watch("custom_fields.LandScape")}
           ></Selection>
         </span>
         <span className="w-[100%]">
@@ -129,6 +135,7 @@ const RentailForm = ({ propertyTypeName, register, watch, setValue }) => {
             Options={["Acres", "Hectacres"]}
             name={"custom_fields.LandScapeAcres"}
             register={register}
+            value={watch("custom_fields.LandScapeAcres")}
           ></Selection>
         </span>
         <span className="w-[100%]">
@@ -148,6 +155,7 @@ const RentailForm = ({ propertyTypeName, register, watch, setValue }) => {
             defaultOption={"Select"}
             Options={["Yes", "No"]}
             name={"custom_fields.Outdoor-Signage"}
+            value={watch("custom_fields.Outdoor-Signage")}
             register={register}
           ></Selection>
         </span>
@@ -179,6 +187,7 @@ const RentailForm = ({ propertyTypeName, register, watch, setValue }) => {
             defaultOption={"Select Class"}
             Options={["A", "B", "C", "D"]}
             name={"custom_fields.BuildingClass"}
+            value={watch("custom_fields.BuildingClass")}
             register={register}
           ></Selection>
         </span>
