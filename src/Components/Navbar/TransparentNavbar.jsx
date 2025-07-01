@@ -199,7 +199,7 @@ function TransparentNavbar() {
                 <div className="block px-4 py-2 text-sm text-gray-700">
                   {user.first_name + " " + user.last_name}
                 </div>
-              </MenuItem>
+              </MenuItem> 
               <MenuItem>
                 <Link
                   to={"/admin/account-setting"}

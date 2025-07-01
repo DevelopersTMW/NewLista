@@ -262,17 +262,14 @@ const Pricing = () => {
 
                   if (token) {
                     if (!checked || checked?.plan_id === null) {
-                      // Case 3 & 4: Free user
                       buttonText = "Upgrade";
-                      buttonLink = ""; // Stay on same page
+                      buttonLink = ""; 
                       onClick = () => Subscription(items.id);
                     } else if (isCurrentPlan && isActive) {
-                      // User already has this paid plan
                       buttonText = "Activated";
                       disabled = true;
                       buttonLink = "";
                     } else if (!isCurrentPlan && isActive) {
-                      // Other paid plans (not current)
                       buttonText = "Manage";
                       buttonLink = "/admin/subscription";
                     }

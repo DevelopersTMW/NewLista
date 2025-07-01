@@ -166,6 +166,9 @@ const AccountSetting = () => {
     },
     mode: "onTouched",
   });
+
+  console.log(selectedState);
+
   const capRateMin = watch("capRateMin");
   const capRateMax = watch("capRateMax");
   const DefaultSelection = useWatch({ control, name: "state" });
@@ -196,11 +199,15 @@ const AccountSetting = () => {
     setValue("state", value.name, { shouldValidate: true });
     trigger("state");
 
+    console.log(value.name);
+
     // reset cities
     let state = value.name;
     setSelectedState(state);
     setSelectedCity("");
     setCities([]);
+
+    console.log(state.name);
 
     if (state) {
       const stateShortNames = value.code;
@@ -213,6 +220,8 @@ const AccountSetting = () => {
         });
     }
   };
+
+  useEffect(() => {}, []);
 
   const selectedCitys = useWatch({ control, name: "city" });
 
@@ -236,6 +245,14 @@ const AccountSetting = () => {
         setbanner(res.data.banner);
         setLogo(res.data.headshot);
 
+        const defaultState = statesArray.find(
+          (state) => state.name === res.data.state
+        );
+        console.log(defaultState);
+
+        if (defaultState) {
+          StateSelectionHandler(defaultState);
+        }
         reset({
           ...data,
           banner: import.meta.env.VITE_IMAGE_KEY + data.banner || null,
@@ -265,6 +282,8 @@ const AccountSetting = () => {
       const data = res.data;
       setbanner(res.data.banner);
       setLogo(res.data.headshot);
+
+      setSelectedState(res.data.state);
 
       reset({
         ...data,
@@ -632,9 +651,7 @@ const AccountSetting = () => {
                       render={({ field: { value, onChange } }) => (
                         <Switches
                           value={value}
-                          onChange={(checked) =>
-                            onChange(checked)
-                          }
+                          onChange={(checked) => onChange(checked)}
                         />
                       )}
                     />
@@ -660,9 +677,7 @@ const AccountSetting = () => {
                       render={({ field: { value, onChange } }) => (
                         <Switches
                           value={value}
-                          onChange={(checked) =>
-                            onChange(checked)
-                          }
+                          onChange={(checked) => onChange(checked)}
                         />
                       )}
                     />

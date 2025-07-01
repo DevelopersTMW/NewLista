@@ -42,6 +42,7 @@ const premiumBenefits = [
 const SubscriptionSetting = () => {
   const ApiKey = import.meta.env.VITE_API_KEY;
   const token = localStorage.getItem("token");
+  const status= localStorage.getItem("status")
 
   const [loading, setLoading] = useState(false);
   const [CurrentPlan, setCurrentPlan] = useState(null);
@@ -183,7 +184,7 @@ const SubscriptionSetting = () => {
                     onClick={handleManageSubscription}
                     className="hover-btn hover-btn-purple font-Urbanist font-semibold mb-2 bg-[#e9e9e9] text-black border-[#e9e9e9] hover:border-Paracolor"
                   >
-                    <span>Manage</span>
+                    <span>{token ? status === "active" ? "Manage" : "Upgrade now" : "Upgrade now"}</span>
                   </button>
 
                   <p className="font-Urbanist font-semibold text-[16px]">

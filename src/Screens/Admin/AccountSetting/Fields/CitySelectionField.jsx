@@ -70,7 +70,7 @@ const CitySearchForm = ({
             max-[481px]:h-11 max-[891px]:h-12 max-[1000px]:h-10.5 max-[1100px]:h-11
             max-[1280px]:h-11.5 max-[1666px]:h-12 min-[1666px]:h-14 min-[1666px]:text-[15px] min-[1666px]:placeholder:text-[15px]
             ${error ? "border-red-500" : "border-[#F3EEFF]"}
-             ${suggestedCities.length === 0 ? "opacity-100 cursor-not-allowed" : ""}
+             ${suggestedCities.length === 4 ? "opacity-100 cursor-not-allowed" : ""}
             
           `}
         autoComplete="off"
