@@ -82,7 +82,7 @@ const PropertytypeSelection = ({
           <Selection
             defaultOption={"Select Status"}
             labels={"Listing Status"}
-            Options={["Available", "Withdraw", "Pending", "Loss", "Lease"]}
+            Options={["Available", "Withdrawn", "Pending", "Under Contract", "Leased"]}
             name={"ListingStatus"}
             register={register}
             rules={{ required: "Please select an option." }}

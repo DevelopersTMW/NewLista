@@ -380,11 +380,9 @@ const PropertyDetails = () => {
                         </span>
 
                         <p className="font-Urbanist font-[700] text-[20px] sm:text-[21px] text-[#222222]">
-                          {Math.round(SingleProperty.building_size)}
+                          {SingleProperty.building_size}
                           {SingleProperty.custom_fields?.BuildingSize &&
-                          SingleProperty.custom_fields?.BuildingSizeNumber
-                            ? ` ${SingleProperty.custom_fields.BuildingSizeNumber} ${SingleProperty.custom_fields.BuildingSize}`
-                            : ""}
+                            " " + SingleProperty.custom_fields.BuildingSize}
                         </p>
                       </div>
                     )}
@@ -403,7 +401,7 @@ const PropertyDetails = () => {
                       <p className="font-Urbanist font-[600] text-[14px] sm:text-[16px] text-[#222222]">
                         💰 Net Operating Income (NOI) :{" "}
                         <span className="font-bold">
-                          {SingleProperty.noi || "None"}
+                          $ {SingleProperty.noi || "None"}
                         </span>
                       </p>
 

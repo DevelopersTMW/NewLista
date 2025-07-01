@@ -149,7 +149,7 @@ const SearchBar = ({ handleFilterChange }) => {
     <div className="sm:mb-8 sm:flex sm:justify-center mt-8">
       <div className="relative w-[85%] justify-between md:w-[35%] lg:w-[94%] xl:w-[84%] flex rounded-full py-3 px-5 lg:px-6.5 sm:py-3.5 text-sm/6 text-gray-600 ring-1 ring-gray-900/10 hover:ring-gray-900/20 bg-textColor lg:justify-center items-center">
         {/* Listing Type */}
-        <div className="w-[45%] lg:w-[15%] px-4 py-2 lg:border-r-[1px] border-solid border-Paracolor">
+        <div className="w-[45%] lg:w-[13%] xl:w-[15%] px-4 py-2 lg:border-r-[1px] border-solid border-Paracolor">
           <select
             {...register("listingType")}
             className="text-[16px] font-Inter text-black font-[500] focus:outline-none border-none focus:ring-0 w-full"
@@ -209,7 +209,7 @@ const SearchBar = ({ handleFilterChange }) => {
         </div>
 
         {/* City Selector */}
-        <div className="hidden lg:w-[22%] px-8 py-1 border-r-[1px] border-solid border-Paracolor lg:flex flex-col">
+        <div className="hidden lg:w-[20%] xl:w-[22%] px-8 py-1 border-r-[1px] border-solid border-Paracolor lg:flex flex-col">
           <h1 className="text-[14px] font-Inter text-black font-[600]">City</h1>
           <ComboboxSelector
             options={cityOptions}
@@ -220,7 +220,7 @@ const SearchBar = ({ handleFilterChange }) => {
         </div>
 
         {/* Price Range */}
-        <div className="hidden lg:w-[20%] px-8 py-1 lg:flex flex-col">
+        <div className="hidden lg:w-[23%] xl:w-[20%] px-8 py-1 lg:flex flex-col">
           <h1 className="text-[14px] font-Inter text-black font-[600]">
             Price Range
           </h1>

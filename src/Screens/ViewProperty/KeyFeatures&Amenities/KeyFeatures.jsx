@@ -118,6 +118,49 @@ const fieldConfig = {
     ],
   },
 
+  "Industrial Park": {
+    fields: [
+      { label: "Ceiling Height", key: "CeilingHeight" },
+      { label: "Over Head Doors", key: "OverheadDoors" },
+      { label: "Ground-Level-Docks", key: "GroundLevelDocks" },
+      { label: "High-Level-Docks", key: "HighLevelDocks" },
+      { label: "Bathroom", key: "Bathroom" },
+      { label: "LotSize", key: "LotSize" },
+      { label: "Crane", key: "Crane" },
+      { label: "Office/Meeting Room", key: "office/meetingroom" },
+      { label: "Stabilized Yard", key: "stabilizedyard" },
+      { label: "Fence", key: "Fence" },
+      { label: "Kitchen/Break Area", key: "kitchen/breakArea" },
+      { label: "120/240V", key: "120/240V" },
+      { label: "120/208V", key: "120/208V" },
+      { label: "120/208V", key: "120/208V" },
+      { label: "240V", key: "240V" },
+      { label: "277/480V", key: "277/480V" },
+      { label: "Other", key: "Other" },
+    ],
+  },
+  "Industrial Building": {
+    fields: [
+      { label: "Ceiling Height", key: "CeilingHeight" },
+      { label: "Over Head Doors", key: "OverheadDoors" },
+      { label: "Ground-Level-Docks", key: "GroundLevelDocks" },
+      { label: "High-Level-Docks", key: "HighLevelDocks" },
+      { label: "Bathroom", key: "Bathroom" },
+      { label: "LotSize", key: "LotSize" },
+      { label: "Crane", key: "Crane" },
+      { label: "Office/Meeting Room", key: "office/meetingroom" },
+      { label: "Stabilized Yard", key: "stabilizedyard" },
+      { label: "Fence", key: "Fence" },
+      { label: "Kitchen/Break Area", key: "kitchen/breakArea" },
+      { label: "120/240V", key: "120/240V" },
+      { label: "120/208V", key: "120/208V" },
+      { label: "120/208V", key: "120/208V" },
+      { label: "240V", key: "240V" },
+      { label: "277/480V", key: "277/480V" },
+      { label: "Other", key: "Other" },
+    ],
+  },
+
   "Retail Center": {
     fields: [
       { label: "Monthly Rental", key: "MonthlyRental" },
@@ -213,7 +256,8 @@ const KeyFeatures = ({ SingleProperty }) => {
         >
           <Zap size={16} className="fill-black" />
           <span className="font-semibold text-[#000000]">
-            {label}: {value}
+            {console.log(value)}
+            {label}: {label === "Monthly Rental" ? "$" + value : value}
           </span>
         </div>
       ))}

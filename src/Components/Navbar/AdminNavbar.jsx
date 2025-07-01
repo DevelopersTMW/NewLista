@@ -139,7 +139,7 @@ function AdminNavbar() {
                           : DummyLogo
                       }
                       onError={(e) => {
-                        e.target.onerror = null; // prevent loop
+                        e.target.onerror = null; 
                         e.target.src = DummyLogo;
                       }}
                     />

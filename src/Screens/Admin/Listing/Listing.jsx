@@ -65,7 +65,6 @@ const Listing = () => {
 
   console.log(status + propertyType + priceRange);
 
-
   const handleResetFilters = () => {
     setValue("status", "");
     setValue("search", "");
@@ -134,7 +133,13 @@ const Listing = () => {
             <div className="border-r-[1px] border-solid border-[#BBBBBB] w-[17%]">
               <Selection
                 defaultOption={"Status"}
-                Options={["Available", "Withdraw", "Pending", "Loss", "Lease"]}
+                Options={[
+                  "Available",
+                  "Withdrawn",
+                  "Pending",
+                  "Under Contract",
+                  "Leased",
+                ]}
                 icon={"!top-3.5"}
                 name={"status"}
                 register={register}
@@ -216,10 +221,10 @@ const Listing = () => {
                     defaultOption={"Status"}
                     Options={[
                       "Available",
-                      "Withdraw",
+                      "Withdrawn",
                       "Pending",
-                      "Loss",
-                      "Lease",
+                      "Under Contract",
+                      "Leased",
                     ]}
                     icon={"!top-3.5"}
                     name={"status"}

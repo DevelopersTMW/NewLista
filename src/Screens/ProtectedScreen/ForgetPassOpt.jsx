@@ -176,7 +176,7 @@ const ForgetPassOtp = () => {
               <button
                 type="submit"
                 disabled={Loading}
-                className={`bg-PurpleColor w-[100%] 2xl:w-[80%] h-11 cursor-pointer mt-3 text-white font-Urbanist rounded-[6px] font-[700] ${
+                className={`bg-PurpleColor w-[100%] 2xl:w-[80%] h-11 cursor-pointer mt-3 text-white font-Urbanist rounded-[6px] font-[700]  ${
                   Loading ? "opacity-50 cursor-not-allowed" : ""
                 }`}
               >

@@ -161,7 +161,7 @@ const OptVerification = () => {
           <button
             type="submit"
             disabled={Loading}
-            className={`bg-PurpleColor h-11 w-full 2xl:w-[80%] text-white rounded-[6px] font-Urbanist font-bold mt-3 ${
+            className={`bg-PurpleColor h-11 w-full 2xl:w-[80%] text-white rounded-[6px] font-Urbanist font-bold mt-3 cursor-pointer ${
               Loading ? "opacity-50 cursor-not-allowed" : ""
             }`}
           >

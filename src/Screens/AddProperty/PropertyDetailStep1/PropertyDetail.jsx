@@ -17,6 +17,7 @@ import PropertytypeSelection from "./PropertyDetailSections/PropertytypeSelectio
 import FormattedNumberInput from "../../../Components/InputFields/NumberInputs.jsx";
 import Inputs from "../../../Components/InputFields/Inputs.jsx";
 import NumberInputs from "../../../Components/InputFields/NumberInputs.jsx";
+import IndustrialForm from "../../../Components/PropertyForm/IndustrialForm/IndustrialForm.jsx";
 
 const Step1 = ({ onNext, defaultValues }) => {
   const {
@@ -37,8 +38,6 @@ const Step1 = ({ onNext, defaultValues }) => {
       reset(defaultValues);
     }
   }, [defaultValues, reset]);
-
-  console.log(watch("custom_fields.MonthlyRental"));
 
   // CHECK RADIO VALUE
   const PropertyRadio = watch("propertyType");
@@ -71,6 +70,26 @@ const Step1 = ({ onNext, defaultValues }) => {
             watch={watch}
             setValue={setValue}
             register={register}
+            propertyTypeName={propertyType}
+          />
+        );
+      case "Industrial Building":
+        return (
+          <IndustrialForm
+            register={register}
+            control={control}
+            watch={watch}
+            setValue={setValue}
+            propertyTypeName={propertyType}
+          />
+        );
+      case "Industrial Park":
+        return (
+          <IndustrialForm
+            register={register}
+            control={control}
+            watch={watch}
+            setValue={setValue}
             propertyTypeName={propertyType}
           />
         );
