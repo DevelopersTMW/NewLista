@@ -16,10 +16,10 @@ const ComboboxSelection = ({
   const dropdownRef = useRef();
 
   useEffect(() => {
-    if (!value) {
+    if (!value || !value.name) {
       setSelected(null);
     } else {
-      const found = options.find((opt) => opt.name === value);
+      const found = options.find((opt) => opt.name === value.name);
       setSelected(found || null);
     }
   }, [value, options]);

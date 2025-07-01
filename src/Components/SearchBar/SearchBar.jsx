@@ -33,8 +33,6 @@ const propertyType = [
   { label: "Other", name: "Other" },
 ];
 
-
-
 const statesArray = [
   { id: 0, name: "Select Your State", code: "" },
   { id: 1, name: "Alabama", code: "AL" },
@@ -116,23 +114,30 @@ const SearchBar = ({ handleFilterChange }) => {
     handleFilterChange(data);
   };
 
-  const StateSelectionHandler = (value) => {
-    const state = value.name;
-    setSelectedState(state);
-    setSelectedCity("");
-    setValue("state", state);
 
-    if (value.code) {
-      axios
-        .get(`/states/${value.code}.json`)
-        .then((res) => {
-          setCities(res.data || []);
-        })
-        .catch((err) => {
-          console.error("Error loading cities", err);
-          setCities([]);
-        });
-    }
+  const StateSelectionHandler = (value) => {
+    if (!value || !value.name) return;
+
+    // Set the state value correctly
+    setValue("state", value.name, { shouldValidate: true });
+
+    // Save selected state name
+    setSelectedState(value.name);
+    setSelectedCity("");
+    setCities([]);
+
+    // Load cities using state short code
+    const stateShortNames = value.code;
+    axios
+      .get(`/states/${stateShortNames}.json`)
+      .then((res) => {
+        const cityList = res.data;
+        setCities(cityList);
+      })
+      .catch((error) => {
+        console.error("Failed to load cities:", error);
+        setCities([]);
+      });
   };
 
   const CitySelectionHandler = (value) => {
@@ -214,6 +219,7 @@ const SearchBar = ({ handleFilterChange }) => {
           <ComboboxSelector
             options={cityOptions}
             onSelect={CitySelectionHandler}
+            value={{ name: selectedCity }}
             placeholder="Select Your City"
             disabled={cityOptions.length === 0}
           />

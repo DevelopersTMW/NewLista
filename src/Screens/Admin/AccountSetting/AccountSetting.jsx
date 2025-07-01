@@ -167,8 +167,6 @@ const AccountSetting = () => {
     mode: "onTouched",
   });
 
-  console.log(selectedState);
-
   const capRateMin = watch("capRateMin");
   const capRateMax = watch("capRateMax");
   const DefaultSelection = useWatch({ control, name: "state" });
@@ -198,9 +196,6 @@ const AccountSetting = () => {
   const StateSelectionHandler = (value) => {
     setValue("state", value.name, { shouldValidate: true });
     trigger("state");
-
-    console.log(value.name);
-
     // reset cities
     let state = value.name;
     setSelectedState(state);
@@ -220,11 +215,7 @@ const AccountSetting = () => {
         });
     }
   };
-
-  useEffect(() => {}, []);
-
   const selectedCitys = useWatch({ control, name: "city" });
-
   const CitySelectionHandler = (value) => {
     setValue("city", value.name, { shouldValidate: true });
     trigger("city");
@@ -248,8 +239,6 @@ const AccountSetting = () => {
         const defaultState = statesArray.find(
           (state) => state.name === res.data.state
         );
-        console.log(defaultState);
-
         if (defaultState) {
           StateSelectionHandler(defaultState);
         }
