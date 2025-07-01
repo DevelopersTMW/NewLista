@@ -197,9 +197,9 @@ function Navbar() {
               )}
             </MenuButton>
             <MenuItems className="absolute right-0 mt-2 border-none w-48 text-[18px] font-[500] bg-[#fcfcfc] rounded-md shadow-lg font-Urbanist py-1 z-20 ring-0">
-              <MenuItem>
+              <MenuItem className="cursor-not-allowed">  
                 <div
-                  className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                  className="block px-4 py-2 text-sm text-gray-700"
                 >
                   {user.first_name + " " + user.last_name}
                 </div>

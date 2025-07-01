@@ -1,5 +1,5 @@
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 
 // COMPONENTS
@@ -37,6 +37,7 @@ const HeroBackground = {
 
 const Home = () => {
   // KEYS
+  const navigate = useNavigate();
   const ApiKey = import.meta.env.VITE_API_KEY;
   const token = localStorage.getItem("token");
   const status = localStorage.getItem("status");
@@ -165,9 +166,30 @@ const Home = () => {
             ? items.sale_price
             : items.lease_rate
         }
+        Status={items.listing_status}
+        type={items.listing_type}
         id={items.id}
+        OffMarketProperties="Off Market Property"
       />
     ));
+  };
+
+  const goToViewProperties = (filterType) => {
+    if (filterType === "offmarket") {
+      if (token) {
+        if (status === "active") {
+          navigate("/properties", { state: { filterType } });
+        } else {
+          navigate("/pricing");
+        }
+      } else {
+        navigate("/login");
+      }
+    } else {
+      navigate("/properties", {
+        state: { filterType },
+      });
+    }
   };
 
   return (
@@ -210,6 +232,7 @@ const Home = () => {
               }
               ButtonName={"View All Properties"}
               ButtonLink={"/properties"}
+              onClick={() => goToViewProperties("feature")}
             />
 
             <div className="flex flex-wrap gap-7 sm:gap-3 md:gap-5 md:w-[84%]">
@@ -226,7 +249,7 @@ const Home = () => {
                     >
                       <PropertiesCards
                         PropertyType={items.property_type}
-                        Area={Math.round(items.building_size)}
+                        Area={items.building_size}
                         Img={items.images[0]}
                         Heading={
                           <TruncatedText
@@ -268,13 +291,14 @@ const Home = () => {
                 "Access exclusive off-market deals not available to the public. To view full property details, you must be a subscriber."
               }
               ButtonName={"View All Off-Market Properties"}
-              ButtonLink={
-                token
-                  ? status === "active"
-                    ? "/properties"
-                    : "/pricing"
-                  : "/login"
-              }
+              // ButtonLink={
+              //   token
+              //     ? status === "active"
+              //       ? "/properties"
+              //       : "/pricing"
+              //     : "/login"
+              // }
+              onClick={() => goToViewProperties("offmarket")}
             />
             {/* PROPERTY CARD SECTION  */}
             <div

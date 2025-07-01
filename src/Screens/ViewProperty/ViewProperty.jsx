@@ -28,6 +28,7 @@ import TruncatedText from "../../Components/TruncatedText/TruncatedText";
 import EmptyCards from "../../Components/EmptyCard/EmptyCard";
 import ResponsiveTabList from "./PropertyTabs/PropertyTabs";
 import Spinner from "../../Components/Spinner/Spinner";
+import { useLocation } from "react-router-dom";
 
 // BACKGORUND
 const BannerBackground = {
@@ -39,6 +40,7 @@ const BannerBackground = {
 };
 
 const ViewProperty = () => {
+  const location = useLocation();
   const ApiKey = import.meta.env.VITE_API_KEY;
   const [Properties, setProperties] = useState([]);
   const [searchFilters, setSearchFilters] = useState(null);
@@ -67,6 +69,25 @@ const ViewProperty = () => {
     GetProperty();
   }, []);
 
+  useEffect(() => {
+    if (location?.state?.filterType) {
+      switch (location.state.filterType) {
+        case "offmarket":
+          setFilterValue("Off Market Properties");
+          setSelectedIndex(0); 
+          break;
+        case "feature":
+          setFilterValue("Features Property");
+          setSelectedIndex(0); 
+          break;
+        default:
+          setFilterValue("AllProperties");
+          setSelectedIndex(0);
+          break;
+      }
+    }
+  }, [location?.state?.filterType]);
+
   const filteredProperties = useMemo(() => {
     if (!Properties || Properties.length === 0) return [];
 
@@ -74,7 +95,15 @@ const ViewProperty = () => {
 
     // Dropdown filtering
     if (FilterValue === "Features Property") {
-      result = result.filter((p) => p.featured_listing);
+      result = result.filter((p) => {
+        if (p.featured_listing) {
+          if (p.off_market_listing && isLoggedIn !== "active") {
+            return false;
+          }
+          return true;
+        }
+        return false;
+      });
     }
 
     if (FilterValue === "Off Market Properties") {
@@ -277,7 +306,11 @@ const ViewProperty = () => {
                         }
                         id={items.id}
                         images={items.images[0]}
+                        CheckProperty={
+                          items.off_market_listing ? "Off Market Property" : ""
+                        }
                       />
+                      {console.log(items)}
                     </div>
                   ))
                 )}

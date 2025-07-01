@@ -15,6 +15,7 @@ const PropertiesCards2 = ({
   images,
   PropertyType,
   Area,
+  CheckProperty,
 }) => {
   return (
     <>
@@ -24,7 +25,7 @@ const PropertiesCards2 = ({
           src={import.meta.env.VITE_IMAGE_KEY + images}
           alt=""
         />
-        <div className="py-3 pb-4 px-4 flex flex-col gap-2 justify-between h-[40vh]">
+        <div className="py-3 pb-4 px-4 flex flex-col gap-2 justify-between h-[35ch]">
           <div className="absolute top-8 end-8">
             {"Active" === Status ? (
               <span className="bg-[#28A745] text-white font-Inter px-4 py-1.5 text-[14px] rounded-full">
@@ -41,7 +42,14 @@ const PropertiesCards2 = ({
             )}
           </div>
           <div>
-            <h1 className="mb-2 text-[21px] font-[600] font-Inter tracking-tight leading-[24px] mt-3 text-gray-900 ">
+           <div className="my-2.5">
+             {CheckProperty && (
+              <span className="bg-[#FFC107] text-white font-Inter px-4 py-1.5 mb-3  text-[14px] rounded-full">
+                {CheckProperty}
+              </span>
+            )}
+           </div>
+            <h1 className="mb-2 text-[21px] font-[600] font-Inter tracking-tight leading-[24px] mt-4 text-gray-900 ">
               {Heading}
             </h1>
             <p className="mb-2 font-Inter text-[13px] font-normal text-gray-700 flex break-all">

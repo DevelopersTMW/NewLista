@@ -399,9 +399,9 @@ const PropertyDetails = () => {
                       "Both (For Sale & For Lease)") && (
                     <>
                       <p className="font-Urbanist font-[600] text-[14px] sm:text-[16px] text-[#222222]">
-                        💰 Net Operating Income (NOI) :{" "}
+                        💰 Net Operating Income (NOI) :
                         <span className="font-bold">
-                          $ {SingleProperty.noi || "None"}
+                          ${SingleProperty.noi || "None"}
                         </span>
                       </p>
 

@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const CardContentSection = ({Heading , Desc , ButtonName , ButtonLink}) => {
+const CardContentSection = ({Heading , Desc , ButtonName , ButtonLink ,onClick}) => {
   return (
     <>
       <div className="flex flex-col gap-4 sm:flex-row justify-center sm:items-center md:w-[84%]">
@@ -14,11 +14,11 @@ const CardContentSection = ({Heading , Desc , ButtonName , ButtonLink}) => {
           </p>
         </div>
         <div className="sm:w-[35%]  flex sm:justify-end">
-          <Link to={`${ButtonLink}`}>
-            <button className="hover-btn hover-btn-black px-5 font-Inter py-3 rounded-[7px] text-[14.5px] cursor-pointer sm:text-[14px]">
+          {/* <Link to={``}> */}
+            <button onClick={onClick} className="hover-btn hover-btn-black px-5 font-Inter py-3 rounded-[7px] text-[14.5px] cursor-pointer sm:text-[14px]">
               <span>{ButtonName}</span>
             </button>
-          </Link>
+          {/* </Link> */}
         </div>
       </div>
     </>
