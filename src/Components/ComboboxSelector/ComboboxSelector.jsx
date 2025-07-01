@@ -9,6 +9,7 @@ const ComboboxSelection = ({
   style,
   icon,
   value,
+  type,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [query, setQuery] = useState("");
@@ -16,13 +17,23 @@ const ComboboxSelection = ({
   const dropdownRef = useRef();
 
   useEffect(() => {
-    if (!value || !value.name) {
-      setSelected(null);
+    if (type === "Acount") {
+      if (!value) {
+        setSelected(null);
+      } else {
+        const found = options.find((opt) => opt.name === value);
+        setSelected(found || null);
+      }
     } else {
-      const found = options.find((opt) => opt.name === value.name);
-      setSelected(found || null);
+      if (!value || !value.name) {
+        setSelected(null);
+      } else {
+        const found = options.find((opt) => opt.name === value.name);
+        setSelected(found || null);
+      }
     }
   }, [value, options]);
+
 
   const filteredOptions = options.filter((opt) =>
     opt.name.toLowerCase().includes(query.toLowerCase())

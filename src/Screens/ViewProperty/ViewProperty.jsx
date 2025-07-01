@@ -74,11 +74,11 @@ const ViewProperty = () => {
       switch (location.state.filterType) {
         case "offmarket":
           setFilterValue("Off Market Properties");
-          setSelectedIndex(0); 
+          setSelectedIndex(0);
           break;
         case "feature":
           setFilterValue("Features Property");
-          setSelectedIndex(0); 
+          setSelectedIndex(0);
           break;
         default:
           setFilterValue("AllProperties");
@@ -92,6 +92,12 @@ const ViewProperty = () => {
     if (!Properties || Properties.length === 0) return [];
 
     let result = [...Properties];
+
+    if (FilterValue === "Standard Property") {
+      result = result.filter(
+        (p) => p.off_market_listing === false && p.featured_listing === false
+      );
+    }
 
     // Dropdown filtering
     if (FilterValue === "Features Property") {
@@ -247,15 +253,21 @@ const ViewProperty = () => {
                 </option>
                 <option
                   className="text-[#1a1919] text-[11.5px] font-[500] font-Urbanist sm:text-[15px]"
+                  value="Standard Property"
+                >
+                  Standard Listing
+                </option>
+                <option
+                  className="text-[#1a1919] text-[11.5px] font-[500] font-Urbanist sm:text-[15px]"
                   value="Features Property"
                 >
-                  Features Property
+                  Features Listing
                 </option>
                 <option
                   className="text-[#1a1919] text-[11.5px] font-[500] font-Urbanist sm:text-[15px]"
                   value="Off Market Properties"
                 >
-                  Off Market Properties
+                  Off Market Listing
                 </option>
               </Select>
             </div>

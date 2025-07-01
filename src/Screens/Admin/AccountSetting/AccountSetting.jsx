@@ -488,6 +488,7 @@ const AccountSetting = () => {
                     onSelect={StateSelectionHandler}
                     placeholder={"Select state or province"}
                     value={DefaultSelection}
+                    type="Acount"
                   />
                   {errors.state && (
                     <p className="text-red-500 text-sm mt-1">

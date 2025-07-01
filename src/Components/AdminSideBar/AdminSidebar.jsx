@@ -185,7 +185,7 @@ const AdminSidebar = ({ screen }) => {
                       ? (e) => e.preventDefault()
                       : () => setIsMobileDrawerOpen(false)
                   }
-                  className={`flex items-center p-2 px-6 sm:px-7 rounded-r-lg group gap-4 ${
+                  className={`flex items-center p-2 px-6 sm:px-7 text-gray-900 rounded-r-lg group gap-4 ${
                     location.pathname === "/admin/inbox" && !isLocked
                       ? "bg-PurpleColor text-white"
                       : "text-[#666666]"

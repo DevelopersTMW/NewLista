@@ -291,13 +291,6 @@ const Home = () => {
                 "Access exclusive off-market deals not available to the public. To view full property details, you must be a subscriber."
               }
               ButtonName={"View All Off-Market Properties"}
-              // ButtonLink={
-              //   token
-              //     ? status === "active"
-              //       ? "/properties"
-              //       : "/pricing"
-              //     : "/login"
-              // }
               onClick={() => goToViewProperties("offmarket")}
             />
             {/* PROPERTY CARD SECTION  */}
