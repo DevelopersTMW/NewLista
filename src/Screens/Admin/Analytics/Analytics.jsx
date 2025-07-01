@@ -5,8 +5,7 @@ import DashboardIcon5_1 from "../../../assets/DashboardIcon5.1.png";
 import DashboardIcon6_1 from "../../../assets/DashboardIcon6.1.png";
 import DashboardIcon2_1 from "../../../assets/DashboardIcon2.1.png";
 import DashboardIcon4_1 from "../../../assets/DashboardIcon4.1.png";
-import DashboardIcon1_11 from "../../../assets/DashboardIcon1.11.png";
-import DashboardIcon1_12 from "../../../assets/DashboardIcon1.22.png";
+import DashboardIcon3_1 from "../../../assets/DashboardIcon3.1.png";
 import Spinner from "../../../Components/Spinner/Spinner";
 import axios from "axios";
 import { LogIn } from "lucide-react";
@@ -78,6 +77,21 @@ const Analytics = () => {
                 <div className="flex justify-between items-center">
                   <span>
                     <h4 className="text-[15px] font-Urbanist font-[500] text-[#666666]">
+                      Standard Listings Views
+                    </h4>
+                    <h1 className="font-Urbanist text-[#222222] text-[35px] font-[700]">
+                      {Analytics.stadard_listing_views}
+                    </h1>
+                  </span>
+                  <span>
+                    <img className="" src={DashboardIcon1_1} alt="" />
+                  </span>
+                </div>
+              </div>
+              <div className="w-[90%] flex flex-col justify-start py-8 bg-white px-5 gap-3   sm:w-[95%] rounded-[14px]">
+                <div className="flex justify-between items-center">
+                  <span>
+                    <h4 className="text-[15px] font-Urbanist font-[500] text-[#666666]">
                       Featured Listings Views
                     </h4>
                     <h1 className="font-Urbanist text-[#222222] text-[35px] font-[700]">
@@ -85,21 +99,25 @@ const Analytics = () => {
                     </h1>
                   </span>
                   <span>
-                    <img className="" src={DashboardIcon1_1} alt="" />
+                    <img className="" src={DashboardIcon3_1} alt="" />
                   </span>
                 </div>
-                {/* <div className="flex items-center gap-2">
+              </div><div className="w-[90%] flex flex-col justify-start py-8 bg-white px-5 gap-3   sm:w-[95%] rounded-[14px]">
+                <div className="flex justify-between items-center">
                   <span>
-                    <img className="h-4 w-5" src={DashboardIcon1_11} alt="" />
+                    <h4 className="text-[15px] font-Urbanist font-[500] text-[#666666]">
+                      Off Market Listings Views
+                    </h4>
+                    <h1 className="font-Urbanist text-[#222222] text-[35px] font-[700]">
+                      {Analytics.off_listing_views}
+                    </h1>
                   </span>
                   <span>
-                    <h4 className="text-[#00B69B] font-Urbanist font-[600] text-[15px]">
-                      {/* Changes  */}
-                {/* +15% */}
-                {/* </h4> */}
-                {/* </span> */}
-                {/* </div> */}
+                    <img className="" src={DashboardIcon5_1} alt="" />
+                  </span>
+                </div>
               </div>
+              
               {/* CARD 2 */}
               <div className="w-[90%] flex flex-col justify-start bg-white px-5 gap-3 py-8  sm:w-[95%] rounded-[14px]">
                 <div className="flex justify-between items-center">
