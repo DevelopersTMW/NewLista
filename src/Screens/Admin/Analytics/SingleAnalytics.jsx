@@ -269,7 +269,7 @@ export default function PropertyViewChartCards() {
 
           {/* BAR CHART */}
           <div className="bg-white flex justify-center items-center rounded-xl px-6 ">
-            <div className="h-64">
+            <div className="h-64 w-full" >
               <Bar
                 data={{
                   labels,
