@@ -78,21 +78,30 @@ export default function PropertyViewChartCards() {
           let key;
 
           if (filter === "Daily") {
-            key = dateObj.toISOString().split("T")[0];
+            key = dateObj.toISOString().split("T")[0]; // YYYY-MM-DD
           } else if (filter === "Weekly") {
             const startOfWeek = new Date(dateObj);
             const day = startOfWeek.getDay();
-            startOfWeek.setDate(dateObj.getDate() - day);
+            startOfWeek.setDate(dateObj.getDate() - day); // Sunday as start
             key = startOfWeek.toISOString().split("T")[0];
           } else if (filter === "Monthly") {
             key = `${dateObj.getFullYear()}-${String(
               dateObj.getMonth()
-            ).padStart(2, "0")}`;
+            ).padStart(2, "0")}`; // YYYY-MM
           } else if (filter === "Last 90 Days") {
             const ninetyDaysAgo = new Date();
             ninetyDaysAgo.setDate(ninetyDaysAgo.getDate() - 90);
             if (dateObj < ninetyDaysAgo) return;
             key = dateObj.toISOString().split("T")[0];
+          } else if (filter === "Last 24 Hours") {
+            const now = new Date();
+            const oneDayAgo = new Date();
+            oneDayAgo.setTime(now.getTime() - 24 * 60 * 60 * 1000); // last 24 hours
+            if (dateObj < oneDayAgo) return;
+            // Group by hour
+            const hour = dateObj.getHours().toString().padStart(2, "0");
+            const day = dateObj.toISOString().split("T")[0];
+            key = `${day} ${hour}:00`;
           }
 
           grouped[key] = (grouped[key] || 0) + 1;
@@ -100,12 +109,14 @@ export default function PropertyViewChartCards() {
 
         const sortedKeys = Object.keys(grouped).sort();
         const labelFormatted = sortedKeys.map((key) => {
-          const parts = key.split("-");
           if (filter === "Monthly") {
-            return new Date(parts[0], parts[1]).toLocaleDateString("en-US", {
+            const [year, month] = key.split("-");
+            return new Date(year, month).toLocaleDateString("en-US", {
               year: "numeric",
               month: "short",
             });
+          } else if (filter === "Last 24 Hours") {
+            return key; // keep as 'YYYY-MM-DD HH:00'
           } else {
             return new Date(key).toLocaleDateString("en-US", {
               year: "numeric",
@@ -232,9 +243,10 @@ export default function PropertyViewChartCards() {
               id="viewFilter"
               value={filter}
               onChange={(e) => setFilter(e.target.value)}
-              className="block w-full pr-8.5 pl-6 py-2.5 rounded-[8px] font-semibold text-[15px] border-b-[1px] border-gray-300  focus:ring-PurpleColor focus:border-PurpleColor text-[#fcfcfc] font-Urbanist outline-none appearance-none cursor-pointer bg-black"
+              className="block w-full pr-8.5 pl-6 py-2.5 rounded-[8px] font-semibold text-[15px] border-b-[1px] border-gray-300 focus:ring-PurpleColor focus:border-PurpleColor text-[#fcfcfc] font-Urbanist outline-none appearance-none cursor-pointer bg-black"
             >
-              <option value="Daily">Daily</option>
+              <option value="Daily">Select</option>
+              <option value="Last 24 Hours">Last 24 Hours</option>
               <option value="Weekly">Weekly</option>
               <option value="Monthly">Monthly</option>
               <option value="Last 90 Days">Last 90 Days</option>

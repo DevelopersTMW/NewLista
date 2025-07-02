@@ -4,9 +4,7 @@ import Spinner from "../../../../../Components/Spinner/Spinner";
 import EditIcon from "../../../../../assets/EditIcon.png";
 import {
   ChartNoAxesCombined,
-  ChartPie,
   PencilOff,
-  ScanSearch,
   Trash2,
 } from "lucide-react";
 import RightSideArrow from "../../../../../assets/ListingRightSideArrow.png";
@@ -20,10 +18,10 @@ const ListingTable = ({ status, propertyType, priceRange, search }) => {
   const [loading, setLoading] = useState(false);
   const [confirmationAction, setConfirmationAction] = useState(null);
   const [selectedId, setSelectedId] = useState(null);
-
   const [currentPage, setCurrentPage] = useState(1);
+  const [sortByViews, setSortByViews] = useState(null); // null | 'asc' | 'desc'
+
   const itemsPerPage = 5;
-  // REACT HOOK FOR
   const { isOpen, confirm, handleConfirm, handleCancel } = useConfirmation();
 
   const ApiKey = import.meta.env.VITE_API_KEY;
@@ -37,9 +35,6 @@ const ListingTable = ({ status, propertyType, priceRange, search }) => {
         const res = await axios.get(`${ApiKey}/user-properties`, {
           headers: { Authorization: `Bearer ${token}` },
         });
-        console.log("====================================");
-        console.log(res);
-        console.log("====================================");
         setListings(res.data?.data || []);
       } catch (err) {
         console.error("Error fetching listings:", err);
@@ -97,13 +92,23 @@ const ListingTable = ({ status, propertyType, priceRange, search }) => {
     });
   };
 
+  const sortListingsByViews = (listings) => {
+    if (!sortByViews) return listings;
+    return [...listings].sort((a, b) => {
+      const viewA = a.views_count || 0;
+      const viewB = b.views_count || 0;
+      return sortByViews === "asc" ? viewA - viewB : viewB - viewA;
+    });
+  };
+
   const filteredListings = applyFilters(listings);
-  const totalPages = Math.ceil(filteredListings.length / itemsPerPage);
-  const currentListings = filteredListings.slice(
+  const sortedListings = sortListingsByViews(filteredListings);
+  const totalPages = Math.ceil(sortedListings.length / itemsPerPage);
+  const currentListings = sortedListings.slice(
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage
   );
-  // EDIT PROPERTY
+
   const handleConfirmation = async (id) => {
     setSelectedId(id);
     setConfirmationAction("edit");
@@ -112,27 +117,26 @@ const ListingTable = ({ status, propertyType, priceRange, search }) => {
       navigate(`/create-property?editId=${id}`);
     }
   };
-  // DELETE
+
   const handleDeleteConfirmation = async (id) => {
     setSelectedId(id);
     setConfirmationAction("delete");
     const confirmed = await confirm();
     if (confirmed) {
       try {
-        const response = await axios.get(`${ApiKey}/delete-property/${id}`, {
+        await axios.get(`${ApiKey}/delete-property/${id}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
-        console.log(response);
         setListings((prev) => prev.filter((listing) => listing.id !== id));
       } catch (error) {
         console.log(error);
-      } finally {
-        setLoading(false);
       }
     }
   };
+
   useEffect(() => {
     setCurrentPage(1);
+    setSortByViews(null);
   }, [status, propertyType, priceRange, search]);
 
   return (
@@ -151,7 +155,16 @@ const ListingTable = ({ status, propertyType, priceRange, search }) => {
                 <th className="px-6 py-4.5">Price</th>
                 <th className="px-6 py-4.5">Status</th>
                 <th className="px-6 py-4.5">Date Listed</th>
-                <th className="px-6 py-4.5 ">Views</th>
+                <th
+                  onClick={() =>
+                    setSortByViews((prev) =>
+                      prev === "desc" ? "asc" : "desc"
+                    )
+                  }
+                  className="px-6 py-4.5 cursor-pointer select-none"
+                >
+                  Views{" "}
+                </th>
                 <th className="px-6 py-4.5 rounded-tr-3xl">Actions</th>
               </tr>
             </thead>
@@ -159,7 +172,7 @@ const ListingTable = ({ status, propertyType, priceRange, search }) => {
               {currentListings.length === 0 ? (
                 <tr>
                   <td
-                    colSpan={6}
+                    colSpan={7}
                     className="text-center bg-white py-10 text-gray-500 font-Urbanist text-[16px]"
                   >
                     No listings found.
@@ -184,9 +197,8 @@ const ListingTable = ({ status, propertyType, priceRange, search }) => {
                     </td>
                     <td className="w-[15%] text-start px-3.5 py-6 text-[#222222] font-[550] text-[16px]">
                       <TruncatedText text={item.sale_price} maxLength={9} />
-                      {/* {`$${item.sale_price.toLocaleString("en-US")}`} */}
                     </td>
-                    <td className="px-3.5 py-6  text-[#222222] font-[550] text-[16px] flex gap-1 items-center mt-3 ml-2 sm:ml-0 sm:mt-2.5">
+                    <td className="px-3.5 py-6 text-[#222222] font-[550] text-[16px] flex gap-1 items-center mt-3 ml-2 sm:ml-0 sm:mt-2.5">
                       <div
                         className={`h-2 w-2 rounded-full ${
                           item.listing_status === "Available"
@@ -205,18 +217,15 @@ const ListingTable = ({ status, propertyType, priceRange, search }) => {
                         day: "numeric",
                       })}
                     </td>
-                    <td className="text-center  font-Inter font-[550] text-[#222222] text-[16px]">
-                      <Link to={`/admin/analytics/${item.id}`}>
-                        <h1 className="flex justify-center cursor-pointer">
-                          <ChartNoAxesCombined />
-                        </h1>
-                      </Link>
+                    <td className="text-center font-Inter font-[550] text-[#222222] text-[16px]">
+                      {item.views_count}
                     </td>
-                    <td className="px-4 py-6 text-[#222222] font-[550] text-[16px] flex gap-3 justify-center">
+                    <td className="px-4 py-6 text-[#222222] font-[550] text-[16px] flex gap-1.5 justify-center">
+                      <Link to={`/admin/analytics/${item.id}`}>
+                        <ChartNoAxesCombined />
+                      </Link>
                       <button
-                        onClick={() => {
-                          handleConfirmation(item.id);
-                        }}
+                        onClick={() => handleConfirmation(item.id)}
                         className="cursor-pointer"
                       >
                         <img
@@ -225,11 +234,7 @@ const ListingTable = ({ status, propertyType, priceRange, search }) => {
                           alt="Edit"
                         />
                       </button>
-                      <button
-                        onClick={() => {
-                          handleDeleteConfirmation(item.id);
-                        }}
-                      >
+                      <button onClick={() => handleDeleteConfirmation(item.id)}>
                         <Trash2 className="size-5 cursor-pointer" />
                       </button>
                     </td>
@@ -241,7 +246,6 @@ const ListingTable = ({ status, propertyType, priceRange, search }) => {
         )}
       </div>
 
-      {/* Pagination Section */}
       {!loading && listings.length > 0 && (
         <section className="mt-3 flex justify-between items-center px-5">
           <div>
@@ -256,7 +260,7 @@ const ListingTable = ({ status, propertyType, priceRange, search }) => {
                 disabled={currentPage === 1}
                 className="border-r-[1px] border-solid border-[#BBBBBB] px-3.5 py-2 disabled:opacity-50 cursor-pointer"
               >
-                <img className="w-2.5 h-3" src={RightSideArrow} alt="Next" />
+                <img className="w-2.5 h-3" src={RightSideArrow} alt="Prev" />
               </button>
               <button
                 onClick={() =>
@@ -268,7 +272,7 @@ const ListingTable = ({ status, propertyType, priceRange, search }) => {
                 <img
                   className="w-2.5 h-3 rotate-180"
                   src={RightSideArrow}
-                  alt="Previous"
+                  alt="Next"
                 />
               </button>
             </div>
