@@ -59,14 +59,39 @@ export default function PropertyViewChartCards() {
           }
         );
 
+        console.log(res);
         const data = res.data;
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
 
-        // Set offer-related stats
+        const isToday = (dateStr) => {
+          const date = new Date(dateStr);
+          date.setHours(0, 0, 0, 0);
+          return date.getTime() === today.getTime();
+        };
+
+        const accepted = data.accepted_offers || [];
+        const received = data.offers_received || [];
+        const pending = data.pending_offers || [];
+        const shared = data.social_shares || [];
+
         setOfferStats({
-          accepted: data.accepted_offers?.length || 0,
-          received: data.offers_received?.length || 0,
-          pending: data.pending_offers?.length || 0,
-          shared: data.social_shares?.length || 0,
+          accepted: {
+            all: accepted.length,
+            today: accepted.filter((o) => isToday(o.created_at)).length,
+          },
+          received: {
+            all: received.length,
+            today: received.filter((o) => isToday(o.created_at)).length,
+          },
+          pending: {
+            all: pending.length,
+            today: pending.filter((o) => isToday(o.created_at)).length,
+          },
+          shared: {
+            all: shared.length,
+            today: shared.filter((o) => isToday(o.created_at)).length,
+          },
         });
 
         // Views grouped by filter
@@ -174,20 +199,28 @@ export default function PropertyViewChartCards() {
   const statCards = [
     {
       label: "Offers Received",
-      value: offerStats.received,
+      value: offerStats.received.all,
+      today: offerStats.received.today,
       icon: DashboardIcon1,
     },
     {
       label: "Pending Offers",
-      value: offerStats.pending,
+      value: offerStats.pending.all,
+      today: offerStats.pending.today,
       icon: DashboardIcon2,
     },
     {
       label: "Accepted Offers",
-      value: offerStats.accepted,
+      value: offerStats.accepted.all,
+      today: offerStats.accepted.today,
       icon: DashboardIcon3,
     },
-    { label: "Social Shares", value: offerStats.shared, icon: DashboardIcon4 },
+    {
+      label: "Social Shares",
+      value: offerStats.shared.all,
+      today: offerStats.shared.today,
+      icon: DashboardIcon4,
+    },
   ];
 
   return (
@@ -216,13 +249,13 @@ export default function PropertyViewChartCards() {
               <span>
                 <img
                   className="h-4 w-5"
-                  src={card.value > 0 ? UpIcon : DownIcon}
+                  src={card.today > 0 ? UpIcon : DownIcon}
                   alt=""
                 />
               </span>
               <span>
                 <h4 className="text-[#606060] font-Urbanist font-[600] text-[15px]">
-                  {card.value} new today
+                  {card.today || 0} new today
                 </h4>
               </span>
             </div>
