@@ -1,9 +1,15 @@
 import { Upload, X } from "lucide-react";
 import React, { useEffect, useState } from "react";
 
+const MAX_IMAGES = 5;
+const MAX_FILE_SIZE = 20 * 1024 * 1024; // 20MB in bytes
+
 const AddPhotoSection = ({ register, setValue, error, DefaultImage = [] }) => {
   const [defaultImages, setDefaultImages] = useState([]);
   const [uploadedImages, setUploadedImages] = useState([]);
+  const [uploadError, setUploadError] = useState("");
+
+  console.log(DefaultImage);
 
   useEffect(() => {
     if (Array.isArray(DefaultImage)) {
@@ -19,8 +25,33 @@ const AddPhotoSection = ({ register, setValue, error, DefaultImage = [] }) => {
   }, [defaultImages, uploadedImages]);
 
   const handleChange = (e) => {
+    setUploadError(""); // Reset error on each upload attempt
+
     const newFiles = Array.from(e.target.files);
+
+    // Check file size of each new file
+    for (const file of newFiles) {
+      if (file.size > MAX_FILE_SIZE) {
+        setUploadError(
+          `Each image must be less than 20 MB. "${file.name}" is too large.`
+        );
+        return;
+      }
+    }
+
+    // Check total image count (existing + new)
+    if (
+      defaultImages.length + uploadedImages.length + newFiles.length >
+      MAX_IMAGES
+    ) {
+      setUploadError(`You can upload a maximum of ${MAX_IMAGES} images.`);
+      return;
+    }
+
     setUploadedImages((prev) => [...prev, ...newFiles]);
+
+    // Clear the input so user can upload same file again if needed
+    e.target.value = null;
   };
 
   const removeDefaultImage = (indexToRemove) => {
@@ -80,6 +111,14 @@ const AddPhotoSection = ({ register, setValue, error, DefaultImage = [] }) => {
           </div>
         </div>
 
+        {/* Show validation error from upload */}
+        {uploadError && (
+          <p className="text-red-500 font-[500] text-[14px] pt-4 font-Urbanist tracking-wide">
+            {uploadError}
+          </p>
+        )}
+
+        {/* Show form validation error */}
         {error && (
           <p className="text-red-500 font-[500] text-[14px] pt-4 font-Urbanist tracking-wide">
             {typeof error === "string" ? error : error.message}
@@ -94,11 +133,15 @@ const AddPhotoSection = ({ register, setValue, error, DefaultImage = [] }) => {
           </h1>
           <div className="flex flex-wrap gap-4">
             {/* Default Images from server */}
-            {defaultImages.map((url, index) => (
+            {defaultImages.map((item, index) => (
               <div className="relative" key={`default-${index}`}>
                 <img
                   className="object-cover w-40 h-36 rounded-2xl"
-                  src={import.meta.env.VITE_IMAGE_KEY + url}
+                  src={
+                    typeof item === "string"
+                      ? import.meta.env.VITE_IMAGE_KEY + item
+                      : URL.createObjectURL(item)
+                  }
                   alt={`Default ${index}`}
                 />
                 <X
