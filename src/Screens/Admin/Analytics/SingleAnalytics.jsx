@@ -128,6 +128,10 @@ export default function PropertyViewChartCards() {
   const chartOptions = {
     responsive: true,
     maintainAspectRatio: false,
+    interaction: {
+      mode: "index", // Show all items with same X label
+      intersect: false, // Do not require cursor to intersect point/bar
+    },
     plugins: {
       legend: { display: false },
       tooltip: {
@@ -269,7 +273,7 @@ export default function PropertyViewChartCards() {
 
           {/* BAR CHART */}
           <div className="bg-white flex justify-center items-center rounded-xl px-6 ">
-            <div className="h-64 w-full" >
+            <div className="h-64 w-full">
               <Bar
                 data={{
                   labels,
