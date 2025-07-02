@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { getDatabase, ref, onValue } from "firebase/database";
 import TruncatedText from "../TruncatedText/TruncatedText";
 
+import UnkownUser from "/public/Images/UnknowUser.png";
+
 export default function UserList({
   users,
   onSelect,
@@ -53,7 +55,7 @@ export default function UserList({
                   <div className="relative">
                     <img
                       className="h-10 w-10 rounded-full object-cover"
-                      src={import.meta.env.VITE_IMAGE_KEY + user.headshot}
+                      src={ user.headshot ? import.meta.env.VITE_IMAGE_KEY + user.headshot : UnkownUser}
                       alt=""
                     />
                     <span
