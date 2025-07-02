@@ -34,11 +34,13 @@ const OurRequest = ({
       .includes(searchTerm.toLowerCase())
   );
 
-  const filteredSent = sentRequest.filter((user) =>
-    `${user.first_name} ${user.last_name}`
-      .toLowerCase()
-      .includes(searchTerm.toLowerCase())
-  );
+  const filteredSent = sentRequest
+    .filter((user) => user.to_user)
+    .filter((user) =>
+      `${user.to_user.first_name} ${user.to_user.last_name}`
+        .toLowerCase()
+        .includes(searchTerm.toLowerCase())
+    );
 
   const totalPagesPending = Math.ceil(filteredPending.length / pageSize);
   const totalPagesSent = Math.ceil(filteredSent.length / pageSize);
@@ -123,19 +125,23 @@ const OurRequest = ({
             ) : paginatedSent.length > 0 ? (
               paginatedSent.map((user) => (
                 <AddToNetwork
-                  key={user.to_user.id}
+                  key={user.to_user?.id ?? user.id} // fallback if user.to_user is missing
                   id={user.id}
-                  InvesImage={user.to_user.headshot}
-                  InvesUserName={`${user.to_user.first_name} ${user.to_user.last_name}`}
-                  InvesDesc={user.to_user.title}
-                  location={`${user.to_user.city}, ${user.to_user.state}`}
-                  propertyTypes={user.to_user.property_interests}
-                  memberSince={getJoinYear(user.to_user.created_at)}
-                  email={user.to_user.email}
-                  phone={user.to_user.phone}
-                  range={user.to_user.preferred_investment_range}
-                  companyname={user.to_user.company_name}
-                  year={user.to_user.years_of_experiance}
+                  InvesImage={user.to_user?.headshot || "default-image.png"} // fallback image if undefined
+                  InvesUserName={`${user.to_user?.first_name || ""} ${
+                    user.to_user?.last_name || ""
+                  }`}
+                  InvesDesc={user.to_user?.title || ""}
+                  location={`${user.to_user?.city || ""}, ${
+                    user.to_user?.state || ""
+                  }`}
+                  propertyTypes={user.to_user?.property_interests || []}
+                  memberSince={getJoinYear(user.to_user?.created_at)}
+                  email={user.to_user?.email || ""}
+                  phone={user.to_user?.phone || ""}
+                  range={user.to_user?.preferred_investment_range || ""}
+                  companyname={user.to_user?.company_name || ""}
+                  year={user.to_user?.years_of_experiance || ""}
                   showModal={showModal}
                   setShowModal={setShowModal}
                   onReject={handleReject}

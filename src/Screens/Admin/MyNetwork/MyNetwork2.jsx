@@ -133,6 +133,9 @@ const MyNetwork2 = () => {
         { headers: { Authorization: `Bearer ${tokens}` } }
       );
 
+      console.log(response);
+      
+
       const sentUser = AddNetwork.find((user) => user.id === id);
 
       // Update AddNetwork list to only include users who are not connected or pending

@@ -4,9 +4,8 @@ import HomeSec1_1 from "../../../assets/HomeSec1.1.png";
 import HomeSec1_2 from "../../../assets/HomeSec1.2.png";
 import HomeSec1_3 from "../../../assets/HomeSec1.3.png";
 
-const HomeSection1 = ({ token }) => {
-
-  const status = localStorage.getItem("status")
+const HomeSection1 = ({ token, onclick }) => {
+  const status = localStorage.getItem("status");
   const CardDetails = [
     {
       image: HomeSec1_1,
@@ -27,7 +26,7 @@ const HomeSection1 = ({ token }) => {
       name: "Search for Off-Market Properties",
       desc: "Access off-market deals and make direct offers.",
       buttonName: "Find Off Market Properties",
-      ButtonLink: token ? "/properties" : "/pricing",
+      onclick: onclick,
     },
   ];
 
@@ -63,11 +62,20 @@ const HomeSection1 = ({ token }) => {
                   </p>
                 </div>
                 <div className="mt-3">
-                  <Link to={`${items.ButtonLink}`}>
-                    <button className="w-[100%] text-[14px] border-[1px] border-solid border-textColor py-2.5 text-textColor font-Inter rounded-[6px] cursor-pointer hover-btn hover-btn-purple hover:border-black sm:text-[16px]">
-                      <span> {items.buttonName}</span>
+                  {items.ButtonLink ? (
+                    <Link to={items.ButtonLink}>
+                      <button className="w-[100%] text-[14px] border-[1px] border-solid border-textColor py-2.5 text-textColor font-Inter rounded-[6px] cursor-pointer hover-btn hover-btn-purple hover:border-black sm:text-[16px]">
+                        <span>{items.buttonName}</span>
+                      </button>
+                    </Link>
+                  ) : (
+                    <button
+                      onClick={items.onclick}
+                      className="w-[100%] text-[14px] border-[1px] border-solid border-textColor py-2.5 text-textColor font-Inter rounded-[6px] cursor-pointer hover-btn hover-btn-purple hover:border-black sm:text-[16px]"
+                    >
+                      <span>{items.buttonName}</span>
                     </button>
-                  </Link>
+                  )}
                 </div>
               </div>
             );

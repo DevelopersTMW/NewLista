@@ -54,7 +54,7 @@ const RentailForm = ({ propertyTypeName, register, watch, setValue }) => {
         </span>
         <span className="w-[100%]">
           <NumberInputs
-            labels={"Monthly Rental*"}
+            labels={"Gross Scheduled Income"}
             type={"text"}
             placeholder={"Ex: 10000"}
             watch={watch}
@@ -65,7 +65,7 @@ const RentailForm = ({ propertyTypeName, register, watch, setValue }) => {
         </span>
         <span className="w-[100%]">
           <Selection
-            labels={"Building Size"}
+            labels={"Lot Size"}
             defaultOption={"Select Size"}
             Options={["Sq Ft", "Sq M"]}
             name={"custom_fields.BuildingSize"}

@@ -56,7 +56,7 @@ const TopDevelopes = ({
           </div>
 
           <div>
-            <h1 className=" text-[25px] font-[700] font-Inter tracking-tight leading-[24px] mt-3 text-gray-900 dark:text-white sm:text-[23px]">
+            <h1 className=" text-[25px] font-[700] font-Inter tracking-tight leading-[24px] mt-3 text-gray-900 sm:text-[23px]">
               {Heading}
             </h1>
             <h1 className="mb-2 text-[18px] font-[600] font-Inter tracking-tight leading-[24px] mt-1 text-gray-900">

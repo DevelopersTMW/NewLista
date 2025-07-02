@@ -1,31 +1,46 @@
 import { Upload, X } from "lucide-react";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 const MAX_IMAGES = 5;
-const MAX_FILE_SIZE = 20 * 1024 * 1024; // 20MB in bytes
+const MAX_FILE_SIZE = 20 * 1024 * 1024;
 
 const AddPhotoSection = ({ register, setValue, error, DefaultImage = [] }) => {
   const [defaultImages, setDefaultImages] = useState([]);
   const [uploadedImages, setUploadedImages] = useState([]);
   const [uploadError, setUploadError] = useState("");
 
-  console.log(DefaultImage);
-
   useEffect(() => {
-    if (Array.isArray(DefaultImage)) {
+    if (
+      Array.isArray(DefaultImage) &&
+      (DefaultImage.length !== defaultImages.length ||
+        !DefaultImage.every((val, idx) => val === defaultImages[idx]))
+    ) {
       setDefaultImages(DefaultImage);
-    } else {
-      setDefaultImages([]);
     }
   }, [DefaultImage]);
 
+  const prevCombinedRef = useRef([]);
+
   useEffect(() => {
     const combined = [...defaultImages, ...uploadedImages];
-    setValue("fileInput", combined, { shouldValidate: true });
-  }, [defaultImages, uploadedImages]);
+
+    const isSame =
+      Array.isArray(prevCombinedRef.current) &&
+      prevCombinedRef.current.length === combined.length &&
+      prevCombinedRef.current.every((val, idx) => val === combined[idx]);
+
+    if (!isSame) {
+      prevCombinedRef.current = combined;
+      setValue("fileInput", combined, {
+        shouldValidate: true,
+        shouldDirty: true,
+      });
+      console.log("✅ fileInput updated");
+    }
+  }, [defaultImages, uploadedImages, setValue]);
 
   const handleChange = (e) => {
-    setUploadError(""); // Reset error on each upload attempt
+    setUploadError("");
 
     const newFiles = Array.from(e.target.files);
 

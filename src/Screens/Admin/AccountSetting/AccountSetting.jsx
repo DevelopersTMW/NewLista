@@ -514,18 +514,6 @@ const AccountSetting = () => {
                   <label className="block mb-1 font-[700] text-PurpleColor w-full max-[1280px]:text-[14px] max-[1666px]:text-[15px] min-[1666px]:text-[16px]">
                     City
                   </label>
-                  {/* <ComboboxSelector
-                    style={`flex items-center bg-[#F3EEFF] text-[#4b4b4b] font-[600] font-Urbanist text-[14px] w-full h-12 px-4 rounded-[6px] outline-none appearance-none cursor-pointer focus:outline-none ${
-                      errors.city ? "border border-red-500" : ""
-                    }`}
-                    icon={"top-3.5 right-3.5"}
-                    options={citiess}
-                    onSelect={CitySelectionHandler}
-                    placeholder={"Select Your City"}
-                    value={selectedCitys}
-                    disabled={citiess.length === 0}
-                  />
-                   */}
                   <CitySearchForm
                     error={errors.city}
                     setValue={setValue}

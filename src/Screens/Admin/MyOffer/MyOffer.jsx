@@ -34,6 +34,8 @@ export default function MyOffersTable() {
             Authorization: `Bearer ${token}`,
           },
         });
+        console.log(response);
+
         setSentOffers(response.data.sent_offers || []);
         setReceivedOffers(response.data.received_offers || []);
       } catch (error) {
@@ -50,7 +52,7 @@ export default function MyOffersTable() {
       setLoading(true);
       const endpoint = action === "accept" ? "offer/accept" : "offer/decline";
 
-      await axios.post(
+      const res = await axios.post(
         `${ApiKey}/${endpoint}`,
         {
           offer_id: id,
@@ -58,6 +60,8 @@ export default function MyOffersTable() {
         },
         { headers: { Authorization: `Bearer ${token}` } }
       );
+
+      console.log(res);
 
       const newStatus = action === "accept" ? "accepted" : "rejected";
 
@@ -133,11 +137,9 @@ export default function MyOffersTable() {
                 <th className="px-6 py-3 font-Urbanist text-center text-white text-[15.5px] uppercase tracking-wider font-bold">
                   Status
                 </th>
-                {tab === "received" && (
-                  <th className="px-6 py-4.5 font-Urbanist text-center text-white text-[16px] uppercase tracking-wider font-bold">
-                    Action
-                  </th>
-                )}
+                <th className="px-6 py-4.5 font-Urbanist text-center text-white text-[16px] uppercase tracking-wider font-bold">
+                  Action
+                </th>
               </tr>
             </thead>
             {loading ? (
@@ -171,18 +173,15 @@ export default function MyOffersTable() {
             ) : (
               <tbody className="divide-y divide-gray-200 ">
                 {paginatedOffers.map((items) => (
-                  <tr
-                    key={items.id}
-                    className="hover:bg-gray-100  w-max"
-                  >
-                    <td className="pl-6 py-6 text-[17px] font-[600] font-Urbanist text-gray-900">
+                  <tr key={items.id} className="hover:bg-gray-100  w-max">
+                    <td className="pl-6 py-6 text-[17px] font-[600] font-Urbanist text-gray-900 w-[35%]">
                       <h1
                         onClick={() => {
                           if (items.property?.id) {
                             navigate(`/properties/${items.property.id}`);
                           }
                         }}
-                        className="w-max cursor-pointer"
+                        className="w-max cursor-pointer hover:border-b-[1px] pb-1"
                       >
                         {tab === "sent"
                           ? items.property?.property_name
@@ -210,9 +209,10 @@ export default function MyOffersTable() {
                           items.status.slice(1)}
                       </span>
                     </td>
-                    {tab === "received" && (
-                      <td className="px-6 py-4 text-center">
-                        {items.status === "pending" ? (
+
+                    <td className="px-6 py-4 text-center">
+                      {items.status === "pending" ? (
+                        tab === "received" && (
                           <div className="flex justify-center gap-1">
                             <button
                               onClick={() => handleAction(items.id, "accept")}
@@ -221,17 +221,34 @@ export default function MyOffersTable() {
                               <CheckCircleIcon className="w-7 h-7 text-green-600 hover:text-green-700 cursor-pointer" />
                             </button>
                             <button
-                              onClick={() => handleAction(items.id, "reject")}
-                              title="Reject"
+                              onClick={() => handleAction(items.id, "Declined")}
+                              title="Declined"
                             >
                               <XCircleIcon className="w-7 h-7 text-red-600 hover:text-red-700 cursor-pointer" />
                             </button>
                           </div>
-                        ) : (
-                          <span className="text-gray-500">—</span>
-                        )}
-                      </td>
-                    )}
+                        )
+                      ) : items.status === "accepted" ? (
+                        <button
+                          onClick={() => {
+                            const user =
+                              tab === "received" ? items.user : items.owner;
+
+                            navigate("/admin/inbox", {
+                              state: {
+                                userId: user?.id,
+                                userName: `${user?.first_name} ${user?.last_name}`,
+                              },
+                            });
+                          }}
+                          className="text-sm bg-purple-600 text-white px-3 py-1 rounded-full hover:bg-purple-700 font-medium cursor-pointer hover-btn hover-btn-purple"
+                        >
+                          <span>Message</span>
+                        </button>
+                      ) : (
+                        <span className="text-gray-500">—</span>
+                      )}
+                    </td>
                   </tr>
                 ))}
               </tbody>

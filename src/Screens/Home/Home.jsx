@@ -227,7 +227,7 @@ const Home = () => {
           {/* HERO SECTION END */}
 
           {/* CARDS SECTION   */}
-          <HomeSection1 token={token}></HomeSection1>
+          <HomeSection1 onclick={() => goToViewProperties("offmarket")} token={token}></HomeSection1>
 
           {/* FEATUES PROPERTIES */}
           <section

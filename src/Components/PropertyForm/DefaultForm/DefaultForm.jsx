@@ -57,7 +57,7 @@ const DefaultForm = ({ propertyTypeName, register, watch, setValue }) => {
           </span>
           <span className="">
             <NumberInputs
-              labels={"Monthly Rental*"}
+              labels={"Gross Scheduled Income"}
               type={"text"}
               watch={watch}
               setValue={setValue}
@@ -68,7 +68,7 @@ const DefaultForm = ({ propertyTypeName, register, watch, setValue }) => {
           </span>
           <span className="">
             <Selection
-              labels={"Building Size"}
+              labels={"Lot Size"}
               defaultOption={"Select"}
               Options={["Sq Ft", "Sq M"]}
               name={"custom_fields.BuildingSize"}

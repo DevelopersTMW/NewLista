@@ -186,9 +186,9 @@ const ListingTable = ({ status, propertyType, priceRange, search }) => {
                   >
                     <th
                       scope="row"
-                      className="w-[26%] text-[14px] px-4 py-6 font-medium text-gray-900 whitespace-nowrap sm:text-[14px] md:text-[16px]"
+                      className="w-[26%] text-[14px] px-4 py-6 font-medium text-gray-900 whitespace-nowrap sm:text-[14px] md:text-[16px] "
                     >
-                      <NavLink to={`/properties/${item.id}`}>
+                      <NavLink className={'hover:border-b-[1px] pb-2'} to={`/properties/${item.id}`}>
                         {item.property_name}
                       </NavLink>
                     </th>

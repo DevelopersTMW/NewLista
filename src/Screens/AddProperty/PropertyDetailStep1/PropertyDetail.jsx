@@ -28,6 +28,7 @@ const Step1 = ({ onNext, defaultValues  , prevStep }) => {
     control,
     setValue,
     reset,
+    trigger
   } = useForm({
     defaultValues,
   });
@@ -36,6 +37,9 @@ const Step1 = ({ onNext, defaultValues  , prevStep }) => {
     if (defaultValues && Object.keys(defaultValues).length > 0) {
       console.log("Step1", defaultValues);
       reset(defaultValues);
+
+      console.log(defaultValues);
+      
     }
   }, [defaultValues, reset]);
 
@@ -132,7 +136,7 @@ const Step1 = ({ onNext, defaultValues  , prevStep }) => {
             />
             {/* CUSTOM FIELD  */}
             {propertyType && renderFormFields()}
-            <AddressFields register={register} errors={errors} />
+            <AddressFields setValue={setValue}  control ={control} trigger={trigger} watch={watch} register={register} errors={errors} />
             {/* DESCRIPTION SECTION  */}
             <div className="border-b-[1px]  border-[#BBBBBB] pb-7 sm:py-7 flex-col gap-4 flex">
               <TextAreas

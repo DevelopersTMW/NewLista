@@ -69,7 +69,7 @@ const ComboboxSelection = ({
       </div>
 
       {isOpen && (
-        <div className="absolute z-10 py-1 mt-1 w-full sm:w-[160px] rounded-md shadow-lg bg-[#f8f8f8] border border-gray-200 max-h-100 overflow-y-auto">
+        <div className="absolute z-10 py-1 mt-1 w-full sm:w-[200px] rounded-md shadow-lg bg-[#f8f8f8] border border-gray-200 max-h-100 overflow-y-auto">
           <div className="p-2">
             <input
               type="text"

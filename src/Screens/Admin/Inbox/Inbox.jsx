@@ -12,7 +12,12 @@ import {
 } from "firebase/database";
 import db from "../../../Configuration/Firebase/FirebaseConfig";
 
+import { useDispatch } from "react-redux";
+import { setTotalUnreadCount } from "../../../Reducers/UnreadCount/UnreadCountSlice";
+import { useLocation } from "react-router-dom";
+
 function Inbox() {
+  const dispatch = useDispatch();
   const [currentUser, setCurrentUser] = useState(null);
   const [otherUsers, setOtherUsers] = useState([]);
   const ApiKey = import.meta.env.VITE_API_KEY;
@@ -22,6 +27,18 @@ function Inbox() {
   const [unreadCounts, setUnreadCounts] = useState({});
   const [latestMessages, setLatestMessages] = useState({});
 
+  // const [totalUnreadCount, setTotalUnreadCount] = useState(0);
+
+  const location = useLocation();
+  
+  useEffect(() => {
+    if (location.state?.userId && otherUsers.length > 0) {
+      const targetUser = otherUsers.find((u) => u.id === location.state.userId);
+      if (targetUser) {
+        setChatUser(targetUser);
+      }
+    }
+  }, [location.state?.userId, otherUsers]);
   useEffect(() => {
     if (!currentUser || otherUsers.length === 0) return;
 
@@ -48,8 +65,15 @@ function Inbox() {
       });
 
       setUnreadCounts(counts);
-      setLatestMessages(latest);
+      const totalUnread = Object.values(counts).reduce(
+        (sum, count) => sum + count,
+        0
+      );
+      // setTotalUnreadCount(totalUnread);
+      dispatch(setTotalUnreadCount(totalUnread));
     });
+
+    // console.log(totalUnreadCount);
 
     return () => unsubscribe();
   }, [currentUser, otherUsers]);

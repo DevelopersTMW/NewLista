@@ -77,6 +77,7 @@ const Step2 = ({ onNext, onBack, defaultValues }) => {
               setValue={setValue}
               register={register}
               error={errors.fileInput}
+              control={control}
             ></AddPhotoSection>
           </div>
           <div className="border-y-[1px] border-[#BBBBBB] border-solid mt-10 py-9">

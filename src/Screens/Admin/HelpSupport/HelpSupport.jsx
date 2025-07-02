@@ -32,9 +32,9 @@ const HelpSupport = () => {
       const response = await axios.post(
         `${ApiKey}/support`,
         {
-          first_name: data.FirstName,
-          last_name: data.LastName,
-          email: data.Email,
+          first_name: user.first_name,
+          last_name: user.first_name,
+          email: user.email,
           message: data.Message,
           error_message: data.ErrMessageBox,
         },

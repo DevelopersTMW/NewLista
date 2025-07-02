@@ -22,7 +22,7 @@ import UnkownUser from "/public/Images/UnknowUser.png";
 // COMPONENTS
 import TruncatedText from "../../TruncatedText/TruncatedText";
 import ConfirmationModal from "../../ConfirmationModal/ConfirmationModal";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FaMoneyBillWave } from "react-icons/fa";
 
 const AddToNetwork = ({
@@ -52,6 +52,7 @@ const AddToNetwork = ({
     confirmLabel: "",
     onConfirm: () => {},
   });
+  const navigate = useNavigate()
 
   // SEND CONNECTION REQUEST
   const openConfirmation = (actionType) => {
@@ -152,11 +153,19 @@ const AddToNetwork = ({
     }
     if (type === "myNetwork") {
       return (
-        <Link to={"/admin/inbox"}>
-          <button className="font-Inter text-[#fff] font-semibold text-[15px] px-7 py-1.5 rounded-full border-solid border-[2px] border-[#43B274] bg-[#43B274] cursor-pointer">
+          <button
+            onClick={() => {
+              navigate("/admin/inbox", {
+                state: {
+                  userId: id,
+                  userName: `${InvesUserName}`,
+                },
+              });
+            }}
+            className="font-Inter text-[#fff] font-semibold text-[15px] px-7 py-1.5 rounded-full border-solid border-[2px] border-[#43B274] bg-[#43B274] cursor-pointer"
+          >
             Message
           </button>
-        </Link>
       );
     }
     if (type === "pending") {
@@ -204,10 +213,7 @@ const AddToNetwork = ({
               <TruncatedText text={InvesUserName} maxLength={11} />
             </h4>
             <h6 className="font-Inter text-[14px] leading-[15px] font-[500]">
-              <TruncatedText
-                text={`${InvesDesc}`}
-                maxLength={19}
-              />
+              <TruncatedText text={`${InvesDesc}`} maxLength={19} />
             </h6>
           </span>
         </div>
@@ -252,7 +258,7 @@ const AddToNetwork = ({
                 strokeWidth={2}
                 className="size-5.5 text-PurpleColor font-[900]"
               />,
-              year ?  year + "Year" : "0 Year",
+              year ? year + "Year" : "0 Year",
               15
             )}
           </ul>

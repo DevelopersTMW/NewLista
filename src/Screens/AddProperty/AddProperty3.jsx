@@ -65,7 +65,7 @@ const PropertyForm = () => {
       form.append("sale_price", formData.salePrice || "");
       form.append("address", formData.PropertyAddress);
       form.append("city", formData.City);
-      form.append("state", formData.StateProvince);
+      form.append("state", formData.state);
       form.append("zip", formData.ZipPostalCode);
       form.append("description", formData.description);
       form.append("featured_listing", formData.FeaturedListing ? 1 : 0);
@@ -131,7 +131,6 @@ const PropertyForm = () => {
         headers: { Authorization: `Bearer ${token}` },
       });
       const data = response.data?.data;
-
       if (data) {
         setFormData({
           PropertyTitle: data.property_name,
@@ -144,8 +143,8 @@ const PropertyForm = () => {
           BuildingSize_sqft: data.building_size || "",
           salePrice: data.sale_price || "",
           PropertyAddress: data.address || "",
-          City: data.city || "",
-          StateProvince: data.state || "",
+          city: data.city || "",
+          state: data.state || "",
           ZipPostalCode: data.zip || "",
           description: data.description || "",
           fileInput: data.images || [],
