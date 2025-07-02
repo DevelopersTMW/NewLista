@@ -37,14 +37,18 @@ const Dashboard = () => {
         });
 
         const allListings = response.data?.data || [];
-        const today = new Date().toISOString().split("T")[0];
+        const today = new Date().toLocaleDateString("en-CA");
+
+        console.log(today);
 
         const totalCount = allListings.length;
 
         const todaysListings = allListings.filter((listing) => {
           const createdDate = listing.created_at?.split("T")[0];
+          console.log(createdDate);
           return createdDate === today;
         });
+        console.log(todaysListings);
         const todayCount = todaysListings.length;
 
         const pendingCount = allListings.filter(
@@ -62,6 +66,7 @@ const Dashboard = () => {
         const todayActiveCount = todaysListings.filter(
           (listing) => listing.listing_status === "Available"
         ).length;
+
 
         setListingStats({
           totalCount,
@@ -88,7 +93,7 @@ const Dashboard = () => {
         });
 
         const allUsers = response.data?.my_connections || [];
-        const today = new Date().toISOString().split("T")[0];
+        const today = new Date().toLocaleDateString("en-CA");
 
         const todayUsers = allUsers.filter((user) => {
           const createdDate = user.created_at?.split("T")[0];

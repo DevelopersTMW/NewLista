@@ -25,12 +25,12 @@ function Inbox() {
   const [Loading, setLoading] = useState(false);
   const tokens = localStorage.getItem("token");
   const [unreadCounts, setUnreadCounts] = useState({});
-  const [latestMessages, setLatestMessages] = useState({});
+  const [latestMessages, setLatestMessagess] = useState({});
 
   // const [totalUnreadCount, setTotalUnreadCount] = useState(0);
 
   const location = useLocation();
-  
+
   useEffect(() => {
     if (location.state?.userId && otherUsers.length > 0) {
       const targetUser = otherUsers.find((u) => u.id === location.state.userId);
@@ -63,7 +63,7 @@ function Inbox() {
           }
         });
       });
-
+      setLatestMessagess(counts)
       setUnreadCounts(counts);
       const totalUnread = Object.values(counts).reduce(
         (sum, count) => sum + count,

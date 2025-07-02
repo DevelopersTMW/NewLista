@@ -46,9 +46,9 @@ const OurNetwork = ({
           {loading ? (
             <Spinner style={"w-14 h-20 text-PurpleColor"} />
           ) : paginatedUsers.length > 0 ? (
-            paginatedUsers.map((user) => (
+            paginatedUsers.map((user , index) => (
               <AddToNetwork
-                key={user.id}
+                key={index}
                 id={user.id}
                 InvesImage={user.headshot}
                 InvesUserName={`${user.first_name} ${user.last_name}`}

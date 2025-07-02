@@ -34,7 +34,6 @@ const propertyType = [
 ];
 
 const statesArray = [
-  { id: 0, name: "Select Your State", code: "" },
   { id: 1, name: "Alabama", code: "AL" },
   { id: 2, name: "Alaska", code: "AK" },
   { id: 3, name: "Arizona", code: "AZ" },

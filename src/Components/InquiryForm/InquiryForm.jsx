@@ -236,9 +236,9 @@ function InquiryForm({ id, propertyAddress }) {
                       register={register("Timeline", {
                         required: false,
                       })}
-                      labels={"Time Line"}
+                      labels={"Timeline"}
                       type="text"
-                      placeholder={"Enter Time Line"}
+                      placeholder={"Enter Timeline"}
                       error={errors.Timeline?.message}
                     ></Inputs>
                   </span>

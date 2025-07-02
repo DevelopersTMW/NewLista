@@ -3,7 +3,7 @@ import AddToNetwork from "../../../../../Components/Cards/AddToNetwork/AddToNetw
 import Spinner from "../../../../../Components/Spinner/Spinner";
 import Pagination from "../../../../../Components/Pagination/Pagination";
 import PendingUserModal from "../../../../../Components/ProfileModal/PendingUserModal";
-
+import UnkownUser from "/public/Images/UnknowUser.png";
 const OurRequest = ({
   loading,
   PendinNetwork,
@@ -127,7 +127,7 @@ const OurRequest = ({
                 <AddToNetwork
                   key={user.to_user?.id ?? user.id} // fallback if user.to_user is missing
                   id={user.id}
-                  InvesImage={user.to_user?.headshot || "default-image.png"} // fallback image if undefined
+                  InvesImage={user.to_user?.headshot || ""} // fallback image if undefined
                   InvesUserName={`${user.to_user?.first_name || ""} ${
                     user.to_user?.last_name || ""
                   }`}

@@ -54,9 +54,6 @@ const MyNetwork2 = () => {
   const [showModal, setShowModal] = useState(false);
   const [activeTab, setActiveTab] = useState("addToNetwork");
 
-  console.log(SentRequest);
-
-
   const getJoinYear = (timestamp) => new Date(timestamp).getFullYear();
 
   const applyFilters = (users) => {
@@ -109,7 +106,6 @@ const MyNetwork2 = () => {
           },
         });
         const Data = response.data;
-        console.log(Data);
         setMyNetwork(Data.my_connections);
         setAddNetwork(Data.all_users);
         setPendingNetwork(Data.received_requests);
