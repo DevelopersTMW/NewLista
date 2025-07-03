@@ -1,7 +1,14 @@
 import React from "react";
 import { Controller } from "react-hook-form";
 
-export default function CapRate({ control, errors, trigger }) {
+export default function CapRate({
+  control,
+  errors,
+  trigger,
+  capRateMin,
+  capRateMax,
+  getValues
+}) {
   const min = 0;
   const max = 30;
 
@@ -19,15 +26,17 @@ export default function CapRate({ control, errors, trigger }) {
             rules={{
               required: "Min is required",
               min: { value: 0, message: "Min must be ≥ 0" },
-              validate: (value, formValues) =>
-                value < formValues.capRateMax || "Min must be less than Max",
+              validate: (value) => {
+                const max = getValues("capRateMax");
+                return value < max || "Min must be less than Max";
+              },
             }}
             render={({ field }) => (
               <input
                 {...field}
                 type="number"
                 min={0}
-                value={field.value ?? 0} // fallback here
+                value={field.value} // fallback here
                 className={`bg-[#F3EEFF] border ${
                   errors.capRateMin ? "border-red-500" : "border-[#F3EEFF]"
                 } text-Paracolor font-[600] text-[14px] w-20 h-8 rounded-[6px] px-1 outline-none`}
@@ -55,7 +64,6 @@ export default function CapRate({ control, errors, trigger }) {
                 const maxVal = maxField.value ?? 0;
                 const minPercent = ((minVal - min) / (max - min)) * 100;
                 const maxPercent = ((maxVal - min) / (max - min)) * minVal;
-
                 return (
                   <div className="relative w-full">
                     <div className="absolute top-1/2 left-0 right-0 h-1 bg-gray-400 rounded -translate-y-1/2" />
@@ -72,7 +80,10 @@ export default function CapRate({ control, errors, trigger }) {
                       max={max}
                       value={minVal}
                       onChange={(e) => {
-                        const val = Math.min(Number(e.target.value), maxVal - 1);
+                        const val = Math.min(
+                          Number(e.target.value),
+                          maxVal - 1
+                        );
                         minField.onChange(val);
                         trigger(["capRateMin", "capRateMax"]);
                       }}
@@ -84,7 +95,10 @@ export default function CapRate({ control, errors, trigger }) {
                       max={max}
                       value={maxVal}
                       onChange={(e) => {
-                        const val = Math.max(Number(e.target.value), minVal + 1);
+                        const val = Math.max(
+                          Number(e.target.value),
+                          minVal + 1
+                        );
                         maxField.onChange(val);
                         trigger(["capRateMin", "capRateMax"]);
                       }}
@@ -107,16 +121,18 @@ export default function CapRate({ control, errors, trigger }) {
             control={control}
             rules={{
               required: "Max is required",
-              min: { value: min, message: "Max must be ≥ 0" },
-              max: { value: max, message: "Max must be ≤ 30" },
-              validate: (value, formValues) =>
-                value > formValues.capRateMin || "Max must be greater than Min",
+              min: { value: 0, message: "Max must be ≥ 0" },
+              max: { value: 30, message: "Max must be ≤ 30" },
+              validate: (value) => {
+                const min = getValues("capRateMin");
+                return value > min || "Max must be greater than Min";
+              },
             }}
             render={({ field }) => (
               <input
                 {...field}
                 type="number"
-                value={field.value ?? 30} // fallback here
+                value={field.value} // fallback here
                 className={`bg-[#F3EEFF] border ${
                   errors.capRateMax ? "border-red-500" : "border-[#F3EEFF]"
                 } text-Paracolor font-[600] text-[14px] w-20 h-8 rounded-[6px] px-1 outline-none`}

@@ -136,6 +136,8 @@ const AccountSetting = () => {
   const [selectedState, setSelectedState] = useState("");
   const [cities, setCities] = useState([]);
   const [selectedCity, setSelectedCity] = useState("");
+
+ 
   // REACT HOOK FOR
   const { isOpen, confirm, handleConfirm, handleCancel } = useConfirmation();
   const {
@@ -148,6 +150,7 @@ const AccountSetting = () => {
     trigger,
     watch,
     reset,
+    getValues
   } = useForm({
     defaultValues: {
       first_name: user.first_name,
@@ -161,14 +164,14 @@ const AccountSetting = () => {
       banner: null,
       headshot: null,
       investor_status: "Non-Active",
-      capRateMin: 0,
-      capRateMax: 0,
+      capRateMin: 0, 
+      capRateMax: 30,
     },
     mode: "onTouched",
   });
-
-  const capRateMin = watch("capRateMin");
+   const capRateMin = watch("capRateMin");
   const capRateMax = watch("capRateMax");
+
   const DefaultSelection = useWatch({ control, name: "state" });
 
   // PREFERRED LOCATION
@@ -268,7 +271,7 @@ const AccountSetting = () => {
 
       const data = res.data;
       console.log(data);
-      
+
       setbanner(res.data.banner);
       setLogo(res.data.headshot);
 
@@ -294,7 +297,6 @@ const AccountSetting = () => {
 
   // COMPLETE PROFILE AND SAVE DATA IN API
   const ProfileComplete = async (data) => {
-    
     function formatUSPhone(phone) {
       const cleaned = phone.replace(/\D/g, "");
       const match = cleaned.match(/^1?(\d{3})(\d{3})(\d{4})$/);
@@ -348,7 +350,7 @@ const AccountSetting = () => {
           }
         );
         console.log(response);
-        
+
         localStorage.setItem("User", JSON.stringify(response.data.user));
         localStorage.setItem(
           "ProfileComplete",
@@ -874,11 +876,12 @@ const AccountSetting = () => {
                   Preferred Cap Rate %
                 </label>
                 <CapRatefield
-                  capRateMin={Math.round(capRateMin)}
+                  capRateMin={capRateMin}
                   capRateMax={capRateMax}
                   control={control}
                   errors={errors}
                   trigger={trigger}
+                  getValues={getValues}
                 ></CapRatefield>
               </div>
 
