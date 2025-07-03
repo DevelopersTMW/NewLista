@@ -47,22 +47,22 @@ const Step2 = ({ onNext, onBack, defaultValues }) => {
     if (defaultValues && Object.keys(defaultValues).length > 0) {
       setimages(defaultValues.fileInput);
 
-      const fields = defaultValues.custom_fields || {};
-      const convertedFields = {};
+      // const fields = defaultValues.custom_fields || {};
+      // const convertedFields = {};
 
-      for (const key in fields) {
-        const value = fields[key];
-        // Only convert "true" or "false" strings to booleans
-        if (value === "true" || value === "false") {
-          convertedFields[key] = value === "true";
-        } else {
-          convertedFields[key] = value; // leave other values as-is
-        }
-      }
+      // for (const key in fields) {
+      //   const value = fields[key];
+      //   // Only convert "true" or "false" strings to booleans
+      //   if (value === "true" || value === "false") {
+      //     convertedFields[key] = value === "true";
+      //   } else {
+      //     convertedFields[key] = value; // leave other values as-is
+      //   }
+      // }
 
       reset({
         ...defaultValues,
-        custom_fields: convertedFields,
+        // custom_fields: convertedFields,
       });
     }
   }, [defaultValues, reset]);
@@ -80,9 +80,9 @@ const Step2 = ({ onNext, onBack, defaultValues }) => {
               control={control}
             ></AddPhotoSection>
           </div>
-          <div className="border-y-[1px] border-[#BBBBBB] border-solid mt-10 py-9">
+          {/* <div className="border-y-[1px] border-[#BBBBBB] border-solid mt-10 py-9">
             <Features errors={errors} control={control}></Features>
-          </div>
+          </div> */}
           {/* <div>
             <div>
               <h1 className="font-Urbanist font-[500] mb-2 text-[#242424] text-[17px]">

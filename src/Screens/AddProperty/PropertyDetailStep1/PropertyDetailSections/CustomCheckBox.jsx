@@ -2,20 +2,57 @@ import React from "react";
 import Checkboxs from "../../../../Components/InputFields/Checkboxs";
 import { Controller } from "react-hook-form";
 
-const featureOptions = [
-  { name: "Parking", label: "Parking" },
-  { name: "SprinklerSystem", label: "Sprinkler System" },
-  { name: "SecuritySystem", label: "Security System" },
-  { name: "HVAC", label: "HVAC" },
-  { name: "HighSpeedInternet", label: "High Speed Internet" },
-  { name: "ADACompliant", label: "ADA Compliant" },
-];
+
+const propertyFeatureMap = {
+  "Apartments / Multifamily": [
+    { name: "LaundryFacilities", label: "Laundry Facilities" },
+    { name: "ParkingSpaces", label: "Parking Spaces" },
+    { name: "SwimmingPool", label: "Swimming Pool" },
+    { name: "FitnessCenter", label: "Fitness Center" },
+    { name: "Playground", label: "Playground" },
+    { name: "PetFriendly", label: "Pet-Friendly" },
+    { name: "SecurityGatedAccess", label: "Security / Gated Access" },
+    { name: "AccessibilityFeatures", label: "Accessibility Features" },
+    { name: "HighSpeedInternet", label: "High-Speed Internet" },
+  ],
+
+  "Retail Center": [
+    { name: "HVAC", label: "HVAC" },
+    { name: "SecuritySystem", label: "Security System" },
+    { name: "SprinklerSystem", label: "Sprinkler System" },
+    { name: "ADACompliant", label: "ADA Compliant" },
+    { name: "ParkingSpaces", label: "Parking Spaces" },
+    { name: "HighSpeedInternet", label: "High-Speed Internet" },
+  ],
+
+  "Office Building": [
+    { name: "Reception", label: "Reception Area" },
+    { name: "ConferenceRooms", label: "Conference Rooms" },
+    { name: "BreakRoom", label: "Break Room" },
+    { name: "ParkingGarage", label: "Parking Garage" },
+    { name: "WiFi", label: "WiFi Included" },
+  ],
+
+  "Warehouse": [
+    { name: "LoadingDock", label: "Loading Dock" },
+    { name: "RollUpDoors", label: "Roll-up Doors" },
+    { name: "ReinforcedFloors", label: "Reinforced Floors" },
+  ],
+
+  "Hotel": [
+    { name: "RoomService", label: "Room Service" },
+    { name: "Concierge", label: "Concierge" },
+    { name: "Pool", label: "Pool Access" },
+    { name: "Gym", label: "Fitness Center" },
+  ],
+
+  // ...add remaining 15 property types similarly
+};
 
 const CustomCheckBox = ({ control, errors, propertyType }) => {
-  if (propertyType !== "Retail Center") return null;
+  const checkboxes = propertyFeatureMap[propertyType];
 
-  console.log(propertyType);
-  
+  if (!checkboxes) return null;
 
   return (
     <>
@@ -31,8 +68,8 @@ const CustomCheckBox = ({ control, errors, propertyType }) => {
             "Please select at least one feature.",
         }}
         render={({ field }) => (
-          <div className="grid max-[400px]:grid-cols-1 grid-cols-2 gap-2 md:grid-cols-3 md:gap-3">
-            {featureOptions.map((opt) => (
+          <div className="grid max-[400px]:grid-cols-1 grid-cols-2 gap-2 md:grid-cols-5 md:gap-3">
+            {checkboxes.map((opt) => (
               <Checkboxs
                 key={opt.name}
                 name={opt.name}

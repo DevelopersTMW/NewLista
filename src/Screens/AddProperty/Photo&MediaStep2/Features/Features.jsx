@@ -2,14 +2,9 @@ import React from "react";
 import Checkboxs from "../../../../Components/InputFields/Checkboxs";
 import { Controller } from "react-hook-form";
 
-const featureOptions = [
-  { name: "Parking", label: "Parking" },
-  { name: "SprinklerSystem", label: "Sprinkler System" },
-  { name: "SecuritySystem", label: "Security System" },
-  { name: "HVAC", label: "HVAC" },
-  { name: "HighSpeedInternet", label: "High Speed Internet" },
-  { name: "ADACompliant", label: "ADA Compliant" },
-];
+const featureMap = {
+  "Apartments / Multifamily": ["Parking", "SprinklerSystem", "HVAC"],
+};
 
 const Features = ({ control, errors }) => {
   return (
