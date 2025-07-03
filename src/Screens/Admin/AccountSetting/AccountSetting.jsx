@@ -202,8 +202,6 @@ const AccountSetting = () => {
     setSelectedCity("");
     setCities([]);
 
-    console.log(state.name);
-
     if (state) {
       const stateShortNames = value.code;
       axios
@@ -269,6 +267,8 @@ const AccountSetting = () => {
       });
 
       const data = res.data;
+      console.log(data);
+      
       setbanner(res.data.banner);
       setLogo(res.data.headshot);
 
@@ -294,6 +294,7 @@ const AccountSetting = () => {
 
   // COMPLETE PROFILE AND SAVE DATA IN API
   const ProfileComplete = async (data) => {
+    
     function formatUSPhone(phone) {
       const cleaned = phone.replace(/\D/g, "");
       const match = cleaned.match(/^1?(\d{3})(\d{3})(\d{4})$/);
@@ -323,8 +324,8 @@ const AccountSetting = () => {
             preferred_investment_range: data.preferred_investment_range,
             preferred_locations: data.preferred_locations,
             preferred_investment_type: data.preferred_investment_type,
-            preferred_cap_rate_min: data.capRateMin,
-            preferred_cap_rate_max: data.capRateMax,
+            preferred_cap_rate_min: Number(data.capRateMin),
+            preferred_cap_rate_max: Number(data.capRateMax),
             investor_status: data.investor_status,
             experience_level: data.experience_level,
             bio: data.bio,
@@ -346,6 +347,8 @@ const AccountSetting = () => {
             },
           }
         );
+        console.log(response);
+        
         localStorage.setItem("User", JSON.stringify(response.data.user));
         localStorage.setItem(
           "ProfileComplete",

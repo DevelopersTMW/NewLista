@@ -18,6 +18,7 @@ import FormattedNumberInput from "../../../Components/InputFields/NumberInputs.j
 import Inputs from "../../../Components/InputFields/Inputs.jsx";
 import NumberInputs from "../../../Components/InputFields/NumberInputs.jsx";
 import IndustrialForm from "../../../Components/PropertyForm/IndustrialForm/IndustrialForm.jsx";
+import CustomCheckBox from "./PropertyDetailSections/CustomCheckBox.jsx";
 
 const Step1 = ({ onNext, defaultValues  , prevStep }) => {
   const {
@@ -136,6 +137,11 @@ const Step1 = ({ onNext, defaultValues  , prevStep }) => {
             />
             {/* CUSTOM FIELD  */}
             {propertyType && renderFormFields()}
+
+            {/* CHECK BOX FIELD  */}
+            <CustomCheckBox></CustomCheckBox>
+
+
             <AddressFields setValue={setValue}  control ={control} trigger={trigger} watch={watch} register={register} errors={errors} />
             {/* DESCRIPTION SECTION  */}
             <div className="border-b-[1px]  border-[#BBBBBB] pb-7 sm:py-7 flex-col gap-4 flex">
