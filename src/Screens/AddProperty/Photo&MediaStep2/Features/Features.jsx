@@ -15,7 +15,7 @@ const Features = ({ control, errors }) => {
   return (
     <>
       <h1 className="font-Urbanist font-[500] mb-2 text-[#242424] text-[17px]">
-        Building Features
+        Features
       </h1>
       <Controller
         name="custom_fields"

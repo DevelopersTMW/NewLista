@@ -48,6 +48,7 @@ const Step1 = ({ onNext, defaultValues  , prevStep }) => {
   const PropertyRadio = watch("propertyType");
   const propertyType = watch("propertyName");
 
+
   const renderFormFields = () => {
     switch (propertyType) {
       case "Retail Center":
@@ -139,8 +140,9 @@ const Step1 = ({ onNext, defaultValues  , prevStep }) => {
             {propertyType && renderFormFields()}
 
             {/* CHECK BOX FIELD  */}
-            <CustomCheckBox></CustomCheckBox>
-
+            <div className="py-8">
+              <CustomCheckBox propertyType={propertyType} control={control} errors={errors}></CustomCheckBox>
+            </div>
 
             <AddressFields setValue={setValue}  control ={control} trigger={trigger} watch={watch} register={register} errors={errors} />
             {/* DESCRIPTION SECTION  */}
