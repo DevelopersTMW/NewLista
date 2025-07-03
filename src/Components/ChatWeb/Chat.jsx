@@ -22,6 +22,7 @@ import {
 
 import RightSideImage1_2 from "../../assets/RightSideImage1.2.png";
 import { Menu } from "@headlessui/react";
+import UnkownUser from "/public/Images/UnknowUser.png";
 // other imports...
 
 function getChatId(userId1, userId2) {
@@ -148,7 +149,11 @@ export default function PrivateChat({ currentUser, chatUser, setChatUser }) {
             <div className="relative">
               <img
                 className="h-11 w-11 rounded-full object-cover border border-[#e6e6e6]"
-                src={import.meta.env.VITE_IMAGE_KEY + chatUser.headshot}
+                src={
+                  chatUser.headshot
+                    ? import.meta.env.VITE_IMAGE_KEY + chatUser.headshot
+                    : UnkownUser
+                }
                 alt=""
               />
               <span
@@ -233,7 +238,11 @@ export default function PrivateChat({ currentUser, chatUser, setChatUser }) {
                     {msg.from !== currentUser.id && (
                       <img
                         className="w-7 h-7 mt-6 rounded-full"
-                        src={import.meta.env.VITE_IMAGE_KEY + chatUser.headshot}
+                        src={
+                          chatUser.headshot
+                            ? import.meta.env.VITE_IMAGE_KEY + chatUser.headshot
+                            : UnkownUser
+                        }
                         alt="User"
                       />
                     )}
@@ -331,7 +340,7 @@ export default function PrivateChat({ currentUser, chatUser, setChatUser }) {
                         src={
                           chatUser.headshot
                             ? import.meta.env.VITE_IMAGE_KEY + chatUser.headshot
-                            : "UnkownUser"
+                            : UnkownUser
                         }
                         alt=""
                       />{" "}

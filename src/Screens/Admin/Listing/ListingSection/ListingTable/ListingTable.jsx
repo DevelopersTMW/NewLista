@@ -2,11 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Spinner from "../../../../../Components/Spinner/Spinner";
 import EditIcon from "../../../../../assets/EditIcon.png";
-import {
-  ChartNoAxesCombined,
-  PencilOff,
-  Trash2,
-} from "lucide-react";
+import { ChartNoAxesCombined, Lock, PencilOff, Trash2 } from "lucide-react";
 import RightSideArrow from "../../../../../assets/ListingRightSideArrow.png";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import ConfirmationModal from "../../../../../Components/ConfirmationModal/ConfirmationModal";
@@ -14,19 +10,26 @@ import { useConfirmation } from "../../../AccountSetting/Fields/Confirmation";
 import TruncatedText from "../../../../../Components/TruncatedText/TruncatedText";
 
 const ListingTable = ({ status, propertyType, priceRange, search }) => {
+
+  const ApiKey = import.meta.env.VITE_API_KEY;
+  const Status = localStorage.getItem("status");
+  const token = localStorage.getItem("token");
+  const navigate = useNavigate();
+
+
   const [listings, setListings] = useState([]);
   const [loading, setLoading] = useState(false);
   const [confirmationAction, setConfirmationAction] = useState(null);
   const [selectedId, setSelectedId] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
-  const [sortByViews, setSortByViews] = useState(null); // null | 'asc' | 'desc'
+  const [sortByViews, setSortByViews] = useState(null);
+  const Islocked = !token || Status !== "active";
 
   const itemsPerPage = 5;
   const { isOpen, confirm, handleConfirm, handleCancel } = useConfirmation();
 
-  const ApiKey = import.meta.env.VITE_API_KEY;
-  const token = localStorage.getItem("token");
-  const navigate = useNavigate();
+  
+
 
   useEffect(() => {
     const fetchListings = async () => {
@@ -141,7 +144,7 @@ const ListingTable = ({ status, propertyType, priceRange, search }) => {
 
   return (
     <>
-      <div className="pt-8 sm:px-4 md:px-7 bg-white w-[98%] rounded-b-[13px] xl:w-full overflow-x-auto h-[85vh]">
+      <div className="pt-8 sm:px-4 md:px-7 bg-white w-[98%] rounded-b-[13px] xl:w-full overflow-x-auto h-[88vh]">
         {loading ? (
           <div className="flex justify-center items-center !h-[75vh]">
             <Spinner style={"w-14 h-20 text-PurpleColor z-50"} />
@@ -157,9 +160,7 @@ const ListingTable = ({ status, propertyType, priceRange, search }) => {
                 <th className="px-6 py-4.5">Date Listed</th>
                 <th
                   onClick={() =>
-                    setSortByViews((prev) =>
-                      prev === "desc" ? "asc" : "desc"
-                    )
+                    setSortByViews((prev) => (prev === "desc" ? "asc" : "desc"))
                   }
                   className="px-6 py-4.5 cursor-pointer select-none"
                 >
@@ -188,7 +189,10 @@ const ListingTable = ({ status, propertyType, priceRange, search }) => {
                       scope="row"
                       className="w-[26%] text-[14px] px-4 py-6 font-medium text-gray-900 whitespace-nowrap sm:text-[14px] md:text-[16px] "
                     >
-                      <NavLink className={'hover:border-b-[1px] pb-2'} to={`/properties/${item.id}`}>
+                      <NavLink
+                        className={"hover:border-b-[1px] pb-2"}
+                        to={`/properties/${item.id}`}
+                      >
                         {item.property_name}
                       </NavLink>
                     </th>
@@ -221,9 +225,22 @@ const ListingTable = ({ status, propertyType, priceRange, search }) => {
                       {item.views_count}
                     </td>
                     <td className="px-4 py-6 text-[#222222] font-[550] text-[16px] flex gap-1.5 justify-center">
-                      <Link to={`/admin/analytics/${item.id}`}>
-                        <ChartNoAxesCombined />
-                      </Link>
+                      {!Islocked ? (
+                        <Link to={`/admin/analytics/${item.id}`}>
+                          <ChartNoAxesCombined />
+                        </Link>
+                      ) : (
+                        <span className="relative">
+                          <span className=""> 
+                            <Lock
+                            strokeWidth={3}
+                            className="absolute text-red-600 size-2 -right-1 z-50 sm:size-2 -top-1 sm:mt-0 "
+                          />
+                          </span>
+                          <ChartNoAxesCombined className="cursor-not-allowed" />
+                        </span>
+                      )}
+
                       <button
                         onClick={() => handleConfirmation(item.id)}
                         className="cursor-pointer"

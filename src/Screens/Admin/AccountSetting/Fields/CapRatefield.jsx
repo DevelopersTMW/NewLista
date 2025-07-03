@@ -116,7 +116,7 @@ export default function CapRate({ control, errors, trigger }) {
               <input
                 {...field}
                 type="number"
-                value={field.value ?? 30} // fallback here
+                value={field.value ?? 0} 
                 className={`bg-[#F3EEFF] border ${
                   errors.capRateMax ? "border-red-500" : "border-[#F3EEFF]"
                 } text-Paracolor font-[600] text-[14px] w-20 h-8 rounded-[6px] px-1 outline-none`}

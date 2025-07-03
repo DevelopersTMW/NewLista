@@ -162,7 +162,7 @@ const AccountSetting = () => {
       headshot: null,
       investor_status: "Non-Active",
       capRateMin: 0,
-      capRateMax: 30,
+      capRateMax: 0,
     },
     mode: "onTouched",
   });
@@ -871,7 +871,7 @@ const AccountSetting = () => {
                   Preferred Cap Rate %
                 </label>
                 <CapRatefield
-                  capRateMin={capRateMin}
+                  capRateMin={Math.round(capRateMin)}
                   capRateMax={capRateMax}
                   control={control}
                   errors={errors}

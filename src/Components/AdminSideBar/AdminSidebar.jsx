@@ -17,7 +17,7 @@ const AdminSidebar = ({ screen }) => {
   const status = localStorage.getItem("status");
   const token = localStorage.getItem("token");
   const [isMobileDrawerOpen, setIsMobileDrawerOpen] = useState(false);
-  const [isLocked, setisLocked] = useState(false);
+  const isLocked = !token || status !== "active";
   const toggleDrawer = () => setIsMobileDrawerOpen((prev) => !prev);
   const closeDrawer = () => setIsMobileDrawerOpen(false);
 
@@ -25,11 +25,15 @@ const AdminSidebar = ({ screen }) => {
     (state) => state.unread.totalUnreadCount
   );
 
-  useEffect(() => {
-    if (!token || status !== "active") {
-      setisLocked(true);
-    }
-  }, []);
+  const pendingOffersCount = useSelector(
+    (state) => state.pendingOffers.pendingOffersCount
+  );
+
+  // useEffect(() => {
+  //   if (!token || status !== "active") {
+  //     setisLocked(true);
+  //   }
+  // }, []);
 
   return (
     <>
@@ -272,6 +276,20 @@ const AdminSidebar = ({ screen }) => {
                       strokeWidth={3}
                       className="absolute text-red-600 size-3 right-7  sm:size-4 -mt-1 sm:mt-0 "
                     />
+                  )}
+                  {!isLocked && pendingOffersCount > 0 && (
+                    <div className="absolute text-red-600 size-3 right-10 top-2.5">
+                      <span
+                        className={`text-white text-[13.5px] font-Urbanist px-2 py-[2px] rounded-full flex items-center justify-center font-semibold min-w-[22px] h-[22px] ${
+                          location.pathname === "/admin/myoffers" && !isLocked
+                            ? "bg-black"
+                            : "bg-green-500 text-[#666666]"
+                        }`}
+                        style={{ paddingTop: "2px" }} // Optional for vertical centering tweak
+                      >
+                        {pendingOffersCount > 99 ? "99+" : pendingOffersCount}
+                      </span>
+                    </div>
                   )}
                   <svg
                     xmlns="http://www.w3.org/2000/svg"

@@ -6,17 +6,24 @@ import axios from "axios";
 import Spinner from "../../../Components/Spinner/Spinner";
 import { Link } from "lucide-react";
 import { Links, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { setPendingOffersCount } from "../../../Reducers/PendingOffers/pendingOffersSlice";
 
 export default function MyOffersTable() {
   const [tab, setTab] = useState("sent");
   const token = localStorage.getItem("token");
   const navigate = useNavigate();
   const ApiKey = import.meta.env.VITE_API_KEY;
+  const dispatch = useDispatch();
   const [loading, setLoading] = useState(true);
   const [sentOffers, setSentOffers] = useState([]);
   const [receivedOffers, setReceivedOffers] = useState([]);
+
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 8;
+  const pendingOffersCount = useSelector(
+    (state) => state.pendingOffers?.pendingOffersCount || 0
+  );
 
   const offers = tab === "sent" ? sentOffers : receivedOffers;
   const totalPages = Math.ceil(offers.length / itemsPerPage);
@@ -34,10 +41,19 @@ export default function MyOffersTable() {
             Authorization: `Bearer ${token}`,
           },
         });
-        console.log(response);
 
-        setSentOffers(response.data.sent_offers || []);
-        setReceivedOffers(response.data.received_offers || []);
+        const sent = response.data.sent_offers || [];
+        const received = response.data.received_offers || [];
+
+        setSentOffers(sent);
+        setReceivedOffers(received);
+
+        // Filter pending received offers count
+        const pendingCount = received.filter(
+          (offer) => offer.status === "pending"
+        ).length;
+        // Dispatch to redux
+        dispatch(setPendingOffersCount(pendingCount));
       } catch (error) {
         console.error("Fetch error:", error);
       } finally {
@@ -76,6 +92,16 @@ export default function MyOffersTable() {
           offer.id === id ? { ...offer, status: newStatus } : offer
         )
       );
+
+      // Update pending offers count in redux
+      setTimeout(() => {
+        // Optional: wait state update
+        const updatedPendingCount = receivedOffers.filter((offer) =>
+          offer.id === id ? newStatus === "pending" : offer.status === "pending"
+        ).length;
+
+        dispatch(setPendingOffersCount(updatedPendingCount));
+      }, 0);
     } catch (err) {
       console.error("Action error:", err);
     } finally {
@@ -113,7 +139,18 @@ export default function MyOffersTable() {
                     : "bg-gray-200 text-gray-700 hover:bg-gray-300"
                 )}
               >
-                {key === "sent" ? "Sent Offers" : "Received Offers"}
+                {key === "sent" ? (
+                  "Sent Offers"
+                ) : (
+                  <div className="flex justify-center items-center gap-1">
+                    Received Offers
+                    {pendingOffersCount > 0 && (
+                      <span className="bg-red-500 text-white px-[3px] py-[2px]  text-[12px] rounded-full font-bold  font-Urbanist min-w-[21px] h-[21px]">
+                        {pendingOffersCount}
+                      </span>
+                    )}
+                  </div>
+                )}
               </button>
             ))}
           </div>

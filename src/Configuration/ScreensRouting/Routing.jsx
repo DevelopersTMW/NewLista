@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Home from "../../Screens/Home/Home";
 import Login from "../../Screens/Login/login";
@@ -29,8 +29,19 @@ import FreeYear from "../../Screens/Pricing/FreeYear.jsx";
 import PremiumYear from "../../Screens/Pricing/PremiumYear.jsx";
 import ForgetPassOtp from "../../Screens/ProtectedScreen/ForgetPassOpt.jsx";
 import ChangePassword from "../../Screens/ProtectedScreen/ChangePassword.jsx";
+import useUnreadMessageListener from "../../CustomHook/useUnreadMessageListener/useUnreadMessageListener.js";
 
 const Routing = () => {
+  const [currentUser, setCurrentUser] = useState(null);
+
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem("User"));
+    if (user) setCurrentUser(user);
+  }, []);
+
+  useUnreadMessageListener(currentUser);
+
+
   return (
     <>
       <BrowserRouter>
@@ -63,7 +74,10 @@ const Routing = () => {
           {/* <Route path={"/commercial"} element={<Commercial />} /> */}
           {/* <Route path={"/industrial"} element={<Industrial />} /> */}
           {/* <Route path={"/lease"} element={<LeaseForm />} /> */}
-          <Route path={"/admin/*"} element={<ProtectiveRoute component={<Admin />} />} />
+          <Route
+            path={"/admin/*"}
+            element={<ProtectiveRoute component={<Admin />} />}
+          />
         </Routes>
       </BrowserRouter>
     </>
