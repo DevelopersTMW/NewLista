@@ -17,13 +17,10 @@ export default function CapRate({ control, errors, trigger }) {
             name="capRateMin"
             control={control}
             rules={{
-              validate: {
-                notEmpty: (value) =>
-                  (value !== null && value !== undefined && value !== "") ||
-                  "Min is required",
-                minCheck: (value, formValues) =>
-                  value < formValues.capRateMax || "Min must be less than Max",
-              },
+              required: "Min is required",
+              min: { value: 0, message: "Min must be ≥ 0" },
+              validate: (value, formValues) =>
+                value < formValues.capRateMax || "Min must be less than Max",
             }}
             render={({ field }) => (
               <input
@@ -55,9 +52,9 @@ export default function CapRate({ control, errors, trigger }) {
               control={control}
               render={({ field: maxField }) => {
                 const minVal = minField.value ?? 0;
-                const maxVal = maxField.value ?? 30;
+                const maxVal = maxField.value ?? 0;
                 const minPercent = ((minVal - min) / (max - min)) * 100;
-                const maxPercent = ((maxVal - min) / (max - min)) * 100;
+                const maxPercent = ((maxVal - min) / (max - min)) * minVal;
 
                 return (
                   <div className="relative w-full">
@@ -75,10 +72,7 @@ export default function CapRate({ control, errors, trigger }) {
                       max={max}
                       value={minVal}
                       onChange={(e) => {
-                        const val = Math.min(
-                          Number(e.target.value),
-                          maxVal - 1
-                        );
+                        const val = Math.min(Number(e.target.value), maxVal - 1);
                         minField.onChange(val);
                         trigger(["capRateMin", "capRateMax"]);
                       }}
@@ -90,10 +84,7 @@ export default function CapRate({ control, errors, trigger }) {
                       max={max}
                       value={maxVal}
                       onChange={(e) => {
-                        const val = Math.max(
-                          Number(e.target.value),
-                          minVal + 1
-                        );
+                        const val = Math.max(Number(e.target.value), minVal + 1);
                         maxField.onChange(val);
                         trigger(["capRateMin", "capRateMax"]);
                       }}
@@ -115,24 +106,19 @@ export default function CapRate({ control, errors, trigger }) {
             name="capRateMax"
             control={control}
             rules={{
-              validate: {
-                notEmpty: (value) =>
-                  (value !== null && value !== undefined && value !== "") ||
-                  "Max is required",
-                minCheck: (value) => value >= 0 || "Max must be ≥ 0",
-                maxCheck: (value) => value <= 30 || "Max must be ≤ 30",
-                greaterThanMin: (value, formValues) =>
-                  value > formValues.capRateMin ||
-                  "Max must be greater than Min",
-              },
+              required: "Max is required",
+              min: { value: min, message: "Max must be ≥ 0" },
+              max: { value: max, message: "Max must be ≤ 30" },
+              validate: (value, formValues) =>
+                value > formValues.capRateMin || "Max must be greater than Min",
             }}
             render={({ field }) => (
               <input
                 {...field}
                 type="number"
-                value={field.value ?? 0} // fallback here
+                value={field.value ?? 30} // fallback here
                 className={`bg-[#F3EEFF] border ${
-                  errors.capRateMax ? "border-red-500" : "border-[#3e3258]"
+                  errors.capRateMax ? "border-red-500" : "border-[#F3EEFF]"
                 } text-Paracolor font-[600] text-[14px] w-20 h-8 rounded-[6px] px-1 outline-none`}
                 onChange={(e) => {
                   let val = Number(e.target.value);
