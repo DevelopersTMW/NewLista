@@ -226,7 +226,7 @@ const ListingTable = ({ status, propertyType, priceRange, search }) => {
                     </td>
                     <td className="px-4 py-6 text-[#222222] font-[550] text-[16px] flex gap-1.5 justify-center">
                       {!Islocked ? (
-                        <Link to={`/admin/analytics/${item.id}`}>
+                        <Link title="Property Analytics" to={`/admin/analytics/${item.id}`}>
                           <ChartNoAxesCombined />
                         </Link>
                       ) : (
@@ -237,13 +237,14 @@ const ListingTable = ({ status, propertyType, priceRange, search }) => {
                             className="absolute text-red-600 size-2 -right-1 z-50 sm:size-2 -top-1 sm:mt-0 "
                           />
                           </span>
-                          <ChartNoAxesCombined className="cursor-not-allowed" />
+                          <ChartNoAxesCombined  className="cursor-not-allowed" />
                         </span>
                       )}
 
                       <button
                         onClick={() => handleConfirmation(item.id)}
                         className="cursor-pointer"
+                        title="Edit Property"
                       >
                         <img
                           className="w-5.5 h-5.5"
@@ -251,7 +252,7 @@ const ListingTable = ({ status, propertyType, priceRange, search }) => {
                           alt="Edit"
                         />
                       </button>
-                      <button onClick={() => handleDeleteConfirmation(item.id)}>
+                      <button title="Delete Property" onClick={() => handleDeleteConfirmation(item.id)}>
                         <Trash2 className="size-5 cursor-pointer" />
                       </button>
                     </td>
