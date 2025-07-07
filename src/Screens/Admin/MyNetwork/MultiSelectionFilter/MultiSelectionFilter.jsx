@@ -1,13 +1,13 @@
 import {
   Combobox,
   ComboboxButton,
+  ComboboxInput,
   ComboboxOption,
   ComboboxOptions,
 } from "@headlessui/react";
 import {
   CheckIcon,
   ChevronDownIcon,
-  XMarkIcon,
 } from "@heroicons/react/20/solid";
 import { useState } from "react";
 import clsx from "clsx";
@@ -59,8 +59,8 @@ const statesArray = [
   { id: 44, name: "Utah", code: "UT" },
   { id: 45, name: "Vermont", code: "VT" },
   { id: 46, name: "Virginia", code: "VA" },
-  { id: 47, name: "Washington", code: "WA" }, // U.S. State
-  { id: 48, name: "Washington D.C.", code: "DC" }, // Federal District
+  { id: 47, name: "Washington", code: "WA" },
+  { id: 48, name: "Washington D.C.", code: "DC" },
   { id: 49, name: "West Virginia", code: "WV" },
   { id: 50, name: "Wisconsin", code: "WI" },
   { id: 51, name: "Wyoming", code: "WY" },
@@ -76,68 +76,56 @@ export default function MultiSelectDropdown({
   setSelectedNames,
   setValue,
 }) {
+  const [isOpen, setIsOpen] = useState(false);
+
   const toggleSelection = (name) => {
-    const isSelected = selectedNames.includes(name);
-    const updatedSelection = isSelected
+    const alreadySelected = selectedNames.includes(name);
+    const updated = alreadySelected
       ? selectedNames.filter((n) => n !== name)
       : [...selectedNames, name];
 
-    setSelectedNames(updatedSelection);
-    setValue("state", updatedSelection); // Sync with form state (e.g., react-hook-form)
-  };
-
-  const removeName = (name) => {
-    const updated = selectedNames.filter((n) => n !== name);
     setSelectedNames(updated);
-    setValue("state", updated); // Also update form state
-  };
+    setValue("state", updated);
 
-  console.log(selectedNames);
+    // Close dropdown if this is the first selection
+    if (!alreadySelected && selectedNames.length === 0) {
+      setIsOpen(false);
+    }
+  };
 
   return (
-    <div className="text-black py-2 w-full max-w-md">
-      <Combobox as="div" value={selectedNames} onChange={() => {}} multiple>
-        {/* Trigger button showing selected names */}
-        <div className="relative">
-          <ComboboxButton className="w-[85%] h-10 px-4 text-left rounded-[6px]  font-Urbanist font-[600] text-[14px] text-Paracolor bg-white truncate cursor-pointer">
-            <button type="button" className="">
-              {selectedNames.length === 0
-                ? "Investment Location"
-                : selectedNames.join(", ")}
-            </button>
-            <ChevronDownIcon className="absolute w-5 h-5  inset-y-0 right-1 flex items-center top-2.5 text-gray-500" />
-          </ComboboxButton>
-        </div>
+    <div className="text-black py-2 w-full max-w-md relative">
+      <button
+        type="button"
+        onClick={() => setIsOpen((prev) => !prev)}
+        className="w-[100%] h-10 px-4 text-left rounded-[6px] font-Urbanist font-[600] text-[14px] text-Paracolor bg-white truncate cursor-pointer relative"
+      >
+        {selectedNames.length === 0
+          ? "Investment Location"
+          : selectedNames.join(", ")}
+        <ChevronDownIcon className="absolute right-2 top-2.5 w-5 h-5 text-gray-500" />
+      </button>
 
-        {/* Dropdown options */}
-        <ComboboxOptions className="mt-1 max-h-60 absolute z-50 w-[10%] overflow-auto rounded-md border border-gray-200 bg-white p-1 shadow-lg">
+      {isOpen && (
+        <ul className="mt-1 max-h-60 absolute z-50 w-[85%] overflow-auto rounded-md border border-gray-200 bg-white p-1 shadow-lg">
           {statesArray.map((state) => {
             const isSelected = selectedNames.includes(state.name);
             return (
-              <ComboboxOption
+              <li
                 key={state.id}
-                value={state.name}
-                onClick={(e) => {
-                  e.preventDefault();
-                  toggleSelection(state.name);
-                }}
-                className={({ active }) =>
-                  clsx(
-                    "flex items-center justify-between px-3 py-1 font-[500] text-[14.5px] rounded-md cursor-pointer select-none font-Urbanist",
-                    active ? "bg-purple-100" : "",
-                    isSelected ? "font-semibold" : ""
-                  )
-                }
+                onClick={() => toggleSelection(state.name)}
+                className={clsx(
+                  "flex items-center justify-between px-3 py-1 font-[500] text-[14.5px] rounded-md cursor-pointer select-none font-Urbanist",
+                  isSelected ? "font-semibold bg-purple-100" : "hover:bg-gray-100"
+                )}
               >
                 <span>{state.name}</span>
-                {isSelected && (
-                  <CheckIcon className="w-4 h-4 text-purple-600" />
-                )}
-              </ComboboxOption>
+                {isSelected && <CheckIcon className="w-4 h-4 text-purple-600" />}
+              </li>
             );
           })}
-        </ComboboxOptions>
-      </Combobox>
+        </ul>
+      )}
     </div>
   );
 }
