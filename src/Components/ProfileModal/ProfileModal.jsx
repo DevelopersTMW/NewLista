@@ -260,7 +260,7 @@ const ProfileModal = ({
                 <div className="flex items-center gap-2">
                   <Award className="size-5 text-PurpleColor" />
                   <span className="font-Urbanist font-semibold text-[16px] text-Paracolor">
-                    {user.user.years_of_experiance ? user.user.years_of_experiance + "Year" : "0 Year"}
+                    {user.user.years_of_experiance ? user.user.years_of_experiance + " Years" : "0 Years"}
                   </span>
                 </div>
               </div>
