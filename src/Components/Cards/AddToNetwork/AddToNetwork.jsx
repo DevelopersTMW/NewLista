@@ -258,7 +258,7 @@ const AddToNetwork = ({
                 strokeWidth={2}
                 className="size-5.5 text-PurpleColor font-[900]"
               />,
-              year ? year + "Year" : "0 Year",
+              year ? year + " Years" : "0 Years",
               15
             )}
           </ul>
