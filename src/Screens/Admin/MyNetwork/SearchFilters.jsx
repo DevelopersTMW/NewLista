@@ -4,9 +4,10 @@ import { ChevronLeft, RefreshCw } from "lucide-react";
 import { useForm, useWatch } from "react-hook-form";
 import Selection from "../../../Components/InputFields/Selection";
 import ComboboxSelector from "../../../Components/ComboboxSelector/ComboboxSelector";
+import MultiSelectCombobox from "./MultiSelectionFilter/MultiSelectionFilter";
 
 const PropertyInterest = [
- "Apartments / Multifamily",
+  "Apartments / Multifamily",
   "Automotive Property",
   "Church",
   "Gas Station",
@@ -134,15 +135,16 @@ const InvestmentRange = [
   "Over $50M",
 ];
 
-const SearchFilters = ({ watch, setValue, register ,control  }) => {
+const SearchFilters = ({ watch, setValue, register, control }) => {
   const [selectedState, setSelectedState] = useState(null);
+  const [selectedNames, setSelectedNames] = useState([]);
 
   const [isFilterOpen, setIsFilterOpen] = useState(false);
 
-  const StateSelectionHandler = (value) => {
-    setSelectedState(value);
-    setValue("state", value.name);
-  };
+  // const StateSelectionHandler = (value) => {
+  //   setSelectedNames(value);
+  //   setValue("state", value.name);
+  // };
 
   const DefaultSelection = useWatch({ control, name: "state" });
   const handleResetFilters = () => {
@@ -150,7 +152,7 @@ const SearchFilters = ({ watch, setValue, register ,control  }) => {
     setValue("search", "");
     setValue("investmentRange", "");
     setValue("state", "");
-    setSelectedState(null);
+    setSelectedNames([]);
   };
 
   return (
@@ -178,6 +180,7 @@ const SearchFilters = ({ watch, setValue, register ,control  }) => {
               </svg>
             </div>
             <input
+              title="Search by Investor name, Company and Keyword Filter by Property Type, Maximum Investment Amount, Investment Location"
               type="search"
               id="default-search"
               className=" w-[100%] text-[#444444] placeholder:text-[#444444] font-Urbanist font-semibold py-4.5 pl-11 rounded-[10px] text-[15px] bg-[#F3EEFF] outline-none"
@@ -217,13 +220,10 @@ const SearchFilters = ({ watch, setValue, register ,control  }) => {
               />
             </div>
             <div className=" border-r-[1px] border-solid border-[#BBBBBB] w-[24%]">
-              <ComboboxSelector
-                style={`flex items-center pt-5 px-4 text-[#4b4b4b] font-[600] font-Urbanist text-[14px] outline-none appearance-none cursor-pointer focus:outline-none overflow-hidden`}
-                icon={"top-6 right-1.5"}
-                options={statesArray}
-                onSelect={StateSelectionHandler}
-                value={DefaultSelection}
-                placeholder={"Investment Locations"}
+              <MultiSelectCombobox
+                selectedNames={selectedNames}
+                setSelectedNames={setSelectedNames}
+                setValue={setValue}
               />
             </div>
             <div className="flex justify-center items-center w-[20%]">

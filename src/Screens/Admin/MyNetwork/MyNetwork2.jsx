@@ -61,7 +61,9 @@ const MyNetwork2 = () => {
       const searchTerm = search?.toLowerCase() || "";
       const selectedInterest = propertyinterest?.toLowerCase() || "";
       const selectedInvestment = investmentRange?.toLowerCase() || "";
-      const selectedState = state?.toLowerCase() || "";
+      const selectedStates = Array.isArray(state)
+        ? state.map((s) => s.toLowerCase())
+        : [];
 
       const fullName = `${user.first_name || ""} ${
         user.last_name || ""
@@ -79,7 +81,6 @@ const MyNetwork2 = () => {
           interests.some((interest) => interest.includes(searchTerm))
         : true;
 
-
       const matchesInterest = propertyinterest
         ? interests.includes(selectedInterest)
         : true;
@@ -88,7 +89,8 @@ const MyNetwork2 = () => {
         ? investment === selectedInvestment
         : true;
 
-      const matchesState = state ? userState === selectedState : true;
+      const matchesState =
+        selectedStates.length > 0 ? selectedStates.includes(userState) : true;
 
       return (
         matchesSearch && matchesInterest && matchesInvestment && matchesState
@@ -130,18 +132,16 @@ const MyNetwork2 = () => {
       );
 
       console.log(response);
-      
 
       const sentUser = AddNetwork.find((user) => user.id === id);
 
       // Update AddNetwork list to only include users who are not connected or pending
-      setAddNetwork(
-        (prev) =>
-          prev
-            .map((user) =>
-              user.id === id ? { ...user, connection_status: "pending" } : user
-            )
-            .filter((user) => user.connection_status === null) 
+      setAddNetwork((prev) =>
+        prev
+          .map((user) =>
+            user.id === id ? { ...user, connection_status: "pending" } : user
+          )
+          .filter((user) => user.connection_status === null)
       );
 
       // Add to pending tab
@@ -185,7 +185,6 @@ const MyNetwork2 = () => {
       setloading(false);
     }
   };
-
 
   return (
     <>

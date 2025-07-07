@@ -39,6 +39,16 @@ export default function PrivateChat({ currentUser, chatUser, setChatUser }) {
   const chatId = getChatId(currentUser.id, chatUser.id);
   const messagesEndRef = useRef(null);
 
+  const textareaRef = useRef(null);
+
+  useEffect(() => {
+    const textarea = textareaRef.current;
+    if (textarea) {
+      textarea.style.height = "auto";
+      textarea.style.height = `${textarea.scrollHeight}px`;
+    }
+  }, [text]);
+
   useEffect(() => {
     const messagesRef = ref(getDatabase(), `messages/${chatId}`);
     setMessages([]);
@@ -285,17 +295,21 @@ export default function PrivateChat({ currentUser, chatUser, setChatUser }) {
         {/* Message Input */}
         <form
           onSubmit={sendMessage}
-          className="flex items-center gap-5 p-4 border-t border-[#d8d8d8]"
+          className="relative flex items-center gap-5 p-4 border-t border-[#d8d8d8]"
         >
-          <input
-            type="text"
+          <textarea
+            ref={textareaRef}
             value={text}
             onChange={(e) => setText(e.target.value)}
             placeholder="Type a message..."
-            className="bg-[#F3EEFF]  text-[#1d1d1d] font-[600] font-Urbanist text-[14px] placeholder:text-[12.5px] sm:placeholder:text-[14px] w-full px-4 rounded-[6px] outline-none
-            max-[481px]:h-11 max-[891px]:h-12 max-[1000px]:h-10.5 max-[1100px]:h-11
-            max-[1280px]:h-11.5 max-[1666px]:h-12 min-[1666px]:h-14 min-[1666px]:text-[15px] min-[1666px]:placeholder:text-[15px]"
+            rows={1}
+            className="bg-[#F3EEFF] text-[#1d1d1d] font-[600] font-Urbanist text-[14px]
+    placeholder:text-[12.5px] sm:placeholder:text-[14px]
+    w-full px-4 py-4 rounded-[6px] outline-none resize-none
+    overflow-y-auto break-words whitespace-pre-wrap
+    h-[48px] !max-h-[180px] leading-[20px]"
           />
+
           <button
             type="submit"
             className="bg-PurpleColor text-white px-9 py-2.5 rounded-[6px] hover:bg-blue-700 text-[17px] font-Urbanist font-[600] transition cursor-pointer"
