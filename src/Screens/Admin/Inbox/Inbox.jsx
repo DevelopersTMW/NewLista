@@ -118,18 +118,10 @@ function Inbox() {
     fetchUsers();
   }, []);
 
-  const [open, setOpen] = useState(false);
   if (!currentUser) return <p>Loading...</p>;
 
   return (
     <>
-      <button onClick={() => setOpen(true)}>Open Modal</button>
-      <ReportUserModal
-        isOpens={open}
-        setShowReportModal={setOpen}
-        userId="12345"
-      />
-
       {!Loading ? (
         otherUsers ? (
           <div className="flex flex-col sm:flex-row w-full mt-3 sm:gap-5 lg:gap-10 text-black">
