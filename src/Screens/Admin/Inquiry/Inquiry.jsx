@@ -68,8 +68,10 @@ const Inquiry = () => {
     setSending(true);
 
     const selectedConversation = conversations[selectedChatIndex];
+    console.log(selectedConversation);
 
     const newMessage = {
+      user_id :  selectedConversation.with_user.id,
       property_id: selectedConversation.property.id,
       property_url: "https://yourdomain.com/property/luxury-villa-dha",
       message: text.trim(),
@@ -159,10 +161,8 @@ const Inquiry = () => {
                       <TruncatedText text={conv.property.name} maxLength={18} />
                     </p>
                   </div>
-
-                  {/* Unread Count Badge */}
                   {unreadCounts[idx] > 0 && (
-                    <span className="min-w-[20px] h-[20px] bg-red-500 text-white rounded-full text-xs font-bold flex items-center justify-center px-1">
+                    <span className="min-w-[20px] h-[20px] bg-green-500 text-white rounded-full text-xs font-bold flex items-center justify-center px-1">
                       {unreadCounts[idx]}
                     </span>
                   )}
