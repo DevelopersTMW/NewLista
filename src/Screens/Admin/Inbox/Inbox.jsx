@@ -143,6 +143,7 @@ function Inbox() {
                 currentUser={currentUser}
                 chatUser={chatUser}
                 setChatUser={setChatUser}
+                setUsers={setOtherUsers}
               />
             )}
           </div>

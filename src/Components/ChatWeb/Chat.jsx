@@ -18,23 +18,33 @@ import {
   Info,
   MapPin,
   Phone,
+  Trash,
 } from "lucide-react";
 
 import RightSideImage1_2 from "../../assets/RightSideImage1.2.png";
 import { Menu } from "@headlessui/react";
 import UnkownUser from "/public/Images/UnknowUser.png";
+import axios from "axios";
 // other imports...
 
 function getChatId(userId1, userId2) {
   return userId1 < userId2 ? `${userId1}_${userId2}` : `${userId2}_${userId1}`;
 }
 
-export default function PrivateChat({ currentUser, chatUser, setChatUser }) {
+export default function PrivateChat({
+  currentUser,
+  chatUser,
+  setChatUser,
+  setUsers,
+}) {
   const [messages, setMessages] = useState([]);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   const [isChatUserOnline, setIsChatUserOnline] = useState();
   const [text, setText] = useState("");
   const [hoveredIndex, setHoveredIndex] = useState(null); // <-- added
+
+  const ApiKey = import.meta.env.VITE_API_KEY;
+  const token = localStorage.getItem("token");
 
   const chatId = getChatId(currentUser.id, chatUser.id);
   const messagesEndRef = useRef(null);
@@ -88,6 +98,33 @@ export default function PrivateChat({ currentUser, chatUser, setChatUser }) {
       setMessages([]);
     } catch (error) {
       console.error("Error clearing chat:", error);
+    }
+  };
+  const deteleUser = async () => {
+    const confirmDelete = window.confirm(
+      "Are you sure you want to delete this user and remove the chat?"
+    );
+    if (!confirmDelete) return;
+
+    try {
+      // 1. Call API to remove connection
+      await axios.get(`${ApiKey}/network/remove-connection/${chatUser.id}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+
+      // 2. Delete messages in Firebase
+      await remove(ref(db, `messages/${chatId}`));
+
+      // 3. Update user list in UI immediately
+      setUsers((prevUsers) =>
+        prevUsers.filter((user) => user.id !== chatUser.id)
+      );
+
+      // 4. Clear current chat user
+      setChatUser(null);
+    } catch (error) {
+      console.error("❌ Failed to delete user:", error);
+      alert("Failed to remove user.");
     }
   };
 
@@ -202,10 +239,19 @@ export default function PrivateChat({ currentUser, chatUser, setChatUser }) {
                   <Menu.Item>
                     <button
                       onClick={() => clearChat()}
-                      className={`hover:bg-gray-200 flex gap-2 w-full text-left px-4 py-2 text-sm text-gray-700 cursor-pointer font-Urbanist font-[600]`}
+                      className={`hover:bg-gray-200 flex gap-2 w-full text-left px-4 py-2 text-sm text-gray-700 cursor-pointer font-Urbanist font-[600] border-b-[1px] border-[#c9c9c9]`}
                     >
                       <CircleMinus className="size-[17px]" />
                       Clear Chat
+                    </button>
+                  </Menu.Item>
+                  <Menu.Item>
+                    <button
+                      onClick={() => deteleUser()}
+                      className={`hover:bg-gray-200 flex gap-2 w-full text-left px-4 py-2 text-sm text-gray-700 cursor-pointer font-Urbanist font-[600]`}
+                    >
+                      <Trash className="size-[17px]" />
+                      Delete User
                     </button>
                   </Menu.Item>
                 </div>

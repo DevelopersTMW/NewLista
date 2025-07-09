@@ -47,12 +47,15 @@ const ProfileModal = ({ isOpen, onClose, user }) => {
         <>
           <button
             onClick={() => setShowReportModal(true)}
+            title="Report User"
             className="font-Inter text-[#fff] font-semibold text-[15px] px-2 py-1.5 rounded-full border-solid border-[2px] bg-red-500 cursor-pointer"
           >
             <img className="w-5 h-5" src={ReportUser} alt="Report" />
           </button>
-
-          <button className="font-Inter text-[#fff] font-semibold text-[15px] px-2 py-1.5 rounded-full border-solid border-[2px] bg-red-500 cursor-pointer">
+          <button
+            title="Block User"
+            className="font-Inter text-[#fff] font-semibold text-[15px] px-2 py-1.5 rounded-full border-solid border-[2px] bg-red-500 cursor-pointer"
+          >
             <img className="w-4.5 h-4.5" src={BlockUserIcon} alt="Block" />
           </button>
         </>
@@ -183,11 +186,11 @@ const ProfileModal = ({ isOpen, onClose, user }) => {
 
       {/* Move this OUTSIDE Dialog */}
       {showReportModal && (
-      <ReportUserModal
-        isOpen={showReportModal}
-        onClose={() => setShowReportModal(false)}
-        userId={user.user.id}
-      />
+        <ReportUserModal
+          isOpen={showReportModal}
+          onClose={() => setShowReportModal(false)}
+          userId={user.user.id}
+        />
       )}
     </>
   );

@@ -180,11 +180,11 @@ const SearchFilters = ({ watch, setValue, register, control }) => {
               </svg>
             </div>
             <input
-              // title=""
+              title="Search by Investor name, Company and Keyword Filter by Property Type, Maximum Investment Amount, Investment Location"
               type="search"
               id="default-search"
               className=" w-[100%] text-[#444444] placeholder:text-[#444444] font-Urbanist font-semibold py-4.5 pl-11 rounded-[10px] text-[15px] bg-[#F3EEFF] outline-none"
-              placeholder="Search by Investor name, Company and Keyword Filter by Property Type, Maximum Investment Amount, Investment Location"
+              placeholder="Search by Name, Company and Keyword"
               {...register("search")}
             />
           </div>
