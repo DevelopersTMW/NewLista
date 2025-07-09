@@ -173,38 +173,7 @@ const AdminSidebar = ({ screen }) => {
                   </h1>
                 </Link>
               </li>
-              <li className="relative">
-                <Link
-                  to={"/admin/inquiry"}
-                  onClick={() => {
-                    setIsMobileDrawerOpen(false);
-                  }}
-                  className={`flex items-center p-2 px-6 sm:px-7 text-gray-900 rounded-r-lg group gap-4  ${
-                    location.pathname === "/admin/inquiry"
-                      ? "bg-PurpleColor text-white"
-                      : "text-[#666666]"
-                  }`}
-                >
-                  <MessageCircleWarning className="size-6" />
-                  <h1 className="font-Urbanist font-[500] text-[15px] sm:mt-1 sm:text-[16px] 2xl:text-[18.5px]">
-                    Inquiries
-                  </h1>
-                  {totalUnreadCount > 0 && (
-                    <div className="absolute text-red-600 size-3 right-10 top-2.5">
-                      <span
-                        className={`text-white text-[13.5px] font-Urbanist px-2 py-[2px] rounded-full flex items-center justify-center font-semibold min-w-[22px] h-[22px] ${
-                          location.pathname === "/admin/inquiry"
-                            ? "bg-black"
-                            : "bg-green-500 text-[#666666]"
-                        }`}
-                        style={{ paddingTop: "2px" }} // Optional for vertical centering tweak
-                      >
-                        {unreadMessages > 99 ? "99+" : unreadMessages}
-                      </span>
-                    </div>
-                  )}
-                </Link>
-              </li>
+             
               <li className="relative">
                 <Link
                   to={isLocked ? "#" : "/admin/network"}
@@ -297,6 +266,38 @@ const AdminSidebar = ({ screen }) => {
                   <h1 className="font-Urbanist font-[500] text-[15px] sm:mt-1 sm:text-[16px] 2xl:text-[18px]">
                     Inbox
                   </h1>
+                </Link>
+              </li>
+               <li className="relative">
+                <Link
+                  to={"/admin/inquiry"}
+                  onClick={() => {
+                    setIsMobileDrawerOpen(false);
+                  }}
+                  className={`flex items-center p-2 px-6 sm:px-7 text-gray-900 rounded-r-lg group gap-4  ${
+                    location.pathname === "/admin/inquiry"
+                      ? "bg-PurpleColor text-white"
+                      : "text-[#666666]"
+                  }`}
+                >
+                  <MessageCircleWarning className="size-6" />
+                  <h1 className="font-Urbanist font-[500] text-[15px] sm:mt-1 sm:text-[16px] 2xl:text-[18.5px]">
+                    Inquiries
+                  </h1>
+                  {totalUnreadCount > 0 && (
+                    <div className="absolute text-red-600 size-3 right-10 top-2.5">
+                      <span
+                        className={`text-white text-[13.5px] font-Urbanist px-2 py-[2px] rounded-full flex items-center justify-center font-semibold min-w-[22px] h-[22px] ${
+                          location.pathname === "/admin/inquiry"
+                            ? "bg-black"
+                            : "bg-green-500 text-[#666666]"
+                        }`}
+                        style={{ paddingTop: "2px" }} // Optional for vertical centering tweak
+                      >
+                        {unreadMessages > 99 ? "99+" : unreadMessages}
+                      </span>
+                    </div>
+                  )}
                 </Link>
               </li>
 
