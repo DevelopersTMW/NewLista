@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import TextAreas from "../InputFields/TextAreas";
 import axios from "axios";
 import { X } from "lucide-react";
+import Spinner from "../Spinner/Spinner";
 
 const REPORT_REASONS = [
   "Spam or scam",
@@ -28,7 +29,7 @@ const ReportUserModal = ({ isOpen, onClose, userId }) => {
   });
 
   const ApiKey = import.meta.env.VITE_API_KEY;
-  const token = localStorage.getItem("token")
+  const token = localStorage.getItem("token");
   const [loading, setloading] = useState(false);
   const selectedReasons = watch("reasons");
   const isOtherChecked = selectedReasons?.includes("Other");
@@ -67,15 +68,13 @@ const ReportUserModal = ({ isOpen, onClose, userId }) => {
         }
       );
       console.log(response);
-    onClose();
-
+      onClose();
     } catch (error) {
-        console.log(error);
+      console.log(error);
       setloading(false);
     } finally {
       setloading(false);
     }
-
   };
 
   if (!isOpen) return null;
@@ -94,72 +93,78 @@ const ReportUserModal = ({ isOpen, onClose, userId }) => {
           </button>
 
           <h2 className="text-3xl font-bold font-Inter mb-4">Report User</h2>
-          
-          <form onSubmit={handleSubmit(onSubmit)}>
-            <fieldset className="mb-4">
-              <legend className="font-semibold mb-2 font-Urbanist">
-                Select reason(s):
-              </legend>
 
-              {REPORT_REASONS.map((reason) => (
-                <label
-                  key={reason}
-                  className="flex items-center mb-2 font-Urbanist text-[15px]"
+          {!loading ? (
+            <form onSubmit={handleSubmit(onSubmit)}>
+              <fieldset className="mb-4">
+                <legend className="font-semibold mb-2 font-Urbanist">
+                  Select reason(s):
+                </legend>
+
+                {REPORT_REASONS.map((reason) => (
+                  <label
+                    key={reason}
+                    className="flex items-center mb-2 font-Urbanist text-[15px]"
+                  >
+                    <input
+                      type="checkbox"
+                      value={reason}
+                      {...register("reasons", {
+                        validate: (value) =>
+                          value.length > 0 ||
+                          "Please select at least one reason.",
+                      })}
+                      className="mr-2"
+                    />
+                    {reason}
+                  </label>
+                ))}
+
+                {/* Show textarea if 'Other' is checked */}
+                {isOtherChecked && (
+                  <div className="mt-3">
+                    <TextAreas
+                      name="otherReason"
+                      placeholder="Please describe your reason..."
+                      register={register("otherReason", {
+                        validate: (value) =>
+                          isOtherChecked && !value.trim()
+                            ? "Please enter a reason for 'Other'."
+                            : true,
+                      })}
+                    />
+                    {errors.otherReason && (
+                      <p className="text-red-600 text-sm mt-1">
+                        {errors.otherReason.message}
+                      </p>
+                    )}
+                  </div>
+                )}
+
+                {errors.reasons && (
+                  <p className="text-red-600 text-sm mt-1">
+                    {errors.reasons.message}
+                  </p>
+                )}
+              </fieldset>
+              <p className="text-[13px] text-Paracolor rounded mb-4 font-medium">
+                Note: Reporting this user will remove your connection with them!
+              </p>
+
+              <div className="flex justify-end">
+                <button
+                  type="submit"
+                  className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 text-[15px] font-Poppins font-semibold cursor-pointer"
                 >
-                  <input
-                    type="checkbox"
-                    value={reason}
-                    {...register("reasons", {
-                      validate: (value) =>
-                        value.length > 0 ||
-                        "Please select at least one reason.",
-                    })}
-                    className="mr-2"
-                  />
-                  {reason}
-                </label>
-              ))}
-
-              {/* Show textarea if 'Other' is checked */}
-              {isOtherChecked && (
-                <div className="mt-3">
-                  <TextAreas
-                    name="otherReason"
-                    placeholder="Please describe your reason..."
-                    register={register("otherReason", {
-                      validate: (value) =>
-                        isOtherChecked && !value.trim()
-                          ? "Please enter a reason for 'Other'."
-                          : true,
-                    })}
-                  />
-                  {errors.otherReason && (
-                    <p className="text-red-600 text-sm mt-1">
-                      {errors.otherReason.message}
-                    </p>
-                  )}
-                </div>
-              )}
-
-              {errors.reasons && (
-                <p className="text-red-600 text-sm mt-1">
-                  {errors.reasons.message}
-                </p>
-              )}
-            </fieldset>
-            <p className="text-[13px] text-Paracolor rounded mb-4 font-medium">
-             Note: Reporting this user will remove your connection with them!
-            </p>
-
-            <div className="flex justify-end">
-              <button
-                type="submit"
-                className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 text-[15px] font-Poppins font-semibold"
-              >
-                Submit Report
-              </button>
+                  Submit Report
+                </button>
+              </div>
+            </form>
+          ) : (
+            <div className="flex justify-center h-[45vh] items-center">
+                <Spinner style={"w-10 h-16 text-PurpleColor z-50"} ></Spinner>
             </div>
-          </form>
+          )}
         </DialogPanel>
       </div>
     </Dialog>
