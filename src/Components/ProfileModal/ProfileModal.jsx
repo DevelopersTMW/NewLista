@@ -4,43 +4,19 @@ import {
   Award,
   Building2,
   Calendar,
-  CircleCheck,
   DollarSign,
   Mail,
   MapPin,
   Phone,
-  UserRoundCheck,
-  X,
 } from "lucide-react";
 import UnkownUser from "../../../public/Images/UnknowUser.png";
 import ConfirmationModal from "../ConfirmationModal/ConfirmationModal";
-import BlockUserIcon from '../../../public/Images/BlockUserIcon.png'
-import ReportUser from '../../../public/Images/ReportUser.png'
+import BlockUserIcon from "../../../public/Images/BlockUserIcon.png";
+import ReportUser from "../../../public/Images/ReportUser.png";
+import ReportUserModal from "../ReportModal/ReportModal";
 
-const ProfileModal = ({
-  isOpen,
-  onClose,
-  InvesImage,
-  InvesUserName,
-  Invessubtitle,
-  onReject,
-  id,
-  user,
-  type,
-}) => {
-  if (!isOpen) return null;
-
-  console.log(user);
-
-  const formatJoinDate = (isoDate) => {
-    const date = new Date(isoDate);
-    const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, "0"); // Months are 0-indexed
-    const day = String(date.getDate()).padStart(2, "0");
-
-    return `Joined ${year}-${month}-${day}`;
-  };
-
+const ProfileModal = ({ isOpen, onClose, user }) => {
+  const [showReportModal, setShowReportModal] = useState(false);
   const [openModal, setOpenModal] = useState(false);
   const [modalData, setModalData] = useState({
     title: "",
@@ -49,93 +25,61 @@ const ProfileModal = ({
     onConfirm: () => {},
   });
 
-  // SEND CONNECTION REQUEST
-  const openConfirmation = (actionType) => {
-    let data = {};
-    switch (actionType) {
-      case "add":
-        data = {
-          icon: (
-            <UserRoundCheck className="size-20 text-PurpleColor  bg-amber-50 PurpleColor px-3.5 py-3.5 rounded-full" />
-          ),
-          message: "You want to add this user to your network?",
-          confirmLabel: "Add",
-          style: "bg-PurpleColor",
-          onConfirm: () => {
-            AddtoNetwork(id);
-            setOpenModal(false);
-          },
-        };
-        break;
-
-      case "accept":
-        data = {
-          icon: (
-            <CircleCheck className="size-20 text-PurpleColor  bg-amber-50 PurpleColor px-3.5 py-3.5 rounded-full" />
-          ),
-          message: "You want to accept this request?",
-          confirmLabel: "Accept",
-          style: "bg-[#43B274]",
-          onConfirm: () => {
-            PendingRequest("accepted", id);
-            setOpenModal(false);
-          },
-        };
-        break;
-
-      case "decline":
-        data = {
-          icon: (
-            <X className="size-20 text-PurpleColor  bg-amber-50 PurpleColor px-3.5 py-3.5 rounded-full" />
-          ),
-          message: "You want to decline this request?",
-          confirmLabel: "Decline",
-          style: "bg-[#F61418]",
-          onConfirm: () => {
-            PendingRequest("declined", id);
-            setOpenModal(false);
-          },
-        };
-        break;
-      default:
-        return;
+  const handleClose = () => {
+    if (showReportModal) {
+      setShowReportModal(false);
+    } else {
+      onClose();
     }
+  };
 
-    setModalData(data);
-    setOpenModal(true);
+  const formatJoinDate = (isoDate) => {
+    const date = new Date(isoDate);
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
+    return `Joined ${year}-${month}-${day}`;
   };
 
   const renderButtons = () => {
     if (user.type === "myNetwork") {
       return (
-      <>
-        <button className="font-Inter text-[#fff] font-semibold text-[15px] px-2 py-1.5 rounded-full border-solid border-[2px] bg-red-500 cursor-pointer">
-          <img className="w-5 h-5" src={ReportUser} alt="" />
-        </button>
-         <button className="font-Inter text-[#fff] font-semibold text-[15px] px-2 py-1.5 rounded-full border-solid border-[2px] bg-red-500 cursor-pointer">
-          <img className="w-4.5 h-4.5" src={BlockUserIcon} alt="" />
-        </button></>
+        <>
+          <button
+            onClick={() => setShowReportModal(true)}
+            className="font-Inter text-[#fff] font-semibold text-[15px] px-2 py-1.5 rounded-full border-solid border-[2px] bg-red-500 cursor-pointer"
+          >
+            <img className="w-5 h-5" src={ReportUser} alt="Report" />
+          </button>
+
+          <button className="font-Inter text-[#fff] font-semibold text-[15px] px-2 py-1.5 rounded-full border-solid border-[2px] bg-red-500 cursor-pointer">
+            <img className="w-4.5 h-4.5" src={BlockUserIcon} alt="Block" />
+          </button>
+        </>
       );
     }
     return null;
   };
 
+  if (!isOpen) return null;
+
   return (
     <>
-      <Dialog open={isOpen} onClose={onClose} className="relative z-50">
+      {/* Main Dialog */}
+      <Dialog open={isOpen} onClose={handleClose} className="relative z-50">
         <DialogBackdrop className="fixed inset-0 bg-[#0000009a] bg-opacity-50" />
-        <div className="fixed inset-0 z-50 flex items-start justify-center min-[380px]:p-4 min-[380px]:my-[0.5%]  overflow-y-auto  min-[380px]:rounded-lg ">
-          <DialogPanel className="bg-white shadow-xl sm:max-w-md  md:max-w-lg overflow-y-auto 2xl:max-w-xl w-full relative  min-[380px]:rounded-lg ">
+        <div className="fixed inset-0 z-40 flex items-start justify-center p-4 overflow-y-auto">
+          <DialogPanel className="bg-white shadow-xl max-w-xl w-full relative rounded-lg">
             {/* Close Button */}
             <button
-              onClick={onClose}
+              onClick={handleClose}
               className="absolute top-5 right-5 text-[14px] font-semibold cursor-pointer text-black z-50 hover:text-black bg-[#f0f0f0] rounded-full px-1.5 py-0.5"
             >
               ✕
             </button>
 
-            {/* Header Image Area */}
-            <div className="bg-gray-100 h-36 flex justify-center items-center relative rounded-t-[10px] cursor-pointer ">
+            {/* Header Image */}
+            <div className="bg-gray-100 h-36 flex justify-center items-center relative rounded-t-[10px]">
               <div className="absolute left-6 bottom-[-40px] w-[105px] h-[105px] bg-gray-300 rounded-full border-4 border-PurpleColor shadow-md overflow-hidden">
                 <img
                   className="rounded-full w-full h-[120%] object-cover absolute -mt-1.5"
@@ -144,132 +88,107 @@ const ProfileModal = ({
                       ? import.meta.env.VITE_IMAGE_KEY + user.user.headshot
                       : UnkownUser
                   }
-                  alt=""
+                  alt="User"
                 />
               </div>
               {user.user.banner ? (
-                <div className="overflow-hidden h-36">
-                  <img
-                    className="object-cover"
-                    src={import.meta.env.VITE_IMAGE_KEY + user.user.banner}
-                    alt=""
-                  />
-                </div>
+                <img
+                  className="object-cover h-36 w-full"
+                  src={import.meta.env.VITE_IMAGE_KEY + user.user.banner}
+                  alt="Banner"
+                />
               ) : (
                 <div className="text-gray-400">📷</div>
               )}
             </div>
 
-            <div className="absolute right-4 mt-5 flex gap-2">{renderButtons(user)}</div>
+            <div className="absolute right-4 mt-5 flex gap-2">
+              {renderButtons(user)}
+            </div>
 
             {/* Content */}
             <div className="px-6 pt-16 pb-6">
-              {" "}
-              {/* increased top padding here */}
-              {/* Heading */}
-              <h1 className="font-Urbanist text-[23px] mb-3 font-semibold">
-                Profile Details
-              </h1>
-              {/* Basic Info */}
-              <h2 className="text-2xl font-bold font-Urbanist">
+              <h1 className="text-2xl font-semibold mb-3">Profile Details</h1>
+              <h2 className="text-xl font-bold">
                 {user.user.first_name + " " + user.user.last_name}
               </h2>
-              <p className="text-gray-600 font-Urbanist font-[500]">
-                {user.user.title}
-              </p>
-              {/* Info Grid */}
+              <p className="text-gray-600">{user.user.title}</p>
+
+              {/* Info */}
               <div className="mt-4 space-y-2 text-sm text-gray-600">
                 {user.user.show_phone && (
                   <div className="flex items-center gap-2">
                     <Phone className="size-5 text-PurpleColor" />
-                    <span className="font-Urbanist font-semibold text-[16px] text-Paracolor">
-                      {user.user.phone}
-                    </span>
+                    <span>{user.user.phone}</span>
                   </div>
                 )}
                 {user.user.show_email && (
                   <div className="flex items-center gap-2">
                     <Mail className="size-5 text-PurpleColor" />
-                    <span className="font-Urbanist font-semibold text-[16px] text-Paracolor">
-                      {user.user.email}
-                    </span>
+                    <span>{user.user.email}</span>
                   </div>
                 )}
                 <div className="flex items-center gap-2">
                   <Calendar className="size-5 text-PurpleColor" />
-                  <span className="font-Urbanist font-semibold text-[16px] text-Paracolor">
-                    {formatJoinDate(user.user.created_at)}
-                  </span>
+                  <span>{formatJoinDate(user.user.created_at)}</span>
                 </div>
-                 <div className="flex items-center gap-2">
+                <div className="flex items-center gap-2">
                   <Building2 className="size-5 text-PurpleColor" />
-                  <span className="font-Urbanist font-semibold text-[16px] text-Paracolor">
-                    {user.user.company_name || "Not Provided"}
-                  </span>
+                  <span>{user.user.company_name || "Not Provided"}</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <MapPin className="size-5 text-PurpleColor" />
-                  <span className="font-Urbanist font-semibold text-[16px] text-Paracolor">
-                    {user.user.address + ", " + user.user.city + ", " + user.user.state}
+                  <span>
+                    {user.user.address}, {user.user.city}, {user.user.state}
                   </span>
                 </div>
                 <div className="flex items-center gap-2">
                   <DollarSign className="size-5 text-PurpleColor" />
-                  <span className="font-Urbanist font-semibold text-[16px] text-Paracolor">
-                    {user.user.preferred_investment_range}
-                  </span>
+                  <span>{user.user.preferred_investment_range}</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <Award className="size-5 text-PurpleColor" />
-                  <span className="font-Urbanist font-semibold text-[16px] text-Paracolor">
-                    {user.user.years_of_experiance ? user.user.years_of_experiance + " Years" : "0 Years"}
+                  <span>
+                    {user.user.years_of_experiance
+                      ? `${user.user.years_of_experiance} Years`
+                      : "0 Years"}
                   </span>
                 </div>
               </div>
-              {/* About */}
+
+              {/* About Us */}
               <div className="mt-4 pt-4 border-t border-[#dfdfdf]">
-                <h3 className="text-[20px] font-bold font-Urbanist">
-                  About Us
-                </h3>
-                <p className="text-Paracolor font-Urbanist font-[500] text-[15px] mt-1">
-                  {user.user.bio}
-                </p>
+                <h3 className="text-lg font-bold">About Us</h3>
+                <p className="text-gray-700 mt-1">{user.user.bio}</p>
               </div>
+
               {/* Property Interests */}
               <div>
-                <h3 className="text-[18px] font-bold mt-3 font-Urbanist">
-                  Property Interests
-                </h3>
+                <h3 className="text-lg font-bold mt-4">Property Interests</h3>
                 <div className="flex gap-1.5 mt-2 flex-wrap">
-                  {user.user.property_interests.map((items) => {
-                    return (
-                      <span className="bg-[#E3E3E3] text-Paracolor font-semibold font-Inter px-3 py-1 text-[12.5px] rounded-full w-max">
-                        {items}
-                      </span>
-                    );
-                  })}
-
-                  {/* <span className="bg-[#E3E3E3] text-Paracolor font-semibold font-Inter px-3 py-1 text-[12.5px] rounded-full w-max">
-                  Office Space
-                </span> */}
+                  {user.user.property_interests.map((item, i) => (
+                    <span
+                      key={i}
+                      className="bg-[#E3E3E3] text-gray-800 font-semibold px-3 py-1 text-sm rounded-full"
+                    >
+                      {item}
+                    </span>
+                  ))}
                 </div>
               </div>
-              {/* Message Button */}
-              
             </div>
           </DialogPanel>
         </div>
       </Dialog>
 
-      <ConfirmationModal
-        isOpen={openModal}
-        onClose={() => setOpenModal(false)}
-        style={modalData.style}
-        message={modalData.message}
-        confirmLabel={modalData.confirmLabel}
-        onConfirm={modalData.onConfirm}
-        icon={modalData.icon}
+      {/* Move this OUTSIDE Dialog */}
+      {showReportModal && (
+      <ReportUserModal
+        isOpen={showReportModal}
+        onClose={() => setShowReportModal(false)}
+        userId={user.user.id}
       />
+      )}
     </>
   );
 };

@@ -15,6 +15,7 @@ import db from "../../../Configuration/Firebase/FirebaseConfig";
 import { useDispatch } from "react-redux";
 import { setTotalUnreadCount } from "../../../Reducers/UnreadCount/UnreadCountSlice";
 import { useLocation } from "react-router-dom";
+import ReportUserModal from "../../../Components/ReportModal/ReportModal";
 
 function Inbox() {
   const dispatch = useDispatch();
@@ -61,7 +62,7 @@ function Inbox() {
           }
         });
       });
-      setLatestMessagess(counts)
+      setLatestMessagess(counts);
       setUnreadCounts(counts);
       const totalUnread = Object.values(counts).reduce(
         (sum, count) => sum + count,
@@ -117,10 +118,18 @@ function Inbox() {
     fetchUsers();
   }, []);
 
+  const [open, setOpen] = useState(false);
   if (!currentUser) return <p>Loading...</p>;
 
   return (
     <>
+      <button onClick={() => setOpen(true)}>Open Modal</button>
+      <ReportUserModal
+        isOpens={open}
+        setShowReportModal={setOpen}
+        userId="12345"
+      />
+
       {!Loading ? (
         otherUsers ? (
           <div className="flex flex-col sm:flex-row w-full mt-3 sm:gap-5 lg:gap-10 text-black">
