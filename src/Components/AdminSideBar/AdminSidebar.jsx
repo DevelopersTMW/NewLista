@@ -9,7 +9,7 @@ import Dashboardicon1_3 from "../../assets/AdminIcon1.3.png";
 import Dashboardicon1_8 from "../../assets/AdminIcon1.8.png";
 import Dashboardicon1_11 from "../../assets/AdminIcon1.1.1.png";
 import Dashboardicon1_31 from "../../assets/Dashboardicon1.3.1.png";
-import { CreditCard, Headset, Lock } from "lucide-react";
+import { CreditCard, Headset, Lock, MessageCircleWarning, UserRoundSearch, UserSearch } from "lucide-react";
 import { useSelector } from "react-redux";
 
 const AdminSidebar = ({ screen }) => {
@@ -37,7 +37,7 @@ const AdminSidebar = ({ screen }) => {
 
   return (
     <>
-      <div className="bg-[#F9F7FF] flex flex-col min-[890px]:flex-row gap-10 py-6 min-[890px]:py-6.5 justify-end ">
+      <div className="bg-[#F9F7FF] flex flex-col min-[890px]:flex-row gap-10 pt-6 min-[890px]:pt-6.5 justify-end ">
         {/* MOBILE SCREEN BUTTON */}
         <button
           type="button"
@@ -158,6 +158,25 @@ const AdminSidebar = ({ screen }) => {
 
                   <h1 className="font-Urbanist font-[500] text-[15px] sm:mt-1 sm:text-[16px] 2xl:text-[18.5px]">
                     My Listings
+                  </h1>
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to={"/admin/inquiry"}
+                  onClick={() => {
+                    setIsMobileDrawerOpen(false);
+                  }}
+                  className={`flex items-center p-2 px-6 sm:px-7 text-gray-900 rounded-r-lg group gap-4  ${
+                    location.pathname === "/admin/inquiry"
+                      ? "bg-PurpleColor text-white"
+                      : "text-[#666666]"
+                  }`}
+                >
+                  <MessageCircleWarning  className="size-6" />
+
+                  <h1 className="font-Urbanist font-[500] text-[15px] sm:mt-1 sm:text-[16px] 2xl:text-[18.5px]">
+                    Inquiries
                   </h1>
                 </Link>
               </li>
@@ -442,7 +461,7 @@ const AdminSidebar = ({ screen }) => {
         </aside>
 
         {/* ADMIN SCREEN  */}
-        <div className="px-4 flex flex-col gap-2 min-[890px]:!w-[70%] xl:!w-[75%] min-h-screen">
+        <div className="px-4 flex flex-col gap-2 min-[890px]:!w-[70%] xl:!w-[75%] h-[95.5vh]">
           <div>
             <AdminNavbar></AdminNavbar>
           </div>

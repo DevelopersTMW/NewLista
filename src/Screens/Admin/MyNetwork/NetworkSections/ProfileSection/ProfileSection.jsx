@@ -34,7 +34,7 @@ const ProfileSection = () => {
         >
           <img className="absolute -top-[40%]  w-[100%]" src={fade} alt="" />
           <h1 className="font-Inter font-bold text-[35px]  sm:text-[43px] text-white  text-center py-16.5 relative ">
-            My Networks
+            My Network
           </h1>
         </div>
       </section>

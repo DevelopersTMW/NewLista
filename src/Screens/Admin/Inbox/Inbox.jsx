@@ -27,8 +27,6 @@ function Inbox() {
   const [unreadCounts, setUnreadCounts] = useState({});
   const [latestMessages, setLatestMessagess] = useState({});
 
-  // const [totalUnreadCount, setTotalUnreadCount] = useState(0);
-
   const location = useLocation();
 
   useEffect(() => {

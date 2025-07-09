@@ -257,7 +257,7 @@ function InquiryForm({ id, propertyAddress }) {
                   <TextAreas
                     label={"Message"}
                     placeholder={
-                      "Describe the property, its features, location advantages, and any unique selling points."
+                      "Type of loan (short-term/bridge or long-term), preferred loan terms, credit score, real estate experience, and any additional notes."
                     }
                     register={register("Message", {
                       required: false,

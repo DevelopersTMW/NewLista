@@ -14,6 +14,7 @@ import ProtectiveRoute from "../../Configuration/ProtectiveRoute/ProtectiveRoute
 import HelpSupport from "./HelpSupport/HelpSupport";
 import SubscriptionSetting from "./SubscriptionSetting/SubscriptionSetting";
 import SingleAnalytics from "./Analytics/SingleAnalytics";
+import Inquiry from "./Inquiry/Inquiry";
 
 const Admin = () => {
   return (
@@ -23,6 +24,7 @@ const Admin = () => {
             <Route path="/" element={<Dashboard />} />
             <Route path="/listing" element={<Listing />} />
             <Route path="/network" element={<MyNetwork2 />} />
+            <Route path="/inquiry" element={<Inquiry />} />
             <Route path="/myoffers" element={<MyOffers />} />
             <Route path="/analytics" element={<Analytics />} />
             <Route path="/analytics/:id" element={<SingleAnalytics  />} />

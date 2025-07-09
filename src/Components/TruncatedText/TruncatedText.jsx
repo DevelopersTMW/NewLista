@@ -14,10 +14,10 @@ function TruncatedText({ text, maxLength  }) {
   const toggleExpand = () => setIsExpanded(prev => !prev);
 
   return (
-    <span>
+     <>
       {displayedText}
       {isLongText && (
-        <button
+        <span
           onClick={toggleExpand}
           style={{
             marginLeft: '5px',
@@ -31,10 +31,9 @@ function TruncatedText({ text, maxLength  }) {
           }}
           aria-label={isExpanded ? "Show less" : "Read more"}
         >
-          {/* {isExpanded ? 'Show less' : 'Read more'} */}
-        </button>
+        </span>
       )}
-    </span>
+     </>
   );
 }
 

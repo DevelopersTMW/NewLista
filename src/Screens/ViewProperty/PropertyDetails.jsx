@@ -41,6 +41,7 @@ import DummyLogo from "../../../public/Images/UnknowUser.png";
 import MakeOffer from "../../Components/MakeAnOffer/MakeOffer";
 import { useSelector } from "react-redux";
 import SocialPage from "./SocialIcons/SocialIcons";
+import PropertyChat from "../../Components/PropertyChat/PropertyChat";
 
 const features = [
   "Ample Parking",
@@ -255,16 +256,22 @@ const PropertyDetails = () => {
                       ? SingleProperty.sale_price
                       : SingleProperty.lease_rate}
                   </h1>
-                  <InquiryForm
-                    id={params.id}
-                    propertyAddress={
-                      SingleProperty.address +
-                      " " +
-                      SingleProperty.city +
-                      " " +
-                      SingleProperty.state
-                    }
-                  />
+                  <div className="flex gap-4">
+                    <InquiryForm
+                      id={params.id}
+                      propertyAddress={
+                        SingleProperty.address +
+                        " " +
+                        SingleProperty.city +
+                        " " +
+                        SingleProperty.state
+                      }
+                    />
+                    <PropertyChat
+                      propertyName={SingleProperty.property_name}
+                      id={params.id}
+                    />
+                  </div>
                 </div>
 
                 <div className="flex flex-col gap-5">
