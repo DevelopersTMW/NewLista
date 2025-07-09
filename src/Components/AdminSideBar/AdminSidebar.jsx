@@ -9,8 +9,16 @@ import Dashboardicon1_3 from "../../assets/AdminIcon1.3.png";
 import Dashboardicon1_8 from "../../assets/AdminIcon1.8.png";
 import Dashboardicon1_11 from "../../assets/AdminIcon1.1.1.png";
 import Dashboardicon1_31 from "../../assets/Dashboardicon1.3.1.png";
-import { CreditCard, Headset, Lock, MessageCircleWarning, UserRoundSearch, UserSearch } from "lucide-react";
+import {
+  CreditCard,
+  Headset,
+  Lock,
+  MessageCircleWarning,
+  UserRoundSearch,
+  UserSearch,
+} from "lucide-react";
 import { useSelector } from "react-redux";
+import useUnreadMessageCount from "../../CustomHook/InquiriesCount/InquiriesCount";
 
 const AdminSidebar = ({ screen }) => {
   const location = useLocation();
@@ -20,6 +28,10 @@ const AdminSidebar = ({ screen }) => {
   const isLocked = !token || status !== "active";
   const toggleDrawer = () => setIsMobileDrawerOpen((prev) => !prev);
   const closeDrawer = () => setIsMobileDrawerOpen(false);
+
+  const unreadMessages = useUnreadMessageCount();
+
+  console.log(unreadMessages);
 
   const totalUnreadCount = useSelector(
     (state) => state.unread.totalUnreadCount
@@ -161,7 +173,7 @@ const AdminSidebar = ({ screen }) => {
                   </h1>
                 </Link>
               </li>
-              <li>
+              <li className="relative">
                 <Link
                   to={"/admin/inquiry"}
                   onClick={() => {
@@ -173,11 +185,24 @@ const AdminSidebar = ({ screen }) => {
                       : "text-[#666666]"
                   }`}
                 >
-                  <MessageCircleWarning  className="size-6" />
-
+                  <MessageCircleWarning className="size-6" />
                   <h1 className="font-Urbanist font-[500] text-[15px] sm:mt-1 sm:text-[16px] 2xl:text-[18.5px]">
                     Inquiries
                   </h1>
+                  {totalUnreadCount > 0 && (
+                    <div className="absolute text-red-600 size-3 right-10 top-2.5">
+                      <span
+                        className={`text-white text-[13.5px] font-Urbanist px-2 py-[2px] rounded-full flex items-center justify-center font-semibold min-w-[22px] h-[22px] ${
+                          location.pathname === "/admin/inquiry"
+                            ? "bg-black"
+                            : "bg-green-500 text-[#666666]"
+                        }`}
+                        style={{ paddingTop: "2px" }} // Optional for vertical centering tweak
+                      >
+                        {unreadMessages > 99 ? "99+" : unreadMessages}
+                      </span>
+                    </div>
+                  )}
                 </Link>
               </li>
               <li className="relative">

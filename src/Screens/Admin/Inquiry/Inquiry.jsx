@@ -71,11 +71,11 @@ const Inquiry = () => {
     console.log(selectedConversation);
 
     const newMessage = {
-      user_id :  selectedConversation.with_user.id,
+      user_id: selectedConversation.with_user.id,
       property_id: selectedConversation.property.id,
-      property_url: "https://yourdomain.com/property/luxury-villa-dha",
+      property_url: `${window.location.origin}/properties/${selectedConversation.property.id}`,
       message: text.trim(),
-      action_url: "hello",
+      action_url: `${window.location.origin}/admin/inquiry`,
     };
 
     try {
