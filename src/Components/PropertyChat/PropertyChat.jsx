@@ -37,7 +37,7 @@ function PropertyChat({ id, propertyName }) {
           property_id: id,
           message: data.Message,
           property_url: `${window.location.origin}/properties/${id}`,
-          action_url: `${window.location.origin}/admin/messages`,
+          action_url: `${window.location.origin}/admin/inquiry`,
         },
         {
           headers: {
