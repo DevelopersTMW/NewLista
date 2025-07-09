@@ -11,7 +11,7 @@ const REPORT_REASONS = [
   "Inappropriate content",
   "Fake profile",
   "Harassment or bullying",
-  "Other", // Add 'Other' as a selectable reason
+  "Other",
 ];
 
 const ReportUserModal = ({ isOpen, onClose, userId }) => {
@@ -23,16 +23,18 @@ const ReportUserModal = ({ isOpen, onClose, userId }) => {
     reset,
   } = useForm({
     defaultValues: {
-      reasons: [],
+      reasons: "",
       otherReason: "",
     },
   });
 
   const ApiKey = import.meta.env.VITE_API_KEY;
   const token = localStorage.getItem("token");
-  const [loading, setloading] = useState(false);
-  const selectedReasons = watch("reasons");
-  const isOtherChecked = selectedReasons?.includes("Other");
+  const [loading, setLoading] = useState(false);
+
+  const selectedReason = watch("reasons");
+  const otherReasonText = watch("otherReason");
+  const isOtherChecked = selectedReason === "Other";
 
   useEffect(() => {
     if (isOpen) {
@@ -47,33 +49,40 @@ const ReportUserModal = ({ isOpen, onClose, userId }) => {
   }, [isOpen, reset]);
 
   const onSubmit = async (data) => {
-    if (data.reasons.length === 0) {
+    if (!data.reasons) {
       return;
     }
-    if (data.reasons.includes("Other") && !data.otherReason.trim()) {
+    if (data.reasons === "Other" && !data.otherReason.trim()) {
       return;
     }
     console.log("✅ Report data:", data);
 
     try {
-      setloading(true);
+      const finalReason = data.reasons === "Other" ? data.otherReason : data.reasons;
+
+      console.log(finalReason);
+      
+
+      setLoading(true);
       const response = await axios.post(
         `${ApiKey}/network/report-user`,
         {
           reported_user_id: userId,
-          reason: data,
+          reason: finalReason,
         },
         {
           headers: { Authorization: `Bearer ${token}` },
         }
       );
       console.log(response);
+      alert(response.data.message)
       onClose();
+      reset()
     } catch (error) {
       console.log(error);
-      setloading(false);
+      setLoading(false);
     } finally {
-      setloading(false);
+      setLoading(false);
     }
   };
 
@@ -98,7 +107,7 @@ const ReportUserModal = ({ isOpen, onClose, userId }) => {
             <form onSubmit={handleSubmit(onSubmit)}>
               <fieldset className="mb-4">
                 <legend className="font-semibold mb-2 font-Urbanist">
-                  Select reason(s):
+                  Select a reason:
                 </legend>
 
                 {REPORT_REASONS.map((reason) => (
@@ -107,12 +116,10 @@ const ReportUserModal = ({ isOpen, onClose, userId }) => {
                     className="flex items-center mb-2 font-Urbanist text-[15px]"
                   >
                     <input
-                      type="checkbox"
+                      type="radio"
                       value={reason}
                       {...register("reasons", {
-                        validate: (value) =>
-                          value.length > 0 ||
-                          "Please select at least one reason.",
+                        required: "Please select a reason.",
                       })}
                       className="mr-2"
                     />
@@ -120,7 +127,7 @@ const ReportUserModal = ({ isOpen, onClose, userId }) => {
                   </label>
                 ))}
 
-                {/* Show textarea if 'Other' is checked */}
+                {/* Show textarea only if 'Other' is selected */}
                 {isOtherChecked && (
                   <div className="mt-3">
                     <TextAreas
@@ -141,12 +148,19 @@ const ReportUserModal = ({ isOpen, onClose, userId }) => {
                   </div>
                 )}
 
+                {isOtherChecked && otherReasonText.trim() && (
+                  <p className="mt-3 text-gray-700 font-medium">
+                    Your message: <span className="italic">{otherReasonText}</span>
+                  </p>
+                )}
+
                 {errors.reasons && (
                   <p className="text-red-600 text-sm mt-1">
                     {errors.reasons.message}
                   </p>
                 )}
               </fieldset>
+
               <p className="text-[13px] text-Paracolor rounded mb-4 font-medium">
                 Note: Reporting this user will remove your connection with them!
               </p>
@@ -162,7 +176,7 @@ const ReportUserModal = ({ isOpen, onClose, userId }) => {
             </form>
           ) : (
             <div className="flex justify-center h-[45vh] items-center">
-                <Spinner style={"w-10 h-16 text-PurpleColor z-50"} ></Spinner>
+              <Spinner style={"w-10 h-16 text-PurpleColor z-50"} />
             </div>
           )}
         </DialogPanel>
