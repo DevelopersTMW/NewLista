@@ -15,6 +15,7 @@ const OurNetwork = ({
   setSelectedUser,
   selectedUser,
   type,
+  RemoveNetwork
 }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const pageSize = 9;
@@ -68,6 +69,7 @@ const OurNetwork = ({
                   setSelectedUser({ user: user, type: "myNetwork" });
                   setShowModal(true);
                 }}
+                RemoveNetwork={RemoveNetwork}
                 type={"myNetwork"}
               />
             ))

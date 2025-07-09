@@ -18,7 +18,7 @@ import ProfileSection from "./NetworkSections/ProfileSection/ProfileSection";
 import AddtoNetworkSec from "./NetworkSections/AddtoNetworkSec/AddtoNetworkSec";
 import OurNetwork from "./NetworkSections/OurNetwork/OurNetwork";
 import OurRequest from "./NetworkSections/OurRequest/OurRequest";
-import { useForm } from "react-hook-form";
+import { set, useForm } from "react-hook-form";
 
 const TabNames = [
   { name: "Discover Investors", TabLink: "addToNetwork" },
@@ -186,6 +186,30 @@ const MyNetwork2 = () => {
     }
   };
 
+  const RemoveNetwork = async (Val, id) => {
+    try {
+      setloading(true);
+      const response = await axios.get(
+        `${ApiKey}/network/remove-connection/${id}`,
+        {
+          headers: { Authorization: `Bearer ${tokens}` },
+        }
+      );
+      if (response.data.message === "Connection removed successfully") {
+        setMyNetwork((prev) => prev.filter((user) => user.id !== id));
+        setAddNetwork((prev) => prev.filter((user) => user.id !== id));
+        setPendingNetwork((prev) => prev.filter((user) => user.id !== id));
+        setSentRequest((prev) =>
+          prev.filter((req) => req.from_user?.id !== id)
+        );
+      }
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setloading(false);
+    }
+  };
+
   return (
     <>
       <ProfileSection />
@@ -223,7 +247,7 @@ const MyNetwork2 = () => {
         {activeTab === "myNetwork" && (
           <OurNetwork
             loading={loading}
-            AddNetwork={AddNetwork}
+            RemoveNetwork={RemoveNetwork}
             searchTerm={search}
             getJoinYear={getJoinYear}
             showModal={showModal}

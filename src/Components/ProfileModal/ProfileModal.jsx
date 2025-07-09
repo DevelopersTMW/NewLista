@@ -14,6 +14,8 @@ import {
 } from "lucide-react";
 import UnkownUser from "../../../public/Images/UnknowUser.png";
 import ConfirmationModal from "../ConfirmationModal/ConfirmationModal";
+import BlockUserIcon from '../../../public/Images/BlockUserIcon.png'
+import ReportUser from '../../../public/Images/ReportUser.png'
 
 const ProfileModal = ({
   isOpen,
@@ -103,62 +105,20 @@ const ProfileModal = ({
     setOpenModal(true);
   };
 
-  // const renderButtons = () => {
-  //   if (user.type === "addToNetwork") {
-  //     return (
-  //       <>
-  //         <button
-  //           onClick={() => openConfirmation("add")}
-  //           disabled={user.button === "pending"}
-  //           className={`font-Inter text-[#fff] font-semibold text-[12px] sm:text-[12.5px] sm:px-2.5 sm:py-1.5 px-2.5 py-1.5 lg:px-3.5 lg:py-2 rounded-full border-solid border-[2px] ${
-  //             user.button === "pending"
-  //               ? "bg-gray-400 border-gray-400 cursor-not-allowed"
-  //               : "bg-PurpleColor border-PurpleColor cursor-pointer 64AAE9"
-  //           }`}
-  //         >
-  //           {user.button === "pending" ? "Already Sent" : "Add to Network"}
-  //         </button>
-
-  //         {/* {user.button === "pending" ? (
-  //           " "
-  //         ) : (
-  //           <button
-  //             onClick={() => onReject(id)}
-  //             className="font-Inter cursor-pointer text-[#fff] font-semibold text-[12px] px-4 py-1.5 sm:text-[12.5px] sm:px-2.5 sm:py-1 lg:px-3.5 rounded-full border-solid border-[2px] border-[#F61418] bg-[#F61418]"
-  //           >
-  //             Reject
-  //           </button>
-  //         )} */}
-  //       </>
-  //     );
-  //   }
-  //   if (user.type === "myNetwork") {
-  //     return (
-  //       <button className="font-Inter text-[#fff] font-semibold text-[15px] px-7 py-1.5 rounded-full border-solid border-[2px] border-[#43B274] bg-[#43B274] cursor-pointer">
-  //         Message
-  //       </button>
-  //     );
-  //   }
-  //   if (user.type === "pending") {
-  //     return (
-  //       <>
-  //         <button
-  //           onClick={() => openConfirmation("accept")}
-  //           className="font-Inter text-[#fff] font-semibold text-[15px] px-6 py-1.5 rounded-full border-solid border-[2px] border-[#43B274] bg-[#43B274] cursor-pointer"
-  //         >
-  //           Accept
-  //         </button>
-  //         <button
-  //           onClick={() => openConfirmation("decline")}
-  //           className="font-Inter cursor-pointer text-[#fff] font-semibold text-[12px]  px-6 py-1.5  sm:text-[14.5px] sm:px-2.5 sm:py-1 lg:px-5 lg:py-1.5 rounded-full border-solid border-[2px] border-[#F61418] bg-[#F61418]"
-  //         >
-  //           Decline
-  //         </button>
-  //       </>
-  //     );
-  //   }
-  //   return null;
-  // };
+  const renderButtons = () => {
+    if (user.type === "myNetwork") {
+      return (
+      <>
+        <button className="font-Inter text-[#fff] font-semibold text-[15px] px-2 py-1.5 rounded-full border-solid border-[2px] bg-red-500 cursor-pointer">
+          <img className="w-5 h-5" src={ReportUser} alt="" />
+        </button>
+         <button className="font-Inter text-[#fff] font-semibold text-[15px] px-2 py-1.5 rounded-full border-solid border-[2px] bg-red-500 cursor-pointer">
+          <img className="w-4.5 h-4.5" src={BlockUserIcon} alt="" />
+        </button></>
+      );
+    }
+    return null;
+  };
 
   return (
     <>
@@ -199,6 +159,8 @@ const ProfileModal = ({
                 <div className="text-gray-400">📷</div>
               )}
             </div>
+
+            <div className="absolute right-4 mt-5 flex gap-2">{renderButtons(user)}</div>
 
             {/* Content */}
             <div className="px-6 pt-16 pb-6">
@@ -293,7 +255,7 @@ const ProfileModal = ({
                 </div>
               </div>
               {/* Message Button */}
-              {/* <div className="mt-7 flex gap-2">{renderButtons(user)}</div> */}
+              
             </div>
           </DialogPanel>
         </div>

@@ -32,10 +32,6 @@ const AddToNetwork = ({
   InvesDesc,
   location,
   propertyTypes,
-  memberSince,
-  email,
-  phone,
-  onReject,
   onViewProfile,
   type,
   AddtoNetwork,
@@ -44,6 +40,7 @@ const AddToNetwork = ({
   year,
   range,
   companyname,
+  RemoveNetwork
 }) => {
   const [openModal, setOpenModal] = useState(false);
   const [modalData, setModalData] = useState({
@@ -52,7 +49,7 @@ const AddToNetwork = ({
     confirmLabel: "",
     onConfirm: () => {},
   });
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   // SEND CONNECTION REQUEST
   const openConfirmation = (actionType) => {
@@ -102,6 +99,20 @@ const AddToNetwork = ({
           },
         };
         break;
+      case "remove":
+        data = {
+          icon: (
+            <X className="size-20 text-red-500  bg-amber-50 PurpleColor px-3.5 py-3.5 rounded-full" />
+          ),
+          message: "You want to Remove this request?",
+          confirmLabel: "Remove",
+          style: "bg-[#F61418]",
+          onConfirm: () => {
+            RemoveNetwork("remove", id);
+            setOpenModal(false);
+          },
+        };
+        break;
       default:
         return;
     }
@@ -137,22 +148,12 @@ const AddToNetwork = ({
           >
             {button === "pending" ? "Pending" : "Add to Network"}
           </button>
-
-          {/* {button === "pending" ? (
-            " "
-          ) : (
-            <button
-              onClick={() => onReject(id)}
-              className="font-Inter cursor-pointer text-[#fff] font-semibold text-[12px] px-4 py-1.5 sm:text-[12.5px] sm:px-2.5 sm:py-1 lg:px-3.5 rounded-full border-solid border-[2px] border-[#F61418] bg-[#F61418]"
-            >
-              Reject
-            </button>
-          )} */}
         </>
       );
     }
     if (type === "myNetwork") {
       return (
+        <>
           <button
             onClick={() => {
               navigate("/admin/inbox", {
@@ -166,6 +167,13 @@ const AddToNetwork = ({
           >
             Message
           </button>
+          <button
+            onClick={() => openConfirmation("remove")}
+            className="font-Inter cursor-pointer text-[#fff] font-semibold text-[12px] px-4 py-1.5 sm:text-[12.5px] sm:px-2.5 sm:py-1 lg:px-3.5 rounded-full border-solid border-[2px] border-[#F61418] bg-[#F61418]"
+          >
+            Remove
+          </button>
+        </>
       );
     }
     if (type === "pending") {

@@ -34,7 +34,7 @@ const Inquiry = () => {
           const unreadMap = {};
           convs.forEach((conv, idx) => {
             const unread = conv.messages.filter(
-              (msg) => msg.type === "receive"
+              (msg) => msg.type === "received"
             ).length;
             unreadMap[idx] = unread;
           });
