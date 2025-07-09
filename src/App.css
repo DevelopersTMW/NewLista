@@ -10,4 +10,42 @@ h1{
   font-weight: 700;
   font-size: 48px;
 }
+.search-input {
+  width: 100%;
+  padding: 1.2rem 1rem 1.2rem 2.8rem;
+  border-radius: 10px;
+  background-color: #f3eeff;
+  font-weight: 600;
+  font-family: 'Urbanist', sans-serif;
+  color: #444;
+  font-size: 15px;
+  outline: none;
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.animated-placeholder {
+  position: absolute;
+  top: 50%;
+  left: 2.8rem;
+  transform: translateY(-50%);
+  color: #888;
+  font-size: 14.5px;
+  font-family: 'Urbanist', sans-serif;
+  font-weight: 600;
+  pointer-events: none;
+  user-select: none;
+  white-space: nowrap;
+  animation: scrollText 8s linear infinite;
+  max-width: 90%;
+  overflow: hidden;
+}
+
+@keyframes scrollText {
+  0% { transform: translateX(0); }
+  50% { transform: translateX(-50%); }
+  100% { transform: translateX(0); }
+}
 

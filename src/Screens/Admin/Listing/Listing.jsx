@@ -91,9 +91,9 @@ const Listing = () => {
 
       <section className=" bg-white rounded-t-[20px] w-[100%] px-4 sm:px-0 pt-5">
         {/* UPPER TAB  */}
-        <div className="flex sm:gap-5 sm:px-7 bg-white">
+        <div className="flex flex-col sm:gap-5 sm:px-7 bg-white">
           {/* SEARCH  */}
-          <div className="relative max-[350px]:w-[57%] w-[67%] items-center flex md:w-[80%]  xl:w-[23%] 2xl:w-[50%]">
+          <div className="relative w-[100%]">
             <div className="absolute inset-y-0 start-0 flex items-center ps-4 pointer-events-none">
               <svg
                 className="w-4 h-4 text-[#444444] "
@@ -121,7 +121,7 @@ const Listing = () => {
           </div>
           {/* FILTER  */}
           {/* Desktop filter bar (hidden on mobile) */}
-          <div className="hidden xl:flex gap-2 px-0 bg-white  w-[85%] border-[1px] border-solid border-[#1E1E1E] rounded-[10px]">
+          <div className="hidden xl:flex gap-2 px-0 bg-white  w-[100%] border-[1px] border-solid border-[#1E1E1E] rounded-[10px]">
             {/* FILTER BUTTON  */}
             <button className=" font-Inter bg-[#1E1E1E] text-white py-2.5 rounded-l-[7px] flex items-center px-4 gap-1 w-[15%]">
               <img className="w-5 h-5" src={FilterIcon} alt="" />{" "}

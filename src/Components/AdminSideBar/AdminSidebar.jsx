@@ -487,7 +487,7 @@ const AdminSidebar = ({ screen }) => {
         </aside>
 
         {/* ADMIN SCREEN  */}
-        <div className="px-4 flex flex-col gap-2 min-[890px]:!w-[70%] xl:!w-[75%] h-[95.5vh]">
+        <div className="px-4 flex flex-col gap-2 min-[890px]:!w-[70%] xl:!w-[75%] h-[100%] pb-5">
           <div>
             <AdminNavbar></AdminNavbar>
           </div>
