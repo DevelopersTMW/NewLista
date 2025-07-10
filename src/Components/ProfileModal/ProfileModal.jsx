@@ -52,12 +52,12 @@ const ProfileModal = ({ isOpen, onClose, user }) => {
           >
             <img className="w-5 h-5" src={ReportUser} alt="Report" />
           </button>
-          <button
+          {/* <button
             title="Block User"
             className="font-Inter text-[#fff] font-semibold text-[15px] px-2 py-1.5 rounded-full border-solid border-[2px] bg-red-500 cursor-pointer"
           >
             <img className="w-4.5 h-4.5" src={BlockUserIcon} alt="Block" />
-          </button>
+          </button> */}
         </>
       );
     }
