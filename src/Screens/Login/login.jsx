@@ -99,13 +99,12 @@ const Login = () => {
           },
         }
       );
-      console.log("====================================");
       console.log(Response);
-      console.log("====================================");
-      localStorage.setItem("token", Response.token);
+      const response = Response.data;
+      localStorage.setItem("token", response.token);
       localStorage.setItem(
         "status",
-        Response.subscription?.status || "inactive"
+        response.subscription?.status || "inactive"
       );
       localStorage.setItem("User", JSON.stringify(Response.data.user));
       if (Response.data.profile_complete) {
