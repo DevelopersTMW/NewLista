@@ -109,6 +109,38 @@ export default function MyOffersTable() {
     }
   };
 
+  const AddtoNetwork = async (userObj) => {
+    setLoading(true);
+    try {
+      const response = await axios.post(
+        `${ApiKey}/connections/request`,
+        { to_user_id: userObj.id },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+
+      // Mark connection status as "pending", not "accepted"
+      setReceivedOffers((prev) =>
+        prev.map((offer) =>
+          (tab === "received" ? offer.user?.id : offer.owner?.id) === userObj.id
+            ? { ...offer, connection_status: "pending" }
+            : offer
+        )
+      );
+
+      setSentOffers((prev) =>
+        prev.map((offer) =>
+          (tab === "sent" ? offer.owner?.id : offer.user?.id) === userObj.id
+            ? { ...offer, connection_status: "pending" }
+            : offer
+        )
+      );
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const statusStyles = {
     pending: "bg-yellow-100 text-yellow-700",
     accepted: "bg-green-100 text-green-700",
@@ -212,6 +244,7 @@ export default function MyOffersTable() {
                 {paginatedOffers.map((items) => (
                   <tr key={items.id} className="hover:bg-gray-100  w-max">
                     <td className="pl-6 py-6 text-[17px] font-[600] font-Urbanist text-gray-900 w-[35%]">
+                      {console.log(items)}
                       <h1
                         onClick={() => {
                           if (items.property?.id) {
@@ -226,7 +259,7 @@ export default function MyOffersTable() {
                       </h1>
                     </td>
                     <td className="px-6 py-4 text-[16px] font-Urbanist font-bold text-gray-900">
-                      ${items.amount} {/* amount is a string with commas */}
+                      ${items.amount}
                     </td>
                     <td className="px-6 py-4 text-[16px] font-Urbanist font-semibold text-gray-500">
                       {new Date(items.created_at).toLocaleDateString("en-US", {
@@ -266,22 +299,41 @@ export default function MyOffersTable() {
                           </div>
                         )
                       ) : items.status === "accepted" ? (
-                        <button
-                          onClick={() => {
-                            const user =
-                              tab === "received" ? items.user : items.owner;
-
-                            navigate("/admin/inbox", {
-                              state: {
-                                userId: user?.id,
-                                userName: `${user?.first_name} ${user?.last_name}`,
-                              },
-                            });
-                          }}
-                          className="text-sm bg-purple-600 text-white px-3 py-1 rounded-full hover:bg-purple-700 font-medium cursor-pointer hover-btn hover-btn-purple"
-                        >
-                          <span>Message</span>
-                        </button>
+                        items.connection_status === "accepted" ? (
+                          <button
+                            onClick={() => {
+                              const user =
+                                tab === "received" ? items.user : items.owner;
+                              navigate("/admin/inbox", {
+                                state: {
+                                  userId: user?.id,
+                                  userName: `${user?.first_name} ${user?.last_name}`,
+                                },
+                              });
+                            }}
+                            className="text-sm bg-purple-600 text-white px-3 py-1 rounded-full hover:bg-purple-700 font-medium cursor-pointer hover-btn hover-btn-purple"
+                          >
+                            <span>Message</span>
+                          </button>
+                        ) : items.connection_status === "pending" ? (
+                          <button
+                            disabled
+                            className="text-sm bg-gray-300 text-gray-700 px-3 py-1 rounded-full font-medium cursor-not-allowed"
+                          >
+                            Pending
+                          </button>
+                        ) : (
+                          <button
+                            onClick={() => {
+                              AddtoNetwork(
+                                tab === "received" ? items.user : items.owner
+                              );
+                            }}
+                            className="text-sm bg-purple-600 text-white px-3 py-1 rounded-full hover:bg-purple-700 font-medium cursor-pointer hover-btn hover-btn-purple"
+                          >
+                            <span>Add Network</span>
+                          </button>
+                        )
                       ) : (
                         <span className="text-gray-500">—</span>
                       )}

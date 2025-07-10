@@ -435,14 +435,14 @@ export default function PrivateChat({
                     </p>{" "}
                     <div className="mt-4 space-y-2 text-sm text-gray-600">
                       {" "}
-                      <div className="flex items-center gap-2">
+                      {/* <div className="flex items-center gap-2">
                         {" "}
                         <Phone className="size-5 text-PurpleColor" />{" "}
                         <span className="font-Urbanist font-semibold text-[16px] text-Paracolor">
                           {" "}
                           {chatUser.phone}{" "}
                         </span>{" "}
-                      </div>{" "}
+                      </div>{" "} */}
                       <div className="flex items-center gap-2">
                         {" "}
                         <Calendar className="size-5 text-PurpleColor" />{" "}

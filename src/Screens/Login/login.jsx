@@ -120,8 +120,10 @@ const Login = () => {
     } catch (error) {
       console.log(error);
       setLoading(false);
-      console.log(error.response.data.errors[0].msg);
-      alert(error.response.data.errors[0].msg);
+      setError("Password", {
+        type: "manual",
+        message: error.response.data.message,
+      });
     }
   };
 

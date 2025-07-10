@@ -219,7 +219,7 @@ const Pricing = () => {
                       : false
                   }
                   PlanName={"Free"}
-                  Pricing={"0 "}
+                  Pricing={"0"}
                   Duration={""}
                   ButtonText={
                     !token
@@ -274,14 +274,14 @@ const Pricing = () => {
                       buttonLink = "/admin/subscription";
                     }
                   }
-
+                 
                   return (
                     <PlansTabs
                       key={items.id}
                       features={benefits}
                       featured={token && isCurrentPlan && isActive}
-                      PlanName={"New Investor Pro Pricing (Save $61)"}
-                      Pricing={`${Math.round(items.price)} `}
+                      PlanName={items.title}
+                      Pricing={`${items.price} `}
                       Duration={`/ ${items.type}`}
                       ButtonText={buttonText}
                       disabled={disabled}

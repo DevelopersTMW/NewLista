@@ -96,7 +96,7 @@ const ListingVisibilitySwitches = ({ register, controls }) => {
       </div>
 
       {/* Contact Visibility  */}
-      <div className="flex flex-col gap-3 mb-7">
+      {/* <div className="flex flex-col gap-3 mb-7">
         <div>
           <h1 className="font-Urbanist font-[600] text-[16px] lg:text-[17px] text-PurpleColor  ">
             Contact Visibility
@@ -144,7 +144,7 @@ const ListingVisibilitySwitches = ({ register, controls }) => {
             </button>
           </div>
         </div>
-      </div>
+      </div> */}
 
       {/* WARNING DIV */}
      {

@@ -256,22 +256,24 @@ const PropertyDetails = () => {
                       ? SingleProperty.sale_price
                       : SingleProperty.lease_rate}
                   </h1>
-                  <div className="flex gap-4">
-                    <InquiryForm
-                      id={params.id}
-                      propertyAddress={
-                        SingleProperty.address +
-                        " " +
-                        SingleProperty.city +
-                        " " +
-                        SingleProperty.state
-                      }
-                    />
-                    <PropertyChat
-                      propertyName={SingleProperty.property_name}
-                      id={params.id}
-                    />
-                  </div>
+                  {UserId !== SingleProperty.user.id && (
+                    <div className="flex gap-4">
+                      <InquiryForm
+                        id={params.id}
+                        propertyAddress={
+                          SingleProperty.address +
+                          " " +
+                          SingleProperty.city +
+                          " " +
+                          SingleProperty.state
+                        }
+                      />
+                      <PropertyChat
+                        propertyName={SingleProperty.property_name}
+                        id={params.id}
+                      />
+                    </div>
+                  )}
                 </div>
 
                 <div className="flex flex-col gap-5">
@@ -434,7 +436,7 @@ const PropertyDetails = () => {
                       <p className="font-Urbanist font-[600] text-[14px] sm:text-[16px] text-[#222222]">
                         〽 Lease Rate & Unit :{" "}
                         <span className="font-bold">
-                          {Math.round(SingleProperty.lease_rate) +
+                          {SingleProperty.lease_rate +
                             " " +
                             SingleProperty.lease_rate_unit || "None"}
                         </span>

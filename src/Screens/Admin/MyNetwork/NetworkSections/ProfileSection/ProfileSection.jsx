@@ -67,7 +67,7 @@ const ProfileSection = () => {
                 {user.city + ", " + user.state || "Not Provided"}
               </p>
             </li>
-            <li className="flex gap-2 justify-center items-center">
+            {/* <li className="flex gap-2 justify-center items-center">
               <img className="w-4 h-4 " src={MessageIcon2} alt="" />
               <p className="font-Inter text-[14px] text-Paracolor font-[600]">
                 {user.email || "guest@guest.com"}
@@ -78,7 +78,7 @@ const ProfileSection = () => {
               <p className="font-Inter text-[14px] text-Paracolor font-[600]">
                 {user.phone || "123456789"}
               </p>
-            </li>
+            </li> */}
           </ul>
         </div>
       </section>

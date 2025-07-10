@@ -137,7 +137,6 @@ const AccountSetting = () => {
   const [cities, setCities] = useState([]);
   const [selectedCity, setSelectedCity] = useState("");
 
- 
   // REACT HOOK FOR
   const { isOpen, confirm, handleConfirm, handleCancel } = useConfirmation();
   const {
@@ -150,7 +149,7 @@ const AccountSetting = () => {
     trigger,
     watch,
     reset,
-    getValues
+    getValues,
   } = useForm({
     defaultValues: {
       first_name: user.first_name,
@@ -164,12 +163,12 @@ const AccountSetting = () => {
       banner: null,
       headshot: null,
       investor_status: "Non-Active",
-      capRateMin: 0, 
+      capRateMin: 0,
       capRateMax: 30,
     },
     mode: "onTouched",
   });
-   const capRateMin = watch("capRateMin");
+  const capRateMin = watch("capRateMin");
   const capRateMax = watch("capRateMax");
 
   const DefaultSelection = useWatch({ control, name: "state" });
@@ -339,8 +338,6 @@ const AccountSetting = () => {
             zip: data.zip,
             company_name: data.company_name,
             years_of_experiance: data.years_of_experiance,
-            show_email: data.show_email ? 1 : 0,
-            show_phone: data.show_phone ? 1 : 0,
           },
           {
             headers: {
@@ -447,7 +444,12 @@ const AccountSetting = () => {
                 <Controller
                   name="phone"
                   control={control}
-                  rules={{ required: "Phone number is required" }}
+                  rules={{
+                    validate: (value) =>
+                      !value ||
+                      /^[0-9()+-\s]+$/.test(value) ||
+                      "Invalid phone number",
+                  }}
                   render={({ field }) => (
                     <CountrySelector
                       phone={field.value}
@@ -616,7 +618,7 @@ const AccountSetting = () => {
                   </h4>
                 </span>
               </div>
-              <div className="grid grid-cols-2">
+              {/* <div className="grid grid-cols-2">
                 <div>
                   <label
                     htmlFor="email"
@@ -669,7 +671,7 @@ const AccountSetting = () => {
                     </h4>
                   </span>
                 </div>
-              </div>
+              </div> */}
               {/* Location  */}
 
               {/* Message */}

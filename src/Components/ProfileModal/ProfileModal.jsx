@@ -119,7 +119,7 @@ const ProfileModal = ({ isOpen, onClose, user }) => {
 
               {/* Info */}
               <div className="mt-4 space-y-2 text-sm text-gray-600">
-                {user.user.show_phone && (
+                {/* {user.user.show_phone && (
                   <div className="flex items-center gap-2">
                     <Phone className="size-5 text-PurpleColor" />
                     <span>{user.user.phone}</span>
@@ -130,7 +130,7 @@ const ProfileModal = ({ isOpen, onClose, user }) => {
                     <Mail className="size-5 text-PurpleColor" />
                     <span>{user.user.email}</span>
                   </div>
-                )}
+                )} */}
                 <div className="flex items-center gap-2">
                   <Calendar className="size-5 text-PurpleColor" />
                   <span>{formatJoinDate(user.user.created_at)}</span>

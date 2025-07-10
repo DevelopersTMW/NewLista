@@ -64,7 +64,7 @@ const PropertyForm = () => {
       form.append("building_size", formData.BuildingSize_sqft);
       form.append("sale_price", formData.salePrice || "");
       form.append("address", formData.PropertyAddress);
-      form.append("city", formData.City);
+      form.append("city", formData.city);
       form.append("state", formData.state);
       form.append("zip", formData.ZipPostalCode);
       form.append("description", formData.description);
@@ -73,8 +73,6 @@ const PropertyForm = () => {
       form.append("owner_financing", formData.OwnerFinancing ? 1 : 0);
       form.append("noi", formData.Noi || "");
       form.append("cap_rate", formData.CapRate || "");
-      form.append("show_phone", formData.ShowNumber ? 1 : 0);
-      form.append("show_email", formData.ShowEmail ? 1 : 0);
 
       // Split fileInput into old URLs and new files
       formData.fileInput.forEach((item) => {

@@ -25,7 +25,11 @@ function PropertyChat({ id, propertyName }) {
     formState: { errors },
     control,
     reset,
-  } = useForm();
+  } = useForm({
+    defaultValues: {
+      Message: `I would like to inquire about your property ${propertyName}. Please contact me at your earliest convenience.`,
+    },
+  });
 
   const ContactSubmission = async (data) => {
     console.log(data);
@@ -136,7 +140,7 @@ function PropertyChat({ id, propertyName }) {
                       "Describe the property, its features, location advantages, and any unique selling points."
                     }
                     register={register("Message", {
-                      required: false,
+                      required: true,
                     })}
                     error={errors.Message?.message}
                   ></TextAreas>
