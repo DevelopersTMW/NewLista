@@ -102,10 +102,10 @@ const Login = () => {
       console.log("====================================");
       console.log(Response);
       console.log("====================================");
-      localStorage.setItem("token", response.token);
+      localStorage.setItem("token", Response.token);
       localStorage.setItem(
         "status",
-        response.subscription?.status || "inactive"
+        Response.subscription?.status || "inactive"
       );
       localStorage.setItem("User", JSON.stringify(Response.data.user));
       if (Response.data.profile_complete) {
