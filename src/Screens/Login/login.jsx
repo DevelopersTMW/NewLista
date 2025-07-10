@@ -102,8 +102,11 @@ const Login = () => {
       console.log("====================================");
       console.log(Response);
       console.log("====================================");
-      localStorage.setItem("token", Response.data.token);
-      localStorage.setItem("status", Response.data.status);
+      localStorage.setItem("token", response.token);
+      localStorage.setItem(
+        "status",
+        response.subscription?.status || "inactive"
+      );
       localStorage.setItem("User", JSON.stringify(Response.data.user));
       if (Response.data.profile_complete) {
         localStorage.setItem(
