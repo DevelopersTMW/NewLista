@@ -112,8 +112,7 @@ const Login = () => {
           "ProfileComplete",
           JSON.stringify(Response.data.profile_complete)
         );
-        navigate(from, { replace: true });
-        reset();
+        navigate("/admin", { replace: true });
       } else {
         navigate("/admin/account-setting");
       }

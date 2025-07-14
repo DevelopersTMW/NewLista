@@ -33,7 +33,7 @@ import PropertyDetailMap from "../../assets/PropertyDetailMap.png";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import Spinner from "../../Components/Spinner/Spinner";
-import { AlignLeft, Link, MapPin } from "lucide-react";
+import { AlignLeft, FlagOff, Link, MapPin } from "lucide-react";
 import EmptyCards from "../../Components/EmptyCard/EmptyCard";
 import TruncatedText from "../../Components/TruncatedText/TruncatedText";
 import KeyFeatures from "./KeyFeatures&Amenities/KeyFeatures";
@@ -315,11 +315,7 @@ const PropertyDetails = () => {
                     title="Report User"
                     className="absolute right-0"
                   >
-                    <img
-                      className="w-7 h-7 cursor-pointer"
-                      src={BlockUserIcon}
-                      alt="Report"
-                    />
+                    <FlagOff />
                   </button>
                 )}
 
