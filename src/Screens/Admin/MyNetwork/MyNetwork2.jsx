@@ -19,6 +19,7 @@ import AddtoNetworkSec from "./NetworkSections/AddtoNetworkSec/AddtoNetworkSec";
 import OurNetwork from "./NetworkSections/OurNetwork/OurNetwork";
 import OurRequest from "./NetworkSections/OurRequest/OurRequest";
 import { set, useForm } from "react-hook-form";
+import { useLocation } from "react-router-dom";
 
 const TabNames = [
   { name: "Discover Investors", TabLink: "addToNetwork" },
@@ -30,6 +31,7 @@ const MyNetwork2 = () => {
   const ApiKey = import.meta.env.VITE_API_KEY;
   const tokens = localStorage.getItem("token");
   const [loading, setloading] = useState(false);
+  const location = useLocation();
 
   const { register, watch, setValue, reset, control } = useForm({
     defaultValues: {
@@ -39,6 +41,16 @@ const MyNetwork2 = () => {
       state: "",
     },
   });
+  const [activeTab, setActiveTab] = useState("addToNetwork");
+
+   useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const tabParam = params.get("tab");
+
+    if (tabParam === "pending" || tabParam === "myNetwork" || tabParam === "addToNetwork") {
+      setActiveTab(tabParam);
+    }
+  }, [location.search]);
 
   const propertyinterest = watch("propertyinterest");
   const investmentRange = watch("investmentRange");
@@ -52,7 +64,6 @@ const MyNetwork2 = () => {
   const [selectedUser, setSelectedUser] = useState([null]);
   const [type, settype] = useState();
   const [showModal, setShowModal] = useState(false);
-  const [activeTab, setActiveTab] = useState("addToNetwork");
 
   const currentUserId = JSON.parse(localStorage.getItem("User"))?.id;
 
@@ -130,7 +141,9 @@ const MyNetwork2 = () => {
     try {
       const response = await axios.post(
         `${ApiKey}/connections/request`,
-        { to_user_id: id },
+        { to_user_id: id , 
+          action_url : `${window.location.origin}/admin/network?tab=pending`
+         },
         { headers: { Authorization: `Bearer ${tokens}` } }
       );
 
@@ -169,7 +182,9 @@ const MyNetwork2 = () => {
     try {
       await axios.patch(
         `${ApiKey}/connections/${id}/update`,
-        { status: Val },
+        { status: Val , 
+          action_url : `${window.location.origin}/admin/network?tab=myNetwork`
+         },
         { headers: { Authorization: `Bearer ${tokens}` } }
       );
 

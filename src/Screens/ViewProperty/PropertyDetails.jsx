@@ -315,7 +315,10 @@ const PropertyDetails = () => {
                     title="Report User"
                     className="absolute right-0"
                   >
-                    <FlagOff />
+                    
+                    <span className="bg-red-500">
+                      <FlagOff className="bg-red-500 text-white px-2 rounded-full size-8 cursor-pointer" />
+                    </span>
                   </button>
                 )}
 
