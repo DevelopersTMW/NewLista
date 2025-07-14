@@ -71,6 +71,8 @@ const PropertyForm = () => {
       form.append("featured_listing", formData.FeaturedListing ? 1 : 0);
       form.append("off_market_listing", formData.OffTheMarketListing ? 1 : 0);
       form.append("owner_financing", formData.OwnerFinancing ? 1 : 0);
+      form.append("show_email", formData.ShowEmail ? 1 : 0);
+      form.append("show_phone", formData.ShowNumber ? 1 : 0);
       form.append("noi", formData.Noi || "");
       form.append("cap_rate", formData.CapRate || "");
 

@@ -84,7 +84,7 @@ const PropertyDetails = () => {
   const params = useParams();
   const token = localStorage.getItem("token");
   const ApiKey = import.meta.env.VITE_API_KEY;
-
+  const status = localStorage.getItem("status");
   const [UserId, setUserId] = useState("");
   const [showReportModal, setShowReportModal] = useState(false);
   const [Properties, setProperties] = useState([]);
@@ -358,20 +358,21 @@ const PropertyDetails = () => {
                       </span>
                     </span>
                   </div>
+                  {status === "active" && (
+                    <span>
+                      {SingleProperty.show_phone && (
+                        <p className="font-Urbanist  text-[16px] sm:text-[17px] font-semibold">
+                          Phone: {SingleProperty.user.phone}
+                        </p>
+                      )}
 
-                  <span>
-                    {SingleProperty.show_phone && (
-                      <p className="font-Urbanist  text-[16px] sm:text-[17px] font-semibold">
-                        Phone: {SingleProperty.user.phone}
-                      </p>
-                    )}
-
-                    {SingleProperty.show_email && (
-                      <p className="font-Urbanist  text-[16px] sm:text-[17px] font-semibold">
-                        Email: {SingleProperty.user.email}
-                      </p>
-                    )}
-                  </span>
+                      {SingleProperty.show_email && (
+                        <p className="font-Urbanist  text-[16px] sm:text-[17px] font-semibold">
+                          Email: {SingleProperty.user.email}
+                        </p>
+                      )}
+                    </span>
+                  )}
 
                   {UserId !== SingleProperty.user.id && (
                     <MakeOffer id={params.id} />

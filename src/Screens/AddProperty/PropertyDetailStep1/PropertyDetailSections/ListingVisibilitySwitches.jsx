@@ -49,7 +49,7 @@ const ListingVisibilitySwitches = ({ register, controls }) => {
               defaultValue={false} // Ensure this is set
               render={({ field }) => (
                 <Switches
-                  value={status ?  field.value :  setShowError(true)} // Pass field.value
+                  value={status ?  field.value :  setShowError(true)} 
                   onChange={status ?  field.onChange :  setShowError(true)}
                   checked={status ?  field.value :  setShowError(true)} // Use field.value for checked
                   onBlur={field.onBlur}
@@ -96,7 +96,7 @@ const ListingVisibilitySwitches = ({ register, controls }) => {
       </div>
 
       {/* Contact Visibility  */}
-      {/* <div className="flex flex-col gap-3 mb-7">
+      <div className="flex flex-col gap-3 mb-7">
         <div>
           <h1 className="font-Urbanist font-[600] text-[16px] lg:text-[17px] text-PurpleColor  ">
             Contact Visibility
@@ -107,9 +107,17 @@ const ListingVisibilitySwitches = ({ register, controls }) => {
             <Controller
               name="ShowNumber"
               control={controls}
-              defaultValue={false}
-              render={({ field }) => <Switches {...field} />}
+              defaultValue={false} // Ensure this is set
+              render={({ field }) => (
+                <Switches
+                  value={status ?  field.value :  setShowError(true)} 
+                  onChange={status ?  field.onChange :  setShowError(true)}
+                  checked={status ?  field.value :  setShowError(true)} // Use field.value for checked
+                  onBlur={field.onBlur}
+                />
+              )}
             />
+            
           </div>
 
           <div className="flex flex-co items-center gap-0.5">
@@ -119,7 +127,7 @@ const ListingVisibilitySwitches = ({ register, controls }) => {
               </h1>
             </span>
             <button className="border-PurpleColor ml-2 border  font-[600] cursor-pointer text-[13px] w-max px-3 flex justify-center items-center text-PurpleColor font-Urbanist rounded-[14px] text-center">
-              Free
+              Premium
             </button>
           </div>
         </div>
@@ -128,8 +136,15 @@ const ListingVisibilitySwitches = ({ register, controls }) => {
             <Controller
               name="ShowEmail"
               control={controls}
-              defaultValue={false}
-              render={({ field }) => <Switches {...field} />}
+              defaultValue={false} // Ensure this is set
+              render={({ field }) => (
+                <Switches
+                  value={status ?  field.value :  setShowError(true)} 
+                  onChange={status ?  field.onChange :  setShowError(true)}
+                  checked={status ?  field.value :  setShowError(true)} // Use field.value for checked
+                  onBlur={field.onBlur}
+                />
+              )}
             />
           </div>
 
@@ -140,11 +155,11 @@ const ListingVisibilitySwitches = ({ register, controls }) => {
               </h1>
             </span>
             <button className="border-PurpleColor ml-2 border  font-[600] cursor-pointer text-[13px] w-max px-3 flex justify-center items-center text-PurpleColor font-Urbanist rounded-[14px] text-center">
-              Free
+              Premium
             </button>
           </div>
         </div>
-      </div> */}
+      </div>
 
       {/* WARNING DIV */}
      {
