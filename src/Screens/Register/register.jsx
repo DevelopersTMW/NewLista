@@ -20,17 +20,15 @@ const Register = () => {
     reset,
   } = useForm();
 
-
   const clientId = import.meta.env.VITE_GOOGLE_CLIENT_ID;
   const ApiKey = import.meta.env.VITE_API_KEY;
   const navigate = useNavigate();
 
-  // STATES 
+  // STATES
   const [Loading, setLoading] = useState(false);
   const [ErrorMessage, setErrorMessage] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setshowConfirmPassword] = useState(false);
-
 
   const RegisterForm = async (Data) => {
     console.log("RegisterUser :", Data);
@@ -51,7 +49,7 @@ const Register = () => {
     if (!/[!@#$%^&*()<>,."]/.test(Data.Password)) {
       setError("Password", {
         type: "manual",
-        message: "Password must contain any special character (!@#$%^&*_+-=?) "
+        message: "Password must contain any special character (!@#$%^&*_+-=?) ",
       });
       return;
     }
@@ -133,16 +131,20 @@ const Register = () => {
           },
         }
       );
+      const response = Response.data;
+      localStorage.setItem("token", response.token);
+      localStorage.setItem(
+        "status",
+        response.subscription?.status || "inactive"
+      );
+      localStorage.setItem("User", JSON.stringify(Response.data.user));
       if (Response.data.profile_complete) {
-        localStorage.setItem("token", Response.data.token);
-        navigate("/admin");
-      } else {
-        localStorage.setItem("token", Response.data.token);
-        localStorage.setItem("User", JSON.stringify(Response.data.user));
         localStorage.setItem(
           "ProfileComplete",
           JSON.stringify(Response.data.profile_complete)
         );
+        navigate("/admin");
+      } else {
         navigate("/admin/account-setting");
       }
     } catch (error) {
