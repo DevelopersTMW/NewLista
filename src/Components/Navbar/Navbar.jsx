@@ -16,7 +16,7 @@ import ConfirmationModal from "../ConfirmationModal/ConfirmationModal";
 import { useSelector } from "react-redux";
 import { useConfirmation } from "../../Screens/Admin/AccountSetting/Fields/Confirmation";
 import Spinner from "../Spinner/Spinner";
-import { UserRoundCheck } from "lucide-react";
+import { Lock, UserRoundCheck } from "lucide-react";
 import axios from "axios";
 import DummyLogo from "../../../public/Images/UnknowUser.png";
 
@@ -27,6 +27,13 @@ function Navbar() {
   const ApiKey = import.meta.env.VITE_API_KEY;
   const [loading, setloading] = useState(false);
   const token = localStorage.getItem("token");
+  const status = localStorage.getItem("status");
+
+  const isLocked = !token || status !== "active";
+
+  const totalUnreadCount = useSelector(
+    (state) => state.unread.totalUnreadCount
+  );
 
   const navigate = useNavigate();
   const [user, setUser] = useState([]);
@@ -182,25 +189,35 @@ function Navbar() {
               {loading ? (
                 <Spinner style={"w-5 h-12 text-PurpleColor z-50"} />
               ) : (
-                <img
-                  className="max-[380px]:w-10 max-[380px]:h-10 w-12.5 h-12.5 sm:h-12 sm:w-12 object-cover rounded-full cursor-pointer border-none"
-                  src={
-                    user?.headshot
-                      ? import.meta.env.VITE_IMAGE_KEY + user.headshot
-                      : DummyLogo
-                  }
-                  onError={(e) => {
-                    e.target.onerror = null;
-                    e.target.src = DummyLogo;
-                  }}
-                />
+                <>
+                  <img
+                    className="max-[380px]:w-10 max-[380px]:h-10 w-12.5 h-12.5 sm:h-12 sm:w-12 object-cover rounded-full cursor-pointer border-none"
+                    src={
+                      user?.headshot
+                        ? import.meta.env.VITE_IMAGE_KEY + user.headshot
+                        : DummyLogo
+                    }
+                    onError={(e) => {
+                      e.target.onerror = null;
+                      e.target.src = DummyLogo;
+                    }}
+                  />
+                  {!isLocked && totalUnreadCount > 0 && (
+                    <div className="absolute text-red-600  -right-2 top-0">
+                      <span
+                        className={`text-white bg-red-500 text-[12px] font-Urbanist px-1.5 py-[1px] rounded-full flex items-center justify-center font-semibold min-w-[19px] h-[19px] `}
+                        style={{ paddingTop: "1.5px" }}
+                      >
+                        {totalUnreadCount > 99 ? "99+" : totalUnreadCount}
+                      </span>
+                    </div>
+                  )}
+                </>
               )}
             </MenuButton>
             <MenuItems className="absolute right-0 mt-2 border-none w-48 text-[18px] font-[500] bg-[#fcfcfc] rounded-md shadow-lg font-Urbanist py-1 z-20 ring-0">
-              <MenuItem className="cursor-not-allowed">  
-                <div
-                  className="block px-4 py-2 text-sm text-gray-700"
-                >
+              <MenuItem className="cursor-not-allowed">
+                <div className="block px-4 py-2 text-sm text-gray-700">
                   {user.first_name + " " + user.last_name}
                 </div>
               </MenuItem>
@@ -210,6 +227,32 @@ function Navbar() {
                   className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                 >
                   Your Profile
+                </Link>
+              </MenuItem>
+              <MenuItem>
+                <Link
+                  to={isLocked ? "#" : "/admin/inbox"}
+                  className={`block px-4 py-2 text-[15px] text-gray-700 hover:bg-gray-100 ${
+                    isLocked && "cursor-not-allowed"
+                  } relative flex justify-between items-center`}
+                >
+                  {isLocked && (
+                    <Lock
+                      strokeWidth={2.5}
+                      className="absolute text-red-600 size-2 right-7  sm:size-3 -mt-1 sm:mt-0 "
+                    />
+                  )}
+                  Inbox
+                  {!isLocked && totalUnreadCount > 0 && (
+                    <div className="absolute text-red-600  right-7 top-2">
+                      <span
+                        className={`text-white bg-red-500 text-[12px] font-Urbanist px-1.5 py-[1px] rounded-full flex items-center justify-center font-semibold min-w-[19px] h-[19px] `}
+                        style={{ paddingTop: "1.5px" }}
+                      >
+                        {totalUnreadCount > 99 ? "99+" : totalUnreadCount}
+                      </span>
+                    </div>
+                  )}
                 </Link>
               </MenuItem>
               <MenuItem onClick={handleConfirmation}>

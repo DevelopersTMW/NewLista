@@ -272,33 +272,21 @@ const PropertyDetails = () => {
                     {SingleProperty.listing_type ===
                       "Both (For Sale & For Lease)" && (
                       <>
-                        <h1 className="font-Poppins text-[#222222] font-[650] text-[30px] sm:text-[36px] flex  gap-6 items-center relative">
-                          {/* Display Price Based on Selected Option */}
-                          {selectedOption === "sale" && (
-                            <div className="flex flex-col leading-[40px]">
-                              <span className="text-[23px]">Sale:</span>
-                              <span>${SingleProperty.sale_price}</span>
+                        <h1 className="font-Poppins text-[#222222] font-[650] text-[30px] sm:text-[36px] flex  gap-10 items-center relative">
+                          <div className="flex flex-col leading-[40px]">
+                            <span className="text-[23px]">Sale:</span>
+                            <span>${SingleProperty.sale_price}</span>
+                          </div>
+                          <div className="flex flex-col leading-[40px] border-l-[1px] pl-10 border-gray-300">
+                            <span className="text-[23px]">Lease:</span>
+                            <div>
+                              ${SingleProperty.lease_rate}
+                              <span className="text-[20px]">
+                                {"/ " + SingleProperty.lease_rate_unit}
+                              </span>
                             </div>
-                          )}
-
-                          {selectedOption === "lease" && (
-                            <div className="flex flex-col leading-[40px]">
-                              <span className="text-[23px]">Lease:</span>
-                              <div>
-                                ${SingleProperty.lease_rate}
-                                <span className="text-[20px]">
-                                  {"/ " + SingleProperty.lease_rate_unit}
-                                </span>
-                              </div>
-                            </div>
-                          )}
-                          {/* Toggle Button */}
-                          <button
-                            onClick={handleToggle}
-                            className="p-1 hover:opacity-80 cursor-pointer absolute top-1 right-0"
-                          >
-                            <AlignLeft />
-                          </button>
+                          </div>
+                         
                         </h1>
                       </>
                     )}

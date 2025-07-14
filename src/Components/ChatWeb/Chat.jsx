@@ -42,8 +42,8 @@ export default function PrivateChat({
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   const [isChatUserOnline, setIsChatUserOnline] = useState();
   const [text, setText] = useState("");
-  const [hoveredIndex, setHoveredIndex] = useState(null); 
-   const [showReportModal, setShowReportModal] = useState(false);
+  const [hoveredIndex, setHoveredIndex] = useState(null);
+  const [showReportModal, setShowReportModal] = useState(false);
 
   const ApiKey = import.meta.env.VITE_API_KEY;
   const token = localStorage.getItem("token");
@@ -256,7 +256,7 @@ export default function PrivateChat({
                       Delete User
                     </button>
                   </Menu.Item>
-                   <Menu.Item>
+                  <Menu.Item>
                     <button
                       onClick={() => setShowReportModal(true)}
                       className={`hover:bg-gray-200 flex gap-2 w-full text-left px-4 py-2 text-sm text-gray-700 cursor-pointer font-Urbanist font-[600]`}
@@ -358,6 +358,12 @@ export default function PrivateChat({
             ref={textareaRef}
             value={text}
             onChange={(e) => setText(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" && !e.shiftKey) {
+                e.preventDefault();
+                sendMessage(e);
+              }
+            }}
             placeholder="Type a message..."
             rows={1}
             className="bg-[#F3EEFF] text-[#1d1d1d] font-[600] font-Urbanist text-[14px]
@@ -516,7 +522,7 @@ export default function PrivateChat({
         )}
       </div>
 
-       {/* Move this OUTSIDE Dialog */}
+      {/* Move this OUTSIDE Dialog */}
       {showReportModal && (
         <ReportUserModal
           isOpen={showReportModal}
