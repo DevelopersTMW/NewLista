@@ -14,7 +14,7 @@ const REPORT_REASONS = [
   "Other",
 ];
 
-const ReportUserModal = ({ isOpen, onClose, userId , from }) => {
+const ReportUserModal = ({ isOpen, onClose, userId, from }) => {
   const {
     register,
     watch,
@@ -58,10 +58,10 @@ const ReportUserModal = ({ isOpen, onClose, userId , from }) => {
     console.log("✅ Report data:", data);
 
     try {
-      const finalReason = data.reasons === "Other" ? data.otherReason : data.reasons;
+      const finalReason =
+        data.reasons === "Other" ? data.otherReason : data.reasons;
 
       console.log(finalReason);
-      
 
       setLoading(true);
       const response = await axios.post(
@@ -75,9 +75,9 @@ const ReportUserModal = ({ isOpen, onClose, userId , from }) => {
         }
       );
       console.log(response);
-      alert(response.data.message)
+      alert(response.data.message);
       onClose();
-      reset()
+      reset();
     } catch (error) {
       console.log(error);
       setLoading(false);
@@ -101,7 +101,11 @@ const ReportUserModal = ({ isOpen, onClose, userId , from }) => {
             <X />
           </button>
 
-          <h2 className="text-3xl font-bold font-Inter mb-4">Report User</h2>
+          <h2 className="text-3xl font-bold font-Inter mb-4">
+            {from === "From Chat:" || from === "From Network:"
+              ? "Report User"
+              : "Report Property"}
+          </h2>
 
           {!loading ? (
             <form onSubmit={handleSubmit(onSubmit)}>
@@ -147,13 +151,6 @@ const ReportUserModal = ({ isOpen, onClose, userId , from }) => {
                     )}
                   </div>
                 )}
-
-                {isOtherChecked && otherReasonText.trim() && (
-                  <p className="mt-3 text-gray-700 font-medium">
-                    Your message: <span className="italic">{otherReasonText}</span>
-                  </p>
-                )}
-
                 {errors.reasons && (
                   <p className="text-red-600 text-sm mt-1">
                     {errors.reasons.message}
@@ -162,7 +159,9 @@ const ReportUserModal = ({ isOpen, onClose, userId , from }) => {
               </fieldset>
 
               <p className="text-[13px] text-Paracolor rounded mb-4 font-medium">
-                Note: Reporting this user will remove your connection with them!
+                {from === "From Chat:" || from === "From Network:"
+                  ? " Note: Reporting this user will remove your connection with them!"
+                  : ""}
               </p>
 
               <div className="flex justify-end">

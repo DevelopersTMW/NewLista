@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import TruncatedText from "../../TruncatedText/TruncatedText";
 
 const TopDevelopes = ({
   Img,
@@ -78,12 +79,34 @@ const TopDevelopes = ({
               </span>
             </div> */}
           <div className="flex justify-between items-end flex-wrap gap-3">
-            <div className="">
-              <h5 className="font-Inter text-[15px] font-[500]">
-                Starting from
-              </h5>
-              <h1 className="font-Inter text-[20px] font-bold">${Price}</h1>
-            </div>
+            {type === "Both (For Sale & For Lease)" && (
+              <div className=" ">
+                <h5 className="font-Inter text-[15px] font-[500]">
+                  Starting from
+                </h5>
+                <h1 className="font-Inter text-[20px] font-bold">
+                  {" "}
+                  $
+                  <TruncatedText text={forsale} maxLength={6} />
+                  {"/sale"}
+                </h1>
+                <h1 className="font-Inter text-[20px] font-bold">
+                  {" "}
+                  $
+                  <TruncatedText text={forlease} maxLength={6} />
+                  {"/lease"}
+                </h1>
+              </div>
+            )}
+            {type !== "Both (For Sale & For Lease)" && (
+              <div className="">
+                <h5 className="font-Inter text-[15px] font-[500]">
+                  Starting from
+                </h5>
+                <h1 className="font-Inter text-[20px] font-bold">${Price}</h1>
+              </div>
+            )}
+
             <div className="">
               <Link to={`/properties/${id}`}>
                 <button className="inline-flex font-Inter text-[13px] sm:text-[15.3px] items-center px-5 py-2.5 rounded-full text-sm font-medium text-center focus:outline-none hover-btn-purple hover-btn ">

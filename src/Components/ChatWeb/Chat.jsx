@@ -64,19 +64,13 @@ export default function PrivateChat({
   }, [text]);
 
   useEffect(() => {
-    const db = getDatabase(); // ✅ Optional, but makes it clearer
+    const db = getDatabase(); 
     const messagesRef = ref(db, `messages/${chatId}`);
-
-    setMessages([]); // Clear previous messages
-
+    setMessages([]); 
     const handleNewMessage = (snapshot) => {
       setMessages((prevMessages) => [...prevMessages, snapshot.val()]);
     };
-
-    // Attach listener
     onChildAdded(messagesRef, handleNewMessage);
-
-    // ✅ Cleanup using correct Firebase `off` method
     return () => {
       off(messagesRef, "child_added", handleNewMessage);
     };
@@ -266,7 +260,7 @@ export default function PrivateChat({
                       className={`hover:bg-gray-200 flex gap-2 w-full text-left px-4 py-2 text-sm text-gray-700 cursor-pointer font-Urbanist font-[600] border-b-[1px] border-[#c9c9c9]`}
                     >
                       <Trash className="size-[17px]" />
-                      Delete User
+                      Remove User
                     </button>
                   </Menu.Item>
                   <Menu.Item>
@@ -275,7 +269,7 @@ export default function PrivateChat({
                       className={`hover:bg-gray-200 flex gap-2 w-full text-left px-4 py-2 text-sm text-gray-700 cursor-pointer font-Urbanist font-[600]`}
                     >
                       <CircleSlash className="size-[17px]" />
-                      Block User
+                      Report User
                     </button>
                   </Menu.Item>
                 </div>

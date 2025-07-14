@@ -3,6 +3,7 @@ import PropertyIcon from "../../../assets/PropertyIcon.png";
 import PropertyIcon2 from "../../../assets/PropertyIcon2.png";
 import { Link } from "react-router-dom";
 import { Pickaxe } from "lucide-react";
+import TruncatedText from "../../TruncatedText/TruncatedText";
 
 const PropertiesCards2 = ({
   Img,
@@ -16,6 +17,8 @@ const PropertiesCards2 = ({
   PropertyType,
   Area,
   CheckProperty,
+  forsale,
+  forlease,
 }) => {
   return (
     <>
@@ -42,13 +45,13 @@ const PropertiesCards2 = ({
             )}
           </div>
           <div>
-           <div className="my-2.5">
-             {CheckProperty && (
-              <span className="bg-[#FFC107] text-white font-Inter px-4 py-1.5 mb-3  text-[14px] rounded-full">
-                {CheckProperty}
-              </span>
-            )}
-           </div>
+            <div className="my-2.5">
+              {CheckProperty && (
+                <span className="bg-[#FFC107] text-white font-Inter px-4 py-1.5 mb-3  text-[14px] rounded-full">
+                  {CheckProperty}
+                </span>
+              )}
+            </div>
             <h1 className="mb-2 text-[21px] font-[600] font-Inter tracking-tight leading-[24px] mt-4 text-gray-900 ">
               {Heading}
             </h1>
@@ -70,11 +73,41 @@ const PropertiesCards2 = ({
               {PropertyType}
             </span>
           </div>
+
           <div className="flex justify-between items-center mt-5">
-            <div>
-              <h5 className="font-Inter text-[16px] font-[500]">Price</h5>
-              <h1 className="font-Inter text-[16px] font-bold">${Price}</h1>
-            </div>
+            {Status === "Both (For Sale & For Lease)" && (
+              <div className=" ">
+                <h5 className="font-Inter text-[16px] font-[500] -mt-3">Price</h5>
+                <h1 className="font-Inter text-[16px] font-bold">
+                  $
+                  <TruncatedText
+                    text={
+                      forsale
+                    }
+                    maxLength={6}
+                  />
+                  {"/sale"}
+
+                </h1>
+                <h1 className="font-Inter text-[16px] font-bold">
+                   $
+                  <TruncatedText
+                    text={
+                      forlease
+                    }
+                    maxLength={6}
+                  />
+                   {"/lease"}
+                </h1>
+              </div>
+            )}
+            {Status !== "Both (For Sale & For Lease)" && (
+              <div>
+                <h5 className="font-Inter text-[16px] font-[500]">Price</h5>
+                <h1 className="font-Inter text-[16px] font-bold">${Price}</h1>
+              </div>
+            )}
+
             <div>
               <Link
                 to={`/properties/${id}`}

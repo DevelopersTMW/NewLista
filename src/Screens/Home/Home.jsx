@@ -166,6 +166,8 @@ const Home = () => {
             ? items.sale_price
             : items.lease_rate
         }
+        forsale={items.sale_price && items.sale_price}
+        forlease={items.lease_rate && items.lease_rate}
         Status={items.listing_status}
         type={items.listing_type}
         id={items.id}
@@ -194,11 +196,11 @@ const Home = () => {
 
   const NetWorkView = () => {
     if (!token) {
-      navigate('/login')
+      navigate("/login");
     } else if (status !== "active") {
-      navigate("/pricing")
+      navigate("/pricing");
     } else {
-      navigate("/admin/network")
+      navigate("/admin/network");
     }
   };
 
@@ -227,7 +229,10 @@ const Home = () => {
           {/* HERO SECTION END */}
 
           {/* CARDS SECTION   */}
-          <HomeSection1 onclick={() => goToViewProperties("offmarket")} token={token}></HomeSection1>
+          <HomeSection1
+            onclick={() => goToViewProperties("offmarket")}
+            token={token}
+          ></HomeSection1>
 
           {/* FEATUES PROPERTIES */}
           <section
@@ -280,6 +285,8 @@ const Home = () => {
                             ? items.sale_price
                             : items.lease_rate
                         }
+                        forsale={items.sale_price && items.sale_price}
+                        forlease={items.lease_rate && items.lease_rate}
                         id={items.id}
                       />
                     </div>
@@ -406,7 +413,9 @@ const Home = () => {
                 "Network with fellow investors. Exchange insights, build lasting partnerships, and discover exclusive real estate deals."
               }
               ButtonName={"View More"}
-              onClick={()=>{NetWorkView()}}
+              onClick={() => {
+                NetWorkView();
+              }}
             />
             {/* CARD SECTION  */}
             <div className="w-[98%] sm:-ml-3 md:w-[84%] flex gap-">

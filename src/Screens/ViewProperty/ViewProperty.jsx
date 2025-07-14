@@ -310,12 +310,14 @@ const ViewProperty = () => {
                           <TruncatedText
                             text={
                               items.listing_type === "For Sale"
-                                ? items.sale_price
-                                : items.lease_rate
+                                  ? items.sale_price
+                                  : items.lease_rate
                             }
                             maxLength={10}
                           />
                         }
+                        forsale={items.sale_price && items.sale_price}
+                        forlease={items.lease_rate && items.lease_rate}
                         id={items.id}
                         images={items.images[0]}
                         CheckProperty={

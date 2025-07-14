@@ -253,7 +253,7 @@ const PropertyDetails = () => {
               </div>
 
               {/* RIGHT SIDE  */}
-              <div className="min-[850px]:!w-[50%] flex flex-col gap-8 pt-6">
+              <div className="min-[850px]:!w-[50%] flex flex-col gap-8 pt-6 relative">
                 <div>
                   <h5 className="font-Urbanist text-[#222222] font-semibold text-[20px]">
                     Price
@@ -286,7 +286,6 @@ const PropertyDetails = () => {
                               </span>
                             </div>
                           </div>
-                         
                         </h1>
                       </>
                     )}
@@ -310,6 +309,19 @@ const PropertyDetails = () => {
                     </div>
                   )}
                 </div>
+                {token && (
+                  <button
+                    onClick={() => setShowReportModal(true)}
+                    title="Report User"
+                    className="absolute right-0"
+                  >
+                    <img
+                      className="w-7 h-7 cursor-pointer"
+                      src={BlockUserIcon}
+                      alt="Report"
+                    />
+                  </button>
+                )}
 
                 <div className="flex flex-col gap-5">
                   <div className="flex justify-between items-center">
@@ -345,19 +357,6 @@ const PropertyDetails = () => {
                         </p>
                       </span>
                     </span>
-                    {token && (
-                      <button
-                        onClick={() => setShowReportModal(true)}
-                        title="Report User"
-                        className=""
-                      >
-                        <img
-                          className="w-7 h-7 cursor-pointer"
-                          src={BlockUserIcon}
-                          alt="Report"
-                        />
-                      </button>
-                    )}
                   </div>
 
                   <span>
@@ -564,6 +563,8 @@ const PropertyDetails = () => {
                               maxLength={9}
                             />
                           }
+                          forsale={items.sale_price && items.sale_price}
+                          forlease={items.lease_rate && items.lease_rate}
                           id={items.id}
                           images={items.images[0]}
                         />

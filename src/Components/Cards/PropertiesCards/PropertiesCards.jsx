@@ -5,6 +5,7 @@ import PropertyIcon from "../../../assets/PropertyIcon.png";
 import PropertyIcon2 from "../../../assets/PropertyIcon2.png";
 import PropertyIcon3 from "../../../assets/PropertyIcon.png";
 import { Cuboid, Pickaxe } from "lucide-react";
+import TruncatedText from "../../TruncatedText/TruncatedText";
 
 const PropertiesCards = ({
   Img,
@@ -16,6 +17,8 @@ const PropertiesCards = ({
   id,
   PropertyType,
   Area,
+  forsale,
+  forlease,
 }) => {
   return (
     <>
@@ -27,7 +30,7 @@ const PropertiesCards = ({
             alt=""
           />
         </Link>
-        <div className="p-5 flex flex-col gap-2 justify-between h-[57vh]">
+        <div className="p-5 flex flex-col gap-2 justify-between h-[55vh]">
           <div className="flex flex-col gap-2">
             <div>
               {"For Sale" === type ? (
@@ -57,7 +60,7 @@ const PropertiesCards = ({
             </div>
             <div>
               <Link to={`/properties/${id}`}>
-                <h1 className="mb-2 text-[25px] font-[600] font-Inter tracking-tight leading-[27px] mt-3 text-gray-900 sm:text-[22px] ">
+                <h1 className="mb-1 text-[25px] font-[600] font-Inter tracking-tight leading-[27px] mt-3 text-gray-900 sm:text-[22px] ">
                   {Heading}
                 </h1>
               </Link>
@@ -81,10 +84,29 @@ const PropertiesCards = ({
             </div>
           </div>
           <div className="flex items-cente flex-col flex-wrap gap-3">
-            <div>
-              <h5 className="font-Inter text-[16px] font-[500]">Price</h5>
-              <h1 className="font-Inter text-[18px] font-bold">${Price}</h1>
-            </div>
+            {type === "Both (For Sale & For Lease)" && (
+              <div className=" ">
+                <h5 className="font-Inter text-[16px] font-[500] ">
+                  Price
+                </h5>
+                <h1 className="font-Inter text-[18px] font-bold">
+                  $
+                  <TruncatedText text={forsale} maxLength={6} />
+                  {"/sale"}
+                </h1>
+                <h1 className="font-Inter text-[18px] font-bold">
+                  $
+                  <TruncatedText text={forlease} maxLength={6} />
+                  {"/lease"}
+                </h1>
+              </div>
+            )}
+            {type !== "Both (For Sale & For Lease)" && (
+              <div>
+                <h5 className="font-Inter text-[18px] font-[500]">Price</h5>
+                <h1 className="font-Inter text-[18px] font-bold">${Price}</h1>
+              </div>
+            )}
             <div>
               <Link
                 to={`/properties/${id}`}
