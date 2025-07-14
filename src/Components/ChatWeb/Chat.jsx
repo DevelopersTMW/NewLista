@@ -8,11 +8,13 @@ import {
   remove,
   onValue,
   update,
+  off
 } from "firebase/database";
 import db from "../../Configuration/Firebase/FirebaseConfig";
 import {
   Calendar,
   CircleMinus,
+  CircleSlash,
   DollarSign,
   EllipsisVertical,
   Info,
@@ -62,11 +64,22 @@ export default function PrivateChat({
   }, [text]);
 
   useEffect(() => {
-    const messagesRef = ref(getDatabase(), `messages/${chatId}`);
-    setMessages([]);
-    onChildAdded(messagesRef, (snapshot) => {
-      setMessages((prev) => [...prev, snapshot.val()]);
-    });
+    const db = getDatabase(); // ✅ Optional, but makes it clearer
+    const messagesRef = ref(db, `messages/${chatId}`);
+
+    setMessages([]); // Clear previous messages
+
+    const handleNewMessage = (snapshot) => {
+      setMessages((prevMessages) => [...prevMessages, snapshot.val()]);
+    };
+
+    // Attach listener
+    onChildAdded(messagesRef, handleNewMessage);
+
+    // ✅ Cleanup using correct Firebase `off` method
+    return () => {
+      off(messagesRef, "child_added", handleNewMessage);
+    };
   }, [chatId]);
 
   useEffect(() => {
@@ -250,7 +263,7 @@ export default function PrivateChat({
                   <Menu.Item>
                     <button
                       onClick={() => deteleUser()}
-                      className={`hover:bg-gray-200 flex gap-2 w-full text-left px-4 py-2 text-sm text-gray-700 cursor-pointer font-Urbanist font-[600]`}
+                      className={`hover:bg-gray-200 flex gap-2 w-full text-left px-4 py-2 text-sm text-gray-700 cursor-pointer font-Urbanist font-[600] border-b-[1px] border-[#c9c9c9]`}
                     >
                       <Trash className="size-[17px]" />
                       Delete User
@@ -261,7 +274,7 @@ export default function PrivateChat({
                       onClick={() => setShowReportModal(true)}
                       className={`hover:bg-gray-200 flex gap-2 w-full text-left px-4 py-2 text-sm text-gray-700 cursor-pointer font-Urbanist font-[600]`}
                     >
-                      <Trash className="size-[17px]" />
+                      <CircleSlash className="size-[17px]" />
                       Block User
                     </button>
                   </Menu.Item>
