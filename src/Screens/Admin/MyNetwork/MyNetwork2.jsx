@@ -54,6 +54,9 @@ const MyNetwork2 = () => {
   const [showModal, setShowModal] = useState(false);
   const [activeTab, setActiveTab] = useState("addToNetwork");
 
+  const currentUserId = JSON.parse(localStorage.getItem("User"))?.id;
+
+
   const getJoinYear = (timestamp) => new Date(timestamp).getFullYear();
 
   const applyFilters = (users) => {
@@ -135,25 +138,26 @@ const MyNetwork2 = () => {
 
       const sentUser = AddNetwork.find((user) => user.id === id);
 
-      // Update AddNetwork list to only include users who are not connected or pending
       setAddNetwork((prev) =>
-        prev
-          .map((user) =>
-            user.id === id ? { ...user, connection_status: "pending" } : user
-          )
-          .filter((user) => user.connection_status === null)
+        prev.map((user) =>
+          user.id === id ? { ...user, connection_status: "pending" } : user
+        )
       );
 
-      // Add to pending tab
       if (sentUser) {
         setSentRequest((prev) => [
-          ...prev,
           {
-            id: Math.random(), // temporary ID
-            from_user: sentUser,
+            id: Math.random(),
+            from_user_id: currentUserId,
+            to_user_id: sentUser.id,
+            status: "pending",
+            created_at: new Date().toISOString(),
+            to_user: sentUser,
           },
+          ...prev,
         ]);
       }
+      console.log(sentUser);
     } catch (error) {
       console.log(error);
     } finally {

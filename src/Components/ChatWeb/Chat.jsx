@@ -25,6 +25,7 @@ import RightSideImage1_2 from "../../assets/RightSideImage1.2.png";
 import { Menu } from "@headlessui/react";
 import UnkownUser from "/public/Images/UnknowUser.png";
 import axios from "axios";
+import ReportUserModal from "../ReportModal/ReportModal";
 // other imports...
 
 function getChatId(userId1, userId2) {
@@ -41,7 +42,8 @@ export default function PrivateChat({
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   const [isChatUserOnline, setIsChatUserOnline] = useState();
   const [text, setText] = useState("");
-  const [hoveredIndex, setHoveredIndex] = useState(null); // <-- added
+  const [hoveredIndex, setHoveredIndex] = useState(null); 
+   const [showReportModal, setShowReportModal] = useState(false);
 
   const ApiKey = import.meta.env.VITE_API_KEY;
   const token = localStorage.getItem("token");
@@ -252,6 +254,15 @@ export default function PrivateChat({
                     >
                       <Trash className="size-[17px]" />
                       Delete User
+                    </button>
+                  </Menu.Item>
+                   <Menu.Item>
+                    <button
+                      onClick={() => setShowReportModal(true)}
+                      className={`hover:bg-gray-200 flex gap-2 w-full text-left px-4 py-2 text-sm text-gray-700 cursor-pointer font-Urbanist font-[600]`}
+                    >
+                      <Trash className="size-[17px]" />
+                      Block User
                     </button>
                   </Menu.Item>
                 </div>
@@ -504,6 +515,16 @@ export default function PrivateChat({
           </>
         )}
       </div>
+
+       {/* Move this OUTSIDE Dialog */}
+      {showReportModal && (
+        <ReportUserModal
+          isOpen={showReportModal}
+          onClose={() => setShowReportModal(false)}
+          userId={chatUser.id}
+          from="From Chat:"
+        />
+      )}
     </>
   );
 }

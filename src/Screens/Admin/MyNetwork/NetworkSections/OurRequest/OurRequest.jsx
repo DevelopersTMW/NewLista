@@ -32,7 +32,10 @@ const OurRequest = ({
     `${user.from_user.first_name} ${user.from_user.last_name}`
       .toLowerCase()
       .includes(searchTerm.toLowerCase())
-  );
+    );
+
+    console.log(sentRequest);
+    
 
   const filteredSent = sentRequest
     .filter((user) => user.to_user)

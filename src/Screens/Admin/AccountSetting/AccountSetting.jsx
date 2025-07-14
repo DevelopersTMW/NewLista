@@ -296,16 +296,20 @@ const AccountSetting = () => {
 
   // COMPLETE PROFILE AND SAVE DATA IN API
   const ProfileComplete = async (data) => {
-    function formatUSPhone(phone) {
-      const cleaned = phone.replace(/\D/g, "");
-      const match = cleaned.match(/^1?(\d{3})(\d{3})(\d{4})$/);
-      if (match) {
-        return `+1 (${match[1]}) ${match[2]}-${match[3]}`;
-      }
-      return phone;
-    }
-    const formatted = formatUSPhone(data.phone);
+    let formatted = "";
 
+    if (data.phone) {
+      function formatUSPhone(phone) {
+        const cleaned = phone.replace(/\D/g, "");
+        const match = cleaned.match(/^1?(\d{3})(\d{3})(\d{4})$/);
+        if (match) {
+          return `+1 (${match[1]}) ${match[2]}-${match[3]}`;
+        }
+        return phone;
+      }
+
+      formatted = formatUSPhone(data.phone);
+    }
     const confirmed = await confirm();
     if (confirmed) {
       try {

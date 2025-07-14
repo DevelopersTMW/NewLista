@@ -14,6 +14,8 @@ const Inquiry = () => {
   const [unreadCounts, setUnreadCounts] = useState({});
   const messagesEndRef = useRef(null);
 
+  const [loadingChat, setLoadingChat] = useState(false);
+
   const token = localStorage.getItem("token");
 
   const fetchConversations = async () => {
@@ -27,9 +29,9 @@ const Inquiry = () => {
           },
         }
       );
-      console.log('====================================');
+      console.log("====================================");
       console.log(response);
-      console.log('====================================');
+      console.log("====================================");
       if (response.data?.status) {
         const convs = response.data.conversations;
 
@@ -65,6 +67,7 @@ const Inquiry = () => {
   }, [selectedChatIndex, conversations]);
 
   const markMessagesAsRead = async (idx) => {
+    setLoadingChat(true);
     const conv = conversations[idx];
     try {
       await axios.post(
@@ -93,6 +96,8 @@ const Inquiry = () => {
       setSelectedChatIndex(idx);
     } catch (err) {
       console.error("Error marking messages read", err);
+    } finally {
+      setLoadingChat(false); // Stop loader
     }
   };
 
@@ -146,14 +151,14 @@ const Inquiry = () => {
     <div className="flex gap-8 h-[76vh] rounded-[10px] overflow-hidden my-5">
       {/* Left: Conversation List */}
       <div className="w-[25%] bg-white flex flex-col rounded-[10px]">
-       <div className="flex items-center px-5 justify-between">
-         <h1 className="text-3xl font-bold  pt-9 pb-7 text-gray-800">
-          Inquiries
-        </h1>
-        <button   onClick={fetchConversations}>
-          <RotateCcw className="mt-3 text-red-500 size-4 cursor-pointer" />
-        </button>
-       </div>
+        <div className="flex items-center px-5 justify-between">
+          <h1 className="text-3xl font-bold  pt-9 pb-7 text-gray-800">
+            Inquiries
+          </h1>
+          <button onClick={fetchConversations}>
+            <RotateCcw className="mt-3 text-red-500 size-4 cursor-pointer" />
+          </button>
+        </div>
         <div className="flex flex-col overflow-auto no-scrollbar flex-grow">
           {loading ? (
             <div className="flex justify-center items-center h-full">
@@ -212,6 +217,10 @@ const Inquiry = () => {
         {selectedChatIndex === null ? (
           <div className="flex justify-center items-center h-full text-gray-400 font-semibold">
             Select User To Check Inquiry
+          </div>
+        ) : loadingChat ? (
+          <div className="flex justify-center items-center h-full">
+            <Spinner style="w-14 h-20 text-PurpleColor z-50" />
           </div>
         ) : (
           <>

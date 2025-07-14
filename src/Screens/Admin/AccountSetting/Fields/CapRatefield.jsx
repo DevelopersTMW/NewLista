@@ -23,14 +23,14 @@ export default function CapRate({
           <Controller
             name="capRateMin"
             control={control}
-            rules={{
-              required: "Min is required",
-              min: { value: 0, message: "Min must be ≥ 0" },
-              validate: (value) => {
-                const max = getValues("capRateMax");
-                return value < max || "Min must be less than Max";
-              },
-            }}
+            // rules={{
+            //   required: "Min is required",
+            //   min: { value: 0, message: "Min must be ≥ 0" },
+            //   validate: (value) => {
+            //     const max = getValues("capRateMax");
+            //     return value < max || "Min must be less than Max";
+            //   },
+            // }}
             render={({ field }) => (
               <input
                 {...field}
@@ -119,15 +119,15 @@ export default function CapRate({
           <Controller
             name="capRateMax"
             control={control}
-            rules={{
-              required: "Max is required",
-              min: { value: 0, message: "Max must be ≥ 0" },
-              max: { value: 30, message: "Max must be ≤ 30" },
-              validate: (value) => {
-                const min = getValues("capRateMin");
-                return value > min || "Max must be greater than Min";
-              },
-            }}
+            // rules={{
+            //   required: "Max is required",
+            //   min: { value: 0, message: "Max must be ≥ 0" },
+            //   max: { value: 30, message: "Max must be ≤ 30" },
+            //   validate: (value) => {
+            //     const min = getValues("capRateMin");
+            //     return value > min || "Max must be greater than Min";
+            //   },
+            // }}
             render={({ field }) => (
               <input
                 {...field}

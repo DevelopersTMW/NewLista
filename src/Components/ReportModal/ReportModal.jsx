@@ -14,7 +14,7 @@ const REPORT_REASONS = [
   "Other",
 ];
 
-const ReportUserModal = ({ isOpen, onClose, userId }) => {
+const ReportUserModal = ({ isOpen, onClose, userId , from }) => {
   const {
     register,
     watch,
@@ -68,7 +68,7 @@ const ReportUserModal = ({ isOpen, onClose, userId }) => {
         `${ApiKey}/network/report-user`,
         {
           reported_user_id: userId,
-          reason: finalReason,
+          reason: from + " " + finalReason,
         },
         {
           headers: { Authorization: `Bearer ${token}` },

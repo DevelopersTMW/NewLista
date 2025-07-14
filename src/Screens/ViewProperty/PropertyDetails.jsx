@@ -10,6 +10,7 @@ import MiniFooter from "../../Components/Footer/MiniFooter";
 import Footer from "../../Components/Footer/Footer";
 import PropertiesCards2 from "../../Components/Cards/PropertiesCards/PropertiesCards2";
 // IMAGES
+import BlockUserIcon from "../../../public/Images/BlockUserIcon.png";
 import SocialIcons1 from "../../assets/SocialIcons1.png";
 import SocialIcons2 from "../../assets/SocialIcons2.png";
 import SocialIcons3 from "../../assets/SocialIcons3.png";
@@ -32,7 +33,7 @@ import PropertyDetailMap from "../../assets/PropertyDetailMap.png";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import Spinner from "../../Components/Spinner/Spinner";
-import { Link, MapPin } from "lucide-react";
+import { AlignLeft, Link, MapPin } from "lucide-react";
 import EmptyCards from "../../Components/EmptyCard/EmptyCard";
 import TruncatedText from "../../Components/TruncatedText/TruncatedText";
 import KeyFeatures from "./KeyFeatures&Amenities/KeyFeatures";
@@ -42,6 +43,7 @@ import MakeOffer from "../../Components/MakeAnOffer/MakeOffer";
 import { useSelector } from "react-redux";
 import SocialPage from "./SocialIcons/SocialIcons";
 import PropertyChat from "../../Components/PropertyChat/PropertyChat";
+import ReportUserModal from "../../Components/ReportModal/ReportModal";
 
 const features = [
   "Ample Parking",
@@ -84,6 +86,7 @@ const PropertyDetails = () => {
   const ApiKey = import.meta.env.VITE_API_KEY;
 
   const [UserId, setUserId] = useState("");
+  const [showReportModal, setShowReportModal] = useState(false);
   const [Properties, setProperties] = useState([]);
   const [SingleProperty, setSingleProperty] = useState();
   const [Loading, setLoading] = useState(true);
@@ -149,8 +152,8 @@ const PropertyDetails = () => {
 
   const [selectedOption, setSelectedOption] = useState("sale");
 
-  const handleChange = (e) => {
-    setSelectedOption(e.target.value);
+  const handleToggle = (e) => {
+    setSelectedOption((prev) => (prev === "sale" ? "lease" : "sale"));
   };
 
   return (
@@ -255,35 +258,32 @@ const PropertyDetails = () => {
                   <h5 className="font-Urbanist text-[#222222] font-semibold text-[20px]">
                     Price
                   </h5>
-                  {SingleProperty.listing_type === "For Sale" &&
-                    "$" + SingleProperty.sale_price}
-                  {SingleProperty.listing_type === "For Lease" &&
-                    "$" + SingleProperty.lease_rate}
+                  {SingleProperty.listing_type === "For Sale" && (
+                    <h1 className="font-Poppins text-[#222222] font-[650] text-[30px] sm:text-[36px] flex  gap-6 items-center relative">
+                      {"$" + SingleProperty.sale_price}
+                    </h1>
+                  )}
+                  {SingleProperty.listing_type === "For Lease" && (
+                    <h1 className="font-Poppins text-[#222222] font-[650] text-[30px] sm:text-[36px] flex  gap-6 items-center relative">
+                      {"$" + SingleProperty.lease_rate}
+                    </h1>
+                  )}
                   <div className="mb-6">
                     {SingleProperty.listing_type ===
                       "Both (For Sale & For Lease)" && (
                       <>
-                        {/* Dropdown Filter */}
-                        <div className="mb-1 -ml-1">
-                          <select
-                            value={selectedOption}
-                            onChange={handleChange}
-                            className="font-Poppins text-[#222222] font-[650] w-[50%] focus:border-none outline-none sm:text-[23px]  rounded text-[16px]"
-                          >
-                            <option className="text-[13px]" value="sale">For Sale :</option>
-                            <option className="text-[13px]" value="lease">For Lease :</option>
-                          </select>
-                        </div>
-
-                        {/* Price Display */}
-                        <h1 className="font-Poppins text-[#222222] font-[650]  text-[30px] sm:text-[36px] flex gap-6">
+                        <h1 className="font-Poppins text-[#222222] font-[650] text-[30px] sm:text-[36px] flex  gap-6 items-center relative">
+                          {/* Display Price Based on Selected Option */}
                           {selectedOption === "sale" && (
                             <div className="flex flex-col leading-[40px]">
+                              <span className="text-[23px]">Sale:</span>
                               <span>${SingleProperty.sale_price}</span>
                             </div>
                           )}
+
                           {selectedOption === "lease" && (
                             <div className="flex flex-col leading-[40px]">
+                              <span className="text-[23px]">Lease:</span>
                               <div>
                                 ${SingleProperty.lease_rate}
                                 <span className="text-[20px]">
@@ -292,6 +292,13 @@ const PropertyDetails = () => {
                               </div>
                             </div>
                           )}
+                          {/* Toggle Button */}
+                          <button
+                            onClick={handleToggle}
+                            className="p-1 hover:opacity-80 cursor-pointer absolute top-1 right-0"
+                          >
+                            <AlignLeft />
+                          </button>
                         </h1>
                       </>
                     )}
@@ -317,38 +324,53 @@ const PropertyDetails = () => {
                 </div>
 
                 <div className="flex flex-col gap-5">
-                  <span className="flex items-center gap-3">
-                    <span className="">
-                      <img
-                        className="rounded-full w-[65px] h-[65px] object-cover"
-                        src={
-                          import.meta.env.VITE_IMAGE_KEY +
-                            SingleProperty.user.headshot || DummyLogo
-                        }
-                        alt=""
-                      />
-                    </span>
-
-                    <span>
-                      <h1 className="font-Urbanist text-[18.5px] sm:text-[21px] font-[700]">
-                        {SingleProperty.user.first_name +
-                          " " +
-                          SingleProperty.user.last_name}
-                      </h1>
-
-                      <p className="font-Urbanist text-[15px] sm:text-[16px] flex items-center gap-1">
-                        {" "}
+                  <div className="flex justify-between items-center">
+                    <span className="flex items-center gap-3">
+                      <span className="">
                         <img
-                          className="w-[15px] h-[14px]"
-                          src={SocialIcons7}
+                          className="rounded-full w-[65px] h-[65px] object-cover"
+                          src={
+                            import.meta.env.VITE_IMAGE_KEY +
+                              SingleProperty.user.headshot || DummyLogo
+                          }
                           alt=""
-                        />{" "}
-                        {SingleProperty.user.city +
-                          " " +
-                          SingleProperty.user.state}
-                      </p>
+                        />
+                      </span>
+
+                      <span>
+                        <h1 className="font-Urbanist text-[18.5px] sm:text-[21px] font-[700]">
+                          {SingleProperty.user.first_name +
+                            " " +
+                            SingleProperty.user.last_name}
+                        </h1>
+
+                        <p className="font-Urbanist text-[15px] sm:text-[16px] flex items-center gap-1">
+                          {" "}
+                          <img
+                            className="w-[15px] h-[14px]"
+                            src={SocialIcons7}
+                            alt=""
+                          />{" "}
+                          {SingleProperty.user.city +
+                            " " +
+                            SingleProperty.user.state}
+                        </p>
+                      </span>
                     </span>
-                  </span>
+                    {token && (
+                      <button
+                        onClick={() => setShowReportModal(true)}
+                        title="Report User"
+                        className=""
+                      >
+                        <img
+                          className="w-7 h-7 cursor-pointer"
+                          src={BlockUserIcon}
+                          alt="Report"
+                        />
+                      </button>
+                    )}
+                  </div>
 
                   <span>
                     {SingleProperty.show_phone && (
@@ -563,6 +585,16 @@ const PropertyDetails = () => {
               </div>
             </section>
           </>
+        )}
+
+        {/* Move this OUTSIDE Dialog */}
+        {showReportModal && (
+          <ReportUserModal
+            isOpen={showReportModal}
+            onClose={() => setShowReportModal(false)}
+            userId={SingleProperty.user.id}
+            from={`From ${SingleProperty.property_name} Property:`}
+          />
         )}
       </section>
 
