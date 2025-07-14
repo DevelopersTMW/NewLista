@@ -29,9 +29,6 @@ const Inquiry = () => {
           },
         }
       );
-      console.log("====================================");
-      console.log(response);
-      console.log("====================================");
       if (response.data?.status) {
         const convs = response.data.conversations;
 
