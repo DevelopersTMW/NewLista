@@ -219,7 +219,7 @@ const Pricing = () => {
                       : false
                   }
                   PlanName={"Free"}
-                  Pricing={"0"}
+                  Pricing={"0 "}
                   Duration={""}
                   ButtonText={
                     !token

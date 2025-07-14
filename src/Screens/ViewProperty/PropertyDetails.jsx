@@ -147,6 +147,12 @@ const PropertyDetails = () => {
     ViewCounter();
   }, []);
 
+  const [selectedOption, setSelectedOption] = useState("sale");
+
+  const handleChange = (e) => {
+    setSelectedOption(e.target.value);
+  };
+
   return (
     <>
       <Navbar></Navbar>
@@ -205,7 +211,7 @@ const PropertyDetails = () => {
                 <div className="flex flex-col sm:flex-row min-[850px]:!flex-col gap-6 md:gap-0 min-[850px]:!gap-4 md:pr-10 min-[850px]:!pr-0 ">
                   <div className="sm:w-[75%] md:w-full xl:w-[99%]">
                     <img
-                      className="w-full md:w-[93%] h-[280px] sm:h-[400px] md:h-[535px] lg:h-[600px] object-cover rounded-[8px]"
+                      className="w-full md:w-[93%] h-[280px] sm:h-[400px] md:h-[535px] lg:h-[600px] object-cover rounded-[8px] "
                       src={
                         import.meta.env.VITE_IMAGE_KEY +
                         SingleProperty.images[0]
@@ -246,16 +252,50 @@ const PropertyDetails = () => {
               {/* RIGHT SIDE  */}
               <div className="min-[850px]:!w-[50%] flex flex-col gap-8 pt-6">
                 <div>
-                  <h5 className="font-Urbanist text-[#222222] font-semibold text-[17px]">
+                  <h5 className="font-Urbanist text-[#222222] font-semibold text-[20px]">
                     Price
                   </h5>
+                  {SingleProperty.listing_type === "For Sale" &&
+                    "$" + SingleProperty.sale_price}
+                  {SingleProperty.listing_type === "For Lease" &&
+                    "$" + SingleProperty.lease_rate}
+                  <div className="mb-6">
+                    {SingleProperty.listing_type ===
+                      "Both (For Sale & For Lease)" && (
+                      <>
+                        {/* Dropdown Filter */}
+                        <div className="mb-1 -ml-1">
+                          <select
+                            value={selectedOption}
+                            onChange={handleChange}
+                            className="font-Poppins text-[#222222] font-[650] w-[50%] focus:border-none outline-none sm:text-[23px]  rounded text-[16px]"
+                          >
+                            <option className="text-[13px]" value="sale">For Sale :</option>
+                            <option className="text-[13px]" value="lease">For Lease :</option>
+                          </select>
+                        </div>
 
-                  <h1 className="font-Poppins text-[#222222] font-[650] text-[30px] sm:text-[36px] mb-4">
-                    $
-                    {SingleProperty.listing_type === "For Sale"
-                      ? SingleProperty.sale_price
-                      : SingleProperty.lease_rate}
-                  </h1>
+                        {/* Price Display */}
+                        <h1 className="font-Poppins text-[#222222] font-[650]  text-[30px] sm:text-[36px] flex gap-6">
+                          {selectedOption === "sale" && (
+                            <div className="flex flex-col leading-[40px]">
+                              <span>${SingleProperty.sale_price}</span>
+                            </div>
+                          )}
+                          {selectedOption === "lease" && (
+                            <div className="flex flex-col leading-[40px]">
+                              <div>
+                                ${SingleProperty.lease_rate}
+                                <span className="text-[20px]">
+                                  {"/ " + SingleProperty.lease_rate_unit}
+                                </span>
+                              </div>
+                            </div>
+                          )}
+                        </h1>
+                      </>
+                    )}
+                  </div>
                   {UserId !== SingleProperty.user.id && (
                     <div className="flex gap-4">
                       <InquiryForm
@@ -278,14 +318,16 @@ const PropertyDetails = () => {
 
                 <div className="flex flex-col gap-5">
                   <span className="flex items-center gap-3">
-                    <img
-                      className="rounded-full w-[60px] h-[62px] sm:w-[65px]"
-                      src={
-                        import.meta.env.VITE_IMAGE_KEY +
-                          SingleProperty.user.headshot || DummyLogo
-                      }
-                      alt=""
-                    />
+                    <span className="">
+                      <img
+                        className="rounded-full w-[65px] h-[65px] object-cover"
+                        src={
+                          import.meta.env.VITE_IMAGE_KEY +
+                            SingleProperty.user.headshot || DummyLogo
+                        }
+                        alt=""
+                      />
+                    </span>
 
                     <span>
                       <h1 className="font-Urbanist text-[18.5px] sm:text-[21px] font-[700]">
