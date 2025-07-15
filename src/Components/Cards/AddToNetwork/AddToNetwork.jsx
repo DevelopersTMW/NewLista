@@ -122,9 +122,9 @@ const AddToNetwork = ({
   };
 
   // INFO ITEMS
-  const renderInfoItem = (icon, text, maxLength = null) => (
-    <li className="flex gap-3 justify-center items-center">
-      {<span className="text-[13px]">{icon}</span>}
+  const renderInfoItem = (title , icon, text, maxLength = null) => (
+    <li  className="flex gap-3 justify-center items-center">
+      {<span title={title} className="text-[13px] cursor-pointer">{icon}</span>}
       {/* {<img className="w-5 h-5" src={icon} alt="" />} */}
       <p className="font-Inter text-[15px] text-Paracolor font-[600]">
         {maxLength ? <TruncatedText text={text} maxLength={maxLength} /> : text}
@@ -229,6 +229,7 @@ const AddToNetwork = ({
           {/* FEATURES  */}
           <ul className="flex justify-start items-start flex-col gap-3">
             {renderInfoItem(
+              "Company Name",
               <Building2
                 strokeWidth={2.5}
                 className="size-5.5 text-PurpleColor font-[900]"
@@ -236,6 +237,7 @@ const AddToNetwork = ({
               `${companyname || "Not Provide"}`
             )}
             {renderInfoItem(
+              "Location",
               <Navigation
                 strokeWidth={3}
                 className="size-5.5 text-PurpleColor font-[900]"
@@ -245,6 +247,7 @@ const AddToNetwork = ({
             )}
 
             {renderInfoItem(
+              "Property Type",
               <Building
                 strokeWidth={2.5}
                 className="size-5.5 text-PurpleColor font-[900]"
@@ -254,6 +257,7 @@ const AddToNetwork = ({
             )}
 
             {renderInfoItem(
+              "Investment Range",
               <DollarSign
                 strokeWidth={2}
                 className="size-5.5 text-PurpleColor font-[900]"
@@ -262,6 +266,7 @@ const AddToNetwork = ({
               15
             )}
             {renderInfoItem(
+              "Years Of Experience",
               <Award
                 strokeWidth={2}
                 className="size-5.5 text-PurpleColor font-[900]"

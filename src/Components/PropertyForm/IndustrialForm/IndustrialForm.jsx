@@ -69,11 +69,15 @@ const IndustrialForm = ({
             <Inputs
               labels={"Year Built"}
               type={"number"}
-              placeholder={"2020"}
               watch={watch}
               setValue={setValue}
+              placeholder={"2020"}
               name={"custom_fields.YearBuilt"}
               register={register}
+              min={"1900"}
+              onInput={(e) => {
+                e.target.value = e.target.value.replace(/\D/g, "").slice(0, 4);
+              }}
             ></Inputs>
           </span>
           <span className="w-[100%]">
@@ -141,7 +145,7 @@ const IndustrialForm = ({
               value={watch("custom_fields.Crane")}
             ></Selection>
           </span>
-           <span className="">
+          <span className="">
             <Selection
               labels={"Office/Meeting Room"}
               defaultOption={"Select"}

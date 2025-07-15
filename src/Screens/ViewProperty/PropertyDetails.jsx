@@ -44,6 +44,7 @@ import { useSelector } from "react-redux";
 import SocialPage from "./SocialIcons/SocialIcons";
 import PropertyChat from "../../Components/PropertyChat/PropertyChat";
 import ReportUserModal from "../../Components/ReportModal/ReportModal";
+import PropertyGallery from "../../Components/Carousel/PropertyGallery/PropertyGallery";
 
 const features = [
   "Ample Parking",
@@ -211,35 +212,7 @@ const PropertyDetails = () => {
             <section className="max-[400px]:px-5 px-8 sm:px-10  lg:px-20 flex flex-col min-[850px]:!flex-row gap-3 w-[100%] 2xl:w-[87%]">
               {/* LEFT SIDE START  */}
               <div className=" flex gap-8 flex-col sm:gap-12 min-[850px]:!w-[50%] ">
-                <div className="flex flex-col sm:flex-row min-[850px]:!flex-col gap-6 md:gap-0 min-[850px]:!gap-4 md:pr-10 min-[850px]:!pr-0 ">
-                  <div className="sm:w-[75%] md:w-full xl:w-[99%]">
-                    <img
-                      className="w-full md:w-[93%] h-[280px] sm:h-[400px] md:h-[535px] lg:h-[600px] object-cover rounded-[8px] "
-                      src={
-                        import.meta.env.VITE_IMAGE_KEY +
-                        SingleProperty.images[0]
-                      }
-                      alt=""
-                    />
-                  </div>
-
-                  <div className="grid max-[400px]:grid-cols-2 grid-cols-3 sm:grid-cols-1 min-[850px]:!grid-cols-2 lg:!grid-cols-3 xl:!grid-cols-4 gap-5 justify-start items-center sm:w-[25%] min-[850px]:!w-[94%] xl:!w-[93%]">
-                    {SingleProperty.images?.length > 1 && (
-                      <div className="flex gap-4 mt-4">
-                        {Array.from(SingleProperty.images)
-                          .slice(1) // skip the first one
-                          .map((file, index) => (
-                            <img
-                              key={index}
-                              src={import.meta.env.VITE_IMAGE_KEY + file}
-                              alt={`preview-${index + 1}`}
-                              className="object-cover w-full rounded-[8px]"
-                            />
-                          ))}
-                      </div>
-                    )}
-                  </div>
-                </div>
+                <PropertyGallery images={SingleProperty.images}/>
 
                 <div className="w-full px-0 lg:px-1  md:w-[94%]">
                   <div className="max-w-4xl mx-auto border border-[#BBBBBB] rounded-lg py-6 max-[400px]:px-3 px-6  lg:px-6 md:px-4 sm:p-6 bg-white">

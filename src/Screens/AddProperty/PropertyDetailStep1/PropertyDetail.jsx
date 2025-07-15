@@ -48,7 +48,6 @@ const Step1 = ({ onNext, defaultValues  , prevStep }) => {
   const PropertyRadio = watch("propertyType");
   const propertyType = watch("propertyName");
 
-  console.log(propertyType);
   
 
 
@@ -110,6 +109,7 @@ const Step1 = ({ onNext, defaultValues  , prevStep }) => {
             watch={watch}
             setValue={setValue}
             propertyTypeName={propertyType}
+            control={control}
           />
         );
     }

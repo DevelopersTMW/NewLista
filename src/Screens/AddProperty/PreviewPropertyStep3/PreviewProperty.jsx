@@ -3,6 +3,7 @@ import Checkboxs from "../../../Components/InputFields/Checkboxs";
 import PropertyDetail from "./PropertyDetail/PropertyDetail";
 import { Controller, useForm } from "react-hook-form";
 import { useEffect } from "react";
+import ImagesCarousel from "../../../Components/ImagesCarousel/ImagesCarousel";
 
 const Step3 = ({ formData, onBack, onSubmit }) => {
   const {
@@ -56,8 +57,9 @@ const Step3 = ({ formData, onBack, onSubmit }) => {
           </div>
 
           {/* Image Preview */}
-          
-          <div>
+          <ImagesCarousel images={formData.fileInput || []} />
+
+          {/* <div>
             {!formData || !formData.fileInput?.length ? (
               <div className="mt-7 rounded-lg bg-muted flex items-center justify-center bg-[#f5f5f5] max-[400px]:py-20 py-24 sm:py-28 lg:py-40">
                 <div className="text-center flex flex-col justify-center items-center gap-2">
@@ -104,7 +106,7 @@ const Step3 = ({ formData, onBack, onSubmit }) => {
                 </div>
               ))}
             </div>
-          )}
+          )} */}
 
           {/* Property Details */}
           <PropertyDetail formData={formData} />

@@ -52,7 +52,7 @@ const PropertyDetail = ({ formData }) => {
                     Sale Price:
                   </h1>
                   <p className="max-[400px]:text-[14px] text-[14.5px] font-Inter font-medium text-pretty text-Paracolor sm:text-[14px]/8 sm:leading-[18px] ">
-                    {formData.salePrice}
+                    ${formData.salePrice}
                   </p>
                 </>
               ) : (
@@ -61,7 +61,7 @@ const PropertyDetail = ({ formData }) => {
                     Lease Rate:
                   </h1>
                   <p className="max-[400px]:text-[14px] text-[14.5px] font-Inter font-medium text-pretty text-Paracolor sm:text-[14px]/8 sm:leading-[18px] ">
-                    {formData.leaseRate}
+                    ${formData.leaseRate}
                   </p>
                 </>
               )}

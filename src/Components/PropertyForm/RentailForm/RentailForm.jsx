@@ -39,6 +39,9 @@ const currencies = [
 ];
 
 const RentailForm = ({ propertyTypeName, register, watch, setValue }) => {
+
+  const Check = watch("custom_fields.BuildingSize");
+  
   return (
     <div className="border-[2px] rounded-[8px] px-4 border-solid border-[#ececec] mt-5 bg-[#fcfcfc] py-8">
       <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 md:gap-8">
@@ -54,7 +57,7 @@ const RentailForm = ({ propertyTypeName, register, watch, setValue }) => {
         </span>
         <span className="w-[100%]">
           <NumberInputs
-            labels={"Gross Scheduled Income"}
+            labels={"Gross Scheduled Income (Annual) "}
             type={"text"}
             placeholder={"Ex: 10000"}
             watch={watch}
@@ -63,27 +66,26 @@ const RentailForm = ({ propertyTypeName, register, watch, setValue }) => {
             register={register}
           ></NumberInputs>
         </span>
-        <span className="w-[100%]">
-          <Selection
-            labels={"Lot Size"}
-            defaultOption={"Select Size"}
-            Options={["Sq Ft", "Sq M"]}
-            name={"custom_fields.BuildingSize"}
-            register={register}
-            value={watch("custom_fields.BuildingSize")}
-          ></Selection>
-        </span>
-        <span className="w-[100%]">
+        <span className="">
           <NumberInputs
-            labels={"‎"}
+            labels={"Lot Size"}
             type={"text"}
             watch={watch}
             setValue={setValue}
-            placeholder={"Ex: 10000"}
+            placeholder={`Enter size in ${Check ? Check : "Unit"} (e.g., 10,000)`}
             name={"custom_fields.BuildingSizeNumber"}
-            
             register={register}
           ></NumberInputs>
+        </span>
+        <span className="">
+          <Selection
+            labels={"Units"}
+            defaultOption={"Select"}
+            Options={["Sq Ft", "Sq M"]}
+            name={"custom_fields.BuildingSize"}
+            value={watch("custom_fields.BuildingSize")}
+            register={register}
+          ></Selection>
         </span>
         <span className="w-[100%]">
           <NumberInputs
