@@ -59,11 +59,13 @@ function ProtectiveRoute({ component }) {
         "/admin/customer-support",
       ];
 
-      if (
+      if(!token){
+        navigate("/login");
+      } else if (
         restrictedRoutes.includes(location.pathname.toLowerCase()) &&
         Status !== "active"
       ) {
-        navigate("/login");
+        navigate("/pricing");
         AlertModal({
           icon: "warning",
           title: "Upgrade Required",
