@@ -124,7 +124,7 @@ const SubscriptionSetting = () => {
               <div className="bg-[#ffffff] px-5 py-4 rounded-[10px] flex justify-between">
                 <div>
                   <h2 className="font-Urbanist text-[#222222] text-[24px] font-[700]">
-                    {"Professional Plan"}
+                    {planName}
                   </h2>
                   <p className="font-Urbanist text-Paracolor text-[19px] font-[600]">
                     {"Duration"}
