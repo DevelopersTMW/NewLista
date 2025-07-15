@@ -130,7 +130,7 @@ const SubscriptionSetting = () => {
                     {"Duration"}
                   </p>
                   <p className="font-Urbanist text-Paracolor text-[19px] font-[600]">
-                    {"Billed monthly"}
+                    {!planDuration  ? "Unlimited" : `Billed ${planDuration}` }
                   </p>
                 </div>
                 <div className="text-end flex flex-col gap-1">
