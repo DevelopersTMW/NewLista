@@ -63,7 +63,7 @@ function ProtectiveRoute({ component }) {
         restrictedRoutes.includes(location.pathname.toLowerCase()) &&
         Status !== "active"
       ) {
-        navigate("/pricing");
+        navigate("/login");
         AlertModal({
           icon: "warning",
           title: "Upgrade Required",
